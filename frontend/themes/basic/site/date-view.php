@@ -297,7 +297,6 @@ if(isset($_GET['top'])&&$_GET['top']=='bottoms'){
                         </div>
                         <a class="col-xs-8" <?php if(!empty($chat)):?>href="<?=$chat?>" data-title="聊天截图" data-lightbox="s"<?php endif;?>>
                             <h6 style="margin-top: 5px;font-weight: bold;color: #E83F78;">聊天截图</h6>
-                            <h5 style="margin-bottom: 0;font-weight: bold;"><?=$contents['number']?></h5>
                         </a>
                     </div>
                 </div>
