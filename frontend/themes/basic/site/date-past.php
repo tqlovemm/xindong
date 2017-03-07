@@ -180,10 +180,10 @@ $rand_url = AccessToken::antiBlocking();
                         <div class="row" style="margin: 0;position: relative;border-bottom: 1px solid #efefef;padding-bottom: 8px;">
                             <a class="<?php if($item['cover_id']==-1){echo "content_link";}?>" href="<?=Url::to(["/date-view/$item[id]",'url'=>$rand_url])?>">
                                 <div class="col-xs-9 col-sm-9 col-md-10 col-lg-10" style="padding: 0;">
-                                    <div class="date-number">
+                                  <!--  <div class="date-number">
                                         <spant>妹子编号</spant>
-                                        <span><?=$item['number']?></span>
-                                    </div>
+                                        <span><?/*=$item['number']*/?></span>
+                                    </div>-->
                                     <div class="date-mark">
                                         <spant>妹子标签</spant>
                                         <?php foreach($marks as $num=>$mark):?>
