@@ -124,7 +124,7 @@ $rand_url = AccessToken::antiBlocking();
 
         $(window).load(function(){
             $(".loading").addClass("loader-chanage");
-            $(".loading").fadeOut(300);
+            $(".loading").fadeOut(200);
         });
     </script>
 
