@@ -1,0 +1,1 @@
+<div class="alert alert-success text-center">您的意见反馈成功，十三平台会对您的意见酌情作出修改，感谢您的参与！！</div>

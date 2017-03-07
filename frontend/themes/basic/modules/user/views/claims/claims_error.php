@@ -1,0 +1,1 @@
+<h2 class="alert alert-success text-center">对不起，同一个会员审核期内您只能投诉一次！！</h2>
