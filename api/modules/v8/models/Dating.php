@@ -58,7 +58,7 @@ class Dating extends ActiveRecord
     public function fields(){
 
         return [
-            'dating_id'=>'id','number','title','created_at','avatar','status','worth','expire','introduction',
+            'dating_id'=>'id','title','created_at','avatar','status','worth','expire','introduction',
             'url'=>function($model){
 
                 return explode('，',$model['url']);
@@ -68,7 +68,11 @@ class Dating extends ActiveRecord
 
                 return explode('，',$model['content']);
 
-            },'photos','chatImg'
+            },
+            'number'=>function($model){
+                return "******";
+            },
+            'photos','chatImg'
         ];
     }
 
