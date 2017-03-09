@@ -165,7 +165,7 @@ $rand_url = AccessToken::antiBlocking();
         </div>
     </nav>
 
-    <div id="top" class=" visible-md visible-lg"></div>
+ <!--   <div id="top" class=" visible-md visible-lg"></div>-->
 <?php $this->beginBody() ?>
     <div class="loading loader-chanage">
         <div class="loader">
