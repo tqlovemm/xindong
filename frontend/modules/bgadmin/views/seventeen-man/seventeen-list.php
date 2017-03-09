@@ -16,8 +16,7 @@ $this->registerCss("
     .addcar:hover{color:red;border: 1px solid red;}
 ");
 $qiniu = Yii::$app->params['qiniushiqi'];
-var_dump($qiniu);
-return;
+
 ?>
 <script src="http://13loveme.com/js/jweixin-1.0.0.js"></script>
 <div class="row list-header">
