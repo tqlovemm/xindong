@@ -11,7 +11,7 @@ $this->registerCss("
     #share_arrow{position: absolute;right: 0;top:0;z-index: 9;width: 100%;height: 100%;background-color: rgba(0, 0, 0, 0.63);padding:0 10px;display: none;}
     #share{width: 60%;padding:5px;border-radius: 50px;border: 2px solid #F3BA0A;color:#F3BA0A;font-size:20px;background-color: transparent;margin-bottom: 10px;}
 ");
-
+$qiniu = Yii::$app->params['qiniushiqi'];
 ?>
 <script src="http://13loveme.com/js/jweixin-1.0.0.js"></script>
 <div id="share_arrow">
@@ -30,7 +30,7 @@ $this->registerCss("
                     <?php foreach ($item['imgs'] as $img):
                         $extend = explode('.',$img['img']); ?>
                         <h5 style="margin-top: 0;">编号：<?=$item['id']?></h5>
-                        <img class="img-responsive" src="<?=$img['img']?>"/>
+                        <img class="img-responsive" src="<?=$qiniu.$img['img']?>"/>
                         <?php if(in_array($extend[count($extend)-1],['jpg','png','jpeg','bmp','JPG','PNG','JPEG','BMP'])){break;}
                     endforeach; ?>
                     <h5>区域：<?=$item['address_city']?></h5>
@@ -51,7 +51,6 @@ $this->registerJs("
 /*瀑布流*/
 $('.wall').jaliswall({ item: '.article' });
 ");
-$img = isset($img['img'])?$img['img']:'';
 ?>
 <script>
     $(function () {

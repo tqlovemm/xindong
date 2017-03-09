@@ -30,6 +30,7 @@ $this->registerCss("
 ");
 $this->title = "档案详情";
 $this->registerJsFile(Yii::getAlias('@web')."/js/TouchSlide.1.1.source.js",['position' => View::POS_HEAD]);
+$qiniu = Yii::$app->params['qiniushiqi'];
 ?>
 <meta name="x5-fullscreen" content="true">
 <meta name="full-screen" content="yes">
@@ -49,7 +50,7 @@ $this->registerJsFile(Yii::getAlias('@web')."/js/TouchSlide.1.1.source.js",['pos
                         if(!in_array($extend[count($extend)-1],['jpg','png','jpeg','bmp','JPG','PNG','JPEG','BMP'])){continue;}
                         ?>
                         <li style="position: relative;">
-                            <a href="http://13loveme.com/<?=$img->img?>" data-lightbox="0" data-title="0" ><img class="img-responsive center-block" src="http://13loveme.com/<?=$img->img?>"></a>
+                            <a href="<?=$qiniu.$img->img?>" data-lightbox="0" data-title="0" ><img class="img-responsive center-block" src="<?=$qiniu.$img->img?>"></a>
                             <div style="position: absolute;width: 100%;height: 100%;top:0;"></div>
                         </li>
                     <?php endforeach;?>
@@ -105,7 +106,7 @@ $this->registerJsFile(Yii::getAlias('@web')."/js/TouchSlide.1.1.source.js",['pos
                                 if($sum>=5)
                                     break;
                                 ?>
-                                <li class="weui_uploader_file" style="background-image:url(http://13loveme.com/<?=$img->img?>)"></li>
+                                <li class="weui_uploader_file" style="background-image:url(<?=$qiniu.$img->img?>)"></li>
                             <?php endforeach;?>
                         </ul>
                     </div>

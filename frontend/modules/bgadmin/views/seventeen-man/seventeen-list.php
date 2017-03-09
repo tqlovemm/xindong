@@ -15,6 +15,7 @@ $this->registerCss("
     .addcar{width: 50%;border: 1px solid #EFB810;margin: 0 auto;border-radius: 50px;padding: 4px;}
     .addcar:hover{color:red;border: 1px solid red;}
 ");
+$qiniu = Yii::$app->params['qiniushiqi'];
 ?>
 <script src="http://13loveme.com/js/jweixin-1.0.0.js"></script>
 <div class="row list-header">
@@ -42,7 +43,7 @@ $this->registerCss("
                         }
                     }
                 } ?>
-                <img class="img-responsive" src="<?=$img?>" />
+                <img class="img-responsive" src="<?=$qiniu.$img?>" />
                 <h5>编号：<?=$item['id']?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区域：<?=$item['address_city']?><span style="color:red;font-weight: bold;float: right;">点击看详情</span></h5>
                 <h5><?=floor((time()-$item['age'])/(86400*365))?> 岁 &nbsp;&nbsp;&nbsp;<?=$item['height']?>cm &nbsp;&nbsp;&nbsp;<?=$item['weight']?>kg</h5>
                 <div style="position: absolute;width: 100%;height: 100%;top:0;"></div>
