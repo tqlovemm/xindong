@@ -43,8 +43,8 @@ $qiniu = Yii::$app->params['qiniushiqi'];
                         }
                     }
                 } ?>
-                <img class="img-responsive" src="<?=$qiniu.'/'.$img?>" />
-                <h5>编号：<?=$item['id']?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区域：<?=$item['address_city']?><span style="color:red;font-weight: bold;float: right;">点击看详情</span></h5>
+                <img class="img-responsive" src="<?=$qiniu.$img?>" />
+                <h5>编号：<?=$item['id']?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区域：<?=$qiniu.$item['address_city']?><span style="color:red;font-weight: bold;float: right;">点击看详情</span></h5>
                 <h5><?=floor((time()-$item['age'])/(86400*365))?> 岁 &nbsp;&nbsp;&nbsp;<?=$item['height']?>cm &nbsp;&nbsp;&nbsp;<?=$item['weight']?>kg</h5>
                 <div style="position: absolute;width: 100%;height: 100%;top:0;"></div>
             </a>

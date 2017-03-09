@@ -50,7 +50,7 @@ $qiniu = Yii::$app->params['qiniushiqi'];
                         if(!in_array($extend[count($extend)-1],['jpg','png','jpeg','bmp','JPG','PNG','JPEG','BMP'])){continue;}
                         ?>
                         <li style="position: relative;">
-                            <a href="<?=$qiniu.'/'.$img->img?>" data-lightbox="0" data-title="0" ><img class="img-responsive center-block" src="<?=$qiniu.'/'.$img->img?>"></a>
+                            <a href="<?=$qiniu.$img->img?>" data-lightbox="0" data-title="0" ><img class="img-responsive center-block" src="<?=$qiniu.$img->img?>"></a>
                             <div style="position: absolute;width: 100%;height: 100%;top:0;"></div>
                         </li>
                     <?php endforeach;?>
@@ -106,7 +106,7 @@ $qiniu = Yii::$app->params['qiniushiqi'];
                                 if($sum>=5)
                                     break;
                                 ?>
-                                <li class="weui_uploader_file" style="background-image:url(<?=$qiniu.'/'.$img->img?>)"></li>
+                                <li class="weui_uploader_file" style="background-image:url(<?=$qiniu.$img->img?>)"></li>
                             <?php endforeach;?>
                         </ul>
                     </div>
