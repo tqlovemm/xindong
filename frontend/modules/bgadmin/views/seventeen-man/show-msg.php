@@ -46,7 +46,7 @@ $this->registerJsFile(Yii::getAlias('@web')."/js/TouchSlide.1.1.source.js",['pos
                 <ul>
                     <?php foreach ($imgs as $img):?>
                         <li>
-                            <img class="img-responsive center-block" src="<?=Yii::$app->params['qiniushiqi'].$img->img?>">
+                            <img class="img-responsive center-block" src="<?=Yii::$app->params['qiniushiqi'].'/'.$img->img?>">
                         </li>
                     <?php endforeach;?>
                 </ul>
@@ -95,7 +95,7 @@ $this->registerJsFile(Yii::getAlias('@web')."/js/TouchSlide.1.1.source.js",['pos
                                 if($key>=4)
                                     break;
                                 ?>
-                                <li class="weui_uploader_file" style="background-image:url(<?=Yii::$app->params['qiniushiqi'].$img->img?>)"></li>
+                                <li class="weui_uploader_file" style="background-image:url(<?=Yii::$app->params['qiniushiqi'].'/'.$img->img?>)"></li>
                             <?php endforeach;?>
                         </ul>
                     </div>

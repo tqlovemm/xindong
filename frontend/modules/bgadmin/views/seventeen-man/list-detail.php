@@ -30,7 +30,7 @@ $qiniu = Yii::$app->params['qiniushiqi'];
                     <?php foreach ($item['imgs'] as $img):
                         $extend = explode('.',$img['img']); ?>
                         <h5 style="margin-top: 0;">编号：<?=$item['id']?></h5>
-                        <img class="img-responsive" src="<?=$qiniu.$img['img']?>"/>
+                        <img class="img-responsive" src="<?=$qiniu.'/'.$img['img']?>"/>
                         <?php if(in_array($extend[count($extend)-1],['jpg','png','jpeg','bmp','JPG','PNG','JPEG','BMP'])){break;}
                     endforeach; ?>
                     <h5>区域：<?=$item['address_city']?></h5>
