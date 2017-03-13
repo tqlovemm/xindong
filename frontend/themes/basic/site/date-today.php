@@ -82,6 +82,7 @@ if(isset($_GET['top'])&&$_GET['top']=='bottoms'){
     ');
 }
 $rand_url = AccessToken::antiBlocking();
+$pre_url = Yii::$app->params['shisangirl'];
 ?>
 <!--    <wb:topic topmid="DsAXCFjFp" column="n" border="n" width="560" height="1580" tags="%E7%94%B7%E5%A5%B3%E7%BA%A6%E4%BC%9A%E6%98%AF%E5%90%A6%E5%AE%8C%E5%85%A8%E8%AE%A9%E7%94%B7%E7%94%9F%E4%B9%B0%E5%8D%95" red_text="%E5%BD%93%E7%84%B6%E5%BA%94%E8%AF%A5%E7%94%B7%E7%94%9F%E4%B9%B0%E5%8D%95" blue_text="%E7%94%B7%E5%A5%B3%E5%B9%B3%E7%AD%89" language="zh_cn" version="pk" appkey="5ioQwE" refer="y" footbar="y" url="http%3A%2F%2F13loveme.com%2Fdate-today" filter="n" ></wb:topic> -->
 <!--不要提交-->
@@ -218,7 +219,7 @@ $rand_url = AccessToken::antiBlocking();
                                 </div>
                                 <?php if($item['cover_id']==-1):?>
                                 <div class="col-sm-3 col-xs-3 col-md-2 col-lg-2" style="padding: 0;position: relative;">
-                                    <img style="opacity:0.1;filter:alpha(opacity=10);" class="img-responsive center-block lazy date-today-img" alt="<?=$item['url']?>" title="<?=$item['content']?>" data-original="<?=$item['avatar']?>">
+                                    <img style="opacity:0.1;filter:alpha(opacity=10);" class="img-responsive center-block lazy date-today-img" alt="<?=$item['url']?>" title="<?=$item['content']?>" data-original="<?=$pre_url.$item['avatar']?>">
                                     <img src="/images/dating/seal.png" style="position: absolute;top:50%;right:50%;width: 60px;margin-top: -30px;margin-right: -30px;">
                                 </div>
                                     <script>
@@ -239,7 +240,7 @@ $rand_url = AccessToken::antiBlocking();
                                     </script>
                                 <?php else:?>
                                 <div class="col-sm-3 col-xs-3 col-md-2 col-lg-2" style="padding: 0;">
-                                    <img class="img-responsive center-block lazy date-today-img" alt="<?=$item['url']?>" title="<?=$item['content']?>" data-original="<?=$item['avatar']?>">
+                                    <img class="img-responsive center-block lazy date-today-img" alt="<?=$item['url']?>" title="<?=$item['content']?>" data-original="<?=$pre_url.$item['avatar']?>">
                                 </div>
                                 <?php endif;?>
                             </a>

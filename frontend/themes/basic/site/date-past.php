@@ -94,6 +94,7 @@ $this->registerCss('
         ');
     }
 $rand_url = AccessToken::antiBlocking();
+$pre_url = Yii::$app->params['shisangirl'];
 ?>
 <?php if(Yii::$app->session->hasFlash('success')):?>
     <div class="alert alert-success">
@@ -201,7 +202,7 @@ $rand_url = AccessToken::antiBlocking();
                                 </div>
                                 <?php if($item['cover_id']==-1):?>
                                     <div class="col-sm-3 col-xs-3 col-md-2 col-lg-2" style="padding: 0;position: relative;">
-                                        <img style="opacity:0.1;filter:alpha(opacity=10);" class="img-responsive center-block lazy date-today-img" alt="<?=$item['url']?>" title="<?=$item['content']?>" data-original="<?=$item['avatar']?>">
+                                        <img style="opacity:0.1;filter:alpha(opacity=10);" class="img-responsive center-block lazy date-today-img" alt="<?=$item['url']?>" title="<?=$item['content']?>" data-original="<?=$pre_url.$item['avatar']?>">
                                         <img src="/images/dating/seal.png" style="position: absolute;top:50%;right:50%;width: 60px;margin-top: -30px;margin-right: -30px;">
                                     </div>
                                     <script>
@@ -222,7 +223,7 @@ $rand_url = AccessToken::antiBlocking();
                                     </script>
                                 <?php else:?>
                                     <div class="col-sm-3 col-xs-3 col-md-2 col-lg-2" style="padding: 0;">
-                                        <img class="img-responsive center-block lazy date-today-img" alt="<?=$item['url']?>" title="<?=$item['content']?>" data-original="<?=$item['avatar']?>">
+                                        <img class="img-responsive center-block lazy date-today-img" alt="<?=$item['url']?>" title="<?=$item['content']?>" data-original="<?=$pre_url.$item['avatar']?>">
                                     </div>
                                 <?php endif;?>
                             </a>

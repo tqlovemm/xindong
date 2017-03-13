@@ -134,7 +134,7 @@ if(isset($_GET['top'])&&$_GET['top']=='bottoms'){
         nav,footer,.suo-xia{display:none;}
     ');
 }
-
+$pre_url = Yii::$app->params['shisangirl'];
 ?>
 
 <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
@@ -261,7 +261,7 @@ if(isset($_GET['top'])&&$_GET['top']=='bottoms'){
                     <div class="divas-slide-container" data-am-widget="gallery" data-am-gallery="{ pureview: true }">
                         <?php foreach($photos['photos'] as $photo):?>
                             <a href="<?=$photo['path']?>" class="divas-slide am-gallery-item">
-                                <img style="margin: 0 10px;box-shadow: 0 0 5px gray;" src="<?=$photo['path']?>" data-src="<?=$photo['path']?>"/>
+                                <img style="margin: 0 10px;box-shadow: 0 0 5px gray;" src="<?=$pre_url.$photo['path']?>" data-src="<?=$pre_url.$photo['path']?>"/>
                             </a>
                         <?php endforeach;?>
                     </div>
@@ -295,7 +295,7 @@ if(isset($_GET['top'])&&$_GET['top']=='bottoms'){
                         <div class="col-xs-4" style="padding:0 5px;">
                             <img style="width: 50px;" src="/images/dating/jietu.png">
                         </div>
-                        <a class="col-xs-8" <?php if(!empty($chat)):?>href="<?=$chat?>" data-title="聊天截图" data-lightbox="s"<?php endif;?>>
+                        <a class="col-xs-8" <?php if(!empty($chat)):?>href="<?=$pre_url.$chat?>" data-title="聊天截图" data-lightbox="s"<?php endif;?>>
                             <h6 style="margin-top: 5px;font-weight: bold;color: #E83F78;">聊天截图</h6>
                         </a>
                     </div>
