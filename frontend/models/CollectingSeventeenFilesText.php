@@ -140,7 +140,7 @@ class CollectingSeventeenFilesText extends \yii\db\ActiveRecord
             'img' => $qiniu['key'], //存储路径
             'text_id' => $this->id, //保存的名称
         ])->execute();
-        $data = array('id'=>$this->id,'path'=>Yii::$app->params['shisan'].$qiniu['key']);
+        $data = array('id'=>$this->id,'path'=>Yii::$app->params['qiniushiqi'].$qiniu['key']);
         return $data;
 
       /*  $up = new Uploader("photoimg", $config, 'collecting_17_files');
@@ -168,7 +168,7 @@ class CollectingSeventeenFilesText extends \yii\db\ActiveRecord
             'text_id' => $this->id, //保存的名称
             'type' => 1, //保存的名称
         ])->execute();
-        $data = array('id'=>$this->id,'path'=>Yii::$app->params['shisan'].$qiniu['key']);
+        $data = array('id'=>$this->id,'path'=>Yii::$app->params['qiniushiqi'].$qiniu['key']);
         return $data;
         /*$config = [
             'savePath' => Yii::getAlias('@webroot/uploads/collecting-17/'), //存储文件夹
