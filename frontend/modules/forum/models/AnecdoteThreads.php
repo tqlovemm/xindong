@@ -87,7 +87,7 @@ class AnecdoteThreads extends \yii\db\ActiveRecord
 
     public function upload()
     {
-        $qn = new QiniuUploader('imageform',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $qn = new QiniuUploader('threadimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
         $qiniu = $qn->upload('threadimages',"uploads/thread_img/$this->tid");
 /*        $config = [
             'savePath' => Yii::getAlias('@webroot/uploads/thread_img/'), //存储文件夹
