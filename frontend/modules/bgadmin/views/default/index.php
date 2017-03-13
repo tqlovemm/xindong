@@ -13,6 +13,7 @@ $this->registerCss('
     .up em {top: 1px;-webkit-transform: rotate(-45deg);transform: rotate(-45deg);}
     .label-makefriend-span{background-color: #ff904e;padding:1px 4px;border-radius: 3px;margin-right: 5px;}
 ');
+$pre_url = Yii::$app->params['shisangirl'];
 ?>
 <link rel="stylesheet" href="/weui/dist/style/weui.min.css"/>
 <?php $this->registerJsFile('js/jquery.wallform.js', ['depends' => ['frontend\assets\AppAsset'], 'position' => $this::POS_HEAD]); ?>
@@ -33,7 +34,7 @@ $this->registerCss('
                             <div class="weui_uploader_bd">
                                 <div class="weui_uploader_files" id="preview">
                                     <?php if(!empty($img)): foreach ($img as $item):?>
-                                        <img onclick="delete_img(<?=$item['id']?>)"  src="<?=$item['path']?>" data-id="<?=$item['id']?>" class="preview collecting-files-img">
+                                        <img onclick="delete_img(<?=$item['id']?>)"  src="<?=$pre_url.$item['path']?>" data-id="<?=$item['id']?>" class="preview collecting-files-img">
                                     <?php endforeach;endif; ?>
                                 </div>
                                 <?php if(count($img)<6):?>
@@ -60,7 +61,7 @@ $this->registerCss('
                             <div class="weui_uploader_bd">
                                 <div class="weui_uploader_files" id="preview_weima">
                                     <?php if(!empty($weima)):?>
-                                        <img src="<?=$weima['path']?>" data-id="<?=$weima['id']?>" class="preview">
+                                        <img src="<?=$pre_url.$weima['path']?>" data-id="<?=$weima['id']?>" class="preview">
                                     <?php endif;?>
                                 </div>
                                 <?php if(empty($weima)):?>
