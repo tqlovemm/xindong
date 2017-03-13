@@ -9,7 +9,7 @@ use yii\widgets\DetailView;
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Collecting17 Files Texts', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$pre_url = Yii::$app->params['imagetqlmm'];
+$pre_url = Yii::$app->params['qiniushiqi'];
 ?>
 <div class="collecting17-files-text-view">
 
