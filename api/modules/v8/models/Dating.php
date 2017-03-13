@@ -79,14 +79,14 @@ class Dating extends ActiveRecord
 
     public function getPhotos(){
         $pre_url = Yii::$app->params['shisangirl'];
-        $photo = Yii::$app->db->createCommand("select CONCAT($pre_url,path) from {{%weekly_content}} where album_id=$this->id and status = 0")->queryAll();
+        $photo = Yii::$app->db->createCommand("select CONCAT('$pre_url',path) from {{%weekly_content}} where album_id=$this->id and status = 0")->queryAll();
 
         return $photo;
     }
 
     public function getChatImg(){
         $pre_url = Yii::$app->params['shisangirl'];
-        $photo = Yii::$app->db->createCommand("select CONCAT($pre_url,path) from {{%weekly_content}} where album_id=$this->id and status = 1")->queryAll();
+        $photo = Yii::$app->db->createCommand("select CONCAT('$pre_url',path) from {{%weekly_content}} where album_id=$this->id and status = 1")->queryAll();
         return $photo;
     }
 }
