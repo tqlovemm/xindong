@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Seeks'), 'url' => ['
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerCssFile('@web/js/lightbox/css/lightbox.css');
 $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii\web\JqueryAsset'], 'position' => \yii\web\View::POS_END]);
-
+$pre_url = Yii::$app->params['shisangirl'];
 ?>
 
 <div class="album-view">
@@ -66,7 +66,7 @@ $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii
                         </div>
                         <div class="img-main">
                             <a title="<?= Html::encode($photo['name']) ?>" href="<?=Url::to(['/dating/dating-content-search/view','id'=>$photo['id']])?>">
-                                <img class="img-thumbnail" src="<?= $photo['path'] ?>" width="100%" height="100%">
+                                <img class="img-thumbnail" src="<?= $pre_url.$photo['path'] ?>" width="100%" height="100%">
                             </a>
                             <div class="img-name"><?= Html::encode($photo['name']) ?></div> 
                         </div>
