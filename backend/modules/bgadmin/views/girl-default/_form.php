@@ -2,6 +2,7 @@
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
     $datas = ['S'=>'S','A'=>'A','B'=>'B','C'=>'C'];
+    $pre_url = Yii::$app->params['shisangirl'];
 ?>
 
 <div class="bgadmin-member-form">
@@ -53,7 +54,7 @@
         if(!empty($weeklyModel)):
         $photos = $weeklyModel->getPhotos();
         foreach ($photos['photos'] as $photo):?>
-            <div class="col-md-2"><img class="img-responsive" src="<?=$photo['path']?>"></div>
+            <div class="col-md-2"><img class="img-responsive" src="<?=$pre_url.$photo['path']?>"></div>
         <?php endforeach;endif;?>
 </div>
 <?php
