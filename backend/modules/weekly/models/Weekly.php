@@ -1,6 +1,7 @@
 <?php
 
 namespace backend\modules\weekly\models;
+use common\Qiniu\QiniuUploader;
 use Yii;
 use yii\db\Query;
 use backend\components\Uploader;
@@ -190,6 +191,29 @@ class Weekly extends \yii\db\ActiveRecord
     }
     public function uploadf()
     {
+
+        $qn = new QiniuUploader('photoimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $qiniu = $qn->upload('shisangirl',"uploads/bgadmin/$this->id");
+
+        $weeklyContent = new WeeklyContent();
+        $weeklyContent->name = !empty($this->title)?$this->title:"error";
+        $weeklyContent->thumb = $qiniu['key'];
+        $weeklyContent->path = $qiniu['key'];
+        $weeklyContent->store_name = $qiniu['hash'];
+        $weeklyContent->album_id = $this->id;
+        $weeklyContent->created_at = time();
+        $weeklyContent->created_by = 1;
+        if($weeklyContent->save()){
+            $data = array('id'=>$weeklyContent->id,'path'=>Yii::$app->params['shisangirl'].$qiniu['key']);
+            return $data;
+        }else{
+            return var_dump($weeklyContent->errors);
+        }
+/*
+        $data = array('id'=>$files_img->id,'path'=>Yii::$app->params['imagetqlmm'].$qiniu['key']);
+        return $data;
+
+
         $config = [
             'savePath' => Yii::getAlias('@frontend').'/web/uploads/bgadmin/', //存储文件夹
             'maxSize' => 2048 ,//允许的文件最大尺寸，单位KB
@@ -210,31 +234,33 @@ class Weekly extends \yii\db\ActiveRecord
             return $data;
         }else{
             return var_dump($weeklyContent->errors);
-        }
-
+        }*/
 
     }
     public function uploadw()
     {
-        $config = [
+
+        $qn = new QiniuUploader('weimaimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $qiniu = $qn->upload('shisangirl',"uploads/bgadmin/weima/$this->id");
+/*        $config = [
             'savePath' => Yii::getAlias('@frontend').'/web/uploads/bgadmin/', //存储文件夹
             'maxSize' => 2048 ,//允许的文件最大尺寸，单位KB
             'allowFiles' => ['.gif' , '.png' , '.jpg' , '.jpeg' , '.bmp'],  //允许的文件格式
         ];
         $up = new Uploader("weimaimg", $config, 'bgadmin'.$this->id);
-        $info = $up->getFileInfo();
+        $info = $up->getFileInfo();*/
 
         $weeklyContent = new WeeklyContent();
         $weeklyContent->name = !empty($this->title)?$this->title:"error";
-        $weeklyContent->thumb = 'http://13loveme.com/uploads/bgadmin/' . $info['name'];
-        $weeklyContent->path = 'http://13loveme.com/uploads/bgadmin/' . $info['name'];
-        $weeklyContent->store_name = $info['name'];
+        $weeklyContent->thumb = $qiniu['key'];
+        $weeklyContent->path = $qiniu['key'];
+        $weeklyContent->store_name = $qiniu['hash'];
         $weeklyContent->album_id = $this->id;
         $weeklyContent->created_at = time();
         $weeklyContent->status = 2;
         $weeklyContent->created_by = 1;
         if($weeklyContent->save()){
-            $data = array('id'=>$weeklyContent->id,'path'=>$weeklyContent->path);
+            $data = array('id'=>$weeklyContent->id,'path'=>Yii::$app->params['shisangirl'].$qiniu['key']);
             return $data;
         }else{
             return var_dump($weeklyContent->errors);
