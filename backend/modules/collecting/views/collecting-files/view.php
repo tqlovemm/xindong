@@ -9,6 +9,7 @@ use yii\widgets\DetailView;
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Collecting17 Files Texts', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$pre_url = Yii::$app->params['imagetqlmm'];
 ?>
 <div class="collecting17-files-text-view">
 
@@ -60,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
     <?php foreach ($img as $item):?>
         <div class="col-md-2">
-            <img class="img-responsive" src="http://13loveme.com/<?=$item['img']?>">
+            <img class="img-responsive" src="<?=$pre_url.$item['img']?>">
             <a class="btn btn-primary" onclick="rotate_img(<?=$item['id']?>,1,this)">顺时针</a>
             <a class="btn btn-primary" onclick="rotate_img(<?=$item['id']?>,2,this)">逆时针</a>
             <?php if(!in_array(Yii::$app->user->id,[13674])):?>
