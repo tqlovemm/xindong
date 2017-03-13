@@ -58,7 +58,13 @@ class Dating extends ActiveRecord
     public function fields(){
 
         return [
-            'dating_id'=>'id','title','created_at','avatar','status','worth','expire','introduction',
+            'dating_id'=>'id','title','created_at',
+            'avatar'=>function($model){
+                $pre_url = Yii::$app->params['shisangirl'];
+                return $pre_url.$model['avatar'];
+
+            } ,
+            'status','worth','expire','introduction',
             'url'=>function($model){
 
                 return explode('，',$model['url']);
