@@ -9,10 +9,11 @@ $albumUrl = Url::toRoute(['/dating/dating/view', 'id' => $model['id']]);
 /*$src =$dating->getCoverPhoto($model['id'], $model['cover_id']);*/
 $name = Html::encode($model['title']);
 $status = ($model['status'] != Dating::TYPE_PUBLIC) ? '<i class="glyphicon glyphicon-lock"></i>' : '';
+$pre_url = Yii::$app->params['shisangirl'];
 ?>
 <div class="album-img" style="position: relative;">
     <a href="<?= $albumUrl ?>">
-        <img src="<?= $model['avatar'] ?>" class="album-cover img-thumbnail img-responsive center-block" alt="album-cover" style="width: 100px;height: 120px;">
+        <img src="<?= $pre_url.$model['avatar'] ?>" class="album-cover img-thumbnail img-responsive center-block" alt="album-cover" style="width: 100px;height: 120px;">
 		<?php if($model['cover_id']==-1):?>
     	<span style="position: absolute;top:40%;left:20%;background-color: rgba(255, 0, 0, 0.51);padding:10px;border-radius: 50%;color:white;">已隐藏</span>
 		<?php elseif($model['cover_id']==-2):?>
