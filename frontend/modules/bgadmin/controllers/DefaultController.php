@@ -248,7 +248,6 @@ defo;
     public function actionDelete($id){
 
         $model = $this->findModelImg($id);
-        @unlink(str_replace('/uploads','uploads',$model->path));
         $model->delete();
         echo $id;
     }
@@ -256,7 +255,6 @@ defo;
     public function actionDeleteWeima($id){
 
         $model = $this->findModelImg($id);
-        @unlink(str_replace('/uploads','uploads',$model->path));
         $model->delete();
         echo $id;
     }
