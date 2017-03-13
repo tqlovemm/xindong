@@ -72,20 +72,21 @@ class Dating extends ActiveRecord
             'number'=>function($model){
                 return "******";
             },
-            'photos','chatImg'
+            'photos',
+            'chatImg'
         ];
     }
 
     public function getPhotos(){
-
-        $photo = Yii::$app->db->createCommand("select path from {{%weekly_content}} where album_id=$this->id and status = 0")->queryAll();
+        $pre_url = Yii::$app->params['shisangirl'];
+        $photo = Yii::$app->db->createCommand("select CONCAT($pre_url,path) from {{%weekly_content}} where album_id=$this->id and status = 0")->queryAll();
 
         return $photo;
     }
 
     public function getChatImg(){
-
-        $photo = Yii::$app->db->createCommand("select path from {{%weekly_content}} where album_id=$this->id and status = 1")->queryAll();
+        $pre_url = Yii::$app->params['shisangirl'];
+        $photo = Yii::$app->db->createCommand("select CONCAT($pre_url,path) from {{%weekly_content}} where album_id=$this->id and status = 1")->queryAll();
         return $photo;
     }
 }
