@@ -1055,7 +1055,7 @@ $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii
                     </li>
 
                 <?php endif;?>
-                <?php if(in_array(Yii::$app->user->id,[10009,10019])):?><!--沈川 李青-->
+                <?php if(in_array(Yii::$app->user->id,[10025,10019])):?><!--沈川 李青-->
                     <!--西蒙之家-->
                     <li style="padding:0 20px;font-size: 20px;background-color: #fff;color:#ff0688;">西檬之家</li>
                     <li class="treeview">
@@ -1130,7 +1130,7 @@ $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii
                     <li><a href="<?= Url::toRoute(['/jiecao/jiecao-wxpay']) ?>"><i class="glyphicon glyphicon-hd-video"></i> 微信充值记录</a></li>
                     <li><a href="<?= Url::toRoute(['/seek/alipay-coin-recharge-record']) ?>"><i class="glyphicon glyphicon-sd-video"></i> 支付宝充值统计</a></li>
                     <?php endif;?>
-                    <?php if(in_array(Yii::$app->user->id,[10025,21029])):?><!--shisankefu_cgh--陈国华,蒋程强-->
+                    <?php if(in_array(Yii::$app->user->id,[10009,21029])):?><!--shisankefu_cgh--陈国华,蒋程强-->
                     <li>
                         <a href="<?= Url::toRoute(['/setting/default/send-collecting-url']) ?>">
                             <i class="glyphicon glyphicon-link"></i> <span>生成收集男生会员信息链接</span>
