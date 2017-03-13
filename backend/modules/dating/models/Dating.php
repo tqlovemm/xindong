@@ -2,6 +2,7 @@
 
 namespace backend\modules\dating\models;
 use backend\modules\weekly\models\WeeklyContent;
+use common\Qiniu\QiniuUploader;
 use Yii;
 use yii\db\Query;
 use backend\components\Uploader2;
@@ -247,6 +248,23 @@ class Dating extends \yii\db\ActiveRecord
      */
     public function upload($type='dating')
     {
+        $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
+        $qiniu = $qn->upload('shisangirl',"uploads/dating/$mkdir");
+
+        $status = ($type=='dating')?0:1;
+
+        //存入数据库
+        Yii::$app->db->createCommand()->insert('{{%weekly_content}}', [
+            'name' => $this->title,
+            'path' => $qiniu['key'], //存储路径
+            'store_name' => $qiniu['hash'], //保存的名称
+            'album_id' => $this->id,
+            'created_at' => time(),
+            'created_by'=>Yii::$app->user->id,
+            'status'=>$status
+        ])->execute();
+/*
         $config = [
             'savePath' => Yii::getAlias('@backend').'/web/uploads/dating/', //存储文件夹
             'maxSize' => 4096 ,//允许的文件最大尺寸，单位KB
@@ -268,6 +286,6 @@ class Dating extends \yii\db\ActiveRecord
             'created_at' => time(),
             'created_by'=>Yii::$app->user->id,
             'status'=>$status
-        ])->execute();
+        ])->execute();*/
     }
 }
