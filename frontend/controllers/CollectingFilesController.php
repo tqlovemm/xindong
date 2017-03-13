@@ -15,6 +15,8 @@ $bgadmin->save();
 namespace frontend\controllers;
 use backend\models\User;
 use common\components\SaveToLog;
+use common\Qiniu\Qfunctions;
+use common\Qiniu\QiniuUploader;
 use frontend\models\CollectingFilesImg;
 use Yii;
 use frontend\models\CollectingFilesText;
@@ -151,6 +153,7 @@ class CollectingFilesController extends Controller
         if($collecting_text->status==1||$collecting_text->status==2){
             throw new ForbiddenHttpException('无效链接');
         }
+
         $data = $collecting_text->upload();
 
         $html = <<<defo

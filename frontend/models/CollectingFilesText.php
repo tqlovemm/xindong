@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use app\components\Uploader;
 use common\components\UploadThumb;
+use common\Qiniu\QiniuUploader;
 use Yii;
 
 /**
@@ -125,48 +126,31 @@ class CollectingFilesText extends \yii\db\ActiveRecord
     }
     public function upload()
     {
-        $config = [
-            'savePath' => Yii::getAlias('@webroot/uploads/collecting/'), //存储文件夹
-            'maxSize' => 10240 ,//允许的文件最大尺寸，单位KB
-            'allowFiles' => ['.png' , '.jpg' , '.jpeg' , '.bmp'],  //允许的文件格式
-        ];
 
-        $up = new UploadThumb("photoimg", $config,$this->id,true);
-        //$up = new Uploader("photoimg", $config, $this->id);
-
-        $save_path =  Yii::getAlias('@web/uploads/collecting/');
-
-        $info = $up->getFileInfo();
+        $qn = new QiniuUploader('photoimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $qiniu = $qn->upload('tqlmm',"uploads/collecting/$this->id");
 
         //存入数据库
         $files_img = new CollectingFilesImg();
-        $files_img->img = $save_path.$info['name'];
-        $files_img->thumb_img = $save_path.'thumb/'.$info['name'];
+        $files_img->img = $qiniu['key'];
+        $files_img->thumb_img = $qiniu['key'];
         $files_img->text_id = $this->id;
         $files_img->save();
 
-        $data = array('id'=>$files_img->id,'path'=>$save_path.$info['name']);
+        $data = array('id'=>$files_img->id,'path'=>Yii::$app->params['imagetqlmm'].$qiniu['key']);
         return $data;
     }
     public function uploadw()
     {
-        $config = [
-            'savePath' => Yii::getAlias('@webroot/uploads/collecting/weima/'), //存储文件夹
-            'maxSize' => 10240 ,//允许的文件最大尺寸，单位KB
-            'allowFiles' => ['.png' , '.jpg' , '.jpeg' , '.bmp'],  //允许的文件格式
-        ];
 
-        $up = new UploadThumb("weimaimg", $config,$this->id,false);
-        //$up = new Uploader("photoimg", $config, $this->id);
-
-        $save_path =  Yii::getAlias('@web/uploads/collecting/weima/');
-
-        $info = $up->getFileInfo();
+        $qn = new QiniuUploader('weimaimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $qiniu = $qn->upload('tqlmm',"uploads/collecting/weima/$this->id");
 
         //存入数据库
-        $this->weima = $save_path.$info['name'];
+        $this->weima = $qiniu['key'];
         $this->save();
-        $data = array('id'=>$this->id,'path'=>$save_path.$info['name']);
+
+        $data = array('id'=>$this->id,'path'=>Yii::$app->params['imagetqlmm'].$qiniu['key']);
         return $data;
     }
 }
