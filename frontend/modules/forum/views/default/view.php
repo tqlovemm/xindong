@@ -52,7 +52,7 @@ $this->registerCss("
 .am-gallery{padding:0 !important;}
 .am-gallery-overlay .am-gallery-item img{width:auto !important;}
 ");
-
+$pre_url = Yii::$app->params['threadimg'];
 ?>
 <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
 <link rel="stylesheet" href="/css/auto/amazeui.min.css" />
@@ -75,19 +75,19 @@ $this->registerCss("
         <?php if(count($thread['img'])==1):?>
             <?php foreach ($thread['img'] as $key=>$img):?>
                 <a style="padding: 0 0 10px 10px;" href="<?=$img['img']?>" class="col-xs-6 am-gallery-item">
-                    <img class="img-responsive" src="http://13loveme.com<?=$img['img']?>">
+                    <img class="img-responsive" src="<?=$pre_url.$img['img']?>">
                 </a>
             <?php endforeach;?>
         <?php elseif(in_array(count($thread['img']),[2,4])):?>
             <?php foreach ($thread['img'] as $key=>$img):?>
                 <a href="<?=$img['img']?>" class="col-xs-6 am-gallery-item" style="<?php if(in_array($key,[1,3])){echo 'float:right;';}?>;height: 130px;margin-bottom: 2px;overflow: hidden;padding:0;">
-                    <img class="img-responsive" src="http://13loveme.com<?=$img['img']?>">
+                    <img class="img-responsive" src="<?=$pre_url.$img['img']?>">
                 </a>
             <?php endforeach;?>
         <?php elseif(in_array(count($thread['img']),[3,5,6,7,8,9])): ?>
             <?php foreach ($thread['img'] as $key=>$img):?>
                 <a href="http://13loveme.com<?=$img['img']?>" class="col-xs-4 am-gallery-item" style="<?php if(in_array($key,[1,4,7])){echo 'margin:0 0.6%;';}?>;<?php if(in_array($key,[2,5,8])){echo 'float:right;';}?>;height: 105px;margin-bottom: 2px;overflow: hidden;">
-                    <img class="img-responsive" src="http://13loveme.com<?=$img['img']?>">
+                    <img class="img-responsive" src="<?=$pre_url.$img['img']?>">
                 </a>
             <?php endforeach;?>
         <?php endif;?>

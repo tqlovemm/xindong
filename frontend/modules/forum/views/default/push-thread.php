@@ -13,6 +13,7 @@ $this->registerCss('
     #main label{margin-bottom:0}
     .weui_cells{font-size:12px !important;}
 ');
+$pre_url = Yii::$app->params['threadimg'];
 ?>
 <?php $this->registerJsFile('js/jquery.wallform.js', ['depends' => ['frontend\assets\AppAsset'], 'position' => $this::POS_HEAD]); ?>
 <div class="row" style="background-color: #31313e;height: 40px;">
@@ -41,7 +42,7 @@ $this->registerCss('
                                     if(!empty($img)):
                                         foreach ($img as $item):
                                             ?>
-                                            <img onclick="delete_img(<?=$item['id']?>)" src="<?=$item['thumbimg']?>" data-id="<?=$item['id']?>" class="preview collecting-files-img">
+                                            <img onclick="delete_img(<?=$item['id']?>)" src="<?=$pre_url.$item['thumbimg']?>" data-id="<?=$item['id']?>" class="preview collecting-files-img">
                                             <?php
                                         endforeach;
                                     endif;

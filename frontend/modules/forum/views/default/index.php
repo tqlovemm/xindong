@@ -35,6 +35,8 @@ $this->registerJs("
         });
     
     ");
+
+$pre_url = Yii::$app->params['threadimg'];
 ?>
 
 <div class="thread-list" style="z-index: -1;">
@@ -53,19 +55,19 @@ $this->registerJs("
                     <?php if(count($item['img'])==1):?>
                     <?php foreach ($item['img'] as $key=>$img):?>
                         <div style="padding: 0 0 0 5px;" class="col-xs-6">
-                            <img class="img-responsive lazy" data-original="http://13loveme.com<?=$img['img']?>">
+                            <img class="img-responsive lazy" data-original="<?=$pre_url.$img['img']?>">
                         </div>
                     <?php endforeach;?>
                     <?php elseif(count($item['img'])==2):?>
                         <?php foreach ($item['img'] as $key=>$img):?>
                             <div class="col-xs-6" style="<?php if($key==1){echo 'float:right;';}?>;height: 130px;overflow: hidden;">
-                                <img class="img-responsive lazy" data-original="http://13loveme.com<?=$img['img']?>">
+                                <img class="img-responsive lazy" data-original="<?=$pre_url.$img['img']?>">
                             </div>
                         <?php endforeach;?>
                     <?php elseif(count($item['img'])>=3):?>
                         <?php foreach ($item['img'] as $key=>$img):?>
                             <div class="col-xs-4" style="<?php if($key==1){echo 'margin:0 0.6%;';}?>;<?php if($key==2){echo 'float:right;';}?>;height: 105px;overflow: hidden;">
-                                <img class="img-responsive lazy" data-original="http://13loveme.com<?=$img['img']?>">
+                                <img class="img-responsive lazy" data-original="<?=$pre_url.$img['img']?>">
                             </div>
                             <?php if($key==2) break;endforeach;?>
                     <?php endif;?>

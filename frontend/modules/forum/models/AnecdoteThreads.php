@@ -3,6 +3,7 @@
 namespace frontend\modules\forum\models;
 
 use common\components\UploadThumb;
+use common\Qiniu\QiniuUploader;
 use frontend\components\UploadThumbAndWatermark;
 use Yii;
 
@@ -86,7 +87,9 @@ class AnecdoteThreads extends \yii\db\ActiveRecord
 
     public function upload()
     {
-        $config = [
+        $qn = new QiniuUploader('weimaimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $qiniu = $qn->upload('threadimages',"uploads/thread_img/$this->tid");
+/*        $config = [
             'savePath' => Yii::getAlias('@webroot/uploads/thread_img/'), //存储文件夹
             'maxSize' => 10240 ,//允许的文件最大尺寸，单位KB
             'allowFiles' => ['.png' , '.jpg' , '.jpeg' , '.bmp', '.gif'],  //允许的文件格式
@@ -96,17 +99,17 @@ class AnecdoteThreads extends \yii\db\ActiveRecord
 
         $save_path =  Yii::getAlias('@web/uploads/thread_img/');
 
-        $info = $up->getFileInfo();
+        $info = $up->getFileInfo();*/
 
         //存入数据库
 
         $save_img = new AnecdoteThreadImages();
         $save_img->tid = $this->tid;
-        $save_img->img = $save_path.$info['name'];
-        $save_img->thumbimg = $save_path.'thumb/'.$info['name'];
+        $save_img->img = $qiniu['key'];
+        $save_img->thumbimg = $qiniu['key'];
         $save_img->save();
 
-        $data = array('id'=>$save_img->id,'path'=>$save_path.'thumb/'.$info['name']);
+        $data = array('id'=>$save_img->id,'path'=>Yii::$app->params['threadimg'].$qiniu['key']);
         return $data;
     }
 
