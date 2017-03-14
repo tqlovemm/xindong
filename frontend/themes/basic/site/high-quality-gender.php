@@ -58,7 +58,7 @@ if(isset($_GET['top'])&&$_GET['top']=='bottoms'){
                     <div class="img-item box col-md-3" style="margin-bottom: 10px;padding:5px;">
                         <div class="img-wrap">
                             <div class="img-main">
-                                <a href="<?=$pre_url.$val['pic_path']?>" style="background: url('<?=$val['pic_path']?>') no-repeat;background-size:100% auto;" data-lightbox="image-1" data-title="<?= Html::encode($val['name'])?>"></a>
+                                <a href="<?=$pre_url.$val['pic_path']?>" style="background: url('<?=$pre_url.$val['pic_path']?>') no-repeat;background-size:100% auto;" data-lightbox="image-1" data-title="<?= Html::encode($val['name'])?>"></a>
                             </div>
                         </div>
                     </div>
