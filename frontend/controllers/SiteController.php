@@ -137,7 +137,7 @@ class SiteController extends BaseController
      * ajax获取心动故事
      */
     public function actionMore($status,$data){
-
+        $pre_url = Yii::$app->params['threadimg'];
         $last = $_POST['last'];
         $amount = $_POST['amount'];
 
@@ -147,7 +147,7 @@ class SiteController extends BaseController
             $title = $row['title']==1?'<span class="red">【女生反馈】</span>':'<span class="blue">【男生反馈】</span>';
             $content = Helper::truncate_utf8_string($row['content'],35);
             $sayList[] = array(
-                'img-hear' => "<img class='img-responsive center-block' src='{$row["url"]}'>",
+                'img-hear' => "<img class='img-responsive center-block' src='$pre_url$row[url]'>",
                 'title-hear' => $title,
                 'content-hear' => $content,
                 'all-hear'=>'
@@ -157,7 +157,7 @@ class SiteController extends BaseController
                                 '.$title.'
                                 <spant class="content-hear">'.$content.'</spant>
                             </div>
-                            <div class="col-xs-3 img-hear"><img class=\'img-responsive center-block\' src="'.$row["url"].'" title="'.$row['content'].'" alt="'.$row['content'].'"></div>
+                            <div class="col-xs-3 img-hear"><img class=\'img-responsive center-block\' src="'.$pre_url.$row["url"].'" title="'.$row['content'].'" alt="'.$row['content'].'"></div>
                         </div>
                     </a>
 
