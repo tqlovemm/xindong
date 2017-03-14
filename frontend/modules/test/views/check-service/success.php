@@ -6,7 +6,7 @@
  * Time: 13:22
  */
 $this->title = "验证成功";
-
+$pre_url = Yii::$app->params['threadimg'];
 $this->registerCss('
     .container-fluid{padding:0;margin:0}
     .outer{background-color:#fff;}
@@ -43,7 +43,7 @@ $this->registerCss('
     </div>
     <div class="row" style="margin: 0 auto;padding:15px 0;">
         <div class="col-xs-3" style="padding-right: 0;">
-            <img class="img-responsive" id="avatar" src="<?=$model['avatar']?>">
+            <img class="img-responsive" id="avatar" src="<?=$pre_url.$model['avatar']?>">
         </div>
         <div class="col-xs-9" style="font-size: 16px;padding-left:15px;">
             <h4 style="margin-top: 8px;"><?=$model['nickname']?></h4>
