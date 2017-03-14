@@ -1,6 +1,7 @@
 <?php
 
 namespace backend\modules\flop\models;
+use common\Qiniu\QiniuUploader;
 use Yii;
 use yii\db\Query;
 use backend\components\UploadThumb;
@@ -169,28 +170,29 @@ class Flop extends \yii\db\ActiveRecord
      */
     public function upload()
     {
-        $config = [
+        $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $qiniu = $qn->upload('tqlmm',"uploads/flop/$this->id");
+
+/*        $config = [
             'savePath' => Yii::getAlias('@backend').'/web/uploads/flop/', //存储文件夹
             'maxSize' => 2048 ,//允许的文件最大尺寸，单位KB
             'allowFiles' => ['.gif' , '.png' , '.jpg' , '.jpeg' , '.bmp'],  //允许的文件格式
         ];
         $up = new UploadThumb("file", $config, 'flop_'.$this->id,true);
-        $info = $up->getFileInfo($this->sex);
+        $info = $up->getFileInfo($this->sex);*/
 
         //存入数据库
          Yii::$app->db->createCommand()->insert('{{%flop_content}}', [
             'area' => $this->area,
-            'number'=>$info['originalName'],
-            'path' => 'http://13loveme.com:82/uploads/flop/thumb/'.$info['name'], //存储路径
-            'store_name' => $info['originalName'], //保存的名称
-            'content'=>'http://13loveme.com:82/uploads/flop/'.$info['name'],
+            'number'=>$qiniu['hash'],
+            'path' => $qiniu['key'], //存储路径
+            'store_name' => $qiniu['hash'], //保存的名称
+            'content'=>$qiniu['key'],
             'flop_id' => $this->id,
             'sex' => $this->sex,
             'created_at' => time(),
             'created_by'=>Yii::$app->user->id,
         ])->execute();
-
-        return $info;
 
     }
 }
