@@ -2,6 +2,7 @@
 
 namespace backend\modules\exciting\models;
 use backend\components\Uploader;
+use common\Qiniu\QiniuUploader;
 use Yii;
 use backend\components\Uploader2;
 
@@ -111,22 +112,25 @@ class OtherText extends \yii\db\ActiveRecord
 
     public function upload()
     {
-        $config = [
+        $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->tid;
+        $qiniu = $qn->upload('threadimages',"uploads/otherpick/$mkdir");
+     /*   $config = [
             'savePath' => Yii::getAlias('@backend').'/web/uploads/otherpick/'.$this->type.'/', //存储文件夹
             'maxSize' => 4096 ,//允许的文件最大尺寸，单位KB
             'allowFiles' => ['.png' , '.jpg' , '.jpeg'],  //允许的文件格式
         ];
         $up = new Uploader2("file", $config, 'otherpick_'.$this->tid,true);
-        $info = $up->getFileInfo();
+        $info = $up->getFileInfo();*/
 
         //存入数据库
         $pic = new OtherTextPic();
         $pic->tid = $this->tid;
         $pic->name = $this->title;
         $pic->content = $this->title;
-        $pic->pic_path = 'http://13loveme.com:82/uploads/otherpick/'.$this->type.'/watermark/'.$info['name'];
+        $pic->pic_path = $qiniu['key'];
         $pic->type = $this->type;
         $pic->save();
-        return $info;
+
     }
 }

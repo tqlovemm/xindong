@@ -171,19 +171,22 @@ class Weekly extends \yii\db\ActiveRecord
      */
     public function upload()
     {
-        $config = [
+        $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
+        $qiniu = $qn->upload('shisangirl',"uploads/bgadmin/$mkdir");
+      /*  $config = [
             'savePath' => Yii::getAlias('@backend').'/web/uploads/weekly/', //存储文件夹
             'maxSize' => 2048 ,//允许的文件最大尺寸，单位KB
             'allowFiles' => ['.gif' , '.png' , '.jpg' , '.jpeg' , '.bmp'],  //允许的文件格式
         ];
         $up = new Uploader("file", $config, 'weekly'.$this->id);
-        $info = $up->getFileInfo();
+        $info = $up->getFileInfo();*/
 
         //存入数据库
         Yii::$app->db->createCommand()->insert('{{%weekly_content}}', [
             'name' => $this->title,
-            'path' => 'http://www.13loveme.com:82'.Yii::getAlias('@web').'/uploads/weekly/' . $this->created_by . '/' . $info['name'], //存储路径
-            'store_name' => $info['name'], //保存的名称
+            'path' => $qiniu['key'], //存储路径
+            'store_name' => $qiniu['hash'], //保存的名称
             'album_id' => $this->id,
             'created_at' => time(),
             'created_by'=>Yii::$app->user->id,
@@ -193,7 +196,8 @@ class Weekly extends \yii\db\ActiveRecord
     {
 
         $qn = new QiniuUploader('photoimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
-        $qiniu = $qn->upload('shisangirl',"uploads/bgadmin/$this->id");
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
+        $qiniu = $qn->upload('shisangirl',"uploads/bgadmin/$mkdir");
 
         $weeklyContent = new WeeklyContent();
         $weeklyContent->name = !empty($this->title)?$this->title:"error";
