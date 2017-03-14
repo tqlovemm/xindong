@@ -53,7 +53,7 @@ class FlopController extends Controller
        if(!Yii::$app->session->isActive){
            Yii::$app->session->open();
        }
-       $this->pre_url = Yii::$app->params['flopimg'];
+       $this->pre_url = Yii::$app->params['imagetqlmm'];
        parent::__construct($id, $module);
 
         $this->flag = $_SESSION['flag'] =isset($_SESSION['flag'])?$_SESSION['flag']:time().rand(1000,9999);
