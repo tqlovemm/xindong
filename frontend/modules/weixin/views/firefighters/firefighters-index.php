@@ -238,7 +238,7 @@ $pre_url = Yii::$app->params['threadimg'];
         $('.col-md-9').append('<div class="col-xs-12 col-md-6" style="padding:0;">' +
             '<div class="row" style="background-color: #fff;margin-bottom: 8px;position: relative;"> ' +
             '<div class="col-xs-4 jiuhuo-img"> ' +
-            '<div style="border-radius: 3px;width: 100%;height: 120px;background: url('+req.pic_path+') no-repeat center;background-size: 100% auto;"></div> ' +
+            '<div style="border-radius: 3px;width: 100%;height: 120px;background: url(<?=$pre_url?>'+req.pic_path+') no-repeat center;background-size: 100% auto;"></div> ' +
             '</div> <div class="col-xs-8" style="padding:10px 5px 0 5px;"> ' +
             '<div style="color:gray;margin-bottom: 5px;"><small>编号：<span class="pid-number">'+req.pid+'</span></small>&nbsp;&nbsp;&nbsp;<small>需节操币：'+req.coin+'</small></div> ' +
             '<div class="" style="font-size: 14px;"><span style="font-weight: bold;">'+req.name+'</span>'+$exp+'</div> ' +
