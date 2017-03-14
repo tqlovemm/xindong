@@ -147,7 +147,10 @@ class SmCollectionFilesText extends \yii\db\ActiveRecord
     }
     public function uploadw()
     {
-        $config = [
+        $qn = new QiniuUploader('weimaimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->member_id;
+        $qiniu = $qn->upload('localandsm',"uploads/local/$mkdir");
+    /*    $config = [
             'savePath' => Yii::getAlias('@webroot/uploads/sm/weima/'), //存储文件夹
             'maxSize' => 10240 ,//允许的文件最大尺寸，单位KB
             'allowFiles' => ['.png' , '.jpg' , '.jpeg' , '.bmp'],  //允许的文件格式
@@ -158,12 +161,12 @@ class SmCollectionFilesText extends \yii\db\ActiveRecord
 
         $save_path =  Yii::getAlias('@web/uploads/sm/weima/');
 
-        $info = $up->getFileInfo();
+        $info = $up->getFileInfo();*/
 
         //存入数据库
-        $this->weima = $save_path.$info['name'];
+        $this->weima = $qiniu['key'];
         $this->save();
-        $data = array('id'=>$this->member_id,'path'=>$save_path.$info['name']);
+        $data = array('id'=>$this->member_id,'path'=>Yii::$app->params['localansm'].$qiniu['key']);
         return $data;
     }
 }
