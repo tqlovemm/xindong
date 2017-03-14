@@ -3,6 +3,7 @@
 namespace backend\modules\bgadmin\models;
 
 use backend\components\Uploader;
+use common\Qiniu\QiniuUploader;
 use Yii;
 
 /**
@@ -91,7 +92,10 @@ class BgadminGirlMemberText extends \yii\db\ActiveRecord
      */
     public function upload()
     {
-        $config = [
+        $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->text_id;
+        $qiniu = $qn->upload('shisangirl',"uploads/bgadmin/$mkdir");
+       /* $config = [
             'savePath' => Yii::getAlias('@backend').'/web/uploads/bgadmin/'.$this->type.'/', //存储文件夹
             'maxSize' => 4096 ,//允许的文件最大尺寸，单位KB
             'allowFiles' => ['.gif' , '.png' , '.jpg' , '.jpeg' , '.bmp'],  //允许的文件格式
@@ -99,13 +103,13 @@ class BgadminGirlMemberText extends \yii\db\ActiveRecord
         $up = new Uploader("file", $config, 'bgadmin_'.$this->text_id);
 
         $save_path =  Yii::getAlias('@web/uploads/bgadmin/'.$this->type.'/');
-        $info = $up->getFileInfo();
+        $info = $up->getFileInfo();*/
 
         //存入数据库
         $model = new BgadminGirlMemberFiles();
         $model->text_id = $this->text_id;
         $model->member_id = $this->member_id;
-        $model->path = $save_path . $info['name'];
+        $model->path = $qiniu['key'];
         $model->content = $this->content;
         $model->created_by = Yii::$app->user->identity->username;
         $model->img_type = $this->type;
