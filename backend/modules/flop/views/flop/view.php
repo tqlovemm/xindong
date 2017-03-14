@@ -8,7 +8,7 @@ $this->title = $model->area;
 
 $this->registerCssFile('@web/js/lightbox/css/lightbox.css');
 $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii\web\JqueryAsset'], 'position' => \yii\web\View::POS_END]);
-
+$pre_url = Yii::$app->params['tqlmm'];
 ?>
 
 <div class="flop-view">
@@ -49,7 +49,7 @@ $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii
                         <?php if($photo['is_cover']==0):?>
                             <span style="color:white;background-color: rgba(255, 0, 0, 0.58);position: absolute;z-index: 9999;width: 50px;height: 50px;border-radius:50%;line-height: 50px;text-align: center;right: 0px;top:0px;">隐藏</span>
                         <?php endif;?>
-                        <img class="img-thumbnail center-block" style="width: 100%;" src="<?= $photo['path'] ?>">
+                        <img class="img-thumbnail center-block" style="width: 100%;" src="<?=$pre_url.$photo['path'] ?>">
                         </a>
                         <div class="photo-setting" style="padding:0 5%;">
                             <a class="edit-flop-content pull-left" data-id="<?=$photo['id']?>" data-toggle="modal" data-target="#myModal">编辑</a>
