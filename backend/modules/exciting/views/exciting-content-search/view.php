@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'album_id',
             'name',
             'thumb',
-            'path:image',
+            'path',
             'store_name',
             'created_at',
             'created_by',
