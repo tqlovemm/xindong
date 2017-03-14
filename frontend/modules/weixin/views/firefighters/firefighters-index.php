@@ -35,7 +35,7 @@ if(isset($_GET['top'])&&$_GET['top']=='bottoms'){
     ');
 }
 $user_id = Yii::$app->user->id;
-$pre_url = Yii::$app->params['shisangirl'];
+$pre_url = Yii::$app->params['threadimg'];
 ?>
 <?php if(Yii::$app->session->hasFlash('success')):?>
     <div class="alert alert-success">

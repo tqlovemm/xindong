@@ -20,7 +20,7 @@ $this->registerCss("
         }
         ");
 
-$pre_url = Yii::$app->params['shisangirl'];
+$pre_url = Yii::$app->params['threadimg'];
 ?>
 <style>
     .middle-img {
