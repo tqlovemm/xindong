@@ -1,6 +1,7 @@
 <?php
 
 namespace backend\modules\exciting\models;
+use common\Qiniu\QiniuUploader;
 use Yii;
 use yii\db\Query;
 use backend\components\Uploader2;
@@ -177,24 +178,27 @@ class Exciting extends \yii\db\ActiveRecord
      */
     public function upload()
     {
-        $config = [
+        $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
+        $qiniu = $qn->upload('threadimages',"uploads/exciting/$mkdir");
+/*        $config = [
             'savePath' => Yii::getAlias('@backend').'/web/uploads/exciting/', //存储文件夹
             'maxSize' => 2048 ,//允许的文件最大尺寸，单位KB
             'allowFiles' => ['.gif' , '.png' , '.jpg' , '.jpeg' , '.bmp'],  //允许的文件格式
         ];
         $up = new Uploader2("file", $config, 'exciting'.$this->id,true);
-        $info = $up->getFileInfo();
+        $info = $up->getFileInfo();*/
 
         //存入数据库
         Yii::$app->db->createCommand()->insert('{{%weekly_content}}', [
             'name' => $this->title,
-            'path' => 'http://13loveme.com:82'.Yii::getAlias('@web').'/uploads/exciting/watermark/' . $info['name'], //存储路径
-            'store_name' => $info['name'], //保存的名称
+            'path' => $qiniu['key'], //存储路径
+            'store_name' => $qiniu['hash'], //保存的名称
             'album_id' => $this->id,
             'created_at' => time(),
             'created_by'=>Yii::$app->user->id
         ])->execute();
 
-        return $info;
+       // return $info;
     }
 }

@@ -9,11 +9,12 @@ $src =$exciting->getCoverPhoto($model['id'], $model['cover_id']);
 $name = $model['title']==1?'女生反馈':'男生反馈';
 $content = Html::encode($model['content']);
 $status = ($model['status'] != Exciting::TYPE_PUBLIC) ? '<i class="glyphicon glyphicon-lock"></i>' : '';
+$pre_url = Yii::$app->params['threadimg'];
 ?>
 <div class="album-img">
 
     <a class="img-thumbnail" href="<?= $albumUrl ?>">
-        <img src="<?= $src ?>" class="album-cover img-responsive" alt="album-cover" style="width: 100px;height: 100px;">
+        <img src="<?= $pre_url.$src ?>" class="album-cover img-responsive" alt="album-cover" style="width: 100px;height: 100px;">
     </a>
 
 </div>
