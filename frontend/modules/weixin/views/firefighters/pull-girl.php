@@ -20,11 +20,7 @@ $this->registerCss("
         }
         ");
 
-if(strpos($file, "loveme") !== false){
-    $weima = $file;
-}else{
-    $weima = "http://13loveme.com:82".$file;
-}
+$pre_url = Yii::$app->params['shisangirl'];
 ?>
 <style>
     .middle-img {
@@ -112,7 +108,7 @@ if(strpos($file, "loveme") !== false){
 <script src="/js/datejs/amazeui.js"></script>
 
 <div id="weima" style="position: absolute;top:0;left:0;z-index: 1;width: 100%;height: 100%;background-color: rgba(125, 125, 125, 0.62);">
-    <img style="width: 90%;border: 1px solid #ddd;border-radius: 4px;" class="center-block" src="<?=$weima?>">
+    <img style="width: 90%;border: 1px solid #ddd;border-radius: 4px;" class="center-block" src="<?=$pre_url.$weima?>">
 </div>
 <?php
 
@@ -133,7 +129,7 @@ if(strpos($file, "loveme") !== false){
         <div class="divas-slide-container" data-am-widget="gallery" data-am-gallery="{ pureview: true }">
             <?php foreach($photos as $photo):?>
                 <a href="<?=$photo['path']?>" class="divas-slide am-gallery-item">
-                    <img style="width: 70px;height: 70px;margin: 5px 5px 0 0;" src="<?=$photo['path']?>" data-src="<?=$photo['path']?>"/>
+                    <img style="width: 70px;height: 70px;margin: 5px 5px 0 0;" src="<?=$pre_url.$photo['path']?>" data-src="<?=$pre_url.$photo['path']?>"/>
                 </a>
             <?php endforeach;?>
         </div>

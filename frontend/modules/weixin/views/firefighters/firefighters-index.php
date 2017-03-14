@@ -35,7 +35,7 @@ if(isset($_GET['top'])&&$_GET['top']=='bottoms'){
     ');
 }
 $user_id = Yii::$app->user->id;
-
+$pre_url = Yii::$app->params['shisangirl'];
 ?>
 <?php if(Yii::$app->session->hasFlash('success')):?>
     <div class="alert alert-success">
@@ -68,7 +68,7 @@ $user_id = Yii::$app->user->id;
                 <div class="col-xs-12 col-md-6" style="padding:0;">
                     <div class="row" style="background-color: #fff;margin-bottom: 8px;position: relative;">
                         <div class="col-xs-4 jiuhuo-img">
-                            <div style="border-radius: 3px;width: 100%;height: 120px;background: url('<?=$val['pic_path']?>') no-repeat center;background-size: 100% auto;"></div>
+                            <div style="border-radius: 3px;width: 100%;height: 120px;background: url('<?=$pre_url.$val['pic_path']?>') no-repeat center;background-size: 100% auto;"></div>
                         </div>
                         <div class="col-xs-8" style="padding:10px 5px 0 5px;">
                             <div style="color:gray;margin-bottom: 5px;"><small>编号：<span class="pid-number"><?=$val['pid']?></span></small>&nbsp;&nbsp;&nbsp;<small>需节操币：<?=$val['coin']?></small></div>
