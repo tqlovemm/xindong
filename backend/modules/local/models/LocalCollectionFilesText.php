@@ -3,6 +3,7 @@
 namespace backend\modules\local\models;
 
 use backend\components\UploadThumb;
+use common\Qiniu\QiniuUploader;
 use Yii;
 
 /**
@@ -119,7 +120,10 @@ class LocalCollectionFilesText extends \yii\db\ActiveRecord
 
     public function upload()
     {
-        $config = [
+        $qn = new QiniuUploader('photoimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->member_id;
+        $qiniu = $qn->upload('localandsm',"uploads/local/$mkdir");
+       /* $config = [
             'savePath' => Yii::getAlias('@webroot/uploads/local/'), //存储文件夹
             'maxSize' => 10240 ,//允许的文件最大尺寸，单位KB
             'allowFiles' => ['.png' , '.jpg' , '.jpeg' , '.bmp'],  //允许的文件格式
@@ -128,21 +132,24 @@ class LocalCollectionFilesText extends \yii\db\ActiveRecord
         $up = new UploadThumb("photoimg", $config,$this->member_id,true);
         $save_path =  Yii::getAlias('@web/uploads/local/');
 
-        $info = $up->getFileInfo();
+        $info = $up->getFileInfo();*/
 
         //存入数据库
         $files_img = new LocalCollectionFilesImg();
-        $files_img->img_path = $save_path.$info['name'];
-        $files_img->thumb_img_path = $save_path.'thumb/'.$info['name'];
+        $files_img->img_path = $qiniu['key'];
+        $files_img->thumb_img_path = $qiniu['key'];
         $files_img->member_id = $this->member_id;
         $files_img->save();
 
-        $data = array('id'=>$files_img->img_id,'path'=>$save_path.$info['name']);
+        $data = array('id'=>$files_img->img_id,'path'=>Yii::$app->params['localansm'].$qiniu['key']);
         return $data;
     }
     public function uploadw()
     {
-        $config = [
+        $qn = new QiniuUploader('weimaimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->member_id;
+        $qiniu = $qn->upload('localandsm',"uploads/local/$mkdir");
+  /*      $config = [
             'savePath' => Yii::getAlias('@webroot/uploads/local/weima/'), //存储文件夹
             'maxSize' => 10240 ,//允许的文件最大尺寸，单位KB
             'allowFiles' => ['.png' , '.jpg' , '.jpeg' , '.bmp'],  //允许的文件格式
@@ -151,12 +158,12 @@ class LocalCollectionFilesText extends \yii\db\ActiveRecord
         $up = new UploadThumb("weimaimg", $config,$this->member_id,false);
         $save_path =  Yii::getAlias('@web/uploads/local/weima/');
 
-        $info = $up->getFileInfo();
+        $info = $up->getFileInfo();*/
 
         //存入数据库
-        $this->weima = $save_path.$info['name'];
+        $this->weima = $qiniu['key'];
         $this->save();
-        $data = array('id'=>$this->member_id,'path'=>$save_path.$info['name']);
+        $data = array('id'=>$this->member_id,'path'=>Yii::$app->params['localansm'].$qiniu['key']);
         return $data;
     }
 }
