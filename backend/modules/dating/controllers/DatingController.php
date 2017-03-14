@@ -4,6 +4,7 @@
 namespace backend\modules\dating\controllers;
 
 use backend\components\AddRecord;
+use common\Qiniu\QiniuUploader;
 use Yii;
 use yii\imagine\Image;
 use backend\modules\dating\models\Dating;
@@ -106,11 +107,14 @@ class DatingController extends BaseController
         $model = $this->findModel($id);
 
         //上传头像
-        Yii::setAlias('@upload', '@backend/web/uploads/dating/avatar/');
+       // Yii::setAlias('@upload', '@backend/web/uploads/dating/avatar/');
 
         if (Yii::$app->request->isPost && !empty($_FILES)) {
 
-            $extension = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
+            $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+            $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$id;
+            $qiniu = $qn->upload('threadimages',"uploads/dating/avatar/$mkdir");
+            /*$extension = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
 
             if($extension=='jpeg'||$extension=='JPEG'){
                 $extension='jpg';
@@ -122,9 +126,9 @@ class DatingController extends BaseController
             //删除旧头像
             if (file_exists(Yii::getAlias('@upload').$model->avatar))
 
-                @unlink(Yii::getAlias('@upload').$model->avatar);
+                @unlink(Yii::getAlias('@upload').$model->avatar);*/
 
-            $model->avatar = Yii::$app->request->getHostInfo().'/uploads/dating/avatar/'.$fileName;
+            $model->avatar = $qiniu['key'];
             $model->update();
         }
 
