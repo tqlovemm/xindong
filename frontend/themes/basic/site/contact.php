@@ -1,6 +1,7 @@
 <?php
 $this->title = '联系我们';
 $this->params['breadcrumbs'][] = $this->title;
+$pre_url = Yii::$app->params['threadimg'];
 $this->registerCss('
         .contact-title{padding: 30px 10px; background-color: #F1DDE6;text-align: center;}
         .title-china{color:#D94071;font-weight: bold;}
@@ -37,7 +38,7 @@ if ($this->beginCache($id=25, ['dependency' => $dependency])) :*/?>
             <div  style="position: absolute;top:50%;right:0;color:#fff;">扫描二维码加入微信</div>
         </div>
         <div class="col-md-2">
-            <img style="width: 170px;" src="http://13loveme.com:82<?=$boy[$boy_rand]['path']?>">
+            <img style="width: 170px;" src="<?=$pre_url.$boy[$boy_rand]['path']?>">
         </div>
         <div class="col-md-3">
             <h1 style="font-weight: bold;color:#fff;margin-top: 40px;">男生入口</h1>
@@ -51,7 +52,7 @@ if ($this->beginCache($id=25, ['dependency' => $dependency])) :*/?>
             <div  style="position: absolute;top:50%;right:0;color:#fff;">扫描二维码加入微信</div>
         </div>
         <div class="col-md-2">
-            <img style="width: 170px;" src="http://13loveme.com:82<?=$girl[$girl_rand]['path']?>">
+            <img style="width: 170px;" src="<?=$pre_url.$girl[$girl_rand]['path']?>">
         </div>
         <div class="col-md-3">
             <h1 style="font-weight: bold;color:#fff;margin-top: 40px;">女生入口</h1>
@@ -93,7 +94,7 @@ if ($this->beginCache($id=25, ['dependency' => $dependency])) :*/?>
                     <img style="width: 40px;margin-top: 5px;float: right;margin-right: 10px;" class="img-responsive" src="/images/contact/boy.png">
                 </div>
                 <div class="pull-left">
-                    <a data-title="男生入口 <?=$boy[$boy_rand]['name']?>" data-lightbox="dd" href="http://13loveme.com:82<?=$boy[$boy_rand]['path']?>" class="btn btn-boy">男生入口&nbsp;&nbsp;<img style="width: 28px;" src="/images/contact/arrow.png"></a>
+                    <a data-title="男生入口 <?=$boy[$boy_rand]['name']?>" data-lightbox="dd" href="<?=$pre_url.$boy[$boy_rand]['path']?>" class="btn btn-boy">男生入口&nbsp;&nbsp;<img style="width: 28px;" src="/images/contact/arrow.png"></a>
                 </div>
             </div>
         </div>
@@ -105,7 +106,7 @@ if ($this->beginCache($id=25, ['dependency' => $dependency])) :*/?>
                     <img style="width: 40px;margin-top: 5px;float: right;margin-right: 10px;" class="img-responsive" src="/images/contact/girlblack.png">
                 </div>
                 <div class="pull-left">
-                    <a data-title="女生入口 <?=$girl[$girl_rand]['name']?>" data-lightbox="dd" href="http://13loveme.com:82<?=$girl[$girl_rand]['path']?>" class="btn btn-girl">女生入口&nbsp;&nbsp;<img style="width: 28px;" src="/images/contact/arrow.png"></a>
+                    <a data-title="女生入口 <?=$girl[$girl_rand]['name']?>" data-lightbox="dd" href="<?=$pre_url.$girl[$girl_rand]['path']?>" class="btn btn-girl">女生入口&nbsp;&nbsp;<img style="width: 28px;" src="/images/contact/arrow.png"></a>
                 </div>
             </div>
         </div>
