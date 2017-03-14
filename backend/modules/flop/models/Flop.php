@@ -171,7 +171,8 @@ class Flop extends \yii\db\ActiveRecord
     public function upload()
     {
         $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
-        $qiniu = $qn->upload('tqlmm',"uploads/flop/$this->id");
+        $mkdir = date('Y').'/'.date('m').'/'.date('d');
+        $qiniu = $qn->upload('tqlmm',"uploads/flop/$mkdir/$this->id");
 
 /*        $config = [
             'savePath' => Yii::getAlias('@backend').'/web/uploads/flop/', //存储文件夹
