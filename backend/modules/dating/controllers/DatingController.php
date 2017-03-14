@@ -113,7 +113,7 @@ class DatingController extends BaseController
 
             $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
             $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$id;
-            $qiniu = $qn->upload('threadimages',"uploads/dating/avatar/$mkdir");
+            $qiniu = $qn->upload('shisangirl',"uploads/dating/avatar/$mkdir");
             /*$extension = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
 
             if($extension=='jpeg'||$extension=='JPEG'){
