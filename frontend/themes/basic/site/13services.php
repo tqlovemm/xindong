@@ -280,11 +280,11 @@ use yii\web\View;
     <div class="row service-method">
         <div class="col-md-6 method-boy">
             <h4 class="boy">如果你是男生</h4>
-           <img src="/images/service/QQ截图20160803171224.jpg">
+           <img src="/images/service/174776714338423506.jpg">
         </div>
         <div class="col-md-6 method-girl">
             <h4 class="girl">如果你是女生</h4>
-            <img src="/images/service/QQ截图20160803171956.jpg">
+            <img src="/images/service/481035858582662669.jpg">
         </div>
       <!--  <div class="method-center-img visible-lg">
             您只需提供您的真实个人资料

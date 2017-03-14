@@ -146,7 +146,6 @@ defo;
     public function actionDeleteWeima($id){
 
         $model = $this->findModel($id);
-        @unlink(str_replace('/uploads','uploads',$model->weima));
         $model->weima = null;
         $model->update();
     }

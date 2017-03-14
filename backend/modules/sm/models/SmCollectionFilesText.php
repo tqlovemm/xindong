@@ -3,6 +3,7 @@
 namespace backend\modules\sm\models;
 
 use backend\components\UploadThumb;
+use common\Qiniu\QiniuUploader;
 use Yii;
 
 /**
@@ -117,7 +118,11 @@ class SmCollectionFilesText extends \yii\db\ActiveRecord
 
     public function upload()
     {
-        $config = [
+        $qn = new QiniuUploader('photoimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->member_id;
+        $qiniu = $qn->upload('localandsm',"uploads/sm/$mkdir");
+
+     /*   $config = [
             'savePath' => Yii::getAlias('@webroot/uploads/sm/'), //存储文件夹
             'maxSize' => 10240 ,//允许的文件最大尺寸，单位KB
             'allowFiles' => ['.png' , '.jpg' , '.jpeg' , '.bmp'],  //允许的文件格式
@@ -128,16 +133,16 @@ class SmCollectionFilesText extends \yii\db\ActiveRecord
 
         $save_path =  Yii::getAlias('@web/uploads/sm/');
 
-        $info = $up->getFileInfo();
+        $info = $up->getFileInfo();*/
 
         //存入数据库
         $files_img = new SmCollectionFilesImg();
-        $files_img->img_path = $save_path.$info['name'];
-        $files_img->thumb_img_path = $save_path.'thumb/'.$info['name'];
+        $files_img->img_path = $qiniu['key'];
+        $files_img->thumb_img_path = $qiniu['key'];
         $files_img->member_id = $this->member_id;
         $files_img->save();
 
-        $data = array('id'=>$files_img->img_id,'path'=>$save_path.$info['name']);
+        $data = array('id'=>$files_img->img_id,'path'=>Yii::$app->params['localansm'].$qiniu['key']);
         return $data;
     }
     public function uploadw()
