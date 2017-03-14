@@ -37,7 +37,7 @@ if(isset($_GET['top'])&&$_GET['top']=='bottoms'){
         nav,footer,#comment,.suo-xia{display:none;}
     ');
 }
-
+$pre_url = Yii::$app->params['threadimg'];
 ?>
 
 
@@ -51,7 +51,7 @@ if(isset($_GET['top'])&&$_GET['top']=='bottoms'){
         <div class="col-md-9" style="padding: 0;">
             <?php foreach($photos['photos'] as $photo):?>
                 <div class="hear-img">
-                    <img class="img-responsive center-block" src="<?=$photo['path']?>">
+                    <img class="img-responsive center-block" src="<?=$pre_url.$photo['path']?>">
                 </div>
             <?php endforeach;?>
         </div>
