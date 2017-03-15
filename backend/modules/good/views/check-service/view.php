@@ -38,4 +38,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 </div>
-<div><img src="<?=$model->avatar?>" style="width: 200px;"></div>
+<div><img src="<?=Yii::$app->params['threadimg'].$model->avatar?>" style="width: 200px;"></div>
