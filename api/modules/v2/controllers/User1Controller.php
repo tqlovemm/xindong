@@ -78,7 +78,7 @@ class User1Controller extends ActiveController
             $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
             if(!empty($avatar_path)){
                 try{
-                    $avatar_path = str_replace($avatar_path,$pre_url,'');
+                    $avatar_path = str_replace($pre_url,'',$avatar_path);
                     $qn->delete('appimages',$avatar_path);
                 }catch (ErrorException $e){
 
