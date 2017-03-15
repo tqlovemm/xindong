@@ -5,6 +5,7 @@ namespace api\modules\v2\controllers;
 use api\modules\v2\models\User;
 use common\Qiniu\QiniuUploader;
 use Yii;
+use yii\base\ErrorException;
 use yii\db\Query;
 use yii\rest\ActiveController;
 use yii\data\ActiveDataProvider;
@@ -76,17 +77,21 @@ class User1Controller extends ActiveController
         if(!empty(Yii::$app->request->post('avatar'))){
             $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
             if(!empty($avatar_path)){
-                $qn->delete('appimages',$avatar_path);
+                try{
+                    $avatar_path = str_replace($avatar_path,$pre_url,'');
+                    $qn->delete('appimages',$avatar_path);
+                }catch (ErrorException $e){
+
+                }
             }
             $pathStr = "uploads";
             $savePath = $pathStr.'/'.time().rand(1,10000).'.jpg';
             file_put_contents($savePath,base64_decode($model->avatar));
             $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.md5($id).rand(1000,9999);
 
-            $qiniu = $qn->upload_app('appimages',$pre_url."uploads/user/avatar/$mkdir",$savePath);
+            $qiniu = $qn->upload_app('appimages',"uploads/user/avatar/$mkdir",$savePath);
             @unlink($savePath);
-
-            $model->avatar = $qiniu['key'];
+            $model->avatar = $pre_url.$qiniu['key'];
         }
 
         if (!$model->save()) {
