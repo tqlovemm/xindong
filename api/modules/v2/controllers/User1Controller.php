@@ -86,7 +86,7 @@ class User1Controller extends ActiveController
             $qiniu = $qn->upload_app('appimages',$pre_url."uploads/user/avatar/$mkdir",$savePath);
             @unlink($savePath);
 
-            $model->avatar = $pre_url.$qiniu['key'];
+            $model->avatar = $qiniu['key'];
         }
 
         if (!$model->save()) {
