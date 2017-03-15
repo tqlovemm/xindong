@@ -10,6 +10,7 @@ use shiyang\masonry\Masonry;
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Seeks'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$pre_url = Yii::$app->params['threadimg'];
 ?>
 
 <div class="album-view">
@@ -39,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="img-wrap">
                         <div class="img-main">
                             <a title="<?= Html::encode($photo['name']) ?>" href="<?=Url::to(['/exciting/website-content-search/view','id'=>$photo['cid']])?>">
-                                <img class="img-responsive" src="<?= $photo['path'] ?>">
+                                <img class="img-responsive" src="<?= $pre_url.$photo['path'] ?>">
                             </a>
                             <div class="img-name" style="padding: 10px;background-color: #fff;font-size: 18px;text-align: center;margin-top: 5px;"><?= Html::encode($photo['name']) ?></div>
                         </div>
