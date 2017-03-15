@@ -5,6 +5,7 @@ use yii\helpers\Url;
 
 $this->registerCssFile('@web/js/lightbox/css/lightbox.css');
 $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii\web\JqueryAsset'], 'position' => \yii\web\View::POS_END]);
+$pre_url = Yii::$app->params['threadimg'];
 ?>
 <form action="">
     <input type="hidden" name="id" value="<?=Yii::$app->request->get('id')?>">
@@ -42,7 +43,7 @@ $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii
                         </div>
                         <div class="img-main">
                             <a title="<?= Html::encode($photo['name']) ?>" href="<?=Url::to(['/exciting/other-text-pic/view','id'=>$photo['pid']])?>">
-                                <img style="height: 100px;" src="<?= $photo['pic_path'] ?>">
+                                <img style="height: 100px;" src="<?= $pre_url.$photo['pic_path'] ?>">
                             </a>
                             <div class="img-name"><?= Html::encode($photo['name']) ?></div>
                             <div class="img-name"><?= Html::encode($photo['number']) ?></div>
