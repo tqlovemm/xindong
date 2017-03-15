@@ -778,6 +778,7 @@ class SiteController extends BaseController
     public function actionSendLoginCode(){
         $mobile = Yii::$app->request->post('mobile');
         $type = Yii::$app->request->post('type');
+        $ip = Yii::$app->getRequest()->getUserIP();
         $saveToForm = new SendMobileCode();
         $queryMobile = $saveToForm::find()->where(['mobile'=>$mobile,'created_at'=>strtotime('today')])->count();
         if($queryMobile>5){
