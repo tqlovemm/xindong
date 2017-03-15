@@ -78,7 +78,7 @@ class User1Controller extends ActiveController
             if(!empty($avatar_path)){
                 $qn->delete('test',$avatar_path);
             }
-            $pathStr = "uploads/user/avatar";
+            $pathStr = "uploads";
             $savePath = $pathStr.'/'.time().rand(1,10000).'.jpg';
             file_put_contents($savePath,base64_decode($model->avatar));
             $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.md5($id).rand(1000,9999);
