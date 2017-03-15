@@ -12,7 +12,9 @@ use api\modules\v6\models\Reply;
 use api\modules\v6\models\Word;
 use api\modules\v7\models\Like;
 use api\modules\v4\models\User;
+use common\Qiniu\QiniuUploader;
 use Yii;
+use yii\base\ErrorException;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
 use yii\myhelper\Decode;
@@ -277,26 +279,26 @@ class WordController extends Controller
     }
 
     protected function DeleteImg($imgs){
-
-        $img = explode(Yii::$app->params['hostname'],$imgs);
-        $imgPath = Yii::getAlias('@apiweb').$img[1];
-        return unlink($imgPath);
+        $pre_url = Yii::$app->params['appimages'];
+        $avatar_path = str_replace($pre_url,'',$imgs);
+        $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $qn->delete('appimages',$avatar_path);
     }
 
     protected function UploadImg($img,$user_id){
-        $img = base64_decode($img);
-        $path = '/uploads/user/content/';
-        $savepath = Yii::getAlias('@apiweb').$path;
-        $t = $user_id.'-'.time().'.png';
-        $savename = $savepath.$t;
-        if(file_put_contents($savename,$img,FILE_USE_INCLUDE_PATH)){
-            $url = Yii::$app->params['hostname'].$path.$t;
-            return $url;
-        }else{
-            return "";
-        }
 
+        $pre_url = Yii::$app->params['appimages'];
+        $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
 
+        $pathStr = "uploads";
+        $savePath = $pathStr.'/'.time().rand(1,10000).'.jpg';
+        file_put_contents($savePath,base64_decode($img));
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.md5($user_id).rand(1000,9999);
+
+        $qiniu = $qn->upload_app('appimages',"uploads/user/content/$mkdir",$savePath);
+        @unlink($savePath);
+
+        return $pre_url.$qiniu['key'];
     }
 
     protected function ReplaceWord($word){
