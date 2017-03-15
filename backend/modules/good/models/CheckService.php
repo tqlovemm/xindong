@@ -5,6 +5,7 @@ namespace backend\modules\good\models;
 use backend\components\MyUpload;
 use common\Qiniu\QiniuUploader;
 use Yii;
+use yii\base\ErrorException;
 
 /**
  * This is the model class for table "pre_check_service".
@@ -84,7 +85,13 @@ class CheckService extends \yii\db\ActiveRecord
         $path = $qiniu['key'];
         $exist = $this->findOne($this->id);
         if(!empty($exist['avatar'])){
-            $qn->delete('threadimages',$exist['avatar']);
+            try{
+                $qn->delete('threadimages',$exist['avatar']);
+            }catch (ErrorException $e){
+
+                throw new ErrorException();
+            }
+
         }
         $this->avatar = $path;
         $this->save();
