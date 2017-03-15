@@ -11,7 +11,7 @@ $this->registerCss("
 <div class="container-fluid">
     <div class="row" style="margin-top: 10px;">
         <ul class="list-group">
-            <a class="inline list-group-item" style="display: inline-block;margin-bottom: 10px;" href="/index.php/bgadmin/record">全部</a>
+            <a class="inline list-group-item" style="display: inline-block;margin-bottom: 10px;" href="/bgadmin/record">全部</a>
             <?php foreach ($admins as $admin):?>
                 <a class="inline list-group-item" style="display: inline-block;margin-bottom: 10px;" href="<?=Url::toRoute(['view','id'=>$admin['id']])?>"><?=$admin['username']?></a>
             <?php endforeach;?>

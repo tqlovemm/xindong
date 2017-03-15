@@ -50,7 +50,7 @@ $this->registerCss("
 
             </div>
             <div class="col-md-2">
-                <a class="btn btn-primary" href="/index.php/dating/dating-other/dating-back?like_id=<?=$model['number']?>">重新让会员报名</a>
+                <a class="btn btn-primary" href="/dating/dating-other/dating-back?like_id=<?=$model['number']?>">重新让会员报名</a>
             </div>
 
         </div>

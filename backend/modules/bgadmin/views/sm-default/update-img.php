@@ -9,11 +9,12 @@ $this->title = 'Update Smadmin Member: ' . ' ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Bgadmin Members', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
+$pre_url = Yii::$app->params['localandsm'];
 ?>
 <div class="bgadmin-member-form">
 
-    <a href="<?=$model->path?>" data-lightbox="s" data-title="<?=$model->content?>">
-        <img style="max-width: 300px;" src="<?=$model->path?>">
+    <a href="<?=$pre_url.$model->path?>" data-lightbox="s" data-title="<?=$model->content?>">
+        <img style="max-width: 300px;" src="<?=$pre_url.$model->path?>">
     </a>
     <h5>上传人：<?=$model->created_by?></h5>
     <h5>上传时间：<?=date('Y-m-d H:i:s',$model->created_at)?></h5>

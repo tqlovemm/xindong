@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'label' => '上传图片',
                 'value' => function ($data) {
-                    return "<img style='width: 100px;' src='http://13loveme.com$data->img'>";
+                    return "<img style='width: 100px;' src='$data->img'>";
                 }
 
             ],

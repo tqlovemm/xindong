@@ -1,7 +1,7 @@
 
 
 <div class="container">
-    <div class="row"><a class="btn btn-default" href="/index.php/flop/flop">返回</a></div>
+    <div class="row"><a class="btn btn-default" href="/flop/flop">返回</a></div>
     <div class="row">
     <table class="table table-bordered flop-data-table">
         <tr>
@@ -28,7 +28,7 @@
                 </td>
                 <td><?=date('m/d',$item['created_at'])?></td>
                 <td><?=$item['flag']?></td>
-                <td><a href="/index.php/flop/flop/flop-data-delete?id=<?=$item['id']?>" class="glyphicon glyphicon-trash"></a> <a href="/index.php/flop/flop/flop-data-view?id=<?=$item['id']?>" class="glyphicon glyphicon-eye-open"></a></td>
+                <td><a href="/flop/flop/flop-data-delete?id=<?=$item['id']?>" class="glyphicon glyphicon-trash"></a> <a href="/flop/flop/flop-data-view?id=<?=$item['id']?>" class="glyphicon glyphicon-eye-open"></a></td>
             </tr>
         <?php endforeach;?>
         </table>

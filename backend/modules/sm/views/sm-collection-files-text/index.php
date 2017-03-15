@@ -82,14 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
              //'status',
             // 'often_go',
             // 'annual_salary',
-            [
-                'attribute' => '二维码',
-                'format'=>'raw',
-                'label' => '二维码',
-                'value' => function ($data) {
-                    return "<img style='width: 50px;' src='http://13loveme.com$data->weima'>";
-                }
-            ],
+
 
 
             ['class' => 'yii\grid\ActionColumn'],

@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function ($data) {
                     $number = \backend\models\User::getNumber($data->user_id);
-                    $url = "/index.php/user/user-file-total?number=$number";
+                    $url = "/user/user-file-total?number=$number";
                     return "<a class='btn btn-primary' href=$url target='_blank'>$number</a>";
                 }
             ],
@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     $number = \backend\models\User::getNumber($data->user_id);
                     if($data->type==0){
                         if($data->status==0){
-                            return "催促客服加快处理 <a class='btn btn-success' target='_blank' href='/index.php/dating/dating-content/dating-signup-check?type=5&user_id=$number'>去处理</a>";
+                            return "催促客服加快处理 <a class='btn btn-success' target='_blank' href='/dating/dating-content/dating-signup-check?type=5&user_id=$number'>去处理</a>";
                         }else{
                             return "催促客服加快处理";
                         }
@@ -124,7 +124,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </h4>
             </div>
             <div class="modal-body">
-                <form action="/index.php/dating/dating-cuicu/do-cuicu" method="get">
+                <form action="/dating/dating-cuicu/do-cuicu" method="get">
                     <div class="radio">
                         <label>
                             <input type="radio" name="status" value=1 checked>处理成功
@@ -162,6 +162,6 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 </script>
 <!--
-<a class="btn btn-primary" onclick="window.open('/index.php/user/user-dating-total?type=1&ids=','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-600)/2+',left='+(window.screen.availWidth-1000)/2+',height=600,width=600')" style="color:#fff;cursor: pointer;">统计觅约</a>
-<a class="btn btn-success" onclick="window.open('/index.php/user/user-file-total?number=','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-600)/2+',left='+(window.screen.availWidth-1000)/2+',height=600,width=600')" style="color:#fff;cursor: pointer;">男生资料</a>
+<a class="btn btn-primary" onclick="window.open('/user/user-dating-total?type=1&ids=','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-600)/2+',left='+(window.screen.availWidth-1000)/2+',height=600,width=600')" style="color:#fff;cursor: pointer;">统计觅约</a>
+<a class="btn btn-success" onclick="window.open('/user/user-file-total?number=','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-600)/2+',left='+(window.screen.availWidth-1000)/2+',height=600,width=600')" style="color:#fff;cursor: pointer;">男生资料</a>
 -->

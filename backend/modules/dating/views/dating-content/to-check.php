@@ -20,9 +20,9 @@ $vip_check = new \frontend\modules\member\models\UserVipTempAdjust();
             <input class="pull-left btn btn-success" type="submit">
         </form>
 
-        <a href="/index.php/dating/dating-content/to-check?type=1" class="pull-left btn btn-primary" style="margin: 0 10px 0 50px;">最新报名</a>
-        <a href="/index.php/dating/dating-content/to-check?type=2" class="pull-left btn btn-primary" style="margin: 0 10px;">往日报名</a>
-        <a href="/index.php/dating/dating-content/to-check?type=0" class="pull-left btn btn-primary" style="margin: 0 10px;">等待审核</a>
+        <a href="/dating/dating-content/to-check?type=1" class="pull-left btn btn-primary" style="margin: 0 10px 0 50px;">最新报名</a>
+        <a href="/dating/dating-content/to-check?type=2" class="pull-left btn btn-primary" style="margin: 0 10px;">往日报名</a>
+        <a href="/dating/dating-content/to-check?type=0" class="pull-left btn btn-primary" style="margin: 0 10px;">等待审核</a>
     </div>
 
     <div class="dating-record">
@@ -67,8 +67,8 @@ $vip_check = new \frontend\modules\member\models\UserVipTempAdjust();
                     <br>
                     <strong style="color:<?=$color2?>;font-size: 20px;">
                         <?=$grade?>
-                        <a class="btn btn-primary" onclick="window.open('/index.php/user/user-dating-total?type=1&ids=<?=$model['user_id']?>','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-600)/2+',left='+(window.screen.availWidth-1000)/2+',height=600,width=600')" style="color:#fff;cursor: pointer;">统计觅约</a>
-                        <a class="btn btn-success" onclick="window.open('/index.php/user/user-file-total?number=<?=$number['number']?>','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-600)/2+',left='+(window.screen.availWidth-1000)/2+',height=600,width=600')" style="color:#fff;cursor: pointer;">男生资料</a>
+                        <a class="btn btn-primary" onclick="window.open('/user/user-dating-total?type=1&ids=<?=$model['user_id']?>','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-600)/2+',left='+(window.screen.availWidth-1000)/2+',height=600,width=600')" style="color:#fff;cursor: pointer;">统计觅约</a>
+                        <a class="btn btn-success" onclick="window.open('/user/user-file-total?number=<?=$number['number']?>','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-600)/2+',left='+(window.screen.availWidth-1000)/2+',height=600,width=600')" style="color:#fff;cursor: pointer;">男生资料</a>
 
                     </strong>
                     <?php

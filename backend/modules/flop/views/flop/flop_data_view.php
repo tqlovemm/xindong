@@ -13,7 +13,7 @@ $data = new FlopContentData();
 
 ?>
 <div class="container">
-    <div class="row"><a class="btn btn-default" href="/index.php/flop/flop/flop-data">返回</a></div>
+    <div class="row"><a class="btn btn-default" href="/flop/flop/flop-data">返回</a></div>
     <div class="row">
         <table class="table table-bordered">
             <tr><td>User ID</td><td><?=$model->user_id?></td></tr>

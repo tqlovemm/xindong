@@ -26,6 +26,7 @@ use yii\web\Linkable;
  */
 class User1 extends ActiveRecord implements IdentityInterface
 {
+    public $avatar_file;
     public static function findIdentity($id)
     {
         return static::findOne($id);
@@ -75,7 +76,8 @@ class User1 extends ActiveRecord implements IdentityInterface
 /*            [['username','email'], 'required'],*/
             [['role', 'status', 'created_at', 'updated_at'], 'integer'],
             [['username', 'avatar', 'password_hash', 'password_reset_token', 'email','nickname'], 'string', 'max' => 255],
-            [['auth_key'], 'string', 'max' => 32]
+            [['auth_key'], 'string', 'max' => 32],
+            ['avatar_file','string']
         ];
     }
 

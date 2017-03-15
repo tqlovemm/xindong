@@ -9,6 +9,7 @@ use yii\grid\GridView;
 
 $this->title = '地方啪信息表';
 $this->params['breadcrumbs'][] = $this->title;
+$pre_url = Yii::$app->params['localandsm'];
 ?>
 <div class="local-collection-files-text-index">
 
@@ -64,14 +65,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
 
-            [
-                'attribute' => '二维码',
-                'format'=>'raw',
-                'label' => '二维码',
-                'value' => function ($data) {
-                    return "<img style='width: 50px;' src='http://13loveme.com$data->weima'>";
-                }
-            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

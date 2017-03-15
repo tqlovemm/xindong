@@ -3,18 +3,18 @@ use yii\widgets\LinkPager;
 ?>
 
 <a href="http://13loveme.com/wei-xin/cjs" class="btn btn-success" target="_blank">刷新access_token</a>
-<form action="/index.php/exciting/firefighters-sign-up" style="margin: 20px 0;">
+<form action="/exciting/firefighters-sign-up" style="margin: 20px 0;">
     <input style="width: 10%;" class="form-control pull-left" type="text" placeholder="输入会员编号查询" name="number">
     <input class="btn btn-primary pull-left" type="submit">
     <div style="clear: both"></div>
 </form>
 <div class="row" style="margin: 10px 0;">
-    <a href="/index.php/exciting/firefighters-sign-up?type=3" class="btn btn-primary">时间正序</a>
-    <a href="/index.php/exciting/firefighters-sign-up?type=1" class="btn btn-primary">时间倒序</a>
-    <a href="/index.php/exciting/firefighters-sign-up?type=0" class="btn btn-primary">等待审核</a>
-    <a href="/index.php/exciting/firefighters-sign-up?type=2" class="btn btn-primary">已经审核</a>
-    <a href="/index.php/exciting/firefighters-sign-up?type=4" class="btn btn-primary">编号排序</a>
-    <a href="/index.php/exciting/firefighters-sign-up?type=5" class="btn btn-primary">未推送</a>
+    <a href="/exciting/firefighters-sign-up?type=3" class="btn btn-primary">时间正序</a>
+    <a href="/exciting/firefighters-sign-up?type=1" class="btn btn-primary">时间倒序</a>
+    <a href="/exciting/firefighters-sign-up?type=0" class="btn btn-primary">等待审核</a>
+    <a href="/exciting/firefighters-sign-up?type=2" class="btn btn-primary">已经审核</a>
+    <a href="/exciting/firefighters-sign-up?type=4" class="btn btn-primary">编号排序</a>
+    <a href="/exciting/firefighters-sign-up?type=5" class="btn btn-primary">未推送</a>
 </div>
 
     <div class="row" style="background-color: #fff;padding: 5px;margin-bottom: 10px;">
@@ -43,7 +43,7 @@ use yii\widgets\LinkPager;
     <div class="row" style="<?php if($val['status']==1):?>background-color: #a7eba0;<?php elseif($val['status']==2):?>background-color: #fad2d5;<?php else:?>background-color: #fff;<?php endif;?>padding: 5px;border-bottom: 1px solid #eee;">
         <div class="col-md-1">
             <?=$number?>
-            <a onclick="window.open('/index.php/user/user-file-total?number=<?=$number?>','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-600)/2+',left='+(window.screen.availWidth-1000)/2+',height=600,width=600')" class="btn btn-primary">查看男生资料</a>
+            <a onclick="window.open('/user/user-file-total?number=<?=$number?>','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-600)/2+',left='+(window.screen.availWidth-1000)/2+',height=600,width=600')" class="btn btn-primary">查看男生资料</a>
             <h4 style="color:<?=$color2?>;"><?=$grade?></h4>
         </div>
         <div class="col-md-1"><?=$val['sign_id']?></div>
@@ -114,11 +114,11 @@ use yii\widgets\LinkPager;
         <div class="col-md-1"><?=$val['reason']?></div>
         <div class="col-md-2">
             <?php if($val['status']==0):?>
-                <a class="btn btn-success" href="/index.php/exciting/firefighters-sign-up/pass-or-not?id=<?=$val['id']?>&status=1">通过</a>
+                <a class="btn btn-success" href="/exciting/firefighters-sign-up/pass-or-not?id=<?=$val['id']?>&status=1">通过</a>
                 <a class="btn btn-danger dating-fail" data-target="#datingfaileModal"  data-toggle="modal"  data-status="2" data-id="<?=$val['id']?>">不通过</a>
             <?php endif;?>
             <?php if($val['status']==1):?>
-                <a class="btn btn-danger" data-confirm="确定撤销吗，撤销会返还所有节操币" href="/index.php/exciting/firefighters-sign-up/reback?id=<?=$val['id']?>&status=2">撤销</a>
+                <a class="btn btn-danger" data-confirm="确定撤销吗，撤销会返还所有节操币" href="/exciting/firefighters-sign-up/reback?id=<?=$val['id']?>&status=2">撤销</a>
             <?php endif;?>
         </div>
         <div class="col-md-1"><?=$val['handler']?></div>
@@ -132,7 +132,7 @@ use yii\widgets\LinkPager;
                     <h4 class="modal-title" id="datingfaileModalLabel">操作原因</h4>
                 </div>
                 <div class="modal-body">
-                    <form method="get" action="/index.php/exciting/firefighters-sign-up/pass-or-not">
+                    <form method="get" action="/exciting/firefighters-sign-up/pass-or-not">
                         <input type="hidden" id="dating-status" name="status" class="form-control">
                         <input type="hidden" id="dating-id" name="id" class="form-control">
                         <textarea id="dating_fail" name="reason" placeholder="操作原因" class="form-control"></textarea>
@@ -157,7 +157,7 @@ use yii\widgets\LinkPager;
         function pushweixin(content){
 
             var con = $(content);
-            $.get('/index.php/exciting/firefighters-sign-up/send-temp?openid='+con.attr('data-openid')+'&number='+con.attr('data-number'),function (data) {
+            $.get('/exciting/firefighters-sign-up/send-temp?openid='+con.attr('data-openid')+'&number='+con.attr('data-number'),function (data) {
                 var result = $.parseJSON(data);
                 alert(result);
             });
@@ -165,7 +165,7 @@ use yii\widgets\LinkPager;
         function deletepushweixin(content){
 
             var con = $(content);
-            $.get('/index.php/exciting/firefighters-sign-up/delete-push-record?openid='+con.attr('data-openid')+'&number='+con.attr('data-number'),function (data) {
+            $.get('/exciting/firefighters-sign-up/delete-push-record?openid='+con.attr('data-openid')+'&number='+con.attr('data-number'),function (data) {
                 var result = $.parseJSON(data);
                 alert(result);
             });

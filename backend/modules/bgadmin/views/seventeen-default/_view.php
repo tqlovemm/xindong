@@ -23,6 +23,7 @@ $this->registerCss("
     .container-fluid .row .col-sm-2{padding:0 10px 0 0;}
     .container-fluid{margin-left:0;}
 ");
+$pre_url = Yii::$app->params['qiniushiqi'];
 ?>
 
 <div class="bgadmin-member-view clearfix">
@@ -147,7 +148,7 @@ $this->registerCss("
                     <div class="row" style="padding: 8px 0;border-bottom: 1px dashed #ddd;">
                         <div class="col-md-3">
                             <a href="<?=$list['path']?>" data-title="<?=$list['content']?>" data-lightbox="d">
-                                <div style="width: 90%;height:90px;background-image: url('<?=$list['path']?>');background-size: cover;background-position: center;"></div>
+                                <div style="width: 90%;height:90px;background-image: url('<?=$pre_url.$list['path']?>');background-size: cover;background-position: center;"></div>
                             </a>
                         </div>
                         <div class="col-md-9">

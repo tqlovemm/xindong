@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'local')->dropDownList(\yii\helpers\ArrayHelper::map(\backend\modules\local\models\LocalCollectionCount::find()->where(['not in','number',1])->all(),'number','number_name'), [
         'prompt'=>'---请选择地方啪---',
-        'onchange'=>'$.post("/index.php/local/default/lists?id='.'"+$(this).val(),function(data){
+        'onchange'=>'$.post("/local/default/lists?id='.'"+$(this).val(),function(data){
                 $("select#localcollectionfilestext-vip").html(data);
             });',
     ])->label("会员等级") ?>

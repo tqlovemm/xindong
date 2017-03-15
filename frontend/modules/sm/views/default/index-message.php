@@ -10,7 +10,7 @@ $this->registerCss('
     .weui_cells_radio p{margin:0;}
     #main label{margin-bottom:0}
 ');
-
+$pre_url = Yii::$app->params['localandsm'];
 ?>
 <link rel="stylesheet" href="/weui/dist/style/weui.min.css"/>
 <div id="header" style="padding:10px;background-color: #2695D0;text-align: center;color:#fff;font-size: 20px;font-weight: bold;position: relative;">
@@ -33,7 +33,7 @@ $this->registerCss('
                             <div class="weui_uploader_files" id="preview">
                                 <?php if(!empty($img)):  foreach ($img as $item):?>
                                 <a data-lightbox="0" data-title="0" href="<?=$item['img_path']?>">
-                                    <img src="<?=$item['img_path']?>" data-id="<?=$item['img_id']?>" class="preview collecting-files-img">
+                                    <img src="<?=$pre_url.$item['img_path']?>" data-id="<?=$item['img_id']?>" class="preview collecting-files-img">
                                 </a>
                                 <?php endforeach; endif; ?>
                             </div>

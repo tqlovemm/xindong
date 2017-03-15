@@ -54,7 +54,7 @@ $this->registerCss('
 
             }
         };
-        xhr.open('get','/index.php/dating/heart-week/heart-week-hide?id='+id);
+        xhr.open('get','/dating/heart-week/heart-week-hide?id='+id);
         xhr.send(null);
 
 

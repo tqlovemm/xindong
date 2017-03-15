@@ -6,6 +6,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model backend\modules\seventeen\models\SeventeenFilesImg */
 /* @var $form yii\widgets\ActiveForm */
+$pre_url = Yii::$app->params['qiniushiqi'];
 ?>
 
 <div class="seventeen-files-img-form">
@@ -16,7 +17,7 @@ use yii\widgets\ActiveForm;
 
     <?php //echo $form->field($model, 'img')->textInput(['maxlength' => true]) ?>
 
-    <div class=""><img style="width: 200px;" src="<?='http://13loveme.com'.$model->img?>"></div>
+    <div class=""><img style="width: 200px;" src="<?=$pre_url.$model->img?>"></div>
 
     <?= $form->field($model, 'type')->dropDownList([0=>'设为正常身材照',2=>'设为头像封面照',1=>'设为微信二维码']) ?>
 

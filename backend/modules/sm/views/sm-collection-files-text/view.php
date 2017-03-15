@@ -10,6 +10,7 @@ return var_dump($model);*/
 $this->title = $model['member_id'];
 $this->params['breadcrumbs'][] = ['label' => 'Sm Collection Files Texts', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$pre_url = Yii::$app->params['localandsm'];
 ?>
 <div class="sm-collection-files-text-view">
 
@@ -70,11 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'often_go',
             'annual_salary',
-            [                      // the owner name of the model
-                'label' => 'weima',
-                'format'=>'raw',
-                'value' => "<img src='http://13loveme.com$model[weima]'>",
-            ],
+
         ],
     ]) ?>
 
@@ -82,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row">
     <?php foreach ($model['img'] as $img):?>
         <div class="col-xs-2">
-            <img class="img-responsive" src="http://13loveme.com<?=$img['img_path']?>">
+            <img class="img-responsive" src="<?=$pre_url.$img['img_path']?>">
 
             <?= Html::a('Delete', ['delete-img', 'id' => $img['img_id']], [
                 'class' => 'btn btn-danger',

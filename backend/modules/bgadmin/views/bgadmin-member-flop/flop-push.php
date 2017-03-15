@@ -52,7 +52,7 @@
     function pushweixin(content){
 
         var con = $(content);
-        $.get('/index.php/bgadmin/bgadmin-member-flop/send-temp?openid='+con.attr('data-openid')+'&number='+con.attr('data-number'),function (data) {
+        $.get('/bgadmin/bgadmin-member-flop/send-temp?openid='+con.attr('data-openid')+'&number='+con.attr('data-number'),function (data) {
             var result = $.parseJSON(data);
             alert(result);
         });
@@ -60,7 +60,7 @@
     function deletepushweixin(content){
 
         var con = $(content);
-        $.get('/index.php/bgadmin/bgadmin-member-flop/delete-push-record?openid='+con.attr('data-openid')+'&number='+con.attr('data-number'),function (data) {
+        $.get('/bgadmin/bgadmin-member-flop/delete-push-record?openid='+con.attr('data-openid')+'&number='+con.attr('data-number'),function (data) {
             var result = $.parseJSON(data);
             alert(result);
         });

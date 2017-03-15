@@ -23,6 +23,7 @@ $this->registerCss("
     .container-fluid .row .col-sm-2{padding:0 10px 0 0;}
     .container-fluid{margin-left:0;}
 ");
+$pre_url = Yii::$app->params['imagetqlmm'];
 ?>
 
 <div class="bgadmin-member-view clearfix">
@@ -96,7 +97,7 @@ $this->registerCss("
                     <th><?=$file->weichat?></th><th><?=$file->cellphone?></th>
                     <th><?=$file->weibo?></th><th><?=$file->qq?></th>
                     <th><?=$file->email?></th>
-                    <th rowspan="7"><a href="http://13loveme.com<?=$file->weima?>" data-title="<?=$file->id?>" data-lightbox="s"><img style="width: 140px;" class="img-responsive" src="http://13loveme.com<?=$file->weima?>"></a></th>
+                    <th rowspan="7"><a href="<?=$pre_url.$file->weima?>" data-title="<?=$file->id?>" data-lightbox="s"><img style="width: 140px;" class="img-responsive" src="<?=$pre_url.$file->weima?>"></a></th>
                 </tr>
                 <tr>
                     <td>年龄</td><td>基础资料入库时间</td><td>基础资料更新时间</td>
@@ -137,7 +138,7 @@ $this->registerCss("
         </div>
         <div class="row">
             <?php foreach ($imgs as $img):?>
-                <div class="col-md-2" style="padding:10px;"><img style="width: 100px;" class="img-responsive" src="http://13loveme.com<?=$img['img']?>"></div>
+                <div class="col-md-2" style="padding:10px;"><img style="width: 100px;" class="img-responsive" src="<?=$pre_url.$img['img']?>"></div>
             <?php endforeach;?>
         </div>
         <?php elseif(!empty($file)&&$model->sex==1):?>
@@ -176,7 +177,7 @@ $this->registerCss("
             </div>
             <div class="row">
                 <?php foreach ($imgs['photos'] as $img):?>
-                    <div class="col-md-2" style="padding:10px;"><img class="img-responsive" src="<?=$img['path']?>"></div>
+                    <div class="col-md-2" style="padding:10px;"><img class="img-responsive" src="<?=$pre_url.$img['path']?>"></div>
                 <?php endforeach;?>
             </div>
 

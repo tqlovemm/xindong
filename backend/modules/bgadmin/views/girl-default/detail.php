@@ -2,7 +2,7 @@
 $this->registerCss("
     body,html,.login-page, .register-page{background-color:#fff;}
 ");
-
+$pre_url = Yii::$app->params['shisangirl'];
 if(Yii::$app->request->get('type')==1):
 ?>
 <table class="table table-bordered">
@@ -37,7 +37,7 @@ if(Yii::$app->request->get('type')==1):
     </table>
     <div class="row">
         <?php foreach ($photos as $photo):?>
-            <div class="col-xs-4"><a href="http://13loveme.com<?=$photo['img']?>" data-lightbox="d" data-title="s"><img class="img-responsive" src="http://13loveme.com<?=$photo['img']?>"></a></div>
+            <div class="col-xs-4"><a href="<?=$pre_url.$photo['img']?>" data-lightbox="d" data-title="s"><img class="img-responsive" src="<?=$pre_url.$photo['img']?>"></a></div>
         <?php endforeach;?>
     </div>
 

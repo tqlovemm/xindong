@@ -11,6 +11,7 @@ $this->registerCss('
     #main label{margin-bottom:0}
     .weui_cells{font-size:14px !important;}
 ');
+$pre_url = Yii::$app->params['localandsm'];
 ?>
 <link rel="stylesheet" href="/weui/dist/style/weui.min.css"/>
 <?php $this->registerJsFile('js/jquery.wallform.js', ['depends' => ['frontend\assets\AppAsset'], 'position' => $this::POS_HEAD]); ?>
@@ -34,7 +35,7 @@ $this->registerCss('
                                     if(!empty($img)):
                                         foreach ($img as $item):
                                             ?>
-                                            <img onclick="delete_img(<?=$item['img_id']?>)"  src="<?=$item['img_path']?>" data-id="<?=$item['img_id']?>" class="preview collecting-files-img">
+                                            <img onclick="delete_img(<?=$item['img_id']?>)"  src="<?=$pre_url.$item['img_path']?>" data-id="<?=$item['img_id']?>" class="preview collecting-files-img">
                                             <?php
                                         endforeach;
                                     endif;
@@ -64,7 +65,7 @@ $this->registerCss('
                             <div class="weui_uploader_bd">
                                 <div class="weui_uploader_files" id="preview_weima">
                                     <?php if(!empty($queries['weima'])):?>
-                                        <img src="<?=$queries['weima']?>" data-id="<?=$queries['member_id']?>" class="preview">
+                                        <img src="<?=$pre_url.$queries['weima']?>" data-id="<?=$queries['member_id']?>" class="preview">
                                     <?php endif;?>
                                 </div>
                                 <?php if(empty($queries['weima'])):?>

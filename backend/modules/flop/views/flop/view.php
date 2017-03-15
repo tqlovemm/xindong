@@ -128,7 +128,7 @@ $pre_url = Yii::$app->params['imagetqlmm'];
 
         }
     };
-    xhr.open('get','/index.php/flop/flop/updated?id='+$(this).attr('data-id'));
+    xhr.open('get','/flop/flop/updated?id='+$(this).attr('data-id'));
     xhr.send(null);
 
     });
@@ -137,7 +137,7 @@ $pre_url = Yii::$app->params['imagetqlmm'];
 
     	$.ajax({
 		    type: "POST",
-			url: "/index.php/flop/flop/save?id="+$('#flop-id').val(),
+			url: "/flop/flop/save?id="+$('#flop-id').val(),
 			data: {
 			    flop_id:$("#flop-area__number").val(),
 				number: $("#flop-number").val(),
