@@ -69,7 +69,7 @@ class User1Controller extends ActiveController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $pre_url = Yii::$app->params['appimages'];
         $avatar_path = $model->avatar;
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
 
@@ -86,7 +86,7 @@ class User1Controller extends ActiveController
             $qiniu = $qn->upload_app('appimages',"uploads/user/avatar/$mkdir",$savePath);
             @unlink($savePath);
 
-            $model->avatar = $qiniu['key'];
+            $model->avatar = $pre_url.$qiniu['key'];
         }
 
         if (!$model->save()) {
