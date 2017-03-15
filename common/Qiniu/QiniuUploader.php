@@ -1,6 +1,7 @@
 <?php
 namespace common\Qiniu;
 
+use common\Qiniu\Storage\BucketManager;
 use common\Qiniu\Storage\UploadManager;
 
 class QiniuUploader
@@ -38,6 +39,25 @@ class QiniuUploader
         } else {
             return $ret;
         }
+
+    }
+    public function upload_app($bucket,$key,$filePath){
+
+        $upToken = $this->Auth()->uploadToken($bucket);
+        $uploadMgr = new UploadManager();
+        list($ret, $err) = $uploadMgr->putFile($upToken, $key, $filePath);
+        if ($err !== null) {
+            var_dump($err);
+        } else {
+            return $ret;
+        }
+
+    }
+    public function delete($bucket,$key){
+
+        $deleteImg = new BucketManager($this->Auth());
+        $deleteImg->delete($bucket,$key);
+
 
     }
 
