@@ -51,7 +51,7 @@ $this->registerCss('
 
             }
         };
-        xhr.open('get','/index.php/dating/dating/dating-hide?id='+id);
+        xhr.open('get','/dating/dating/dating-hide?id='+id);
         xhr.send(null);
 
 
