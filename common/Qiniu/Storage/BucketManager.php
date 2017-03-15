@@ -3,6 +3,7 @@ namespace common\Qiniu\Storage;
 
 use common\Qiniu\Auth;
 use common\Qiniu\Config;
+use common\Qiniu\Qfunctions;
 use common\Qiniu\Zone;
 use common\Qiniu\Http\Client;
 use common\Qiniu\Http\Error;
@@ -16,10 +17,11 @@ final class BucketManager
 {
     private $auth;
     private $zone;
-
+    private $qf;
     public function __construct(Auth $auth, Zone $zone = null)
     {
         $this->auth = $auth;
+        $this->qf = new Qfunctions();
         if ($zone === null) {
             $this->zone = new Zone();
         }
@@ -58,10 +60,10 @@ final class BucketManager
     public function listFiles($bucket, $prefix = null, $marker = null, $limit = 1000, $delimiter = null)
     {
         $query = array('bucket' => $bucket);
-        \Qiniu\setWithoutEmpty($query, 'prefix', $prefix);
-        \Qiniu\setWithoutEmpty($query, 'marker', $marker);
-        \Qiniu\setWithoutEmpty($query, 'limit', $limit);
-        \Qiniu\setWithoutEmpty($query, 'delimiter', $delimiter);
+        $this->qf->setWithoutEmpty($query, 'prefix', $prefix);
+        $this->qf->setWithoutEmpty($query, 'marker', $marker);
+        $this->qf->setWithoutEmpty($query, 'limit', $limit);
+        $this->qf->setWithoutEmpty($query, 'delimiter', $delimiter);
         $url = Config::RSF_HOST . '/list?' . http_build_query($query);
         list($ret, $error) = $this->get($url);
         if ($ret === null) {
@@ -89,7 +91,7 @@ final class BucketManager
      */
     public function stat($bucket, $key)
     {
-        $path = '/stat/' . \Qiniu\entry($bucket, $key);
+        $path = '/stat/' . $this->qf->entry($bucket, $key);
         return $this->rsGet($path);
     }
 
@@ -104,7 +106,7 @@ final class BucketManager
      */
     public function delete($bucket, $key)
     {
-        $path = '/delete/' . \Qiniu\entry($bucket, $key);
+        $path = '/delete/' . $this->qf->entry($bucket, $key);
         list(, $error) = $this->rsPost($path);
         return $error;
     }
@@ -137,8 +139,8 @@ final class BucketManager
      */
     public function copy($from_bucket, $from_key, $to_bucket, $to_key, $force = false)
     {
-        $from = \Qiniu\entry($from_bucket, $from_key);
-        $to = \Qiniu\entry($to_bucket, $to_key);
+        $from = $this->qf->entry($from_bucket, $from_key);
+        $to = $this->qf->entry($to_bucket, $to_key);
         $path = '/copy/' . $from . '/' . $to;
         if ($force) {
             $path .= '/force/true';
@@ -160,8 +162,8 @@ final class BucketManager
      */
     public function move($from_bucket, $from_key, $to_bucket, $to_key, $force = false)
     {
-        $from = \Qiniu\entry($from_bucket, $from_key);
-        $to = \Qiniu\entry($to_bucket, $to_key);
+        $from = $this->qf->entry($from_bucket, $from_key);
+        $to = $this->qf->entry($to_bucket, $to_key);
         $path = '/move/' . $from . '/' . $to;
         if ($force) {
             $path .= '/force/true';
@@ -182,8 +184,8 @@ final class BucketManager
      */
     public function changeMime($bucket, $key, $mime)
     {
-        $resource = \Qiniu\entry($bucket, $key);
-        $encode_mime = \Qiniu\base64_urlSafeEncode($mime);
+        $resource = $this->qf->entry($bucket, $key);
+        $encode_mime = $this->qf->base64_urlSafeEncode($mime);
         $path = '/chgm/' . $resource . '/mime/' .$encode_mime;
         list(, $error) = $this->rsPost($path);
         return $error;
@@ -214,8 +216,8 @@ final class BucketManager
     public function fetch($url, $bucket, $key = null)
     {
 
-        $resource = \Qiniu\base64_urlSafeEncode($url);
-        $to = \Qiniu\entry($bucket, $key);
+        $resource = $this->qf->base64_urlSafeEncode($url);
+        $to = $this->qf->entry($bucket, $key);
         $path = '/fetch/' . $resource . '/to/' . $to;
 
         $ak = $this->auth->getAccessKey();
@@ -236,7 +238,7 @@ final class BucketManager
      */
     public function prefetch($bucket, $key)
     {
-        $resource = \Qiniu\entry($bucket, $key);
+        $resource = $this->qf->entry($bucket, $key);
         $path = '/prefetch/' . $resource;
 
         $ak = $this->auth->getAccessKey();
@@ -281,7 +283,7 @@ final class BucketManager
      */
     public function deleteAfterDays($bucket, $key, $days)
     {
-        $entry = \Qiniu\entry($bucket, $key);
+        $entry = $this->qf->entry($bucket, $key);
         $url = "/deleteAfterDays/$entry/$days";
         list(, $error) = $this->rsPost($url);
         return $error;
@@ -357,22 +359,31 @@ final class BucketManager
 
     private static function oneKeyBatch($operation, $bucket, $keys)
     {
+        $qf = new Qfunctions();
         $data = array();
         foreach ($keys as $key) {
-            array_push($data, $operation . '/' . \Qiniu\entry($bucket, $key));
+            array_push($data, $operation . '/' . $qf->entry($bucket, $key));
         }
         return $data;
     }
 
+    /**
+     * @param $operation
+     * @param $source_bucket
+     * @param $key_pairs
+     * @param $target_bucket
+     * @return array
+     */
     private static function twoKeyBatch($operation, $source_bucket, $key_pairs, $target_bucket)
     {
+        $qf = new Qfunctions();
         if ($target_bucket === null) {
             $target_bucket = $source_bucket;
         }
         $data = array();
         foreach ($key_pairs as $from_key => $to_key) {
-            $from = \Qiniu\entry($source_bucket, $from_key);
-            $to = \Qiniu\entry($target_bucket, $to_key);
+            $from = $qf->entry($source_bucket, $from_key);
+            $to = $qf->entry($target_bucket, $to_key);
             array_push($data, $operation . '/' . $from . '/' . $to);
         }
         return $data;
