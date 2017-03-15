@@ -3,6 +3,7 @@
 namespace api\modules\v2\controllers;
 
 use api\modules\v2\models\User;
+use common\Qiniu\QiniuUploader;
 use Yii;
 use yii\db\Query;
 use yii\rest\ActiveController;
@@ -68,22 +69,24 @@ class User1Controller extends ActiveController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
+        $avatar_path = $model->avatar;
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
 
         if(!empty(Yii::$app->request->post('avatar'))){
-            $images = $model->avatar;
-            $pathStr = "uploads/user/avatar";
-
-            if ( !file_exists( $pathStr ) ) {
-                if ( !mkdir( $pathStr , 0777 , true ) ) {
-                    return false;
-                }
+            $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+            if(!empty($avatar_path)){
+                $qn->delete('test',$avatar_path);
             }
-            $savePath = $pathStr.'/'.$id.'_'.time().rand(1,10000).'.jpg';
-            file_put_contents($savePath,base64_decode($images));
-            $abs_path = Yii::$app->params['hostname'].'/'.$savePath;//Yii::$app->request->getHostInfo().
+            $pathStr = "uploads/user/avatar";
+            $savePath = $pathStr.'/'.time().rand(1,10000).'.jpg';
+            file_put_contents($savePath,base64_decode($model->avatar));
+            $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.md5($id).rand(1000,9999);
 
-            $model->avatar = $abs_path;
+            $qiniu = $qn->upload_app('test',"uploads/user/avatar/$mkdir",$savePath);
+            @unlink($savePath);
+
+            $model->avatar = $qiniu['key'];
         }
 
         if (!$model->save()) {
