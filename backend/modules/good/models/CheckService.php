@@ -71,18 +71,7 @@ class CheckService extends \yii\db\ActiveRecord
     public function upload(){
 
         $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
-        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
-        $qiniu = $qn->upload('threadimages',"uploads/weixin_avatar/$mkdir");
-    /*    $config = [
-            'savePath' =>   Yii::getAlias('@webroot/uploads/weixin_avatar'),
-            'maxSize'   =>  5000,
-            'allowFiles'    =>  ['.jpg','.png','jpeg'],
-        ];*/
 
- /*       $up = new MyUpload('file',$config,'');
-        $info = $up->getFileInfo();*/
-
-        $path = $qiniu['key'];
         $exist = $this->findOne($this->id);
         if(!empty($exist['avatar'])){
             try{
@@ -93,7 +82,9 @@ class CheckService extends \yii\db\ActiveRecord
             }
 
         }
-        $this->avatar = $path;
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
+        $qiniu = $qn->upload('threadimages',"uploads/weixin_avatar/$mkdir");
+        $this->avatar = $qiniu['key'];
         $this->save();
     }
 }
