@@ -76,14 +76,14 @@ class User1Controller extends ActiveController
         if(!empty(Yii::$app->request->post('avatar'))){
             $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
             if(!empty($avatar_path)){
-                $qn->delete('test',$avatar_path);
+                $qn->delete('appimages',$avatar_path);
             }
             $pathStr = "uploads";
             $savePath = $pathStr.'/'.time().rand(1,10000).'.jpg';
             file_put_contents($savePath,base64_decode($model->avatar));
             $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.md5($id).rand(1000,9999);
 
-            $qiniu = $qn->upload_app('test',"uploads/user/avatar/$mkdir",$savePath);
+            $qiniu = $qn->upload_app('appimages',"uploads/user/avatar/$mkdir",$savePath);
             @unlink($savePath);
 
             $model->avatar = $qiniu['key'];
