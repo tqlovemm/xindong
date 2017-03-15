@@ -3,6 +3,7 @@
 namespace backend\modules\good\models;
 
 use backend\components\MyUpload;
+use common\Qiniu\QiniuUploader;
 use Yii;
 
 /**
@@ -68,24 +69,24 @@ class CheckService extends \yii\db\ActiveRecord
 
     public function upload(){
 
-        $config = [
+        $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
+        $qiniu = $qn->upload('threadimages',"uploads/weixin_avatar/$mkdir");
+    /*    $config = [
             'savePath' =>   Yii::getAlias('@webroot/uploads/weixin_avatar'),
             'maxSize'   =>  5000,
             'allowFiles'    =>  ['.jpg','.png','jpeg'],
-        ];
+        ];*/
 
-        $up = new MyUpload('file',$config,'');
-        $info = $up->getFileInfo();
+ /*       $up = new MyUpload('file',$config,'');
+        $info = $up->getFileInfo();*/
 
-        $path = "http://13loveme.com:82".Yii::getAlias('@web/uploads/weixin_avatar/').$info['name'];
+        $path = $qiniu['key'];
         $exist = $this->findOne($this->id);
         if(!empty($exist['avatar'])){
-            $delPath = explode("http://13loveme.com:82",$exist['avatar']);
-            $delPath = Yii::getAlias('@webroot').$delPath[1];
-            unlink($delPath);
+            $qn->delete('threadimages',$exist['avatar']);
         }
         $this->avatar = $path;
         $this->save();
-
     }
 }
