@@ -778,13 +778,9 @@ class SiteController extends BaseController
     public function actionSendLoginCode(){
         $mobile = Yii::$app->request->post('mobile');
         $type = Yii::$app->request->post('type');
-        $ip = Yii::$app->getRequest()->getUserIP();
         $saveToForm = new SendMobileCode();
-        $queryIP = $saveToForm::find()->where(['ip'=>$ip,'created_at'=>strtotime('today')])->count();
         $queryMobile = $saveToForm::find()->where(['mobile'=>$mobile,'created_at'=>strtotime('today')])->count();
-        if($queryIP>7){
-            $data = json_encode(array('statusCode'=>130012,'statusMsg'=>'今日所发短信数量超出平台限制'));
-        }elseif($queryMobile>3){
+        if($queryMobile>5){
             $data = json_encode(array('statusCode'=>130013,'statusMsg'=>'该手机今日所发短信数量超出平台上限'));
         }else{
             if($type=='reset'){
