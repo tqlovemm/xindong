@@ -121,11 +121,6 @@ $rand_url = AccessToken::antiBlocking();
             var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
         })();
-
-        $(window).load(function(){
-            $(".loading").addClass("loader-chanage");
-            $(".loading").fadeOut(200);
-        });
     </script>
 
 </head>
@@ -167,17 +162,6 @@ $rand_url = AccessToken::antiBlocking();
 
  <!--   <div id="top" class=" visible-md visible-lg"></div>-->
 <?php $this->beginBody() ?>
-    <div class="loading loader-chanage">
-        <div class="loader">
-            <div class="loader-inner pacman">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-        </div>
-    </div>
     <?= $content ?>
 <?php $this->endBody() ?>
     <footer>

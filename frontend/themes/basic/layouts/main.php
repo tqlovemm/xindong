@@ -58,10 +58,6 @@ if(isset($_GET['top'])&&$_GET['top']=='bottom'){
             var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
         })();
-        window.onload = function(){
-            $(".loading").addClass("loader-chanage");
-            $(".loading").fadeOut(300);
-        }
     </script>
 
 </head>
@@ -73,17 +69,6 @@ if(isset($_GET['top'])&&$_GET['top']=='bottom'){
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
-            <div class="loading loader-chanage">
-                <div class="loader">
-                    <div class="loader-inner pacman">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </div>
-                </div>
-            </div>
         <?= $content ?>
         </div>
     </div>
