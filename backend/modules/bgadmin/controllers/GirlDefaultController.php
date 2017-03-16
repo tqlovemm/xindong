@@ -491,15 +491,13 @@ class GirlDefaultController extends Controller
      */
     public function actionDelete($id)
     {
-        if(Yii::$app->user->id==10000){
+
             $model = $this->findModel($id);
             if($model->delete()){
                 $data_arr = array('description'=>"删除一个十三平台后台跟踪会员信息,会员编号：{$model->number}",'data'=>json_encode($model->attributes),'old_data'=>'','new_data'=>'','type'=>2);
                 AddRecord::record($data_arr);
             }
-        }else{
-            throw new ForbiddenHttpException('禁止操作');
-        }
+
         return $this->redirect(['index']);
     }
 
