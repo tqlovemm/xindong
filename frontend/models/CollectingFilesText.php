@@ -128,7 +128,8 @@ class CollectingFilesText extends \yii\db\ActiveRecord
     {
 
         $qn = new QiniuUploader('photoimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
-        $qiniu = $qn->upload('tqlmm',"uploads/collecting/$this->id");
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
+        $qiniu = $qn->upload('tqlmm',"uploads/collecting/$mkdir");
 
         //存入数据库
         $files_img = new CollectingFilesImg();
