@@ -3,6 +3,7 @@
 namespace frontend\modules\member\controllers;
 
 use backend\modules\dating\models\RechargeRecord;
+use common\Qiniu\QiniuUploader;
 use frontend\models\UserAvatarCheck;
 use Yii;
 use yii\base\Model;
@@ -54,13 +55,24 @@ class SettingController extends BaseController
         $model = $this->findModel();
         $profile = Profile::find()->where(['user_id' => $model->id])->one();
 
-
+        $pre_url = Yii::$app->params['appimages'];
         //上传头像
-        Yii::setAlias('@upload', '@webroot/uploads/user/avatar/');
+       // Yii::setAlias('@upload', '@webroot/uploads/user/avatar/');
 
         if (Yii::$app->request->isPost && !empty($_FILES)) {
 
-            $extension = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
+            $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+
+            if(!empty($model->avatar)){
+                $avatar = str_replace($pre_url,'',$model->avatar);
+                try{
+                    $qn->delete('appimages',$avatar);
+                }catch (\Error $e){
+
+                }
+            }
+
+      /*     $extension = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
 
             if($extension=='jpeg'||$extension=='JPEG'){
                 $extension='jpg';
@@ -69,11 +81,15 @@ class SettingController extends BaseController
 
             Image::thumbnail($_FILES['file']['tmp_name'], 160, 160)->save(Yii::getAlias('@upload') . $fileName, ['quality' => 80]);
 
+
             //删除旧头像
             if (file_exists(Yii::getAlias('@upload').$model->avatar) && (strpos($model->avatar, 'default') === false))
-                @unlink(Yii::getAlias('@upload').$model->avatar);
+                @unlink(Yii::getAlias('@upload').$model->avatar);*/
 
-            $model->avatar = Yii::$app->request->getHostInfo().'/uploads/user/avatar/'.$fileName;
+            $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$model->id;
+            $qiniu = $qn->upload('appimages',"uploads/user/avatar/$mkdir");
+
+            $model->avatar = $pre_url.$qiniu['key'];
 
             $model->update();
         }
@@ -305,29 +321,7 @@ class SettingController extends BaseController
         return $this->render('avatar-update',['model'=>$model,'status'=>$ex->status]);
     }
 
-    public function actionT(){
 
-        $ex = UserAvatarCheck::findOne(['user_id'=>Yii::$app->user->id]);
-        if(empty($ex)){
-
-
-
-        }
-
-
-
-        $user_avatar = new UserAvatarCheck();
-        $user_avatar->user_id = Yii::$app->user->id;
-        $user_avatar->file = "ddd";
-
-        if($user_avatar->save()){
-
-            return 'sssssss';
-        }
-
-        return 'fffffffffff';
-
-    }
     protected function findModel()
     {
         return User::findOne(Yii::$app->user->id);
