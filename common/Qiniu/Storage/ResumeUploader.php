@@ -4,6 +4,7 @@ namespace common\Qiniu\Storage;
 use common\Qiniu\Config;
 use common\Qiniu\Http\Client;
 use common\Qiniu\Http\Error;
+use common\Qiniu\Qfunctions;
 
 /**
  * 断点续上传类, 该类主要实现了断点续上传中的分块上传,
@@ -67,6 +68,7 @@ final class ResumeUploader
      */
     public function upload()
     {
+        $qf = new Qfunctions();
         $uploaded = 0;
         while ($uploaded < $this->size) {
             $blockSize = $this->blockSize($uploaded);
@@ -74,7 +76,7 @@ final class ResumeUploader
             if ($data === false) {
                 throw new \Exception("file read failed", 1);
             }
-            $crc = \Qiniu\crc32_data($data);
+            $crc = $qf->crc32_data($data);
             $response = $this->makeBlock($data, $blockSize);
             $ret = null;
             if ($response->ok() && $response->json() != null) {
@@ -112,14 +114,15 @@ final class ResumeUploader
 
     private function fileUrl()
     {
+        $qf = new Qfunctions();
         $url = $this->host . '/mkfile/' . $this->size;
-        $url .= '/mimeType/' . \Qiniu\base64_urlSafeEncode($this->mime);
+        $url .= '/mimeType/' . $qf->base64_urlSafeEncode($this->mime);
         if ($this->key != null) {
-            $url .= '/key/' . \Qiniu\base64_urlSafeEncode($this->key);
+            $url .= '/key/' . $qf->base64_urlSafeEncode($this->key);
         }
         if (!empty($this->params)) {
             foreach ($this->params as $key => $value) {
-                $val =  \Qiniu\base64_urlSafeEncode($value);
+                $val =  $qf->base64_urlSafeEncode($value);
                 $url .= "/$key/$val";
             }
         }
