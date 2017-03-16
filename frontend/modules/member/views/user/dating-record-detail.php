@@ -20,7 +20,7 @@ $this->registerCss("
 
     }
 ");
-$avatar = str_replace('http://www.13loveme.com:82/',$pre_url,$extra['avatar']);
+$avatar = str_replace($pre_url,'http://www.13loveme.com:82/',$extra['avatar']);
 ?>
 <div class="row member-center">
     <header>
