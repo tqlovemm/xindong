@@ -245,7 +245,7 @@ $this->registerCss('
 
                                         }
                                 };
-                                xhr.open('get','/index.php/flop/ajax-area?local=<?=$area?>&id='+mem_id);
+                                xhr.open('get','/flop/ajax-area?local=<?=$area?>&id='+mem_id);
                                 xhr.send(null);
 
                         });
@@ -282,15 +282,15 @@ $this->registerCss('
 
                                 if(active==0){
 
-                                        xhr.open('get','/index.php/flop/ajax-carefully?type=0');
+                                        xhr.open('get','/flop/ajax-carefully?type=0');
 
                                 }else if(active==1){
 
-                                        xhr.open('get','/index.php/flop/ajax-carefully?type=1');
+                                        xhr.open('get','/flop/ajax-carefully?type=1');
 
                                 }else if(active==2){
 
-                                        xhr.open('get','/index.php/flop/ajax-carefully?type=2');
+                                        xhr.open('get','/flop/ajax-carefully?type=2');
 
                                 }
 
@@ -343,13 +343,13 @@ $this->registerCss('
                         if(type==1){
 
                                 /*喜欢*/
-                                xhr.open('get','/index.php/flop/flop-like?id='+id);
+                                xhr.open('get','/flop/flop-like?id='+id);
 
 
                         }else if(type==0) {
 
                                 /*不喜欢*/
-                                xhr.open('get','/index.php/flop/flop-nope?id='+id);
+                                xhr.open('get','/flop/flop-nope?id='+id);
 
                         }
 
@@ -371,14 +371,14 @@ $this->registerCss('
 
                         if(val==0){
 
-                                xhr.open('get','/index.php/flop/ajax-carefully?type=0');
+                                xhr.open('get','/flop/ajax-carefully?type=0');
 
                         }else if(val==1){
 
-                                xhr.open('get','/index.php/flop/ajax-carefully?type=1');
+                                xhr.open('get','/flop/ajax-carefully?type=1');
 
                         } else if(val==2){
-                                xhr.open('get','/index.php/flop/ajax-carefully?type=2');
+                                xhr.open('get','/flop/ajax-carefully?type=2');
 
                         }
 
@@ -405,7 +405,7 @@ $this->registerCss('
                                 }
                         };
 
-                        xhr.open('get','/index.php/flop/add-flop-list?id='+id);
+                        xhr.open('get','/flop/add-flop-list?id='+id);
 
                         xhr.send(null);
 
