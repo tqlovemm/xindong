@@ -2,6 +2,7 @@
 
 $this->title = '联系我们';
 $this->params['breadcrumbs'][] = $this->title;
+$pre_url = Yii::$app->params['threadimg'];
 $this->registerCss('
 
         .left{float:left;}
@@ -69,7 +70,7 @@ if ($this->beginCache($id=29, ['dependency' => $dependency])) :?>
             </div>
         </div>
         <div class="col-md-5">
-            <img class="img-responsive center-block" src="http://13loveme.com:82<?=$boy[0]->path?>"  width="200" style="margin-top: 10px;">
+            <img class="img-responsive center-block" src="<?=$pre_url.$boy[0]->path?>"  width="200" style="margin-top: 10px;">
             <div class="clearfix"></div>
             <h5 class="text-success text-center" style="letter-spacing: 1.1em;">只要你有需求，十三平台与你同在</h5>
         </div>
@@ -77,6 +78,6 @@ if ($this->beginCache($id=29, ['dependency' => $dependency])) :?>
 </div>
 
 <div class="container visible-xs visible-sm" style="padding: 0;">
-    <img class="img-responsive center-block" src="http://13loveme.com:82<?=$boy_phone[0]->path?>">
+    <img class="img-responsive center-block" src="<?=$pre_url.$boy_phone[0]->path?>">
 </div>
 <?php $this->endCache();endif;?>
