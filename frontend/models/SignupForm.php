@@ -121,6 +121,7 @@ class SignupForm extends Model
      */
     public function signup()
     {
+        $pre_url = Yii::$app->params['appimages'];
         if ($this->validate()) {
 
             $user = new User();
@@ -130,7 +131,7 @@ class SignupForm extends Model
             $user->none = md5(md5($this->password).'13loveme');
             $user->setPassword($this->password);
             $user->generateAuthKey();
-            $user->avatar = Yii::$app->request->getHostInfo().'/uploads/user/avatar/default/' . rand(1, 40) . '.jpg';
+            $user->avatar = $pre_url.'uploads/user/avatar/default/' . rand(1, 40) . '.jpg';
             $user->save();
             return $user;
         }
@@ -138,7 +139,7 @@ class SignupForm extends Model
     }
 
     public function emailSignup(){
-
+        $pre_url = Yii::$app->params['appimages'];
         if ($this->validate()) {
             if($this->email==''){
                 $this->addError('cellphone','该手机号码非短信验证号码');
@@ -150,7 +151,7 @@ class SignupForm extends Model
             $user->none = md5(md5($this->password).'13loveme');
             $user->setPassword($this->password);
             $user->generateAuthKey();
-            $user->avatar = Yii::$app->request->getHostInfo().'/uploads/user/avatar/default/' . rand(1, 40) . '.jpg';
+            $user->avatar = $pre_url.'uploads/user/avatar/default/' . rand(1, 40) . '.jpg';
             $user->save();
             return $user;
         }
