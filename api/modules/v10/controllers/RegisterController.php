@@ -41,7 +41,7 @@ class RegisterController extends Controller
     //用户注册
     public function actionCreate()
     {
-
+        $pre_url = Yii::$app->params['appimages'];
         /**
          * cellphone,password_hash,avatar,sex,birthdate,username.
          */
@@ -78,8 +78,8 @@ class RegisterController extends Controller
         file_put_contents($path_1.$t.'.jpg',$avatar);
         $avatar_path = $path_1.$t.'.jpg';
         $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$model->username;
-        $qiniu = $qn->upload_app('test','uploads/user/avatar/'.$mkdir,$avatar_path);
-        $model->avatar = $qiniu['key'];
+        $qiniu = $qn->upload_app('appimages','uploads/user/avatar/'.$mkdir,$avatar_path);
+        $model->avatar = $pre_url.$qiniu['key'];
         @unlink($avatar_path);
         if (!$model->save()) {
 
