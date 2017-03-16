@@ -104,7 +104,7 @@ $pre_url = Yii::$app->params['shisangirl'];
 <script src="/js/datejs/amazeui.js"></script>
 
 <div id="weima" style="position: absolute;top:0;left:0;z-index: 1;width: 100%;height: 100%;background-color: rgba(125, 125, 125, 0.62);">
-    <img style="width: 90%;border: 1px solid #ddd;border-radius: 4px;" class="center-block" src="<?=$pre_url.$weima?>">
+    <img style="width: 90%;border: 1px solid #ddd;border-radius: 4px;" class="center-block" src="<?=$pre_url.$file?>">
 </div>
 <?php
 
@@ -144,7 +144,7 @@ $pre_url = Yii::$app->params['shisangirl'];
             <div class="col-xs-4" style="padding:0 5px;">
                 <img style="width: 50px;" src="/images/dating/jietu.png">
             </div>
-            <a href="<?=$pre_url.$weima?>" data-title="女生微信二维码" data-lightbox="s" class="col-xs-8">
+            <a href="<?=$pre_url.$file?>" data-title="女生微信二维码" data-lightbox="s" class="col-xs-8">
                 <h6 style="margin-top: 5px;font-weight: bold;color: #E83F78;">微信二维码</h6>
                 <h5 style="margin-bottom: 0;font-weight: bold;">二维码图片</h5>
             </a>
