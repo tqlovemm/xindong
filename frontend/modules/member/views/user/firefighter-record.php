@@ -1,7 +1,7 @@
 <?php
 use shiyang\masonry\Masonry;
 $this->title = "救火福利";
-$pre_url = Yii::$app->params['shisangirl'];
+$pre_url = Yii::$app->params['threadimg'];
 ?>
     <link rel="stylesheet" href="<?=Yii::getAlias("@web")?>/js/more/pullToRefresh.css" />
     <script src="<?=Yii::getAlias("@web")?>/js/more/iscroll.js"></script>

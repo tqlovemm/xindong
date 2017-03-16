@@ -18,7 +18,7 @@ $this->registerCss("
 
     }
 ");
-$pre_url = Yii::$app->params['shisangirl'];
+$pre_url = Yii::$app->params['threadimg'];
 $avatar = str_replace('http://www.13loveme.com:82/',$pre_url,$model->pic_path);
 ?>
 
