@@ -39,6 +39,7 @@ $this->registerCss('
         #flop-choice-lists li span{color:#EB444E;}
 
 ');
+$pre_url = Yii::$app->params['imagetqlmm'];
 ?>
 
 <div class="container container-box" style="position: relative;">
@@ -211,8 +212,8 @@ $this->registerCss('
                                                     "<div class='demo__card'>"+
                                                     "<div class='member__id2 hide'>"+data.id+"</div>"+
                                                     "<div class='demo__card__top brown'>"+
-                                                    "<a class='flop__img_tan' href='"+data.content+"' data-title='编号:"+data.number+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+data.weight+"kg/"+data.height+"cm"+"' data-lightbox='sdf'>" +
-                                                    "<div class='demo__card__img' style='background-image: url("+data.content+");background-size: cover;background-repeat: no-repeat;'></div></a>"+
+                                                    "<a class='flop__img_tan' href='<?=$pre_url?>"+data.content+"' data-title='编号:"+data.number+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+data.weight+"kg/"+data.height+"cm"+"' data-lightbox='sdf'>" +
+                                                    "<div class='demo__card__img' style='background-image: url(<?=$pre_url?>"+data.content+");background-size: cover;background-repeat: no-repeat;'></div></a>"+
                                                     "<div class='demo__card__info' style='padding:10px;'>"+
                                                     "<div class='pull-left'><span>编号："+data.number+"</span></div>"+
                                                     "<div class='pull-right'><span>点击查看大图</span></div>"+
@@ -314,8 +315,8 @@ $this->registerCss('
                                             "<div class='demo__card'>"+
                                             "<div class='member__id2 hide'>"+data.id+"</div>"+
                                             "<div class='demo__card__top brown'>"+
-                                            "<a class='flop__img_tan' href='"+data.content+"' data-title='编号:"+data.number+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+data.weight+"kg/"+data.height+"cm"+"' data-lightbox='sdf'>" +
-                                            "<div class='demo__card__img' style='background-image: url("+data.content+");background-size: cover;background-repeat: no-repeat;'></div></a>"+
+                                            "<a class='flop__img_tan' href='<?=$pre_url?>"+data.content+"' data-title='编号:"+data.number+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+data.weight+"kg/"+data.height+"cm"+"' data-lightbox='sdf'>" +
+                                            "<div class='demo__card__img' style='background-image: url(<?=$pre_url?>"+data.content+");background-size: cover;background-repeat: no-repeat;'></div></a>"+
                                             "<div class='demo__card__info' style='padding:10px;'>"+
                                             "<div class='pull-left'><span>编号："+data.number+"</span></div>"+
                                             "<div class='pull-right'><span>"+data.weight+"kg</span> / <span>"+data.height+"cm</span></div>"+
