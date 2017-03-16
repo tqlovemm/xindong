@@ -9,6 +9,7 @@
 namespace api\modules\v10\controllers;
 
 use api\modules\v2\models\Profile;
+use common\Qiniu\QiniuUploader;
 use Yii;
 use yii\db\Query;
 use yii\myhelper\Easemob;
@@ -70,14 +71,18 @@ class RegisterController extends Controller
         $model->nickname = $model->username;
         $model->none = $model->password_hash;
 
+        $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
         $avatar = base64_decode($model->avatar);
-        $path_1 ='/uploads/user/avatar/';
-        $path = Yii::getAlias('@apiweb').$path_1;
+        $path_1 ='uploads/';
         $t = time();
-        file_put_contents($path.$t.'.jpg',$avatar,FILE_USE_INCLUDE_PATH);
-        $model->avatar = Yii::$app->params['hostname'].$path_1.$t.'.jpg';
-
+        file_put_contents($path_1.$t.'.jpg',$avatar);
+        $avatar_path = $path_1.$t.'.jpg';
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$model->username;
+        $qiniu = $qn->upload_app('test','uploads/user/avatar/'.$mkdir,$avatar_path);
+        $model->avatar = $qiniu['key'];
+        @unlink($avatar_path);
         if (!$model->save()) {
+
             $str = array(
                 'code'  =>  '201',
                 'message'   =>  '注册失败'.array_values($model->getFirstErrors())[0],
