@@ -70,7 +70,7 @@ class ChangeUserInfoController extends Controller
                 foreach ($old_images as $oimg){
                     try{
                         $replace_img = str_replace($pre_url,'',$oimg['img_url']);
-                        $qn->delete('test',$replace_img);
+                        $qn->delete('appimages',$replace_img);
                     }catch (\Error $e){
 
                     }
@@ -85,7 +85,7 @@ class ChangeUserInfoController extends Controller
                 $location = $pathStr.time().rand(1,10000).'.jpg';
                 file_put_contents($location,base64_decode($item));
                 $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$id.'_'.md5(rand(1000,9999));
-                $qiniu = $qn->upload_app('test','uploads/user/files/'.$mkdir,$location);
+                $qiniu = $qn->upload_app('appimages','uploads/user/files/'.$mkdir,$location);
                 $path = $pre_url.$qiniu['key'];
                 Yii::$app->db->createCommand('insert into pre_user_image(user_id,img_url,created_at,updated_at) values('.$id.','."'$path'".','.time().','.time().')')->execute();
                 @unlink($location);
