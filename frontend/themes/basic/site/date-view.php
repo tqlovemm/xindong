@@ -283,10 +283,10 @@ $pre_url = Yii::$app->params['shisangirl'];
                         <div class="col-xs-4" style="padding:0 5px;">
                             <img style="width: 50px;" src="/images/dating/no.png">
                         </div>
-                       <!-- <div class="col-xs-8">
+                        <div class="col-xs-8">
                             <h6 style="margin-top: 5px;font-weight: bold;color: #E83F78;">妹子编号</h6>
-                            <h5 style="margin-bottom: 0;font-weight: bold;"><?/*=$contents['number']*/?></h5>
-                        </div>-->
+                            <h5 style="margin-bottom: 0;font-weight: bold;"><?=$contents['number']?></h5>
+                        </div>
                     </div>
                 </div>
                 <?php $chat = !empty($photos_chat['photos'])?$photos_chat['photos'][0]['path']:'';?>
