@@ -248,9 +248,9 @@ class SiteController extends BaseController
     public function actionDatePast($title,$where=""){
 
         $this->layout='/basic';
-        if($where==""){
+        /*if($where==""){
             $this->encryption(Yii::$app->request->hostInfo.Yii::$app->request->url);
-        }
+        }*/
 
 
         $query = Dating::find()->select('id,number,title,content,url,created_at,avatar,worth,cover_id')->where(['status' => 2,'title'=>$title])->andWhere(['in','cover_id',[0,-1]])->orderBy('updated_at desc');
