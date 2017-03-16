@@ -358,7 +358,7 @@ $pre_url = Yii::$app->params['shisangirl'];
                         </div>
                     <?php else:?>
                         <div class="row" style="margin-top: 30px;">
-                            <div class="dating__signup" data-sum="<?=$dating_signup_num?>" data-content="<?=$content?>" data-worth="<?=$contents['worth']?>" data-avatar="<?=$contents['avatar']?>" data-toggle="modal" data-target="<?=$modal?>" data-number="<?=$contents['number']?>">
+                            <div class="dating__signup" data-sum="<?=$dating_signup_num?>" data-content="<?=$content?>" data-worth="<?=$contents['worth']?>" data-avatar="<?=$pre_url.$contents['avatar']?>" data-toggle="modal" data-target="<?=$modal?>" data-number="<?=$contents['number']?>">
                                 <div style="width: 40%;background-color: #fff;border-radius: 30px;text-align: center;color:#E83F78;margin: auto;padding:10px 0;font-size: 18px;box-shadow: 0 0 10px #d2d2d2;">
                                     <span class="glyphicon glyphicon-plus"></span> 求推荐
                                 </div>

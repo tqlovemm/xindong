@@ -262,7 +262,7 @@ $pre_url = Yii::$app->params['shisangirl'];
                             <?php if($dating_signup_num>=10||$item['cover_id']==-1):?>
                                 <div class="col-xs-6" style="padding: 8px 0;"><?=$operate?></div>
                             <?php else:?>
-                                    <div class="col-xs-6 dating__signup" data-sum="<?=$dating_signup_num?>" data-content="<?=$content?>" data-worth="<?=$item['worth']?>" data-avatar="<?=$item['avatar']?>" data-toggle="modal" data-target="<?=$modal?>" style="padding: 8px 0;" data-number="<?=$item['number']?>">
+                                    <div class="col-xs-6 dating__signup" data-sum="<?=$dating_signup_num?>" data-content="<?=$content?>" data-worth="<?=$item['worth']?>" data-avatar="<?=$pre_url.$item['avatar']?>" data-toggle="modal" data-target="<?=$modal?>" style="padding: 8px 0;" data-number="<?=$item['number']?>">
                                         <span class="glyphicon glyphicon-plus" style="font-size: 12px;"></span>求推荐
                                     </div>
                             <?php endif;?>
