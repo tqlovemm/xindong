@@ -19,6 +19,7 @@ $this->registerCss("
     }
 ");
 $pre_url = Yii::$app->params['shisangirl'];
+$avatar = str_replace('http://www.13loveme.com:82/',$pre_url,$model->pic_path);
 ?>
 
 <div class="row member-center">
@@ -44,7 +45,7 @@ $pre_url = Yii::$app->params['shisangirl'];
 </script>
 
 <div class="row fail-content">
-    <img class="img-responsive center-block" src="<?=$pre_url.$model->pic_path?>">
+    <img class="img-responsive center-block" src="<?=$avatar?>">
     <h5>地区：<?=$model->name?></h5>
     <h5>交友要求：<?=$model->content?></h5>
     <h5>交友结果：<?=$status?></h5>

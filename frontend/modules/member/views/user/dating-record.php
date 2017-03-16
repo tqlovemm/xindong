@@ -39,7 +39,11 @@ $pre_url = Yii::$app->params['shisangirl'];
         } ?>
             <li class="enter-dating-detail" data-id="<?=$item['id']?>" style="border-bottom: 1px solid #f3f3f3;background-color: #fff;padding:10px 5px;width: 100%;">
                 <div class="col-xs-3" style="padding: 0;">
-                    <img class="img-responsive" style="border-radius: 5px;width: 70px;" src="<?=$pre_url.$extra['avatar']?>">
+                    <?php
+
+                     $avatar = str_replace('http://www.13loveme.com:82/',$pre_url,$extra['avatar']);
+                    ?>
+                    <img class="img-responsive" style="border-radius: 5px;width: 70px;" src="<?=$avatar?>">
                 </div>
                 <div class="col-xs-9" style="padding: 0;position: relative;">
                     <h5 style="margin-top: 5px;">

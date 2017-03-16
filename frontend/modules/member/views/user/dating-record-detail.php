@@ -20,6 +20,7 @@ $this->registerCss("
 
     }
 ");
+$avatar = str_replace('http://www.13loveme.com:82/',$pre_url,$extra['avatar']);
 ?>
 <div class="row member-center">
     <header>
@@ -44,7 +45,7 @@ $this->registerCss("
 </script>
 
 <div class="row fail-content">
-    <img class="img-responsive center-block" src="<?=$pre_url.$extra['avatar']?>">
+    <img class="img-responsive center-block" src="<?=$avatar?>">
     <h5>地区：<?=$extra['address']?></h5>
     <h5>编号：<?=$extra['number']?></h5>
     <h5>妹子标签：<?=$extra['mark']?></h5>
