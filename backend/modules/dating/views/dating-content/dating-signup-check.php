@@ -6,7 +6,7 @@ $this->registerCss("
     .dating-record .row .col-md-1{padding:0;}
 ");
 $vip_check = new \frontend\modules\member\models\UserVipTempAdjust();
- = Yii::$app->params['shisangirl'];
+$pre_url = Yii::$app->params['shisangirl'];
 ?>
 
     <a href="http://13loveme.com/wei-xin/cjs" class="btn btn-success" target="_blank">刷新access_token</a><hr>
