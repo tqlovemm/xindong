@@ -298,7 +298,7 @@ class GirlDefaultController extends Controller
 
         $imgs = $model->memberFiles;
 
-        if(Yii::$app->user->id==10000){
+
 
             if($model->delete()){
 
@@ -312,9 +312,7 @@ class GirlDefaultController extends Controller
                 $back_url = Yii::$app->request->referrer;
                 return $this->redirect($back_url);
             }
-        }else{
-            throw new ForbiddenHttpException('禁止操作');
-        }
+
     }
 
     public function actionUpload($id){
