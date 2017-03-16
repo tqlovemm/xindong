@@ -8,6 +8,7 @@
 
 namespace api\modules\v10\controllers;
 
+use common\Qiniu\QiniuUploader;
 use Yii;
 use yii\db\Query;
 use yii\myhelper\Decode;
@@ -44,7 +45,6 @@ class ChangeUserInfoController extends Controller
 
     public function actionUpdate($id){
 
-
         $decode = new Decode();
         if(!$decode->decodeDigit($id)){
             Response::show(210,'参数不正确');
@@ -56,13 +56,42 @@ class ChangeUserInfoController extends Controller
         if(!$res1 || !$res0){
             Response::show('201','用户不存在');
         }
-
+        $pre_url = Yii::$app->params['appimages'];
+        //$pre_url = 'http://omu5j530t.bkt.clouddn.com/';
         if($model->img_url){
 
+            $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
             $data = explode('&',$model->img_url);
+
             //删除旧照片
-            $imgs = (new Query())->select('id,img_url')->from('{{%user_image}}')->where(['user_id'=>$id])->all();
-            $len1 = count($imgs);
+            $old_images = (new Query())->select('id,img_url')->from('{{%user_image}}')->where(['user_id'=>$id])->all();
+            if(!empty($old_images)){
+
+                foreach ($old_images as $oimg){
+                    try{
+                        $replace_img = str_replace($pre_url,'',$oimg['img_url']);
+                        $qn->delete('test',$replace_img);
+                    }catch (\Error $e){
+
+                    }
+                }
+                Yii::$app->db->createCommand('delete from pre_user_image where user_id='.$id)->execute();
+            }
+
+            //保存新图片
+            $pathStr = "uploads/";
+            foreach ($data as $item){
+
+                $location = $pathStr.time().rand(1,10000).'.jpg';
+                file_put_contents($location,base64_decode($item));
+                $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$id.'_'.md5(rand(1000,9999));
+                $qiniu = $qn->upload_app('test','uploads/user/files/'.$mkdir,$location);
+                $path = $pre_url.$qiniu['key'];
+                Yii::$app->db->createCommand('insert into pre_user_image(user_id,img_url,created_at,updated_at) values('.$id.','."'$path'".','.time().','.time().')')->execute();
+                @unlink($location);
+            }
+
+       /*     $len1 = count($imgs);
             $newlen = count($data);
 
             if($imgs) {
@@ -153,7 +182,7 @@ class ChangeUserInfoController extends Controller
                         Response::show('201','新添加图片失败');
                     }
                 }
-            }
+            }*/
         }
 
         if($model->is_marry == '单身'){
