@@ -53,6 +53,10 @@ $this->registerCss("
 .am-gallery-overlay .am-gallery-item img{width:auto !important;}
 ");
 $pre_url = Yii::$app->params['threadimg'];
+$headimgurl = $thread['user']['headimgurl'];
+if(strpos($headimgurl,'uploads')!=false){
+    $headimgurl = $pre_url.$headimgurl;
+}
 ?>
 <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
 <link rel="stylesheet" href="/css/auto/amazeui.min.css" />
@@ -68,7 +72,7 @@ $pre_url = Yii::$app->params['threadimg'];
         <div class="col-xs-2" style="padding-left:0;text-align: right;"><a style="color:#eee" href="/forum/default/report?tid=<?=$thread['tid']?>">举报</a></div>
     </div>
     <div class="row">
-        <div class="col-xs-6"><img class="img-circle" style="width: 40px;" src="<?=$thread['user']['headimgurl']?>">&nbsp;&nbsp;&nbsp; <?=$thread['user']['username']?></div>
+        <div class="col-xs-6"><img class="img-circle" style="width: 40px;" src="<?=$headimgurl?>">&nbsp;&nbsp;&nbsp; <?=$thread['user']['username']?></div>
     </div>
 
     <div data-am-widget="gallery" class="row am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-overlay clearfix" data-am-gallery="{ pureview: true }" >
@@ -86,7 +90,7 @@ $pre_url = Yii::$app->params['threadimg'];
             <?php endforeach;?>
         <?php elseif(in_array(count($thread['img']),[3,5,6,7,8,9])): ?>
             <?php foreach ($thread['img'] as $key=>$img):?>
-                <a href="http://13loveme.com<?=$img['img']?>" class="col-xs-4 am-gallery-item" style="<?php if(in_array($key,[1,4,7])){echo 'margin:0 0.6%;';}?>;<?php if(in_array($key,[2,5,8])){echo 'float:right;';}?>;height: 105px;margin-bottom: 2px;overflow: hidden;">
+                <a href="<?=$headimgurl.$img['img']?>" class="col-xs-4 am-gallery-item" style="<?php if(in_array($key,[1,4,7])){echo 'margin:0 0.6%;';}?>;<?php if(in_array($key,[2,5,8])){echo 'float:right;';}?>;height: 105px;margin-bottom: 2px;overflow: hidden;">
                     <img class="img-responsive" src="<?=$pre_url.$img['img']?>">
                 </a>
             <?php endforeach;?>
@@ -128,10 +132,14 @@ $pre_url = Yii::$app->params['threadimg'];
                                 $user_info = new \frontend\modules\forum\models\AnecdoteUsers();
                                 $username = $user_info::findOne(['user_id'=>$list['user_id']]);
                                 $to_username = $user_info::findOne(['user_id'=>$list['to_user_id']]);
+                                $userheadimgurl = $username->headimgurl;
+                                if(strpos($userheadimgurl,'uploads')!=false){
+                                    $userheadimgurl = $pre_url.$username->headimgurl;
+                                }
                                 ?>
                                 <div class="col-xs-12" style="padding:5px;border-bottom:1px dotted #e0dddd;">
                                     <a href="/forum/default/push-comments?tid=<?=$list['cid']?>&level=2&to_user_id=<?=$list['user_id']?>" style="display: block;">
-                                        <p style="margin-bottom: 0;font-size: 12px;"><img style="width: 20px;" class="img-circle" src="<?=$username->headimgurl?>"> <?=$username->username?>回复<?=$to_username->username?>：<?= \yii\helpers\Html::encode($list['content'])?></p>
+                                        <p style="margin-bottom: 0;font-size: 12px;"><img style="width: 20px;" class="img-circle" src="<?=$userheadimgurl?>"> <?=$username->username?>回复<?=$to_username->username?>：<?= \yii\helpers\Html::encode($list['content'])?></p>
                                     </a>
                                 </div>
                             <?php endforeach;?>
@@ -169,10 +177,14 @@ $pre_url = Yii::$app->params['threadimg'];
                                 $user_info = new \frontend\modules\forum\models\AnecdoteUsers();
                                 $username = $user_info::findOne(['user_id'=>$list['user_id']]);
                                 $to_username = $user_info::findOne(['user_id'=>$list['to_user_id']]);
+                                $userheadimgurl = $username->headimgurl;
+                                if(strpos($userheadimgurl,'uploads')!=false){
+                                    $userheadimgurl = $pre_url.$username->headimgurl;
+                                }
                                 ?>
                                 <div class="col-xs-12" style="padding:5px;border-bottom:1px dotted #e0dddd;">
                                     <a href="/forum/default/push-comments?tid=<?=$list['cid']?>&level=2&to_user_id=<?=$list['user_id']?>" style="display: block;">
-                                        <p style="margin-bottom: 0;font-size: 12px;"><img style="width: 20px;" class="img-circle" src="<?=$username->headimgurl?>"> <?=$username->username?>回复<?=$to_username->username?>：<?= \yii\helpers\Html::encode($list['content'])?></p>
+                                        <p style="margin-bottom: 0;font-size: 12px;"><img style="width: 20px;" class="img-circle" src="<?=$userheadimgurl?>"> <?=$username->username?>回复<?=$to_username->username?>：<?= \yii\helpers\Html::encode($list['content'])?></p>
                                     </a>
                                 </div>
                             <?php endforeach;?>
