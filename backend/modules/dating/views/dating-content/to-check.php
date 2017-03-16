@@ -6,6 +6,7 @@ $this->registerCss("
     .dating-record .row .col-md-1{padding:0;}
 ");
 $vip_check = new \frontend\modules\member\models\UserVipTempAdjust();
+$pre_url = Yii::$app->params['shisangirl'];
 ?>
 
     <a href="http://13loveme.com/wei-xin/cjs" class="btn btn-success" target="_blank">刷新access_token</a><hr>
@@ -83,8 +84,8 @@ $vip_check = new \frontend\modules\member\models\UserVipTempAdjust();
                     <div class="row">
                         <div  class="col-md-4" style="padding:0">
                             <?php foreach($getImages as $item):?>
-                                <a href="<?=$item['path']?>"  data-lightbox="d" data-title="<?=$girl_info['number']?>">
-                                    <img style="width: 56px;" src="<?=$item['path']?>">
+                                <a href="<?=$pre_url.$item['path']?>"  data-lightbox="d" data-title="<?=$girl_info['number']?>">
+                                    <img style="width: 56px;" src="<?=$pre_url.$item['path']?>">
                                 </a>
                             <?php endforeach;?>
                         </div>
@@ -102,7 +103,7 @@ $vip_check = new \frontend\modules\member\models\UserVipTempAdjust();
                                 if(!empty($file)){
 
                                     if(!empty($file['memberFiles'])){
-                                        echo "二维码：<a href=http://13loveme.com:82/{$file['memberFiles'][0]['path']}  data-lightbox='s' data-title='s'><img class='img-responsive img-thumbnail' style='width: 100px;height: 100px;' src=http://13loveme.com:82/{$file['memberFiles'][0]['path']}></a>";
+                                        echo "二维码：<a href=$pre_url{$file['memberFiles'][0]['path']}  data-lightbox='s' data-title='s'><img class='img-responsive img-thumbnail' style='width: 100px;height: 100px;' src=$pre_url{$file['memberFiles'][0]['path']}></a>";
                                         $weiuser = \frontend\modules\weixin\models\UserWeichat::findOne(['number'=>$boy_number]);
                                         if(!empty($weiuser)&&$model['status']==11&&$model['platform']!=2):
                                             echo '<button onclick="pushweixin(this)" data-openid="'.$weiuser->openid.'" data-number="'.$girl_info['number'].'" class="btn btn-success">微信推送联系方式</button>';
