@@ -313,6 +313,7 @@ class WFlopController extends Controller
     /*区域选择*/
     public function actionAjaxArea($local='',$type=100){
 
+        $pre_url = Yii::$app->params['imagetqlmm'];
         $session = Yii::$app->session;
         if(!$session->isActive){
             $session->open();
@@ -366,7 +367,7 @@ class WFlopController extends Controller
         <div class='member__id hide'>$query[id]</div>
         <div class='demo__card__top brown'>
             <a class='flop__img_tan' href='/flop/show-msg/?number=$query[number]&id=$query[id]' data-path=$query[content] data-title='编号:$query[number]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$query[weight]kg/$query[height]cm'>
-                <div class='demo__card__img' style='background-image: url($query[content]);background-size: cover;background-position: center;background-repeat: no-repeat;position: relative;'></div>
+                <div class='demo__card__img' style='background-image: url($pre_url$query[content]);background-size: cover;background-position: center;background-repeat: no-repeat;position: relative;'></div>
             </a>
             <div class='demo__card__info' style='padding:10px;'>
                 <div class='pull-left'>
@@ -385,8 +386,8 @@ EOF;
     <div class='demo__card'>
         <div class='member__id hide'>$query[id]</div>
         <div class='demo__card__top brown'>
-            <a class='flop__img_tan' href=$query[content] data-lightbox='dd' data-path=$query[content] data-title='编号:$query[number]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$query[weight]kg/$query[height]cm'>
-                <div class='demo__card__img' style='background-image: url($query[content]);background-size: cover;background-position: center;background-repeat: no-repeat;position: relative;'></div>
+            <a class='flop__img_tan' href=$pre_url$query[content] data-lightbox='dd' data-path=$query[content] data-title='编号:$query[number]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$query[weight]kg/$query[height]cm'>
+                <div class='demo__card__img' style='background-image: url($pre_url$query[content]);background-size: cover;background-position: center;background-repeat: no-repeat;position: relative;'></div>
             </a>
             <div class='demo__card__info' style='padding:10px;'>
                 <div class='pull-left'>
