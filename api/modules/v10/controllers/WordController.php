@@ -293,7 +293,7 @@ class WordController extends Controller
         $pathStr = "uploads";
         $savePath = $pathStr.'/'.time().rand(1,10000).'.jpg';
         file_put_contents($savePath,base64_decode($img));
-        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.md5($user_id).rand(1000,9999);
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$user_id.'_'.md5(rand(1000,9999));
 
         $qiniu = $qn->upload_app('appimages',"uploads/user/content/$mkdir",$savePath);
         @unlink($savePath);
