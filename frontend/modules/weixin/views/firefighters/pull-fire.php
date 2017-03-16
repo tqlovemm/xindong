@@ -16,7 +16,7 @@ $this->registerCss("
         }
         ");
 
-$pre_url = Yii::$app->params['threadimg'];
+$pre_url = Yii::$app->params['shisangirl'];
 ?>
 <style>
     .middle-img {
@@ -122,7 +122,7 @@ $pre_url = Yii::$app->params['threadimg'];
     <div id="slider" class="divas-slider" style="padding: 10px 0;background-color: #fff;">
         <div class="divas-slide-container" data-am-widget="gallery" data-am-gallery="{ pureview: true }">
 
-                <a href="<?=$contents['pic_path']?>" class="divas-slide am-gallery-item">
+                <a href="<?=$pre_url.$contents['pic_path']?>" class="divas-slide am-gallery-item">
                     <img style="width: 70px;height: 70px;margin: 5px 5px 0 0;" src="<?=$pre_url.$contents['pic_path']?>" data-src="<?=$pre_url.$contents['pic_path']?>"/>
                 </a>
 
@@ -144,7 +144,7 @@ $pre_url = Yii::$app->params['threadimg'];
             <div class="col-xs-4" style="padding:0 5px;">
                 <img style="width: 50px;" src="/images/dating/jietu.png">
             </div>
-            <a href="<?=$weima?>" data-title="女生微信二维码" data-lightbox="s" class="col-xs-8">
+            <a href="<?=$pre_url.$weima?>" data-title="女生微信二维码" data-lightbox="s" class="col-xs-8">
                 <h6 style="margin-top: 5px;font-weight: bold;color: #E83F78;">微信二维码</h6>
                 <h5 style="margin-bottom: 0;font-weight: bold;">二维码图片</h5>
             </a>
