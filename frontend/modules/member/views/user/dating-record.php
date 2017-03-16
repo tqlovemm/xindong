@@ -41,7 +41,7 @@ $pre_url = Yii::$app->params['shisangirl'];
                 <div class="col-xs-3" style="padding: 0;">
                     <?php
 
-                     $avatar = str_replace($pre_url,'http://www.13loveme.com/',$extra['avatar']);
+                     $avatar = str_replace($pre_url,'http://13loveme.com/',$extra['avatar']);
                     ?>
                     <img class="img-responsive" style="border-radius: 5px;width: 70px;" src="<?=$avatar?>">
                 </div>
