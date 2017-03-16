@@ -130,7 +130,8 @@ class CollectingSeventeenFilesText extends \yii\db\ActiveRecord
     public function upload()
     {
         $qn = new QiniuUploader('photoimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
-        $qiniu = $qn->upload('shisan',"uploads/collecting-17/$this->id");
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
+        $qiniu = $qn->upload('shisan',"uploads/collecting-17/$mkdir");
  /*       $config = [
             'savePath' => Yii::getAlias('@webroot/uploads/collecting-17/'), //存储文件夹
             'maxSize' => 10240 ,//允许的文件最大尺寸，单位KB
@@ -161,7 +162,8 @@ class CollectingSeventeenFilesText extends \yii\db\ActiveRecord
     public function uploadw()
     {
         $qn = new QiniuUploader('weimaimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
-        $qiniu = $qn->upload('shisan',"uploads/collecting-17/weima/$this->id");
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
+        $qiniu = $qn->upload('shisan',"uploads/collecting-17/weima/$mkdir");
 
         Yii::$app->db->createCommand()->insert('{{%collecting_17_files_img}}', [
             'img' =>$qiniu['key'], //存储路径
