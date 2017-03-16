@@ -1,6 +1,7 @@
 <?php
 use shiyang\masonry\Masonry;
 $this->title = "救火福利";
+$pre_url = Yii::$app->params['shisangirl'];
 ?>
     <link rel="stylesheet" href="<?=Yii::getAlias("@web")?>/js/more/pullToRefresh.css" />
     <script src="<?=Yii::getAlias("@web")?>/js/more/iscroll.js"></script>
@@ -33,7 +34,7 @@ $this->title = "救火福利";
     ?>
     <li class="enter-firefighter-detail" data-id="<?=$item['id']?>" style="border-bottom: 1px solid #f3f3f3;background-color: #fff;padding:10px 5px;width: 100%;">
         <div class="col-xs-3" style="padding: 0;">
-            <img class="img-responsive" style="border-radius: 5px;width: 70px;height: 70px;" src="<?=$sign['pic_path']?>">
+            <img class="img-responsive" style="border-radius: 5px;width: 70px;height: 70px;" src="<?=$pre_url.$sign['pic_path']?>">
         </div>
         <div class="col-xs-9" style="padding: 0;position: relative;">
             <h5 style="margin-top: 5px;">

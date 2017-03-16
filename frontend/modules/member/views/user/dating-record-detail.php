@@ -9,7 +9,7 @@ if(in_array($model->status,[9,10])){
 }elseif($model->status==12){
     $status="失败";$op="扣除";$op2="返还";
 }
-
+$pre_url = Yii::$app->params['shisangirl'];
 $this->registerCss("
 
     .fail-reason,.fail-content{border-bottom: 1px solid #f3f3f3;background-color: #fff;padding:10px;}
@@ -44,7 +44,7 @@ $this->registerCss("
 </script>
 
 <div class="row fail-content">
-    <img class="img-responsive center-block" src="<?=$extra['avatar']?>">
+    <img class="img-responsive center-block" src="<?=$pre_url.$extra['avatar']?>">
     <h5>地区：<?=$extra['address']?></h5>
     <h5>编号：<?=$extra['number']?></h5>
     <h5>妹子标签：<?=$extra['mark']?></h5>

@@ -18,7 +18,7 @@ $this->registerCss("
 
     }
 ");
-
+$pre_url = Yii::$app->params['shisangirl'];
 ?>
 
 <div class="row member-center">
@@ -44,7 +44,7 @@ $this->registerCss("
 </script>
 
 <div class="row fail-content">
-    <img class="img-responsive center-block" src="<?=$model->pic_path?>">
+    <img class="img-responsive center-block" src="<?=$pre_url.$model->pic_path?>">
     <h5>地区：<?=$model->name?></h5>
     <h5>交友要求：<?=$model->content?></h5>
     <h5>交友结果：<?=$status?></h5>
