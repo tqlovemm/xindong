@@ -6,6 +6,7 @@ $this->registerCss("
     .dating-record .row .col-md-1{padding:0;}
 ");
 $vip_check = new \frontend\modules\member\models\UserVipTempAdjust();
+ = Yii::$app->params['shisangirl'];
 ?>
 
     <a href="http://13loveme.com/wei-xin/cjs" class="btn btn-success" target="_blank">刷新access_token</a><hr>
@@ -86,7 +87,7 @@ $vip_check = new \frontend\modules\member\models\UserVipTempAdjust();
                     <div  class="col-md-4" style="padding:0">
                     <?php foreach($getImages as $item):?>
                         <a href="<?=$item['path']?>"  data-lightbox="d" data-title="<?=$girl_info['number']?>">
-                            <img style="width: 56px;" src="<?=$item['path']?>">
+                            <img style="width: 56px;" src="<?=$pre_url.$item['path']?>">
                         </a>
                     <?php endforeach;?>
                     </div>
@@ -103,13 +104,13 @@ $vip_check = new \frontend\modules\member\models\UserVipTempAdjust();
                                 $file = $member->getMemberText(0)->asArray()->one();
                                 if(!empty($file)){
                                     if(!empty($file['memberFiles'])){
-                                        echo "二维码：<a href={$file['memberFiles'][0]['path']}  data-lightbox='s' data-title='s'><img class='img-responsive img-thumbnail' style='width: 100px;height: 100px;' src={$file['memberFiles'][0]['path']}></a>";
+                                        echo "二维码：<a href={$file['memberFiles'][0]['path']}  data-lightbox='s' data-title='s'><img class='img-responsive img-thumbnail' style='width: 100px;height: 100px;' src=$pre_url{$file['memberFiles'][0]['path']}></a>";
                                         $weiuser = \frontend\modules\weixin\models\UserWeichat::findOne(['number'=>$boy_number]);
                                         if(!empty($weiuser)&&$model['status']==11&&$model['platform']!=2):
                                             echo '<button onclick="pushweixin(this)" data-openid="'.$weiuser->openid.'" data-number="'.$girl_info['number'].'" class="btn btn-success">微信推送联系方式</button>';
                                             echo '<button onclick="deletepushweixin(this)" data-openid="'.$weiuser->openid.'" data-number="'.$girl_info['number'].'" class="btn btn-warning">清空记录重新推送</button>';
                                         elseif($model['status']==11&&$model['platform']==2):
-                                            echo '<button onclick="pushapp(this)" data-openid="'.\backend\models\User::getUsername($model['user_id']).'" data-number="/home/wwwroot/shisan/backend/web'.$file['memberFiles'][0]['path'].'" class="btn btn-success">APP推送联系方式</button>';
+                                            echo '<button onclick="pushapp(this)" data-openid="'.\backend\models\User::getUsername($model['user_id']).'" data-number="'.$pre_url.$file['memberFiles'][0]['path'].'" class="btn btn-success">APP推送联系方式</button>';
                                         endif;
                                     }else{
 
