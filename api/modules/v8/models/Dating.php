@@ -75,9 +75,7 @@ class Dating extends ActiveRecord
                 return explode('，',$model['content']);
 
             },
-            'number'=>function($model){
-                return "******";
-            },
+            'number',
             'photos',
             'chatImg'
         ];
