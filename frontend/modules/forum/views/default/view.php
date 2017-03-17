@@ -131,9 +131,6 @@ $headimgurl = $thread['user']['headimgurl'];
                                 $username = $user_info::findOne(['user_id'=>$list['user_id']]);
                                 $to_username = $user_info::findOne(['user_id'=>$list['to_user_id']]);
                                 $userheadimgurl = $username->headimgurl;
-                                if(strpos($userheadimgurl,'uploads')!=false){
-                                    $userheadimgurl = $pre_url.$username->headimgurl;
-                                }
                                 ?>
                                 <div class="col-xs-12" style="padding:5px;border-bottom:1px dotted #e0dddd;">
                                     <a href="/forum/default/push-comments?tid=<?=$list['cid']?>&level=2&to_user_id=<?=$list['user_id']?>" style="display: block;">
@@ -176,9 +173,6 @@ $headimgurl = $thread['user']['headimgurl'];
                                 $username = $user_info::findOne(['user_id'=>$list['user_id']]);
                                 $to_username = $user_info::findOne(['user_id'=>$list['to_user_id']]);
                                 $userheadimgurl = $username->headimgurl;
-                                if(strpos($userheadimgurl,'uploads')!=false){
-                                    $userheadimgurl = $pre_url.$username->headimgurl;
-                                }
                                 ?>
                                 <div class="col-xs-12" style="padding:5px;border-bottom:1px dotted #e0dddd;">
                                     <a href="/forum/default/push-comments?tid=<?=$list['cid']?>&level=2&to_user_id=<?=$list['user_id']?>" style="display: block;">
