@@ -111,7 +111,7 @@ class TurnOverCardSuccess extends ActiveRecord
                 if(isset($star['num'])){
                     return $star['num'];
                 }else{
-                    return 0;
+                    return $this->user_id;
                 }
             }
         ];
