@@ -144,7 +144,7 @@ class JudgeController extends Controller
        // $userIds = implode(',',$userId);
 
         if(!empty($user)){
-            $userInfo = User::find()->select('id,avatar')->where(" id in ({$user})")->all();
+            $userInfo = User::find()->select('id,avatar')->where(['in','id',$user])->all();
             $palace['userInfo'] = $userInfo;
         }
         $palace['count'] = $count;
