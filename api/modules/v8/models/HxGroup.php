@@ -64,7 +64,11 @@ class HxGroup extends ActiveRecord
     public function fields()
     {
         return [
-            'id','g_id','thumb','created_at',"groupname",'owner','affiliations',
+            'id','g_id','thumb'=>function($model){
+
+                return Yii::$app->params['appimages'].$model->thumb;
+            },
+            'created_at',"groupname",'owner','affiliations',
         ];
     }
 }
