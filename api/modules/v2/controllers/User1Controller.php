@@ -73,29 +73,30 @@ class User1Controller extends ActiveController
         $pre_url = Yii::$app->params['appimages'];
         $avatar_path = $model->avatar;
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
-
+        $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
         if(!empty(Yii::$app->request->post('avatar'))){
-            $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
-            if(!empty($avatar_path)){
-                try{
-                    $avatar_path = str_replace($pre_url,'',$avatar_path);
-                    $qn->delete('appimages',$avatar_path);
-                }catch (ErrorException $e){
 
-                }
-            }
             $pathStr = "uploads";
             $savePath = $pathStr.'/'.time().rand(1,10000).'.jpg';
             file_put_contents($savePath,base64_decode($model->avatar));
-            $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.md5($id).rand(1000,9999);
 
+            $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.md5($id).rand(1000,9999);
             $qiniu = $qn->upload_app('appimages',"uploads/user/avatar/$mkdir",$savePath);
+
             @unlink($savePath);
             $model->avatar = $pre_url.$qiniu['key'];
         }
 
         if (!$model->save()) {
             return array_values($model->getFirstErrors())[0];
+        }
+        if(!empty($avatar_path)){
+            try{
+                $avatar_path = str_replace($pre_url,'',$avatar_path);
+                $qn->delete('appimages',$avatar_path);
+            }catch (ErrorException $e){
+
+            }
         }
         return $model;
     }
