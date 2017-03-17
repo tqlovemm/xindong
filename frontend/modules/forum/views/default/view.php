@@ -52,7 +52,7 @@ $this->registerCss("
 .am-gallery{padding:0 !important;}
 .am-gallery-overlay .am-gallery-item img{width:auto !important;}
 ");
-$pre_url = Yii::$app->params['threadimg'];
+$pre_url = Yii::$app->params['appimages'];
 $headimgurl = $thread['user']['headimgurl'];
 if(strpos($headimgurl,'uploads')!=false){
     $headimgurl = $pre_url.$headimgurl;
