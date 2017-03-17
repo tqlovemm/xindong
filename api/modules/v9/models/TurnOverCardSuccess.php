@@ -105,9 +105,9 @@ class TurnOverCardSuccess extends ActiveRecord
                 return date('Y年m月',$this->created_at);
             }
             ,'updated_at','info',
-            'star'=>function(){
+            'star'=>function($model){
 
-                $star = TurnOverCardJudge::find()->select('num')->where(['user_id'=>$_GET['id'],'for_who'=>$this->beliked,'flag'=>0])->one();
+                $star = TurnOverCardJudge::find()->select('num')->where(['user_id'=>$model->user_id,'for_who'=>$this->beliked,'flag'=>0])->one();
                 if(isset($star['num'])){
                     return $star['num'];
                 }else{
