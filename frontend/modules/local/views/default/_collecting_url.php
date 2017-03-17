@@ -7,7 +7,7 @@
     <?= $form->field($model, 'sex')->dropDownList([0=>'男生',1=>'女生'])->label('性别') ?>
     <?= $form->field($model, 'local')->dropDownList($local, [
         'prompt'=>'---请选择地方啪---',
-        'onchange'=>'$.post("/index.php/local/default/lists?id='.'"+$(this).val(),function(data){
+        'onchange'=>'$.post("/local/default/lists?id='.'"+$(this).val(),function(data){
                 $("select#localcollectionfilestext-vip").html(data);
             });',
     ])->label('地方啪') ?>
