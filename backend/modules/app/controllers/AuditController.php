@@ -120,7 +120,7 @@ class AuditController extends Controller
         $appPush->platform = 'all';
         $appPush->msg = $option['extra'];
         $appPush->extras = json_encode(array('push_title'=>urlencode($appPush->title),'push_content'=>urlencode($appPush->msg),'push_type'=>$appPush->type));
-        $appPush->icon = 'http://13loveme.com:82/images/app_push/u=2285230243,2436417019&fm=21&gp=0.png';
+        $appPush->icon = 'http://admin.13loveme.com/images/app_push/u=2285230243,2436417019&fm=21&gp=0.png';
 
         if($appPush->save()){
             return true;
