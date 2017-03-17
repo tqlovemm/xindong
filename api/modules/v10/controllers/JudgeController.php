@@ -14,6 +14,7 @@ use api\modules\v9\models\TurnOverCardPalace;
 use api\modules\v9\models\TurnOverCardSuccess;
 use api\modules\v4\models\User;
 use yii\db\Query;
+use yii\helpers\ArrayHelper;
 use yii\myhelper\Decode;
 use yii\myhelper\Response;
 use yii\rest\Controller;
@@ -110,19 +111,21 @@ class JudgeController extends Controller
             Response::show(210,'参数不正确');
         }
         //喜欢我的人数
-        $count2 = TurnOverCardPalace::find()->where(['like'=>$id,'flag'=>1,'is_del'=>0])->orWhere(['like'=>$id,'like_best'=>1,'is_del'=>0])->all();
-        $palaceId = array();
+        $turnModel = TurnOverCardPalace::find()->where(['like'=>$id,'flag'=>1,'is_del'=>0])->orWhere(['like'=>$id,'like_best'=>1,'is_del'=>0]);
+        $count = $turnModel->count();
+        $user = ArrayHelper::map($turnModel->all(),'user_id','user_id');
+   /*     $palaceId = array();
         foreach($count2 as $item){
             $palaceId[] = $item['id'];
-        }
-        if(count($palaceId)){
+        }*/
+     /*   if(count($palaceId)){
             $palaceId = implode(',',$palaceId);
             $count3 = TurnOverCardSuccess::find()->where(['beliked'=>$id,'flag'=>0])->andWhere("palace_id not in ({$palaceId})")->count();
         }else{
             $count3 = TurnOverCardSuccess::find()->where(['beliked'=>$id,'flag'=>0])->count();
-        }
+        }*/
 
-        $palace['count'] = count($count2)+$count3;
+    /*    $palace['count'] = count($count2);
         $user1 = TurnOverCardPalace::find()->where(['like'=>$id,'flag'=>1,'is_del'=>0])->orWhere(['like'=>$id,'like_best'=>1,'is_del'=>0])->limit(3)->all();
         $userId = array();
         if(count($user1)<3){
@@ -133,17 +136,18 @@ class JudgeController extends Controller
                     $userId[] = $item['user_id'];
                 }
             }
-        }
+        }*/
 
-        foreach($user1 as $item){
+     /*   foreach($user as $item){
             $userId[] = $item['user_id'];
-        }
-        $userIds = implode(',',$userId);
-        if($userIds){
-            $userInfo = User::find()->select('id,avatar')->where(" id in ({$userIds})")->all();
+        }*/
+       // $userIds = implode(',',$userId);
 
+        if(!empty($user)){
+            $userInfo = User::find()->select('id,avatar')->where(" id in ({$user})")->all();
             $palace['userInfo'] = $userInfo;
         }
+        $palace['count'] = $count;
         $groupId = User::find()->select('groupid')->where(['id'=>$id])->one();
         $palace['groupid'] = $groupId['groupid'];
         return $palace;
