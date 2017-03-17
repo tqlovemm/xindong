@@ -52,11 +52,9 @@ $this->registerCss("
 .am-gallery{padding:0 !important;}
 .am-gallery-overlay .am-gallery-item img{width:auto !important;}
 ");
-$pre_url = Yii::$app->params['appimages'];
+$pre_url = Yii::$app->params['threadimg'];
 $headimgurl = $thread['user']['headimgurl'];
-if(strpos($headimgurl,'uploads')!=false){
-    $headimgurl = $pre_url.$headimgurl;
-}
+
 ?>
 <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
 <link rel="stylesheet" href="/css/auto/amazeui.min.css" />
