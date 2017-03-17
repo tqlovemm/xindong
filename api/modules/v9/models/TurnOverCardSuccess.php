@@ -108,8 +108,8 @@ class TurnOverCardSuccess extends ActiveRecord
             'star'=>function(){
 
                 $star = TurnOverCardJudge::find()->select('num')->where(['user_id'=>$this->beliked,'for_who'=>$this->user_id,'flag'=>0])->one();
-                if(isset($star['num'])){
-                    return $star['num'];
+                if(!empty($star['num'])){
+                    return $star['num'].$this->beliked;
                 }else{
                     return 0;
                 }
