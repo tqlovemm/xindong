@@ -24,6 +24,7 @@ use yii\filters\VerbFilter;
  */
 class ThirthFilesController extends Controller
 {
+    public $enableCsrfValidation = false;
     public function behaviors()
     {
         return [
