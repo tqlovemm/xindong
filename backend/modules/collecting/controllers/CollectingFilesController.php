@@ -16,6 +16,7 @@ use yii\filters\VerbFilter;
  */
 class CollectingFilesController extends Controller
 {
+    public $enableCsrfValidation = false;
     public function behaviors()
     {
         return [
