@@ -521,13 +521,13 @@ class SiteController extends BaseController
         $this->layout = 'basic';
         $girl_rand = $boy_rand = 0;
         $model = Website::find()->with('photo')->asArray();
-        $ip = $_SERVER["HTTP_X_REAL_IP"];
+        $ips = $_SERVER["HTTP_X_REAL_IP"];
         $boy = $model->where(['website_id'=>2])->one();
         $girl = $model->where(['website_id'=>3])->one();
 
         $limitIpModel = new ContactIpLimits();
 
-        if(($ip = $limitIpModel::findOne(['ip'=>$ip]))!=null){
+        if(($ip = $limitIpModel::findOne(['ip'=>$ips]))!=null){
 
             $girl_rand = $ip->girl_rand;
             $boy_rand = $ip->boy_rand;
@@ -537,7 +537,7 @@ class SiteController extends BaseController
             $girl_rand = mt_rand(0,count($girl['photo'])-1);
             $boy_rand = mt_rand(0,count($boy['photo'])-1);
 
-            $limitIpModel->ip = $ip;
+            $limitIpModel->ip = $ips;
             $limitIpModel->girl_rand = $girl_rand;
             $limitIpModel->boy_rand = $boy_rand;
             $limitIpModel->save();
