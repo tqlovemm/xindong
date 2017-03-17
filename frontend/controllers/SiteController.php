@@ -537,7 +537,7 @@ class SiteController extends BaseController
             $girl_rand = mt_rand(0,count($girl['photo'])-1);
             $boy_rand = mt_rand(0,count($boy['photo'])-1);
 
-            $limitIpModel->ip = $_SERVER['REMOTE_ADDR'];
+            $limitIpModel->ip = $ip;
             $limitIpModel->girl_rand = $girl_rand;
             $limitIpModel->boy_rand = $boy_rand;
             $limitIpModel->save();
