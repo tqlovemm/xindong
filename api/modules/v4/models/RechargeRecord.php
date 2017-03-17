@@ -113,7 +113,19 @@ class RechargeRecord extends ActiveRecord
                     );
 
                 }
-                return json_decode($model['extra']);
+                $datingUserInfo = json_decode($model['extra'],true);
+                if(strpos($datingUserInfo['avatar'],'http://13loveme.com:82/')!==false){
+                    $avatar = str_replace('http://13loveme.com:82/',Yii::$app->params['shisangirl'],$datingUserInfo['avatar']);
+                }elseif(strpos($datingUserInfo['avatar'],'http://13loveme.com/')!==false){
+                    $avatar = str_replace('http://13loveme.com/',Yii::$app->params['shisangirl'],$datingUserInfo['avatar']);
+                }else{
+                    $avatar=$datingUserInfo['avatar'];
+                }
+                $datingUserInfo['avatar']= $avatar;
+                /*$avatar = str_replace(Yii::$app->params['shisangirl'],'',$datingUserInfo['avatar']);
+                unset($datingUserInfo['avatar']);*/
+                return $datingUserInfo;
+
             }
 
         ];
