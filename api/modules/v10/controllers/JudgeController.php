@@ -95,9 +95,9 @@ class JudgeController extends Controller
         if($model->save()){
             Response::show('200','评论成功');
         }else{
-            $error = $model->errors;
+            //$error = $model->errors;
             //return array_values($model->getFirstErrors())[0];
-            Response::show('201',$error);
+            Response::show('201',array_values($model->getFirstErrors())[0]);
         }
 
     }
