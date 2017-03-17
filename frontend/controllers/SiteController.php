@@ -547,8 +547,7 @@ class SiteController extends BaseController
         return $this->render('contact',['boy'=>$boy['photo'],'girl'=>$girl['photo'],'girl_rand'=>$girl_rand,'boy_rand'=>$boy_rand]);
     }
     public function actionTextIp(){
-
-        $ip = $_SERVER["HTTP_X_REAL_IP"];
+        $ip = Yii::$app->getRequest()->getUserIP();
         return var_dump($ip);
 
     }
