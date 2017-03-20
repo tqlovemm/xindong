@@ -168,7 +168,7 @@ $pre_url = Yii::$app->params['shisangirl'];
 
             <a href="<?=$pre_url.$file?>" data-title="<?=$remark?>" data-lightbox="s" class="col-xs-8">
                 <h6 style="margin-top: 5px;font-weight: bold;color: #E83F78;">快点我哦</h6>
-                <h5 style="margin-bottom: 0;font-weight: bold;">女生微信二维码</h5>
+                <h5 style="margin-bottom: 0;font-weight: bold;">女生二维码</h5>
             </a>
         </div>
     </div>
