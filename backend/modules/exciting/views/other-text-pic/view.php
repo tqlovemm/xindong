@@ -9,6 +9,7 @@ use yii\widgets\DetailView;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Weekly Contents', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$pre_url = Yii::$app->params['shisangirl'];
 ?>
 <div class="weekly-content-view">
 
@@ -42,7 +43,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'number',
             'name',
             'content',
-            'pic_path:image',
+            'pic_path'=>function($model){
+
+                return "<img src=$model->pic_path>";
+            },
             'created_at:datetime',
         ],
     ]) ?>
