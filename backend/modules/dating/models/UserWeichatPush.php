@@ -10,6 +10,7 @@ use Yii;
  * @property integer $id
  * @property integer $status
  * @property string $openid
+ * @property string $remark
  * @property string $number
  * @property integer $created_at
  */
@@ -31,7 +32,7 @@ class UserWeichatPush extends \yii\db\ActiveRecord
         return [
             [['openid', 'number'], 'required'],
             [['created_at','status'], 'integer'],
-            [['openid'], 'string', 'max' => 64],
+            [['openid','remark'], 'string', 'max' => 64],
             [['number'], 'string', 'max' => 16]
         ];
     }
@@ -57,6 +58,7 @@ class UserWeichatPush extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'openid' => 'Openid',
+            'remark' => 'Remark',
             'number' => 'Number',
             'created_at' => 'Created At',
             'status' => 'Status',

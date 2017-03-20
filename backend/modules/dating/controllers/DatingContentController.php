@@ -238,6 +238,7 @@ class DatingContentController extends BaseController
         }else{
             $model->number = $number;
             $model->openid = $openid;
+            $model->remark = Yii::$app->setting->get('remarks');
             if($model->save()){
                 $url = "http://13loveme.com/weixin/firefighters/pull-girl?number=$number&id=".$model->id;
                 $data = array(
