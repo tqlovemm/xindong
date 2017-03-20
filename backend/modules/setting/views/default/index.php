@@ -41,6 +41,10 @@ $this->params['breadcrumbs'][] = $this->title;
 			    		<?= Html::label(Yii::t('app', 'Third Party Statistical Code'), 'thirdPartyStatisticalCode') ?>
 			    		<?= Html::textarea('thirdPartyStatisticalCode', $settings['thirdPartyStatisticalCode'], ['class' => 'form-control']) ?>
 			    	</div>
+					<div class="form-group">
+			    		<?= Html::label('女生备注', 'remarks') ?>
+			    		<?= Html::textarea('remarks', $settings['remarks'], ['class' => 'form-control']) ?>
+			    	</div>
 		    	</div>
 		    	<div class="box-footer">
 				    <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
