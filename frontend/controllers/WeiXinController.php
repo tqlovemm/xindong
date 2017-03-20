@@ -1046,7 +1046,7 @@ class WeiXinController extends Controller
 
         $data = urldecode(json_encode($arr));
 
-        $url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$this->getAccessToken();
+        $url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$this->getAccessTokens();
 
         $this->postData($url,$data);
 
