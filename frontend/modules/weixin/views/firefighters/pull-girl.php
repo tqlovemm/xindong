@@ -110,7 +110,7 @@ $pre_url = Yii::$app->params['shisangirl'];
 <div id="weima" style="position: absolute;top:0;left:0;z-index: 1;width: 100%;height: 100%;background-color: rgba(125, 125, 125, 0.62);">
     <img style="width: 90%;border: 1px solid #ddd;border-radius: 4px;" class="center-block" src="<?=$pre_url.$file?>">
     <?php if(!empty($remark)):?>
-    <p style="text-align:center;font-size:24px;color:#fff;">添加女生请备注：<?=$remark?></p>
+        <p style="text-align:center;font-size:24px;color:#fff;"><?=$remark?></p>
     <?php endif;?>
 </div>
 
@@ -166,7 +166,7 @@ $pre_url = Yii::$app->params['shisangirl'];
                 <img style="width: 50px;" src="/images/dating/jietu.png">
             </div>
 
-            <a href="<?=$pre_url.$file?>" data-title="添加女生请备注：<?=Yii::$app->setting->get('remarks')?>" data-lightbox="s" class="col-xs-8">
+            <a href="<?=$pre_url.$file?>" data-title="<?=$remark?>" data-lightbox="s" class="col-xs-8">
                 <h6 style="margin-top: 5px;font-weight: bold;color: #E83F78;">微信二维码</h6>
                 <h5 style="margin-bottom: 0;font-weight: bold;">二维码图片</h5>
             </a>
