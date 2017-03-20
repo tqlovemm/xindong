@@ -78,9 +78,6 @@ class ScanWeimaDetailController extends Controller
      */
     public function actionCreate()
     {
-        if (Yii::$app->user->identity->role!==1) {
-            throw new ForbiddenHttpException('You are not allowed to perform this action.');
-        }
         $model = new ScanWeimaDetail();
 
         if ($model->load(Yii::$app->request->post())) {
