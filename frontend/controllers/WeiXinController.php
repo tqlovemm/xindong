@@ -166,7 +166,7 @@ class WeiXinController extends Controller
     }
     public function actionGetMenu(){
 
-        $url = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token={$this->getAccessToken()}";
+        $url = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token={$this->getAccessTokens()}";
         $data = $this->getData($url);
         $get_menu = json_decode($data,true);
 
