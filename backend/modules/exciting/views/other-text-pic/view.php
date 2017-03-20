@@ -43,10 +43,10 @@ $pre_url = Yii::$app->params['shisangirl'];
             'number',
             'name',
             'content',
-            'pic_path'=>function($model){
-
-                return json_encode($model->pic_path);
-            },
+            [
+            'label' => 'pic_path',
+            'value' => json_encode($model->pic_path),
+            ],
             'created_at:datetime',
         ],
     ]) ?>
