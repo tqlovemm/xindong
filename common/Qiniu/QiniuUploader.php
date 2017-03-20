@@ -3,6 +3,7 @@ namespace common\Qiniu;
 
 use common\Qiniu\Storage\BucketManager;
 use common\Qiniu\Storage\UploadManager;
+use yii\myhelper\WaterMark;
 
 class QiniuUploader
 {
@@ -31,6 +32,22 @@ class QiniuUploader
         $file_name = $_FILES[$this->form_name]['name'];
         $filePath= $_FILES[$this->form_name]['tmp_name'];
 
+        $upToken = $this->Auth()->uploadToken($bucket);
+        $uploadMgr = new UploadManager();
+        list($ret, $err) = $uploadMgr->putFile($upToken, $key.'_'.md5($file_name), $filePath);
+        if ($err !== null) {
+            var_dump($err);
+        } else {
+            return $ret;
+        }
+
+    }
+    public function upload_water($bucket,$key){
+
+        $file_name = $_FILES[$this->form_name]['name'];
+        $filePath= $_FILES[$this->form_name]['tmp_name'];
+        $watermark = new WaterMark();
+        $watermark->imgMark($filePath,$filePath);
         $upToken = $this->Auth()->uploadToken($bucket);
         $uploadMgr = new UploadManager();
         list($ret, $err) = $uploadMgr->putFile($upToken, $key.'_'.md5($file_name), $filePath);
