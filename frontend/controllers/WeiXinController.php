@@ -892,14 +892,14 @@ class WeiXinController extends Controller
      */
     protected function getUserInfo($openid){
 
-        $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$this->getAccessToken()."&openid=".$openid."&lang=zh_CN";
+        $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$this->getAccessTokens()."&openid=".$openid."&lang=zh_CN";
         $data = file_get_contents($url);
         return $data;
     }
 
     protected function getMedia(){
 
-        $url = "https://api.weixin.qq.com/cgi-bin/material/get_material?access_token=".$this->getAccessToken();
+        $url = "https://api.weixin.qq.com/cgi-bin/material/get_material?access_token=".$this->getAccessTokens();
         $data = file_get_contents($url);
         return $data;
     }
@@ -1030,7 +1030,7 @@ class WeiXinController extends Controller
             "offset"=>$start,
             "count"=>$number
         );
-        $url = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=".$this->getAccessToken();
+        $url = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=".$this->getAccessTokens();
 
         $data = json_encode($arr);
 
@@ -1123,7 +1123,7 @@ class WeiXinController extends Controller
      */
     public function sendTemp($data){
 
-        $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=".$this->getAccessToken();
+        $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=".$this->getAccessTokens();
 
         return $this->postData($url,json_encode($data));
 
@@ -1149,7 +1149,7 @@ class WeiXinController extends Controller
     }
     protected function userList($next_openid=''){
 
-        $url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=".$this->getAccessToken()."&next_openid=$next_openid";
+        $url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=".$this->getAccessTokens()."&next_openid=$next_openid";
         $res = json_decode($this->getData($url),true);
         return $res;
     }
@@ -1162,7 +1162,7 @@ class WeiXinController extends Controller
 
 
         $userInfoList = array(Yii::$app->params['service_openid']);
-        $url = "https://api.weixin.qq.com/cgi-bin/message/mass/preview?access_token=".$this->getAccessToken();
+        $url = "https://api.weixin.qq.com/cgi-bin/message/mass/preview?access_token=".$this->getAccessTokens();
         foreach($userInfoList as $val){
 
             $datas = array(
@@ -1193,7 +1193,7 @@ class WeiXinController extends Controller
     private  function sendMsgToAll(){
         //$userInfoList = $this->getUserList();olQJss81V3N-ldlc0XlQJkg0fRKo//olQJss1mkh6-2xNlHwPKKh1IEFLQ
         $userInfoList = array('olQJss1mkh6-2xNlHwPKKh1IEFLQ');
-        $url = "https://api.weixin.qq.com/cgi-bin/message/mass/preview?access_token=".$this->getAccessToken();
+        $url = "https://api.weixin.qq.com/cgi-bin/message/mass/preview?access_token=".$this->getAccessTokens();
         foreach($userInfoList as $val){
             $data = '{
                "touser":"'.$val.'",
