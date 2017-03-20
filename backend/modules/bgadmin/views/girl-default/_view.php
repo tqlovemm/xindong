@@ -117,7 +117,7 @@ $pre_url = Yii::$app->params['shisangirl'];
                     <div class="row">
                         <?php foreach ($item['memberFiles'] as $list):?>
                             <div class="col-sm-2">
-                                <a href="<?=$list['path']?>" data-title="<?=$list['content']?>" data-lightbox="d">
+                                <a href="<?=$pre_url.$list['path']?>" data-title="<?=$list['content']?>" data-lightbox="d">
                                     <div style="width: 100%;height:200px;background-image: url('<?=$pre_url.$list['path']?>');background-size: cover;background-position: center;"></div>
                                 </a>
                                 <?= Html::a('', ['update-img', 'id' => $list['id']], ['class' => 'glyphicon glyphicon-pencil pull-left']) ?>
