@@ -45,7 +45,7 @@ $pre_url = Yii::$app->params['shisangirl'];
             'content',
             'pic_path'=>function($model){
 
-                return "<img src=$model->pic_path>";
+                return json_encode($model->pic_path);
             },
             'created_at:datetime',
         ],
