@@ -104,7 +104,7 @@ class OtherTextPicController extends Controller
         if(empty($member)){
             return '不存在该女生，请私人客服及时建立女生资料上传二维码';
         }
-        return $this->redirect('/index.php/bgadmin/girl-default/view?id='.$member->member_id);
+        return $this->redirect('/bgadmin/girl-default/view?id='.$member->member_id);
     }
 
     /**
