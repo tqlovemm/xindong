@@ -430,7 +430,7 @@ class SiteController extends BaseController
             return "报名已满！无法报名！！";
         }
 
-        if($recharge_record::find()->where(['user_id'=>$user_id,'status'=>[9,10]])->count()>4){
+        if($recharge_record::find()->where(['user_id'=>$user_id,'status'=>[9,10],'subject'=>3])->count()>4){
             return "已有大量报名正在审核中，请等待审核结束后再报名！".$user_id;
         }
 
