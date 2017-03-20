@@ -179,9 +179,6 @@ class ScanWeimaDetailController extends Controller
      */
     public function actionUpdate($id)
     {
-        if (Yii::$app->user->identity->role!==1) {
-            throw new ForbiddenHttpException('You are not allowed to perform this action.');
-        }
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -201,9 +198,6 @@ class ScanWeimaDetailController extends Controller
      */
     public function actionDelete($id)
     {
-        if (Yii::$app->user->identity->role!==1) {
-            throw new ForbiddenHttpException('You are not allowed to perform this action.');
-        }
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
