@@ -279,9 +279,10 @@ class FirefightersController extends Controller
         $photos = $dating->getPhotoById($contents['id']);
         $r = BgadminGirlMember::findOne(['number'=>substr($number,0,strlen($number)-2)]);
         $member = !empty($r)?$r:BgadminGirlMember::findOne(['number'=>$number]);
-
+        $remark = '';
         if($id!=0){
             $push = UserWeichatPush::findOne(['id'=>$id]);
+            $remark = $push->remark;
             if(empty($push)){
                 return '对不起!!该链接已经失效!!';
             }
@@ -294,7 +295,7 @@ class FirefightersController extends Controller
             $file = $member->getMemberText(0)->asArray()->one();
             if(!empty($file)){
                 if(!empty($file['memberFiles'])){
-                    return $this->render('pull-girl',['file'=>$file['memberFiles'][0]['path'],'contents'=>$contents,'photos'=>$photos]);
+                    return $this->render('pull-girl',['file'=>$file['memberFiles'][0]['path'],'contents'=>$contents,'photos'=>$photos,'remark'=>$remark]);
                 }
             }
         }

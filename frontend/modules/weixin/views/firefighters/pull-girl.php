@@ -109,7 +109,11 @@ $pre_url = Yii::$app->params['shisangirl'];
 
 <div id="weima" style="position: absolute;top:0;left:0;z-index: 1;width: 100%;height: 100%;background-color: rgba(125, 125, 125, 0.62);">
     <img style="width: 90%;border: 1px solid #ddd;border-radius: 4px;" class="center-block" src="<?=$pre_url.$file?>">
+    <?php if(!empty($remark)):?>
+    <p style="text-align:center;font-size:24px;color:#fff;">添加女生请备注：<?=$remark?></p>
+    <?php endif;?>
 </div>
+
 <?php
 
     $this->registerJs("
