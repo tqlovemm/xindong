@@ -67,6 +67,10 @@ class SiteController extends BaseController
         ];
     }
 
+    public function actionRemarks(){
+
+        return var_dump(Yii::$app->setting->get('remarks'));
+    }
     /**
      * @inheritdoc
      */
