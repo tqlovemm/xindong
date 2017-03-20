@@ -9,7 +9,7 @@ use yii\widgets\DetailView;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Weekly Contents', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-$pre_url = Yii::$app->params['shisangirl'];
+$pre_url = Yii::$app->params['threadimg'];
 ?>
 <div class="weekly-content-view">
 
