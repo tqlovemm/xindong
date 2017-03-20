@@ -162,7 +162,7 @@ $pre_url = Yii::$app->params['shisangirl'];
                 <img style="width: 50px;" src="/images/dating/jietu.png">
             </div>
 
-            <a href="<?=$pre_url.$file?>" data-title="女生微信二维码" data-lightbox="s" class="col-xs-8">
+            <a href="<?=$pre_url.$file?>" data-title="添加女生请备注：<?=Yii::$app->setting->get('remarks')?>" data-lightbox="s" class="col-xs-8">
                 <h6 style="margin-top: 5px;font-weight: bold;color: #E83F78;">微信二维码</h6>
                 <h5 style="margin-bottom: 0;font-weight: bold;">二维码图片</h5>
             </a>
