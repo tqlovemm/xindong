@@ -100,11 +100,12 @@ class AppWordsController extends Controller
     {
         $model = $this->findModel($id);
         if(!empty($model)){
-            $path = explode(Yii::$app->params['hostname'],$model['img']);
-            $path = Yii::getAlias('@apiweb').$path[1];
-            if($model->delete()){
-                unlink($path);
-            }
+            $model->delete();
+           // $path = explode(Yii::$app->params['hostname'],$model['img']);
+            //$path = Yii::getAlias('@apiweb').$path[1];
+            //if($model->delete()){
+             //   unlink($path);
+            //}
         }
 
         return $this->redirect(['index']);
