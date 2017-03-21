@@ -197,7 +197,7 @@ class Weekly extends \yii\db\ActiveRecord
 
         $qn = new QiniuUploader('photoimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
         $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
-        $qiniu = $qn->upload('shisangirl',"uploads/bgadmin/$mkdir");
+        $qiniu = $qn->upload_water('shisangirl',"uploads/bgadmin/$mkdir");
 
         $weeklyContent = new WeeklyContent();
         $weeklyContent->name = !empty($this->title)?$this->title:"error";
