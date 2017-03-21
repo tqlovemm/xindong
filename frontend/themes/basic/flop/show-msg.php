@@ -28,6 +28,7 @@ $this->registerCss("
     
 ");
 $this->registerJsFile(Yii::getAlias('@web')."/js/TouchSlide.1.1.source.js",['position' => View::POS_HEAD]);
+$pre_url = Yii::$app->params['tqlmm'];
 ?>
 <meta name="x5-fullscreen" content="true">
 <meta name="full-screen" content="yes">
@@ -46,7 +47,7 @@ $this->registerJsFile(Yii::getAlias('@web')."/js/TouchSlide.1.1.source.js",['pos
                 <ul>
                     <?php foreach ($imgs as $img):?>
                         <li>
-                           <img class="img-responsive center-block" src="http://13loveme.com/<?=$img->thumb_img?>">
+                           <img class="img-responsive center-block" src="<?=$pre_url.$img->thumb_img?>">
                         </li>
                     <?php endforeach;?>
                 </ul>
@@ -95,7 +96,7 @@ $this->registerJsFile(Yii::getAlias('@web')."/js/TouchSlide.1.1.source.js",['pos
                                 if($key>=4)
                                     break;
                                 ?>
-                                <li class="weui_uploader_file" style="background-image:url(http://13loveme.com/<?=$img->thumb_img?>)"></li>
+                                <li class="weui_uploader_file" style="background-image:url(<?=$pre_url.$img->thumb_img?>)"></li>
                             <?php endforeach;?>
                         </ul>
                     </div>
