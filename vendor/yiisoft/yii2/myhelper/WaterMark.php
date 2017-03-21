@@ -5,7 +5,7 @@ namespace yii\myhelper;
 class WaterMark
 {
 
-    public function imgMark($ground,$path,$waterImg='http://13loveme.com/images/watermark/shi_san~ping_~tai_watermark.png'){
+    public function imgMark($ground,$path,$waterImg='http://13loveme.com/images/watermark/13.png'){
 
         $groundImg = $ground;
         $groundInfo = getimagesize($groundImg);
