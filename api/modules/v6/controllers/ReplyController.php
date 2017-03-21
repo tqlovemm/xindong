@@ -96,7 +96,7 @@ class ReplyController extends ActiveController
         $push->type = 'SSCOMM_NEWSCOMMENT_DETAIL';
         $push->status = 2;
         $push->is_read = 1;
-        $push->icon = 'http://admin.13loveme.com/images/app_push/u=1630850300,1879297584&fm=21&gp=0.png';
+        $push->icon = Yii::$app->params['icon'].'/images/app_push/u=1630850300,1879297584&fm=21&gp=0.png';
         $push->extras = json_encode(array('push_title'=>urlencode($push->title),'push_content'=>urlencode($push->msg),'push_post_id'=>$model->words_id,'push_type'=>$push->type));
 
 
@@ -136,7 +136,7 @@ class ReplyController extends ActiveController
                 $push2->type = 'SSCOMM_NEWSCOMMENT_DETAIL';
                 $push2->status = 2;
                 $push2->is_read = 1;
-                $push2->icon = 'http://admin.13loveme.com/images/app_push/u=1630850300,1879297584&fm=21&gp=0.png';
+                $push2->icon = Yii::$app->params['icon'].'/images/app_push/u=1630850300,1879297584&fm=21&gp=0.png';
                 $push2->extras = json_encode(array('push_title'=>urlencode($push2->title),'push_content'=>urlencode($push2->msg),'push_post_id'=>$model->words_id,'push_type'=>$push2->type));
                 $push2->message_id = $message2->attributes['id'];
                 $cid2 = (new Query())->select('cid')->from('{{%user}}')->where(['id'=>$model->second_id])->one();
