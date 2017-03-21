@@ -250,7 +250,7 @@ class Dating extends \yii\db\ActiveRecord
     {
         $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
         $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
-        $qiniu = $qn->upload('shisangirl',"uploads/dating/$mkdir");
+        $qiniu = $qn->upload_water('shisangirl',"uploads/dating/$mkdir");
 
         $status = ($type=='dating')?0:1;
 
