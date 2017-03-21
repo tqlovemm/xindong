@@ -19,6 +19,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'groupid')->dropDownList([2 =>'普通会员',3=>'高端会员',4=>'至尊会员',5=>'私人定制']) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => 64]) ?>
+    <?= $form->field($model, 'cellphone')->textInput() ?>
 
     <?= $form->field($model, 'identify')->textInput(['maxlength' => 64])->label('微信号') ?>
 
