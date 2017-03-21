@@ -28,7 +28,7 @@ $this->registerCss("
     
 ");
 $this->registerJsFile(Yii::getAlias('@web')."/js/TouchSlide.1.1.source.js",['position' => View::POS_HEAD]);
-$pre_url = Yii::$app->params['tqlmm'];
+$pre_url = Yii::$app->params['imagetqlmm'];
 ?>
 <meta name="x5-fullscreen" content="true">
 <meta name="full-screen" content="yes">
