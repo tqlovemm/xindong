@@ -114,7 +114,7 @@ class OtherText extends \yii\db\ActiveRecord
     {
         $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
         $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->tid;
-        $qiniu = $qn->upload('threadimages',"uploads/otherpick/$mkdir");
+        $qiniu = $qn->upload_water('threadimages',"uploads/otherpick/$mkdir");
      /*   $config = [
             'savePath' => Yii::getAlias('@backend').'/web/uploads/otherpick/'.$this->type.'/', //存储文件夹
             'maxSize' => 4096 ,//允许的文件最大尺寸，单位KB

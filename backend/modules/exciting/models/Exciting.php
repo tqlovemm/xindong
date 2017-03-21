@@ -180,7 +180,7 @@ class Exciting extends \yii\db\ActiveRecord
     {
         $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
         $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
-        $qiniu = $qn->upload('threadimages',"uploads/exciting/$mkdir");
+        $qiniu = $qn->upload_water('threadimages',"uploads/exciting/$mkdir");
 /*        $config = [
             'savePath' => Yii::getAlias('@backend').'/web/uploads/exciting/', //存储文件夹
             'maxSize' => 2048 ,//允许的文件最大尺寸，单位KB
