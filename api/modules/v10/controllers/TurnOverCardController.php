@@ -317,7 +317,6 @@ class TurnOverCardController extends Controller
                         $userid = $this->getPalaceDislike($id,$uniqueUser);
                         $info = $query->andWhere("pre_user.id in ({$userid}) ");break;
                     }
-
                 case 5://新人 (去除后宫的人)
 
                     $data = array();
@@ -350,7 +349,6 @@ class TurnOverCardController extends Controller
 
                     $userid = $this->getPalaceDislike($id,$uniqueUser);
                     $info = $query->andWhere("pre_user.id in ({$userid}) ");break;
-
                 case 6:
                 case 7:
                 case 8://活跃度 一个月以内翻过牌的
@@ -437,7 +435,6 @@ class TurnOverCardController extends Controller
 
                     $userid = $this->getPalaceDislike($id,$uniqueUser);
                     $info = $query->andWhere("pre_user.id in ({$userid}) ");break;
-
                 case 9://被喜欢率 被标记超级喜欢的优先 mark
 
                     $bestlike = TurnOverCardPalace::find()->select('like')
@@ -525,15 +522,14 @@ class TurnOverCardController extends Controller
                     }
 
                     $info = $query->where($where);break;
-
                 default://去除同性和后宫的人（被dilike 的人）
                     $userid = $this->getPalaceDislike($id,$uniqueUser);
                     $info = $query->where(['sex'=>$sex])->andWhere(" pre_user.id in ({$userid})");
             }
-
-
         }
+
         $info = $info->groupBy('pre_user.id');
+
         return new ActiveDataProvider([
             'query' =>  $info,
             'pagination' => [

@@ -306,7 +306,7 @@ class WordController extends ActiveController
                         $title = "你关注的好友：".$username." 有了新的动态，去看看？";
                         $msg = "你关注的好友：".$username." 有了新的动态，去看看？";
                         $date = time();
-                        $icon = 'http://13loveme.com:82/images/app_push/u=3453872033,2552982116&fm=21&gp=0.png';
+                        $icon = 'http://admin.13loveme.com/images/app_push/u=3453872033,2552982116&fm=21&gp=0.png';
                         $extras = json_encode(array('push_title'=>urlencode($title),'push_post_id'=>urlencode($model->id),'push_content'=>urlencode($msg),'push_type'=>'SSCOMM_FANS_THREAD_DETAIL'));
                         Yii::$app->db->createCommand("insert into {{%app_push}} (type,status,cid,title,msg,extras,platform,response,icon,created_at,updated_at) values('SSCOMM_FANS_THREAD_DETAIL',2,'$theCid','$title','$msg','$extras','all','NULL','$icon',$date,$date)")->execute();
 

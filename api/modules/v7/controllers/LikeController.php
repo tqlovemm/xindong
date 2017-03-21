@@ -105,7 +105,7 @@ class LikeController extends ActiveController
                         $push->msg = $username.' 点了个赞';
                         $push->message_id = $message->attributes['id'];
                         $push->response = 'NULL';
-                        $push->icon = 'http://13loveme.com:82/images/app_push/u=1630850300,1879297584&fm=21&gp=0.png';
+                        $push->icon = 'http://admin.13loveme.com/images/app_push/u=1630850300,1879297584&fm=21&gp=0.png';
                         $push->extras = json_encode(array('push_title'=>urlencode($push->title),'push_content'=>urlencode($push->msg),'push_post_id'=>$model->words_id,'push_type'=>'SSCOMM_NEWSCOMMENT_DETAIL'));
                         $push->save();
                         //Yii::$app->db->createCommand("insert into {{%app_push}} (type,status,cid,message_id,title,msg,extras,platform,response,icon,created_at,updated_at) values('SSCOMM_NEWSCOMMENT_DETAIL',2,'$cid[cid]','$message_id','$title','$msg','$extras','all','NULL','$icon',$date,$date)")->execute();
