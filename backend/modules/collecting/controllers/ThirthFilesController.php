@@ -209,7 +209,7 @@ class ThirthFilesController extends Controller
         $insert_flop->created_by = 10000;
         $insert_flop->number = $id;
         $insert_flop->is_cover = 1;
-        $insert_flop->content = $insert_flop->path = "http://13loveme.com".$model->getCover();
+        $insert_flop->content = $insert_flop->path = $model->getCover();
         $insert_flop->save();
 
     }
@@ -289,7 +289,7 @@ class ThirthFilesController extends Controller
             $insert_flop->created_by = 10000;
             $insert_flop->number = $id;
             $insert_flop->is_cover = 1;
-            $insert_flop->content = $insert_flop->path = "http://13loveme.com".$model->getCover();
+            $insert_flop->content = $insert_flop->path = $model->getCover();
 
             if($insert_flop->save()){
                 return $this->redirect('index');
