@@ -38,7 +38,7 @@ $this->registerCss('
                 ])->label(false);?>
             </div>
             <div class="form-group has-feedback clearfix">
-                <?= Html::buttonInput('获取验证码', ['class' => 'btn', 'id' => 'second']) ?>
+                <?= Html::buttonInput('获取验证码', ['class' => 'btn','style'=>'cursor:pointer', 'id' => 'second']) ?>
                 <?= $form->field($model, 'smsCode', [
                     'template' => '<div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-paperclip"></i></span>{input}</div>{error}',
                     'inputOptions' => [
