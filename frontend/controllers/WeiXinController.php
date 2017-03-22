@@ -293,8 +293,6 @@ class WeiXinController extends Controller
                 }catch (\Exception $e){
                     var_dump( $e->getMessage() );
                 }
-                exit;
-
             }
         }
 
