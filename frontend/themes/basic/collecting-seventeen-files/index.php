@@ -13,6 +13,7 @@ $this->registerCss('
     .weui_cells{font-size:14px !important;}
     
 ');
+$pre_url = Yii::$app->params['qiniushiqi'];
 ?>
 <link rel="stylesheet" href="/weui/dist/style/weui.min.css"/>
 <?php $this->registerJsFile('js/jquery.wallform.js', ['depends' => ['frontend\assets\AppAsset'], 'position' => $this::POS_HEAD]); ?>
@@ -38,7 +39,7 @@ $this->registerCss('
                                         if(!empty($img)):
                                             foreach ($img as $item):
                                     ?>
-                                        <img src="<?=$item['img']?>" data-id="<?=$item['id']?>" class="preview collecting-files-img">
+                                        <img src="<?=$pre_url.$item['img']?>" data-id="<?=$item['id']?>" class="preview collecting-files-img">
                                     <?php
                                             endforeach;
                                         endif;
@@ -73,7 +74,7 @@ $this->registerCss('
                                     <?php
                                     if(!empty($wei_img)):
                                         foreach ($wei_img as $key=>$item): ?>
-                                            <img src="<?=$item['img']?>" data-id="<?=$item['id']?>" class="preview collecting-files-img">
+                                            <img src="<?=$pre_url.$item['img']?>" data-id="<?=$item['id']?>" class="preview collecting-files-img">
                                         <?php endforeach;endif;?>
                                 </div>
                                 <?php if(count($wei_img)<1):?>
