@@ -293,7 +293,20 @@ class WeiXinTestController extends Controller
                             $weima = ChannelWeima::findOne($key[1]);
                             $this->setTag($openid,$weima->tag_id);
                         }else{
-                            SaveToLog::log($model->errors,'we.log');
+                            SaveToLog::log($model->errors,'we13.log');
+                        }
+                    }else{
+                        $model->scene_id = 0;
+                        $model->openid = "{$openid}";
+                        $model->headimgurl = "$user_info->headimgurl";
+                        $model->subscribe_time = $user_info->subscribe_time;
+                        $model->country = $user_info->country;
+                        $model->province = $user_info->province;
+                        $model->city = $user_info->city;
+                        $model->sex = $user_info->sex;
+                        $model->nickname= $user_info->nickname;
+                        if(!$model->save()){
+                            SaveToLog::log($model->errors,'we0.log');
                         }
                     }
                 }catch (\Exception $e){
@@ -303,7 +316,7 @@ class WeiXinTestController extends Controller
 
             if( strtolower($this->postObj->Event) == 'unsubscribe' ){
                 $already_today = $model::find()->where(['openid'=>$openid])->andWhere(['status'=>[1,3]])->andWhere('created_at='.strtotime('today'))->orderBy('subscribe_time desc')->one();
-                $already_yestoday = $model::find()->where(['openid'=>$openid])->andWhere(['status'=>[1,3]])->andWhere('created_at!='.strtotime('today'))->orderBy('subscribe_time desc')->one();
+                $already_yesterday = $model::find()->where(['openid'=>$openid])->andWhere(['status'=>[1,3]])->andWhere('created_at!='.strtotime('today'))->orderBy('subscribe_time desc')->one();
                 if(!empty($already_today)){
                     $model->scene_id = $already_today->scene_id;
                     $model->openid = $already_today->openid;
@@ -318,22 +331,21 @@ class WeiXinTestController extends Controller
                     if(!$model->save()){
                         SaveToLog::log($model->errors,'we2.log');
                     }
-                }elseif(!empty($already_yestoday)){
-                    $model->scene_id = $already_yestoday->scene_id;
-                    $model->openid = $already_yestoday->openid;
-                    $model->headimgurl = $already_yestoday->headimgurl;
+                }elseif(!empty($already_yesterday)){
+                    $model->scene_id = $already_yesterday->scene_id;
+                    $model->openid = $already_yesterday->openid;
+                    $model->headimgurl = $already_yesterday->headimgurl;
                     $model->subscribe_time = time();
-                    $model->country = $already_yestoday->country;
-                    $model->province = $already_yestoday->province;
-                    $model->city = $already_yestoday->city;
-                    $model->sex = $already_yestoday->sex;
-                    $model->nickname= $already_yestoday->nickname;
+                    $model->country = $already_yesterday->country;
+                    $model->province = $already_yesterday->province;
+                    $model->city = $already_yesterday->city;
+                    $model->sex = $already_yesterday->sex;
+                    $model->nickname= $already_yesterday->nickname;
                     $model->status = 4;//老用户取消
                     if(!$model->save()){
                         SaveToLog::log($model->errors,'we4.log');
                     }
                 }
-
             }
         }
 
