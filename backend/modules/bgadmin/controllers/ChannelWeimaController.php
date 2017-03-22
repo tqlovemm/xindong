@@ -97,7 +97,7 @@ class ChannelWeimaController extends Controller
                     $geter = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=".urlencode($ticket);
                     $weima = "<img src='".$geter."'>";
                     $img = file_get_contents($geter);
-                    $path = 'images/weima/'.$model->sence_id.'.jpg';
+                    $path = 'images/weima/'.$model->sence_id.'_'.md5(time()).'.jpg';
                     file_put_contents($path,$img);
 
                     $query = $model::findOne($model->sence_id);
