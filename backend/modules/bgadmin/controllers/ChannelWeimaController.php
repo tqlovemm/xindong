@@ -79,8 +79,11 @@ class ChannelWeimaController extends Controller
      */
     public function actionCreate()
     {
-
         $model = new ChannelWeima();
+        $model->customer_service = "我爱你".rand(100,999);
+        $tagData = $this->setTag($model->customer_service);
+        var_dump(json_decode($tagData[1],true));return;
+
 
         if ($model->load(Yii::$app->request->post())) {
 
