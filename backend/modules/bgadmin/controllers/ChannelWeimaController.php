@@ -79,9 +79,7 @@ class ChannelWeimaController extends Controller
      */
     public function actionCreate()
     {
-        $model = new ChannelWeima();
-        $model->customer_service = "好好好";
-        var_dump($this->setTag($model->customer_service));return;
+
         $model = new ChannelWeima();
 
         if ($model->load(Yii::$app->request->post())) {
@@ -89,6 +87,9 @@ class ChannelWeimaController extends Controller
             if ($model->validate()) {
 
                 if($model->save()){
+
+                    $tagData = $this->setTag($model->customer_service);
+
                     $access_token = $this->getAccessTokens();
                     $url = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=$access_token";
                     $qrcode = '{"action_name": "QR_LIMIT_SCENE", "action_info": {"scene": {"scene_id": '.$model->sence_id.'}}}';
@@ -99,10 +100,11 @@ class ChannelWeimaController extends Controller
                     $img = file_get_contents($geter);
                     $path = 'images/weima/'.$model->sence_id.'.jpg';
                     file_put_contents($path,$img);
-                    $this->setTag($model->customer_service);
+
                     $query = $model::findOne($model->sence_id);
                     $query->local_path = $path;
                     $query->remote_path = $geter;
+                    $query->tag_id = json_decode($tagData[1],true)['tag']['id'];
                     $query->update();
                     return $this->render('create', [
                         'model' => $model,'weima'=>$weima,
