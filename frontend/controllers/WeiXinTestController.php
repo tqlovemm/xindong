@@ -229,12 +229,12 @@ class WeiXinTestController extends Controller
 
     }
 
-    public function setRemark($openid,$remark){
+    public function setRemark($remark){
 
         $url = "https://api.weixin.qq.com/cgi-bin/tags/create?access_token=".$this->getAccessTokens();
         $data = array([
             'tag'=>[
-                "openid"=>$openid, "name"=>$remark
+                "name"=>$remark
             ]
         ]);
         $this->postData($url,json_encode($data));
@@ -250,7 +250,7 @@ class WeiXinTestController extends Controller
             if( strtolower($this->postObj->Event) == 'subscribe' ){
 
                 $openid =  $this->postObj->FromUserName;
-                $res = $this->setRemark($openid,"客服13");
+                $res = $this->setRemark("客服14");
                 $user_info = $this->getUserInfo($openid);
                 $this->text($res);
             }
