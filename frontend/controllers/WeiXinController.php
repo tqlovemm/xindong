@@ -309,17 +309,6 @@ class WeiXinController extends Controller
 <a href='http://www.13loveme.com/contact'>☞PAO圈.·入口☜</a>
 撩起来！约一啪！";
                 $this->text($content);
-                $EventKey = $this->postObj->EventKey;//菜单的自定义的key值，可以根据此值判断用户点击了什么内容，从而推送不同信息
-
-                try {
-                    $model = new ScanWeimaRecord();
-                    $model->scene_id = $EventKey;
-                    $model->openid = "{$this->postObj->FromUserName}";
-                    $model->status = 0;
-                    $model->save();
-                }catch (Exception $e){
-                    throw new Exception($e);
-                }
                 exit;
             }
         }
