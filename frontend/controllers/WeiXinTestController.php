@@ -229,6 +229,13 @@ class WeiXinTestController extends Controller
 
     }
 
+    public function setRemark($openid,$remark){
+
+        $url = "https://api.weixin.qq.com/cgi-bin/user/info/updateremark?access_token=".$this->getAccessTokens();
+        $data = array("openid"=>$openid, "remark"=>$remark);
+        $this->postData($url,json_encode($data));
+
+    }
     protected function responseMsg(){
 
         //2.处理消息类型，并设置回复类型和内容
@@ -239,6 +246,7 @@ class WeiXinTestController extends Controller
             if( strtolower($this->postObj->Event) == 'subscribe' ){
 
                 $openid =  $this->postObj->FromUserName;
+                $this->setRemark($openid,'fawef');
                 $user_info = $this->getUserInfo($openid);
                 $this->text($user_info);
             }
