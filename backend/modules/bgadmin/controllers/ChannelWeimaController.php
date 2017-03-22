@@ -104,10 +104,15 @@ class ChannelWeimaController extends Controller
                     $query->local_path = $path;
                     $query->remote_path = $geter;
                     $query->tag_id = json_decode($tagData[1],true)['tag']['id'];
-                    $query->update();
-                    return $this->render('create', [
-                        'model' => $model,'weima'=>$weima,
-                    ]);
+                    if($query->update()){
+                        return $this->render('create', [
+                            'model' => $model,'weima'=>$weima,
+                        ]);
+                    }else{
+
+                        return var_dump($query->errors);
+                    }
+
                 }
             }
         }
