@@ -231,8 +231,12 @@ class WeiXinTestController extends Controller
 
     public function setRemark($openid,$remark){
 
-        $url = "https://api.weixin.qq.com/cgi-bin/user/info/updateremark?access_token=".$this->getAccessTokens();
-        $data = array("openid"=>$openid, "remark"=>$remark);
+        $url = "https://api.weixin.qq.com/cgi-bin/tags/create?access_token=".$this->getAccessTokens();
+        $data = array([
+            'tag'=>[
+                "openid"=>$openid, "name"=>$remark
+            ]
+        ]);
         $this->postData($url,json_encode($data));
 
     }
