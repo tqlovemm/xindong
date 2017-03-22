@@ -232,12 +232,8 @@ class WeiXinTestController extends Controller
     public function setRemark($remark){
 
         $url = "https://api.weixin.qq.com/cgi-bin/tags/create?access_token=".$this->getAccessTokens();
-        $data = array([
-            'tag'=>[
-                "name"=>$remark
-            ]
-        ]);
-        $this->postData($url,json_encode($data));
+        $data ='{"tag" : {"name" : "广东"}}';
+        $this->postData($url,$data);
 
     }
     protected function responseMsg(){
