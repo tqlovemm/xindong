@@ -255,6 +255,12 @@ class WeiXinTestController extends Controller
         $data = array('openid_list'=>[$openid],'tagid'=>$tagid);
         $this->postData($url,json_encode($data));
 
+    } public function actopmTag($openid,$tagid){
+
+        $url = "https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token=".$this->getAccessTokens();
+        $data = array("openid_list"=>["oLdyrv6Xai3EC-nJgH-MZ5Fn3UpY"],"tagid"=>"$tagid");
+        $this->postData($url,json_encode($data));
+
     }
     protected function responseMsg(){
 
