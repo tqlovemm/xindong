@@ -14,8 +14,8 @@ use Yii;
  * @property string $description
  * @property string $local_path
  * @property string $remote_path
- * @property string $created_by
- * @property string $created_at
+ * @property integer $created_by
+ * @property integer $created_at
  */
 class ChannelWeima extends \yii\db\ActiveRecord
 {
@@ -34,8 +34,8 @@ class ChannelWeima extends \yii\db\ActiveRecord
     {
         return [
             [['customer_service', 'account_manager'], 'required'],
-            [['tag_id'], 'integer'],
-            [['customer_service', 'account_manager','created_by','created_at'], 'string', 'max' => 64],
+            [['tag_id','created_by','created_at'], 'integer'],
+            [['customer_service', 'account_manager'], 'string', 'max' => 64],
             [['description','local_path','remote_path'], 'string', 'max' => 256],
         ];
     }
