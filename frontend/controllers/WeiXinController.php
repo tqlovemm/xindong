@@ -243,7 +243,13 @@ class WeiXinController extends Controller
         $this->createMenu($arr);
 
     }
+    public function setTag($openid,$tagid){
 
+        $url = "https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token=".$this->getAccessTokens();
+        $data = array("openid_list"=>["$openid"],"tagid"=>$tagid);
+        $this->postData($url,json_encode($data));
+
+    }
     protected function responseMsg(){
 
         //2.处理消息类型，并设置回复类型和内容
@@ -290,11 +296,6 @@ class WeiXinController extends Controller
                 }
                 exit;
 
-            }
-            if ($this->postObj->Event == 'CLICK') {//点击事件
-
-                $EventKey = $this->postObj->EventKey;//菜单的自定义的key值，可以根据此值判断用户点击了什么内容，从而推送不同信息
-                exit;
             }
             if (strtolower($this->postObj->Event) == 'scan' ) {//扫码事件
 
