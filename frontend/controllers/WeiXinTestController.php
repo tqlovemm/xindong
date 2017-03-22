@@ -325,6 +325,7 @@ class WeiXinTestController extends Controller
                     $model->nickname= $already_yestoday->nickname;
                     $model->status = 4;//往日取消
                 }
+                $model->save();
             }
         }
 
