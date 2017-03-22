@@ -302,9 +302,8 @@ class WeiXinTestController extends Controller
             }
 
             if( strtolower($this->postObj->Event) == 'unsubscribe' ){
-                $already = $model::find()->where(['openid'=>$openid])->andWhere(['status'=>[1,3]]);
-                $already_today = $already->andWhere('created_at='.strtotime('today'))->orderBy('subscribe_time asc')->one();
-                $already_yestoday = $already->andWhere('created_at!='.strtotime('today'))->orderBy('subscribe_time asc')->one();
+                $already_today = $model::find()->where(['openid'=>$openid])->andWhere(['status'=>[1,3]])->andWhere('created_at='.strtotime('today'))->orderBy('subscribe_time asc')->one();
+                $already_yestoday = $model::find()->where(['openid'=>$openid])->andWhere(['status'=>[1,3]])->andWhere('created_at!='.strtotime('today'))->orderBy('subscribe_time asc')->one();
                 if(!empty($already_today)){
                     $model->scene_id = $already_today->scene_id;
                     $model->openid = $already_today->openid;
