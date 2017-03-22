@@ -302,7 +302,7 @@ class WeiXinTestController extends Controller
                         }
                         if($model->save()){
                             $weima = ChannelWeima::findOne($model->scene_id);
-                            $this->setTag($openid,$weima->customer_service);
+                            $this->setTag($openid,$weima->tag_id);
                         }
                     }
                 }catch (\Exception $e){
