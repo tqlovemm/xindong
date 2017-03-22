@@ -1,6 +1,8 @@
 <?php
 namespace frontend\controllers;
 
+use backend\modules\bgadmin\models\ChannelWeima;
+use frontend\modules\weixin\models\ChannelWeimaRecord;
 use Yii;
 use yii\base\Exception;
 use yii\data\Pagination;
@@ -265,23 +267,74 @@ class WeiXinTestController extends Controller
     }
     protected function responseMsg(){
 
-        //2.处理消息类型，并设置回复类型和内容
-
-        //判断该数据包是否是订阅的事件推送
         if( strtolower( $this->postObj->MsgType) == 'event'){
-
+            $openid =  $this->postObj->FromUserName;
+            $model = new ChannelWeimaRecord();
             if( strtolower($this->postObj->Event) == 'subscribe' ){
+                $content = "欢迎来到有节操有内涵有故事的十三平台！\n
+<a href='http://mp.weixin.qq.com/s/IhEg7rG-ls01lFpBAGri6w'>☞如何.·玩转☜</a>
+十三在手！天下我有！\n
+<a href='http://13loveme.com/date-past?title=%E6%B1%9F%E8%8B%8F&company=13pt'>☞那些.·觅约☜</a>
+速效配对！有求必硬！\n
+<a href='http://mp.weixin.qq.com/mp/homepage?__biz=MzAxMDIwMDIxMw==&hid=4&sn=422bb1b056dd63f8c212eb9fedcfbb05#wechat_redirect'>☞玩点.·神马☜</a>
+真实互动，展开自我！\n
+<a href='http://www.13loveme.com/contact'>☞PAO圈.·入口☜</a>
+撩起来！约一啪！";
 
-               // $openid =  $this->postObj->FromUserName;
-                //$user_info = json_decode($this->getUserInfo($openid));
-
-                $this->text($this->postObj->EventKey);
+                $this->text($content);
+                $user_info = json_decode($this->getUserInfo($openid));
+                try{
+                    if (isset($this->postObj->EventKey)) {
+                        $key = explode('_', $this->postObj->EventKey);
+                        $model->scene_id = $key[1];
+                        $model->openid = "{$openid}";
+                        $model->headimgurl = "$user_info->headimgurl";
+                        $model->subscribe_time = $user_info->subscribe_time;
+                        $model->country = $user_info->country;
+                        $model->province = $user_info->province;
+                        $model->city = $user_info->city;
+                        $model->sex = $user_info->sex;
+                        $model->nickname= $user_info->nickname;
+                        if(empty($model::find()->where(['openid'=>$openid,'status'=>1])->andWhere('created_at!='.strtotime('today'))->asArray()->one())) {
+                            $model->status = 1;//新用户关注
+                        }else{
+                            $model->status = 3;//老用户关注
+                        }
+                        if($model->save()){
+                            $weima = ChannelWeima::findOne($model->scene_id);
+                            $this->setTag($openid,$weima->customer_service);
+                        }
+                    }
+                }catch (\Exception $e){
+                    var_dump( $e->getMessage() );
+                }
             }
 
-            if (strtolower($this->postObj->Event) == 'scan' ) {//扫码事件
-
-                $openid =  $this->postObj->FromUserName;
-                $this->text($openid);
+            if( strtolower($this->postObj->Event) == 'unsubscribe' ){
+                $already = $model::find()->where(['openid'=>$openid])->andWhere('created_at='.strtotime('today'))->one();
+                if(!empty($already)){
+                    $model->scene_id = $already->scene_id;
+                    $model->openid = $already->openid;
+                    $model->headimgurl = $already->headimgurl;
+                    $model->subscribe_time = time();
+                    $model->country = $already->country;
+                    $model->province = $already->province;
+                    $model->city = $already->city;
+                    $model->sex = $already->sex;
+                    $model->nickname= $already->nickname;
+                    $model->status = 2;//今天取消
+                }else{
+                    $model->scene_id = $already->scene_id;
+                    $model->openid = $already->openid;
+                    $model->headimgurl = $already->headimgurl;
+                    $model->subscribe_time = time();
+                    $model->country = $already->country;
+                    $model->province = $already->province;
+                    $model->city = $already->city;
+                    $model->sex = $already->sex;
+                    $model->nickname= $already->nickname;
+                    $model->status = 4;//往日取消
+                }
             }
         }
 
@@ -291,7 +344,7 @@ class WeiXinTestController extends Controller
             $content = "<a href='http://13loveme.com/contact'>☞PAO圈.·入口☜</a>
 撩起来！约一啪！";
             $this->text($content);
-        }else{
+        } else{
             switch( trim($this->postObj->Content) ){
                 case "深夜":
                     $data = array(
