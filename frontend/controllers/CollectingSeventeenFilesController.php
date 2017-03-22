@@ -43,10 +43,10 @@ class CollectingSeventeenFilesController extends Controller
         }
 
         if(!empty($query)){
-
+/*
             if($query->status!=0){
                 return $this->render('success',['id'=>$save_mobile]);
-            }
+            }*/
             return $this->render('index',['queries'=>$query,'img'=>$img,'wei_img'=>$wei_img]);
         }
     }
