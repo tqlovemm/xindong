@@ -80,6 +80,9 @@ class ChannelWeimaController extends Controller
     public function actionCreate()
     {
         $model = new ChannelWeima();
+        $model->customer_service = "好好好";
+        var_dump($this->setTag($model->customer_service));return;
+        $model = new ChannelWeima();
 
         if ($model->load(Yii::$app->request->post())) {
 
@@ -119,7 +122,7 @@ class ChannelWeimaController extends Controller
         $url = "https://api.weixin.qq.com/cgi-bin/tags/create?access_token=".$this->getAccessTokens();
         $data = array('tag'=>array('name'=>urlencode($remark)));
 
-        $this->http_post_data($url,urldecode(json_encode($data)));
+        return $this->http_post_data($url,urldecode(json_encode($data)));
 
     }
 
