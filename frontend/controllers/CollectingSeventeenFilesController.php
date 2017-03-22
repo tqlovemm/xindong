@@ -44,7 +44,7 @@ class CollectingSeventeenFilesController extends Controller
 
         if(!empty($query)){
 
-            if($query['status']!=0){
+            if($query->status!=0){
                 return $this->render('success',['id'=>$save_mobile]);
             }
             return $this->render('index',['queries'=>$query,'img'=>$img,'wei_img'=>$wei_img]);
@@ -109,18 +109,6 @@ class CollectingSeventeenFilesController extends Controller
             $model->$key = $data;
         }
 
-        /*return var_dump($model);
-        $model->age = strtotime(Yii::$app->request->post('age'));
-        $model->height = Yii::$app->request->post('height');
-        $model->weight = Yii::$app->request->post('weight');
-        $model->education = Yii::$app->request->post('education');
-        $model->cup = Yii::$app->request->post('cup');
-        $model->address_detail = Yii::$app->request->post('address_detail');
-        $model->address_province = Yii::$app->request->post('address_province');
-        $model->address_city = Yii::$app->request->post('address_city');
-        $model->job = Yii::$app->request->post('job');
-        $model->extra = Yii::$app->request->post('extra');*/
-
         if($model->update()){
             $model->status = 1;
             $model->update();
@@ -131,29 +119,6 @@ class CollectingSeventeenFilesController extends Controller
         }
 
         return $this->redirect('/17-files');
-    }
-    public function actionPrivateText($id){
-
-        $model = $this->findModel($id);
-        if($model->status==0){
-            return $this->redirect('/17-files/'.$model->flag);
-        }elseif($model->status==2){
-            return $this->render('success',['id'=>$model->flag]);
-        }
-        $model->weichat = Yii::$app->request->post('weichat');
-        $model->weibo = Yii::$app->request->post('weibo');
-        $model->qq = Yii::$app->request->post('qq');
-        $model->id_number = Yii::$app->request->post('id_number');
-        $model->cellphone = Yii::$app->request->post('cellphone');
-        $model->pay = Yii::$app->request->post('pay');
-
-        if($model->update()){
-            $model->status = 2;
-            $model->update();
-            return $this->render('success',['id'=>$model->flag]);
-        }
-
-        return $this->redirect('/17-files/'.$model->flag);
     }
 
     public function actionSuccess($id){
