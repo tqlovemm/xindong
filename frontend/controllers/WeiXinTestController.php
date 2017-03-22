@@ -244,11 +244,12 @@ class WeiXinTestController extends Controller
         return var_dump($data);
 
     }
-    public function actionDd(){
+    public function setTag($openid,$tagid){
 
+        $url = "https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token=".$this->getAccessTokens();
+        $data = array('openid_list'=>array($openid),'tagid'=>$tagid);
+        $this->postData($url,urldecode(json_encode($data)));
 
-        $data = array('tag'=>array('name'=>urlencode('你好')));
-        var_dump(urldecode(json_encode($data)));
     }
     protected function responseMsg(){
 
@@ -260,8 +261,9 @@ class WeiXinTestController extends Controller
             if( strtolower($this->postObj->Event) == 'subscribe' ){
 
                 $openid =  $this->postObj->FromUserName;
-                $res = $this->setRemark("客服14");
-                $user_info = $this->getUserInfo($openid);
+                $res = $this->setTag($openid,100);
+                //$res = $this->setRemark("客服14");
+                //$user_info = $this->getUserInfo($openid);
                 $this->text($res);
             }
 
