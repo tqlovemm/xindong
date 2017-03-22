@@ -1,5 +1,7 @@
 <?php
 use yii\widgets\LinkPager;
+$pre_url = Yii::$app->params['threadimg'];
+$pre =  Yii::$app->params['shisangirl'];
 ?>
 
 <a href="http://13loveme.com/wei-xin/cjs" class="btn btn-success" target="_blank">刷新access_token</a>
@@ -60,7 +62,7 @@ use yii\widgets\LinkPager;
 
         <div class="col-md-4">
             <div class="row">
-                <div class="col-xs-3"><img class="img-responsive" src="<?=$val['sign']['pic_path']?>"></div>
+                <div class="col-xs-3"><img class="img-responsive" src="<?=$pre_url.$val['sign']['pic_path']?>"></div>
                 <div class="col-xs-6" style="padding: 0">
                     <div class="">类型：<?php if($val['sign']['type']==3){echo '<span style="color:orange;">救火</span>';}else{echo '<span style="color:red;">福利</span>';}?></div>
                     <div class="">编号：<?=$val['sign']['number']?></div>
@@ -80,12 +82,7 @@ use yii\widgets\LinkPager;
                         if(!empty($file)){
 
                             if(!empty($file['memberFiles'])){
-                                $weima_girl = $file['memberFiles'][0]['path'];
-                                if((strpos('loveme',$weima_girl)==false)==false){
-
-                                    $weima_girl = "http://13loveme.com:82".$weima_girl;
-                                }
-
+                                $weima_girl = $pre.$file['memberFiles'][0]['path'];
                                 echo "<a href=$weima_girl}  data-lightbox='s' data-title='s'><img class='img-responsive img-thumbnail' style='width: 100px;height: 100px;' src={$weima_girl}></a>";
                                 $weiuser = \frontend\modules\weixin\models\UserWeichat::findOne(['number'=>$number]);
                                 if(!empty($weiuser)&&$val['status']==1):
