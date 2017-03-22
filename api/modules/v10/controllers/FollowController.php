@@ -37,6 +37,7 @@ class FollowController extends Controller
             Yii::$app->db->createCommand("UPDATE {{%user_data}} SET following_count=following_count+1 WHERE user_id=".$id)->execute();
             Yii::$app->db->createCommand("UPDATE {{%user_data}} SET follower_count=follower_count+1 WHERE user_id=".$user_id)->execute();
             $cid = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$id)->queryOne();
+            $self = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$user_id)->queryOne();
 
             if(!empty($cid['cid'])){
                 if(empty($cid['nickname'])){
@@ -47,7 +48,7 @@ class FollowController extends Controller
                 $date = time();
                 $icon = Yii::$app->params['icon'].'/images/app_push/u=3453872033,2552982116&fm=21&gp=0.png';
                 $extras = json_encode(array('push_title'=>urlencode($title),'push_content'=>urlencode($msg),'push_type'=>'SSCOMM_FANS'));
-                Yii::$app->db->createCommand("insert into {{%app_push}} (type,status,cid,title,msg,extras,platform,response,icon,created_at,updated_at) values('SSCOMM_FANS',2,'$cid[cid]','$title','$msg','$extras','all','NULL','$icon',$date,$date)")->execute();
+                Yii::$app->db->createCommand("insert into {{%app_push}} (type,status,cid,title,msg,extras,platform,response,icon,created_at,updated_at) values('SSCOMM_FANS',2,'$self[cid]','$title','$msg','$extras','all','NULL','$icon',$date,$date)")->execute();
 
             }
 
