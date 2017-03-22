@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use backend\modules\bgadmin\models\ChannelWeima;
+use common\components\SaveToLog;
 use frontend\modules\weixin\models\ChannelWeimaRecord;
 use Yii;
 use yii\web\Controller;
@@ -291,6 +292,8 @@ class WeiXinTestController extends Controller
                         if($model->save()){
                             $weima = ChannelWeima::findOne($key[1]);
                             $this->setTag($openid,$weima->tag_id);
+                        }else{
+                            SaveToLog::log($model->errors,'we.log');
                         }
                     }
                 }catch (\Exception $e){
@@ -313,7 +316,9 @@ class WeiXinTestController extends Controller
                     $model->sex = $already_today->sex;
                     $model->nickname= $already_today->nickname;
                     $model->status = 2;//今天取消
-                    $model->save();
+                    if(!$model->save()){
+                        SaveToLog::log($model->errors,'we2.log');
+                    }
                 }elseif(!empty($already_yestoday)){
                     $model->scene_id = $already_yestoday->scene_id;
                     $model->openid = $already_yestoday->openid;
@@ -325,7 +330,9 @@ class WeiXinTestController extends Controller
                     $model->sex = $already_yestoday->sex;
                     $model->nickname= $already_yestoday->nickname;
                     $model->status = 4;//老用户取消
-                    $model->save();
+                    if(!$model->save()){
+                        SaveToLog::log($model->errors,'we4.log');
+                    }
                 }
 
             }
