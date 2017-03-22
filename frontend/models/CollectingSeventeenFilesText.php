@@ -110,8 +110,9 @@ class CollectingSeventeenFilesText extends \yii\db\ActiveRecord
     {
         if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {
-
                 $this->created_at = time();
+                $this->updated_at = time();
+            }else{
                 $this->updated_at = time();
             }
             return true;
