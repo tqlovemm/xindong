@@ -299,28 +299,30 @@ class WeiXinTestController extends Controller
             }
 
             if( strtolower($this->postObj->Event) == 'unsubscribe' ){
-                $already = $model::find()->where(['openid'=>$openid])->andWhere('created_at='.strtotime('today'))->one();
-                if(!empty($already)){
-                    $model->scene_id = $already->scene_id;
-                    $model->openid = $already->openid;
-                    $model->headimgurl = $already->headimgurl;
+                $already = $model::find()->where(['openid'=>$openid]);
+                $already_today = $already->andWhere('created_at='.strtotime('today'))->one();
+                $already_yestoday = $already->andWhere('created_at!='.strtotime('today'))->one();
+                if(!empty($already_today)){
+                    $model->scene_id = $already_today->scene_id;
+                    $model->openid = $already_today->openid;
+                    $model->headimgurl = $already_today->headimgurl;
                     $model->subscribe_time = time();
-                    $model->country = $already->country;
-                    $model->province = $already->province;
-                    $model->city = $already->city;
-                    $model->sex = $already->sex;
-                    $model->nickname= $already->nickname;
+                    $model->country = $already_today->country;
+                    $model->province = $already_today->province;
+                    $model->city = $already_today->city;
+                    $model->sex = $already_today->sex;
+                    $model->nickname= $already_today->nickname;
                     $model->status = 2;//今天取消
-                }else{
-                    $model->scene_id = $already->scene_id;
-                    $model->openid = $already->openid;
-                    $model->headimgurl = $already->headimgurl;
+                }elseif(!empty($already_yestoday)){
+                    $model->scene_id = $already_yestoday->scene_id;
+                    $model->openid = $already_yestoday->openid;
+                    $model->headimgurl = $already_yestoday->headimgurl;
                     $model->subscribe_time = time();
-                    $model->country = $already->country;
-                    $model->province = $already->province;
-                    $model->city = $already->city;
-                    $model->sex = $already->sex;
-                    $model->nickname= $already->nickname;
+                    $model->country = $already_yestoday->country;
+                    $model->province = $already_yestoday->province;
+                    $model->city = $already_yestoday->city;
+                    $model->sex = $already_yestoday->sex;
+                    $model->nickname= $already_yestoday->nickname;
                     $model->status = 4;//往日取消
                 }
             }
