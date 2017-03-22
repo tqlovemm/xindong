@@ -272,10 +272,10 @@ class WeiXinTestController extends Controller
 
             if( strtolower($this->postObj->Event) == 'subscribe' ){
 
-                $openid =  $this->postObj->FromUserName;
-                $user_info = json_decode($this->getUserInfo($openid));
+               // $openid =  $this->postObj->FromUserName;
+                //$user_info = json_decode($this->getUserInfo($openid));
 
-                $this->text($user_info->headimgurl);
+                $this->text($this->postObj->EventKey);
             }
 
             if (strtolower($this->postObj->Event) == 'scan' ) {//扫码事件
