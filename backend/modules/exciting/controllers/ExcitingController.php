@@ -99,7 +99,7 @@ class ExcitingController extends BaseController
     public function actionCreate()
     {
         $model = new Exciting();
-        $path = 'http://13loveme.com:82/images/hear'.'/'.rand(1,20).'.jpg';
+        $path = 'http://admin.13loveme.com/images/hear'.'/'.rand(1,20).'.jpg';
         if ($model->load(Yii::$app->request->post())) {
             $model->url = $path;
             if($model->save()){
