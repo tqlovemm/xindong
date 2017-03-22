@@ -267,8 +267,7 @@ class WeiXinController extends Controller
 <a href='http://mp.weixin.qq.com/mp/homepage?__biz=MzAxMDIwMDIxMw==&hid=4&sn=422bb1b056dd63f8c212eb9fedcfbb05#wechat_redirect'>☞玩点.·神马☜</a>
 真实互动，展开自我！\n
 <a href='http://www.13loveme.com/contact'>☞PAO圈.·入口☜</a>
-撩起来！约一啪！
-                ";
+撩起来！约一啪！";
                 $this->text($content);
                 $openid =  $this->postObj->FromUserName;
                 try{
@@ -296,20 +295,6 @@ class WeiXinController extends Controller
                 }
                 exit;
 
-            }
-            if (strtolower($this->postObj->Event) == 'scan' ) {//扫码事件
-
-                $content = "欢迎来到有节操有内涵有故事的十三平台！\n
-<a href='http://mp.weixin.qq.com/s?__biz=MzAxMDIwMDIxMw==&mid=503683187&idx=1&sn=9e750223ff76edbcdc1a2a044e09a12d&scene=1&srcid=08267xoQ0F6LFDzuzVbOZLrf#wechat_redirect'>☞如何.·玩转☜</a>
-十三在手！天下我有！\n
-<a href='http://13loveme.com/date-past?title=%E6%B1%9F%E8%8B%8F&company=13pt'>☞那些.·觅约☜</a>
-速效配对！有求必硬！\n
-<a href='http://mp.weixin.qq.com/mp/homepage?__biz=MzAxMDIwMDIxMw==&hid=4&sn=422bb1b056dd63f8c212eb9fedcfbb05#wechat_redirect'>☞玩点.·神马☜</a>
-真实互动，展开自我！\n
-<a href='http://www.13loveme.com/contact'>☞PAO圈.·入口☜</a>
-撩起来！约一啪！";
-                $this->text($content);
-                exit;
             }
         }
 
