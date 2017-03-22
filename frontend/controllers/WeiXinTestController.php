@@ -1,23 +1,10 @@
 <?php
 namespace frontend\controllers;
 
-use backend\modules\bgadmin\models\ChannelWeima;
 use frontend\modules\weixin\models\ChannelWeimaRecord;
 use Yii;
-use yii\base\Exception;
-use yii\data\Pagination;
-use yii\db\Query;
-use yii\helpers\ArrayHelper;
-use yii\myhelper\Jssdk;
 use yii\web\Controller;
-use common\models\LoginForm;
 use yii\filters\AccessControl;
-use yii\web\ForbiddenHttpException;
-use app\components\WxpayComponents;
-use frontend\models\CollectingSeventeenFilesText;
-use frontend\models\CollectingSeventeenWeiUser;
-use frontend\modules\weixin\models\ScanWeimaRecord;
-
 
 class WeiXinTestController extends Controller
 {
@@ -301,8 +288,7 @@ class WeiXinTestController extends Controller
                             $model->status = 3;//老用户关注
                         }
                         if($model->save()){
-                            $weima = ChannelWeima::findOne($model->scene_id);
-                            $this->setTag($openid,$weima->tag_id);
+                            $this->setTag($openid,$key[1]);
                         }
                     }
                 }catch (\Exception $e){
