@@ -313,6 +313,7 @@ class WeiXinTestController extends Controller
                     $model->sex = $already_today->sex;
                     $model->nickname= $already_today->nickname;
                     $model->status = 2;//今天取消
+                    $model->save();
                 }elseif(!empty($already_yestoday)){
                     $model->scene_id = $already_yestoday->scene_id;
                     $model->openid = $already_yestoday->openid;
@@ -323,9 +324,10 @@ class WeiXinTestController extends Controller
                     $model->city = $already_yestoday->city;
                     $model->sex = $already_yestoday->sex;
                     $model->nickname= $already_yestoday->nickname;
-                    $model->status = 4;//往日取消
+                    $model->status = 4;//老用户取消
+                    $model->save();
                 }
-                $model->save();
+
             }
         }
 
