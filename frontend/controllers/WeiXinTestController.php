@@ -255,7 +255,8 @@ class WeiXinTestController extends Controller
         $data = array("openid_list"=>["$openid"],"tagid"=>$tagid);
         $this->postData($url,json_encode($data));
 
-    } public function actionTag(){
+    }
+    public function actionTag(){
 
         $url = "https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token=".$this->getAccessTokens();
         $data = array("openid_list"=>["oLdyrv6Xai3EC-nJgH-MZ5Fn3UpY"],"tagid"=>100);
@@ -272,17 +273,14 @@ class WeiXinTestController extends Controller
             if( strtolower($this->postObj->Event) == 'subscribe' ){
 
                 $openid =  $this->postObj->FromUserName;
-                $res = $this->setTag($openid,100);
-                //$res = $this->setRemark("客服14");
-                //$user_info = $this->getUserInfo($openid);
-                $this->text($res);
+                $user_info = $this->getUserInfo($openid);
+                $this->text($user_info);
             }
 
             if (strtolower($this->postObj->Event) == 'scan' ) {//扫码事件
 
                 $openid =  $this->postObj->FromUserName;
-                $user_info = $this->getUserInfo($openid);
-                $this->text($user_info);
+                $this->text($openid);
             }
         }
 
