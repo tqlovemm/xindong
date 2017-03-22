@@ -248,7 +248,7 @@ class WeiXinTestController extends Controller
 
         $url = "https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token=".$this->getAccessTokens();
         $data = array('openid_list'=>array($openid),'tagid'=>$tagid);
-        $this->postData($url,urldecode(json_encode($data)));
+        $this->postData($url,json_encode($data));
 
     }
     protected function responseMsg(){
