@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use backend\modules\bgadmin\models\ChannelWeima;
 use frontend\modules\weixin\models\ChannelWeimaRecord;
 use Yii;
 use yii\web\Controller;
@@ -288,7 +289,8 @@ class WeiXinTestController extends Controller
                             $model->status = 3;//老用户关注
                         }
                         if($model->save()){
-                            $this->setTag($openid,$key[1]);
+                            $weima = ChannelWeima::findOne($key[1]);
+                            $this->setTag($openid,$weima->tag_id);
                         }
                     }
                 }catch (\Exception $e){
