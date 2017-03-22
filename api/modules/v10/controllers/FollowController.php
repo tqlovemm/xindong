@@ -36,7 +36,7 @@ class FollowController extends Controller
             Yii::$app->db->createCommand("insert into {{%user_follow}} (user_id,people_id) VALUES ({$id},{$user_id})")->execute();
             Yii::$app->db->createCommand("UPDATE {{%user_data}} SET following_count=following_count+1 WHERE user_id=".$id)->execute();
             Yii::$app->db->createCommand("UPDATE {{%user_data}} SET follower_count=follower_count+1 WHERE user_id=".$user_id)->execute();
-            $cid = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$user_id)->queryOne();
+            $cid = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$id)->queryOne();
 
             if(!empty($cid['cid'])){
                 if(empty($cid['nickname'])){
