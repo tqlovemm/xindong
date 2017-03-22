@@ -237,12 +237,11 @@ class WeiXinTestController extends Controller
         $this->postData($url,urldecode(json_encode($data)));
 
     }
-    public function actionRemark($remark){
+    public function actionRemark(){
 
-        $url = "https://api.weixin.qq.com/cgi-bin/tags/create?access_token=".$this->getAccessTokens();
-        $data = array('tag'=>array('name'=>urlencode($remark)));
-
-        $this->postData($url,urldecode(json_encode($data)));
+        $url = "https://api.weixin.qq.com/cgi-bin/tags/get?access_token=".$this->getAccessTokens();
+        $data = $this->getData($url);
+        return var_dump($data);
 
     }
     public function actionDd(){
