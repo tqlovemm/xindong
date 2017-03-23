@@ -261,6 +261,7 @@ class WeiXinTestController extends Controller
             $model = new ChannelWeimaRecord();
             if( strtolower($this->postObj->Event) == 'subscribe' ){
 
+                $this->text($this->postObj->EventKey);exit();
                 $user_info = json_decode($this->getUserInfo($openid));
                 try{
                     if (isset($this->postObj->EventKey)) {
