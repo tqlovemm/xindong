@@ -20,6 +20,7 @@ use Yii;
  * @property string $city
  * @property integer $sex
  * @property integer $status
+ * @property integer $type
  */
 class ChannelWeimaRecord extends \yii\db\ActiveRecord
 {
@@ -38,7 +39,7 @@ class ChannelWeimaRecord extends \yii\db\ActiveRecord
     {
         return [
             [['scene_id'], 'required'],
-            [['scene_id', 'status','subscribe_time','created_at','sex'], 'integer'],
+            [['scene_id', 'status','subscribe_time','created_at','sex','type'], 'integer'],
             [['openid','nickname','country','province','city','headimgurl'], 'string']
         ];
     }
@@ -51,6 +52,7 @@ class ChannelWeimaRecord extends \yii\db\ActiveRecord
         if(parent::beforeSave($insert)){
             if($this->isNewRecord){
                 $this->created_at = strtotime('today');
+                $this->type = 1;
             }
             return true;
         }
@@ -76,6 +78,7 @@ class ChannelWeimaRecord extends \yii\db\ActiveRecord
             'province' => 'Province',
             'city' => 'City',
             'headimgurl' => 'Headimgurl',
+            'type' => 'Type',
         ];
     }
     /**
