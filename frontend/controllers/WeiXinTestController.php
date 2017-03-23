@@ -266,7 +266,11 @@ class WeiXinTestController extends Controller
                 try{
                     if (!empty($this->postObj->EventKey)) {
                         $key = explode('_', $this->postObj->EventKey);
-                        $model->scene_id = $key[1];
+                        if(isset($key[1])){
+                            $model->scene_id = $key[1];
+                        }else{
+                            $model->scene_id = $this->postObj->EventKey;
+                        }
                         $model->openid = "{$openid}";
                         $model->headimgurl = "$user_info->headimgurl";
                         $model->subscribe_time = $user_info->subscribe_time;
