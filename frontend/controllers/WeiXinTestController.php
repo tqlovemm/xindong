@@ -68,13 +68,13 @@ class WeiXinTestController extends Controller
     }
     private function getAccessTokens() {
         $this->cache = Yii::$app->cache;
-        $data = $this->cache->get('access_token_jss');
+        $data = $this->cache->get('access_token_js');
         if (empty($data)) {
             $token_access_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxc495a4f0e7f288cc&secret=88f026969080c4460cc12c9a9afd4def";
             $res = json_decode($this->getData($token_access_url));
             $access_token = $res->access_token;
             if ($access_token) {
-                $this->cache->set('access_token_jss',$access_token,7000);
+                $this->cache->set('access_token_js',$access_token,7000);
             }
         } else {
             $access_token = $data;
