@@ -260,17 +260,7 @@ class WeiXinTestController extends Controller
             $openid =  $this->postObj->FromUserName;
             $model = new ChannelWeimaRecord();
             if( strtolower($this->postObj->Event) == 'subscribe' ){
-                $content = "欢迎来到有节操有内涵有故事的十三平台！\n
-<a href='http://mp.weixin.qq.com/s/IhEg7rG-ls01lFpBAGri6w'>☞如何.·玩转☜</a>
-十三在手！天下我有！\n
-<a href='http://13loveme.com/date-past?title=%E6%B1%9F%E8%8B%8F&company=13pt'>☞那些.·觅约☜</a>
-速效配对！有求必硬！\n
-<a href='http://mp.weixin.qq.com/mp/homepage?__biz=MzAxMDIwMDIxMw==&hid=4&sn=422bb1b056dd63f8c212eb9fedcfbb05#wechat_redirect'>☞玩点.·神马☜</a>
-真实互动，展开自我！\n
-<a href='http://www.13loveme.com/contact'>☞PAO圈.·入口☜</a>
-撩起来！约一啪！";
 
-                $this->text($content);
                 $user_info = json_decode($this->getUserInfo($openid));
                 try{
                     if (isset($this->postObj->EventKey)) {
@@ -311,6 +301,19 @@ class WeiXinTestController extends Controller
                     }
                 }catch (\Exception $e){
                     var_dump( $e->getMessage() );
+                }finally{
+
+                    $content = "欢迎来到有节操有内涵有故事的十三平台！\n
+<a href='http://mp.weixin.qq.com/s/IhEg7rG-ls01lFpBAGri6w'>☞如何.·玩转☜</a>
+十三在手！天下我有！\n
+<a href='http://13loveme.com/date-past?title=%E6%B1%9F%E8%8B%8F&company=13pt'>☞那些.·觅约☜</a>
+速效配对！有求必硬！\n
+<a href='http://mp.weixin.qq.com/mp/homepage?__biz=MzAxMDIwMDIxMw==&hid=4&sn=422bb1b056dd63f8c212eb9fedcfbb05#wechat_redirect'>☞玩点.·神马☜</a>
+真实互动，展开自我！\n
+<a href='http://www.13loveme.com/contact'>☞PAO圈.·入口☜</a>
+撩起来！约一啪！";
+
+                    $this->text($content);
                 }
             }
 
