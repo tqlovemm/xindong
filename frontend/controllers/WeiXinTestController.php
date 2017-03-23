@@ -296,7 +296,7 @@ class WeiXinTestController extends Controller
                                 }else{
                                     $followModel->old_subscribe=1;
                                 }
-                                if($followModel->save()){
+                                if(!$followModel->save()){
                                     SaveToLog::log($followModel->errors,'wm.log');
                                 }
                             }
