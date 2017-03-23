@@ -297,7 +297,7 @@ class WeiXinTestController extends Controller
                         $model->sex = $user_info->sex;
                         $model->nickname= $user_info->nickname;
                         if(!$model->save()){
-                            $this->text(json_encode($model->errors));
+                            $this->text(json_encode($model->errors).'25');
                             //SaveToLog::log($model->errors,'we0.log');
                         }
                     }
