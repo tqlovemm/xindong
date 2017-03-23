@@ -269,8 +269,7 @@ class WeiXinTestController extends Controller
                         if(isset($key[1])){
                             $model->scene_id = $key[1];
                         }else{
-                            $model->scene_id = $this->postObj->EventKey;
-                            $this->text($model->scene_id);
+                            $model->scene_id = 0;
                         }
                         $model->openid = "{$openid}";
                         $model->headimgurl = "$user_info->headimgurl";
