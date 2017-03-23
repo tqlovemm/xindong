@@ -306,6 +306,7 @@ class WeiXinTestController extends Controller
                         }
                     }
                 }catch (\Exception $e){
+                    SaveToLog::log($model->errors,'we13.log');
                     $this->text(json_encode($e->getMessage()).'eeeee');
                 }finally{
 
