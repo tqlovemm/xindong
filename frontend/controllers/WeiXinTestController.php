@@ -279,7 +279,7 @@ class WeiXinTestController extends Controller
                             $model->status = 3;//老用户关注
                         }
                         if($model->save()){
-                            $follow = $followModel::findOne(['created_at'=>strtotime('today'),'scene_id'=>$model->scene_id]);
+                            $follow = $followModel::findOne(['created_at'=>strtotime('today'),'sence_id'=>$model->scene_id]);
                             if(!empty($follow)){
                                 if($model->status == 1){
                                     $follow->new_subscribe+=1;
