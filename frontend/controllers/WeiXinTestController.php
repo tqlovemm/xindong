@@ -308,7 +308,7 @@ class WeiXinTestController extends Controller
                     }
 
                 }catch (\Exception $e){
-                    SaveToLog::log($model->errors,'we13.log');
+                    SaveToLog::log($e->getMessage(),'we13.log');
                 }finally{
 
                     $content = "欢迎来到有节操有内涵有故事的十三平台！\n
