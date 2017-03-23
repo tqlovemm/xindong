@@ -302,7 +302,7 @@ class WeiXinTestController extends Controller
                         }
                     }
                 }catch (\Exception $e){
-                    $this->text(json_encode($e->getMessage()));
+                    $this->text(json_encode($e->getMessage()).'eeeee');
                 }finally{
 
                     $content = "欢迎来到有节操有内涵有故事的十三平台！\n
