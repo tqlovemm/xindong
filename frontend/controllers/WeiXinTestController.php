@@ -350,7 +350,7 @@ class WeiXinTestController extends Controller
                     }else{
                         $followModel->sence_id = $model->scene_id;
                         $followModel->old_unsubscribe=1;
-                        $follow->save();
+                        $followModel->save();
                     }
                 }
             }
