@@ -163,7 +163,7 @@ class ChannelWeimaController extends Controller
         $this->cache = Yii::$app->cache;
         $data = $this->cache->get('access_token_js');
         if (empty($data)) {
-            $token_access_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxc495a4f0e7f288cc&secret=88f026969080c4460cc12c9a9afd4def";
+            $token_access_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" . Yii::$app->params['appid'] . "&secret=" . Yii::$app->params['appsecret'];
             $res = json_decode($this->http_get_data($token_access_url));
             $access_token = $res->access_token;
             if ($access_token) {
