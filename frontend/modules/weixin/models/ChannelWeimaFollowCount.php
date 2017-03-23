@@ -33,7 +33,7 @@ class ChannelWeimaFollowCount extends \yii\db\ActiveRecord
     {
         return [
             [['sence_id', 'created_at'], 'required'],
-            [['sence_id', 'new__subscribe', 'new_unsubscribe', 'old_subscribe', 'old_unsubscribe', 'scan', 'created_at'], 'integer']
+            [['sence_id', 'new_subscribe', 'new_unsubscribe', 'old_subscribe', 'old_unsubscribe', 'scan', 'created_at'], 'integer']
         ];
     }
 
