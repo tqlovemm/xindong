@@ -50,7 +50,7 @@ class DefaultController extends Controller
             ->With('user')
             ->asArray()
             ->limit(14)
-            ->orderBy('at.created_at desc')
+            ->orderBy('at.updated_at desc')
             ->all();
         if($model !== null ){
 
