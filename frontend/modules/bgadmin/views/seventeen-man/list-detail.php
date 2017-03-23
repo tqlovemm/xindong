@@ -47,6 +47,7 @@ $qiniu = Yii::$app->params['qiniushiqi'];
 </div>
 
 <?php
+$img = isset($img['img'])?$img['img']:'';
 $this->registerJs("
 /*瀑布流*/
 $('.wall').jaliswall({ item: '.article' });
