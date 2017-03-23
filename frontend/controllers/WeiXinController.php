@@ -1,8 +1,11 @@
 <?php
 namespace frontend\controllers;
 
+use backend\modules\bgadmin\models\ChannelWeima;
+use common\components\SaveToLog;
+use frontend\modules\weixin\models\ChannelWeimaFollowCount;
+use frontend\modules\weixin\models\ChannelWeimaRecord;
 use Yii;
-use yii\base\Exception;
 use yii\data\Pagination;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
@@ -11,11 +14,10 @@ use yii\web\Controller;
 use common\models\LoginForm;
 use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;
-use app\components\SaveToLog;
 use app\components\WxpayComponents;
 use frontend\models\CollectingSeventeenFilesText;
 use frontend\models\CollectingSeventeenWeiUser;
-use frontend\modules\weixin\models\ScanWeimaRecord;
+
 
 
 class WeiXinController extends Controller
@@ -252,12 +254,69 @@ class WeiXinController extends Controller
     }
     protected function responseMsg(){
 
-        //2.处理消息类型，并设置回复类型和内容
-
-        //判断该数据包是否是订阅的事件推送
         if( strtolower( $this->postObj->MsgType) == 'event'){
+            $openid =  $this->postObj->FromUserName;
+            $model = new ChannelWeimaRecord();
+            $followModel = new ChannelWeimaFollowCount();
 
             if( strtolower($this->postObj->Event) == 'subscribe' ){
+
+                //$this->text($this->postObj->EventKey);exit();
+                $user_info = json_decode($this->getUserInfo($openid));
+                try{
+                    if (!empty($this->postObj->EventKey)) {
+                        $key = explode('_', $this->postObj->EventKey);
+                        if(isset($key[1])){
+                            $model->scene_id = $key[1];
+                        }else{
+                            $model->scene_id = 0;
+                        }
+                        $model->openid = "{$openid}";
+                        $model->headimgurl = "$user_info->headimgurl";
+                        $model->subscribe_time = $user_info->subscribe_time;
+                        $model->country = $user_info->country;
+                        $model->province = $user_info->province;
+                        $model->city = $user_info->city;
+                        $model->sex = $user_info->sex;
+                        $model->nickname= $user_info->nickname;
+                        $model->type = 1;
+                        if(empty($model::find()->where(['openid'=>$openid,'status'=>1])->andWhere('created_at!='.strtotime('today'))->asArray()->one())) {
+                            $model->status = 1;//新用户关注
+                        }else{
+                            $model->status = 3;//老用户关注
+                        }
+                        if($model->save()){
+                            $follow = $followModel::findOne(['created_at'=>strtotime('today'),'sence_id'=>$model->scene_id]);
+                            if(!empty($follow)){
+                                if($model->status == 1){
+                                    $follow->new_subscribe+=1;
+                                }else{
+                                    $follow->old_subscribe+=1;
+                                }
+                                if(!$follow->update()){
+                                    SaveToLog::log($follow->errors,'wm.log');
+                                }
+                            }else{
+                                $followModel->sence_id = $model->scene_id;
+                                if($model->status == 1){
+                                    $followModel->new_subscribe=1;
+                                }else{
+                                    $followModel->old_subscribe=1;
+                                }
+                                if(!$followModel->save()){
+                                    SaveToLog::log($followModel->errors,'wm.log');
+                                }
+                            }
+                            $weima = ChannelWeima::findOne($model->scene_id);
+                            $this->setTag($openid,$weima->tag_id);
+                        }else{
+                            SaveToLog::log($model->errors,'we13.log');
+                        }
+                    }
+
+                }catch (\Exception $e){
+                    SaveToLog::log($e->getMessage(),'we13.log');
+                }finally{
 
                     $content = "欢迎来到有节操有内涵有故事的十三平台！\n
 <a href='http://mp.weixin.qq.com/s/IhEg7rG-ls01lFpBAGri6w'>☞如何.·玩转☜</a>
@@ -268,30 +327,46 @@ class WeiXinController extends Controller
 真实互动，展开自我！\n
 <a href='http://www.13loveme.com/contact'>☞PAO圈.·入口☜</a>
 撩起来！约一啪！";
-                $this->text($content);
-                $openid =  $this->postObj->FromUserName;
-                try{
-                    $model = new ScanWeimaRecord();
-                    if(empty($model::findOne(['openid'=>$openid,'status'=>1]))) {
-                        if (isset($this->postObj->EventKey)) {
-                            $key = explode('_', $this->postObj->EventKey);
-                            $model->scene_id = $key[1];
-                            $model->openid = "{$openid}";
-                            $model->status = 10;
-                            $model->save();
+                    $this->text($content);
+                }
+            }
+            if( strtolower($this->postObj->Event) == 'unsubscribe' ){
+                $already_today = $model::find()->where(['openid'=>$openid])->andWhere('created_at='.strtotime('today'))->orderBy('subscribe_time desc')->one();
+                $already_yesterday = $model::find()->where(['openid'=>$openid])->andWhere('created_at!='.strtotime('today'))->orderBy('subscribe_time desc')->one();
+                if(!empty($already_today)){
+
+                    $follow = $followModel::findOne(['created_at'=>strtotime('today'),'sence_id'=>$already_today->scene_id]);
+                    if(!empty($follow)){
+                        $follow->new_unsubscribe+=1;
+                        if(!$follow->update()){
+                            SaveToLog::log($model->errors,'wm.log');
                         }
                     }else{
-
-                        if (isset($this->postObj->EventKey)) {
-                            $key = explode('_', $this->postObj->EventKey);
-                            $model->scene_id = $key[1];
-                            $model->openid = "{$openid}";
-                            $model->status = 1;
-                            $model->save();
+                        $followModel->sence_id = $already_today->scene_id;
+                        $followModel->new_unsubscribe=1;
+                        if(!$followModel->save()){
+                            SaveToLog::log($model->errors,'wm.log');
                         }
                     }
-                }catch (\Exception $e){
-                    var_dump( $e->getMessage() );
+
+                    $model::updateAll(['type'=>0],['openid'=>$openid,'type'=>1]);
+
+
+                }elseif(!empty($already_yesterday)){
+
+                    $follow = $followModel::findOne(['created_at'=>strtotime('today'),'sence_id'=>$already_yesterday->scene_id]);
+                    if(!empty($follow)){
+                        $follow->old_unsubscribe+=1;
+                        if(!$follow->update()){
+                            SaveToLog::log($model->errors,'wm.log');
+                        }
+                    }else{
+                        $followModel->sence_id = $already_yesterday->scene_id;
+                        $followModel->old_unsubscribe=1;
+                        if(!$followModel->save()){
+                            SaveToLog::log($model->errors,'wm.log');
+                        }
+                    }
                 }
             }
         }
@@ -302,7 +377,7 @@ class WeiXinController extends Controller
             $content = "<a href='http://13loveme.com/contact'>☞PAO圈.·入口☜</a>
 撩起来！约一啪！";
             $this->text($content);
-        }else{
+        } else{
             switch( trim($this->postObj->Content) ){
                 case "深夜":
                     $data = array(
@@ -321,6 +396,7 @@ class WeiXinController extends Controller
                     break;
             }
         }//if end
+
     }//reponseMsg end
 
     /*get code*/
