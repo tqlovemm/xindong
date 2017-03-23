@@ -83,7 +83,7 @@ $('.wall').jaliswall({ item: '.article' });
             title: '高端会员交友', // 分享标题
             desc: '请及时分享给客服，客服会帮你联系她，记住一定要分享给客服哦，过期无效。', // 分享描述
             link: 'http://13loveme.com/bgadmin/seventeen-man/share-list?flag=<?=$flag?>', // 分享链接
-            imgUrl: '<?=$qiniu.$img['img']?>', // 分享图标
+            imgUrl: '<?=$qiniu.$img?>', // 分享图标
             type: 'link', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () {
