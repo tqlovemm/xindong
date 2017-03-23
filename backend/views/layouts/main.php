@@ -568,8 +568,8 @@ $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?= Url::toRoute(['/bgadmin/scan-weima-detail']) ?>">
-                                        <i class="glyphicon glyphicon-gift"></i> <span>生成十三平台分裂二维码</span>
+                                    <a href="<?= Url::toRoute(['/bgadmin/channel-weima']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>渠道二维码生成与统计</span>
                                     </a>
                                 </li>
                             </ul>
@@ -996,8 +996,8 @@ $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?= Url::toRoute(['/bgadmin/scan-weima-detail']) ?>">
-                                        <i class="glyphicon glyphicon-gift"></i> <span>生成十三平台分裂二维码</span>
+                                    <a href="<?= Url::toRoute(['/bgadmin/channel-weima']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>渠道二维码生成与统计</span>
                                     </a>
                                 </li>
                             </ul>
@@ -1049,8 +1049,8 @@ $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii
                         </a>
                     </li>
                     <li>
-                        <a href="<?= Url::toRoute(['/bgadmin/scan-weima-detail']) ?>">
-                            <i class="glyphicon glyphicon-gift"></i> <span>生成十三平台分裂二维码</span>
+                        <a href="<?= Url::toRoute(['/bgadmin/channel-weima']) ?>">
+                            <i class="glyphicon glyphicon-gift"></i> <span>渠道二维码生成与统计</span>
                         </a>
                     </li>
 
