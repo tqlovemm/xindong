@@ -286,7 +286,9 @@ class WeiXinTestController extends Controller
                                 }else{
                                     $follow->old_subscribe+=1;
                                 }
-                                $follow->update();
+                                if(!$follow->update()){
+                                    SaveToLog::log($follow->errors,'wm.log');
+                                }
                             }else{
                                 $followModel->sence_id = $model->scene_id;
                                 if($model->status == 1){
@@ -294,7 +296,9 @@ class WeiXinTestController extends Controller
                                 }else{
                                     $followModel->old_subscribe=1;
                                 }
-                                $follow->save();
+                                if($followModel->save()){
+                                    SaveToLog::log($followModel->errors,'wm.log');
+                                }
                             }
                             $weima = ChannelWeima::findOne($model->scene_id);
                             $this->setTag($openid,$weima->tag_id);
