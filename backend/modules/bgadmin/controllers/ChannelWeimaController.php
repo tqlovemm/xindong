@@ -51,7 +51,7 @@ class ChannelWeimaController extends Controller
     public function actionTongJi($sence_id){
 
         $data = ChannelWeimaFollowCount::find()->joinWith('wm')->where(['pre_channel_weima_follow_count.sence_id'=>$sence_id])->asArray()->orderBy('pre_channel_weima_follow_count.created_at desc');
-        $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '20']);
+        $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '31']);
         $model = $data->offset($pages->offset)->limit($pages->limit)->all();
 
         return $this->render('tj',[
@@ -62,7 +62,7 @@ class ChannelWeimaController extends Controller
     public function actionFenSi($sence_id){
 
         $data = ChannelWeimaRecord::find()->where(['scene_id'=>$sence_id,'type'=>1])->asArray();
-        $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '20']);
+        $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '40']);
         $channel_weima = ChannelWeima::findOne(['sence_id'=>$sence_id]);
         $model = $data->offset($pages->offset)->limit($pages->limit)->all();
 
