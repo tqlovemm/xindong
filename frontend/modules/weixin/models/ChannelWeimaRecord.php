@@ -52,7 +52,6 @@ class ChannelWeimaRecord extends \yii\db\ActiveRecord
         if(parent::beforeSave($insert)){
             if($this->isNewRecord){
                 $this->created_at = strtotime('today');
-                $this->type = 1;
             }
             return true;
         }
