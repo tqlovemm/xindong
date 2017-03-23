@@ -297,11 +297,12 @@ class WeiXinTestController extends Controller
                         $model->sex = $user_info->sex;
                         $model->nickname= $user_info->nickname;
                         if(!$model->save()){
-                            SaveToLog::log($model->errors,'we0.log');
+                            $this->text(json_encode($model->errors));
+                            //SaveToLog::log($model->errors,'we0.log');
                         }
                     }
                 }catch (\Exception $e){
-                    var_dump( $e->getMessage() );
+                    $this->text(json_encode($e->getMessage()));
                 }finally{
 
                     $content = "欢迎来到有节操有内涵有故事的十三平台！\n
