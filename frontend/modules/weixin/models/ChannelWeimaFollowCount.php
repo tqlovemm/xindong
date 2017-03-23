@@ -2,6 +2,7 @@
 
 namespace frontend\modules\weixin\models;
 
+use backend\modules\bgadmin\models\ChannelWeima;
 use Yii;
 
 /**
@@ -63,5 +64,10 @@ class ChannelWeimaFollowCount extends \yii\db\ActiveRecord
             return true;
         }
         return false;
+    }
+
+    public function getWm()
+    {
+        return $this->hasOne(ChannelWeima::className(), ['sence_id'=>'sence_id' ]);
     }
 }
