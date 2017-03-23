@@ -30,7 +30,7 @@ class DefaultController extends Controller
             ->with('thumbs')
             ->with('user')
             ->asArray()
-            ->orderBy('at.created_at desc')
+            ->orderBy('at.updated_at desc')
             ->limit(5)
             ->all();
         $id = $this->getJudgeLog();
