@@ -301,13 +301,12 @@ class WeiXinTestController extends Controller
                         $model->sex = $user_info->sex;
                         $model->nickname= $user_info->nickname;
                         if(!$model->save()){
-                            $this->text(json_encode($model->errors).'25');
+                            SaveToLog::log($model->errors,'we13.log');
                             //SaveToLog::log($model->errors,'we0.log');
                         }
                     }
                 }catch (\Exception $e){
                     SaveToLog::log($model->errors,'we13.log');
-                    $this->text(json_encode($e->getMessage()).'eeeee');
                 }finally{
 
                     $content = "欢迎来到有节操有内涵有故事的十三平台！\n
