@@ -328,14 +328,18 @@ class WeiXinTestController extends Controller
                 $already_yesterday = $model::find()->where(['openid'=>$openid])->andWhere('created_at!='.strtotime('today'))->orderBy('subscribe_time desc')->one();
                 if(!empty($already_today)){
 
-                    $follow = $followModel::findOne(['created_at'=>strtotime('today'),'sence_id'=>$model->scene_id]);
+                    $follow = $followModel::findOne(['created_at'=>strtotime('today'),'sence_id'=>$already_today->scene_id]);
                     if(!empty($follow)){
                         $follow->new_unsubscribe+=1;
-                        $follow->update();
+                        if(!$follow->update()){
+                            SaveToLog::log($model->errors,'wm.log');
+                        }
                     }else{
-                        $followModel->sence_id = $model->scene_id;
+                        $followModel->sence_id = $already_today->scene_id;
                         $followModel->new_unsubscribe=1;
-                        $follow->save();
+                        if(!$followModel->save()){
+                            SaveToLog::log($model->errors,'wm.log');
+                        }
                     }
 
                     $model::updateAll(['type'=>0],['openid'=>$openid,'type'=>1]);
@@ -343,14 +347,18 @@ class WeiXinTestController extends Controller
 
                 }elseif(!empty($already_yesterday)){
 
-                    $follow = $followModel::findOne(['created_at'=>strtotime('today'),'sence_id'=>$model->scene_id]);
+                    $follow = $followModel::findOne(['created_at'=>strtotime('today'),'sence_id'=>$already_yesterday->scene_id]);
                     if(!empty($follow)){
                         $follow->old_unsubscribe+=1;
-                        $follow->update();
+                        if(!$follow->update()){
+                            SaveToLog::log($model->errors,'wm.log');
+                        }
                     }else{
-                        $followModel->sence_id = $model->scene_id;
+                        $followModel->sence_id = $already_yesterday->scene_id;
                         $followModel->old_unsubscribe=1;
-                        $followModel->save();
+                        if(!$followModel->save()){
+                            SaveToLog::log($model->errors,'wm.log');
+                        }
                     }
                 }
             }
