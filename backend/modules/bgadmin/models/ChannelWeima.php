@@ -2,6 +2,7 @@
 
 namespace backend\modules\bgadmin\models;
 
+use frontend\modules\weixin\models\ChannelWeimaFollowCount;
 use Yii;
 
 /**
@@ -73,6 +74,10 @@ class ChannelWeima extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getCount()
+    {
+        return $this->hasOne(ChannelWeimaFollowCount::className(), ['sence_id' => 'sence_id'])->where(['created_at'=>strtotime('today')]);
+    }
     public function getNum()
     {
         return $this->hasMany(ChannelWeimaRecord::className(), ['scene_id' => 'sence_id'])->where(['status'=>1]);

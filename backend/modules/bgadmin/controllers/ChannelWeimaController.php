@@ -2,6 +2,8 @@
 
 namespace backend\modules\bgadmin\controllers;
 
+use frontend\modules\weixin\models\ChannelWeimaFollowCount;
+use frontend\modules\weixin\models\ChannelWeimaRecord;
 use frontend\modules\weixin\models\ScanWeimaRecord;
 use Yii;
 use backend\modules\bgadmin\models\ChannelWeima;
@@ -38,12 +40,36 @@ class ChannelWeimaController extends Controller
      */
     public function actionIndex()
     {
-        return 'fawef';
-        $searchModel = new ChannelWeimaSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+        $ChannelWeima = new ChannelWeima();
+        //$count = new ChannelWeimaFollowCount();
+        //$tongJi_today = $count::find()->with('wm')->where(['pre_channel_weima_follow_count.created_at'=>strtotime('today')])->orderBy('sence_id desc')->asArray()->all();
+        $tongJi_today = $ChannelWeima::find()->with('count')->orderBy('sence_id desc')->asArray()->all();
+
+        return $this->render('index',['model'=>$tongJi_today]);
+    }
+
+    public function actionTongJi($sence_id){
+
+        $data = ChannelWeimaFollowCount::find()->joinWith('wm')->where(['pre_channel_weima_follow_count.sence_id'=>$sence_id])->asArray()->orderBy('pre_channel_weima_follow_count.created_at desc');
+        $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '20']);
+        $model = $data->offset($pages->offset)->limit($pages->limit)->all();
+
+        return $this->render('tj',[
+            'model' => $model,
+            'pages' => $pages,
+        ]);
+    }
+    public function actionFenSi($sence_id){
+
+        $data = ChannelWeimaRecord::find()->where(['scene_id'=>$sence_id,'type'=>1])->asArray();
+        $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '20']);
+        $channel_weima = ChannelWeima::findOne(['sence_id'=>$sence_id]);
+        $model = $data->offset($pages->offset)->limit($pages->limit)->all();
+
+        return $this->render('fs',[
+            'model' => $model,
+            'pages' => $pages,
+            'channel_weima'=>$channel_weima,
         ]);
     }
 

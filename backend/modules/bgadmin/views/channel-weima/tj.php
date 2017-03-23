@@ -1,27 +1,72 @@
 <?php
 use yii\widgets\LinkPager;
-$items = array();
-foreach($model as $item) {
-
-    $order_id = $item['created_at'];
-    unset($item['created_at']);
-    if(!isset($items[$order_id])) {
-        $items[$order_id] = array('order_id'=>$order_id, 'items'=>array());
-    }
-    $items[$order_id]['items'][] = $item;
+$this->title = "渠道粉丝数据统计";
+$this->registerCss("
+    .table{width:100%;}
+    .table thead tr{background-color: #ddd;}
+    .table thead tr th{border:1px solid #eee;text-align:center;}
+    .table tr td{border:1px solid #eee;text-align:center;}
+    .follow{margin-bottom:0;}
+    .follow li{list-style: none;}
+    .skin-blue-light .main-header .logo{display:none;}
+    
+    .weimenubox li.on, .weimenubox li.on a {
+    background: #d7d7d7;
+    color: #333;
+    display: block;
 }
-rsort($items);
-
+.weimenubox li {
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    border-top: 1px #c9cace solid;
+    border-bottom: 1px #c9cace solid;
+    border-right: 1px #c9cace solid;
+    font-size: 14px;
+}
+.weimenubox li a {
+    padding: 0 25px;
+    line-height: 30px;
+    height: 30px;
+    color: #333;
+    text-decoration: none;
+    display: block;
+}
+    .weimenubox {
+    margin-bottom: 10px;
+    border-left: 1px #c9cace solid;
+    
+}
+");
 ?>
+<div style="width:740px;margin:0 auto;height:40px;line-height:40px;text-align:center;">
+    <div class="weimenubox">
+        <ul class="list-group">
+            <li class="on"><a href="">渠道粉丝数据统计</a></li>
+            <li><a href="<?=\yii\helpers\Url::to(['fen-si','sence_id'=>$model[0]['sence_id']])?>">渠道粉丝明细</a></li>
+            <div class="clearfix"></div>
+        </ul>
+    </div>
+</div>
 <table class="table table-bordered table-striped">
-<?php foreach($items as $key=>$val):?>
-  <tr>
-      <td>时间</td><td><?=date('Y-m-d',$val['order_id'])?></td>
-        <?php foreach ($val['items'] as $list):?>
-            <td><?php if($list['status']==10){echo '新关注数';}elseif($list['status']==1){echo '取关后又关注数';}else{echo '已关注后扫码数';} ?></td>
-            <td><?=$list['count']?></td>
-        <?php endforeach;?>
-  </tr>
+    <caption><?=$model[0]['wm']['customer_service']?>：渠道二维码统计</caption>
+    <thead>
+    <tr>
+        <th rowspan="2" style="line-height: 54px;">日期</th>
+        <th colspan="2">新粉丝</th>
+        <th colspan="2">老粉丝</th>
+    </tr>
+    <tr>
+        <th>关注</th><th>取消</th>
+        <th>关注</th><th>取消</th>
+    </tr>
+    </thead>
+<?php foreach($model as $key=>$item):?>
+    <tr>
+        <td><?=date('Y-m-d',$item['created_at'])?></td>
+        <td><?=$item['new_subscribe']?></td><td><?=$item['new_unsubscribe']?></td>
+        <td><?=$item['old_subscribe']?></td><td><?=$item['old_unsubscribe']?></td>
+    </tr>
 <?php endforeach;?>
 </table>
 
