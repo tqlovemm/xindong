@@ -35,6 +35,13 @@ $this->registerCss("
                 <li>关注 / 取消</li>
             </ul>
         </th>
+        <th>
+            <ul class="follow list-group">
+                <li>今日总计</li>
+                <li>关注 / 取消</li>
+            </ul>
+        </th>
+        <th>今日增长</th>
         <th>数据统计</th>
         <th>二维码</th>
         <th>操作</th>
@@ -51,6 +58,8 @@ $this->registerCss("
             <td><?=$item['customer_service']?></td>
             <td><?=$new_subscribe?> / <?=$new_unsubscribe?></td>
             <td><?=$old_subscribe?> / <?=$old_unsubscribe?></td>
+            <td><?=$new_subscribe+$old_subscribe?> / <?=$new_unsubscribe+$old_unsubscribe?></td>
+            <td><?=$new_subscribe+$old_subscribe-$new_unsubscribe-$old_unsubscribe?></td>
             <td><a href="#" onclick="window.open('<?=\yii\helpers\Url::to(['tong-ji','sence_id'=>$item['sence_id']])?>','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-600)/2+',left='+(window.screen.availWidth-1000)/2+',height=600,width=760')">查看</a></td>
             <td><a data-lightbox="gg" data-title="<?=$item['customer_service']?>" href="<?=$item['remote_path']?>">查看二维码</a></td>
             <td>删除</td>

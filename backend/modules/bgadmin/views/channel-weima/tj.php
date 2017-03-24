@@ -55,8 +55,11 @@ $this->registerCss("
         <th rowspan="2" style="line-height: 54px;">日期</th>
         <th colspan="2">新粉丝</th>
         <th colspan="2">老粉丝</th>
+        <th colspan="2">当日总计</th>
+        <th rowspan="2" style="line-height: 54px;">当日增长</th>
     </tr>
     <tr>
+        <th>关注</th><th>取消</th>
         <th>关注</th><th>取消</th>
         <th>关注</th><th>取消</th>
     </tr>
@@ -66,6 +69,8 @@ $this->registerCss("
         <td><?=date('Y-m-d',$item['created_at'])?></td>
         <td><?=$item['new_subscribe']?></td><td><?=$item['new_unsubscribe']?></td>
         <td><?=$item['old_subscribe']?></td><td><?=$item['old_unsubscribe']?></td>
+        <td><?=$item['new_subscribe']+$item['old_subscribe']?></td><td><?=$item['new_unsubscribe']+$item['old_unsubscribe']?></td>
+        <td><?=$item['new_subscribe']+$item['old_subscribe']-$item['new_unsubscribe']-$item['old_unsubscribe']?></td>
     </tr>
 <?php endforeach;?>
 </table>
