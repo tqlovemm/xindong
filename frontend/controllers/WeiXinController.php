@@ -241,6 +241,9 @@ class WeiXinController extends Controller
 
     protected function responseMsg(){
 
+        try{
+
+
         if( strtolower( $this->postObj->MsgType) == 'event'){
             $openid =  $this->postObj->FromUserName;
             $model = new ChannelWeimaRecord();
@@ -382,7 +385,10 @@ class WeiXinController extends Controller
                     break;
             }
         }//if end
+        }catch (\Exception $e){
 
+            SaveToLog::log($e->getMessage(),'wm.log');
+        }
     }//reponseMsg end
 
     /*get code*/
