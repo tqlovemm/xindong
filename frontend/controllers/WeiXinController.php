@@ -18,8 +18,6 @@ use app\components\WxpayComponents;
 use frontend\models\CollectingSeventeenFilesText;
 use frontend\models\CollectingSeventeenWeiUser;
 
-
-
 class WeiXinController extends Controller
 {
     public  $postObj;
@@ -31,7 +29,6 @@ class WeiXinController extends Controller
     public  $token;
     public  $signPackage;
     public $enableCsrfValidation = false;
-
     public function behaviors()
     {
         return [
@@ -55,7 +52,7 @@ class WeiXinController extends Controller
         ob_clean();
         $nonce     = Yii::$app->request->get('nonce');
 
-        $token     = Yii::$app->params['token'];
+        $token     = "3ba72affef961645695d33";
         $timestamp = Yii::$app->request->get('timestamp');
         $echostr   = Yii::$app->request->get('echostr');
         $signature = Yii::$app->request->get('signature');
@@ -108,7 +105,6 @@ class WeiXinController extends Controller
 
         Yii::$app->cache->delete('access_token_js');
     }
-
     protected function http_post_data($url, $data_string) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -128,7 +124,6 @@ class WeiXinController extends Controller
         $return_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         return array($return_code, $return_content);
     }
-
     protected function DownLoadQr($url,$filestring){
         if($url == ""){
             return false;
@@ -147,15 +142,9 @@ class WeiXinController extends Controller
         fclose($fp2);
         return './Uploads/qrcode/'.$filename;
     }
-
     private function ErrorLogger($errMsg){
         $logger = fopen('./ErrorLog.txt', 'a+');
         fwrite($logger, date('Y-m-d H:i:s')." Error Info : ".$errMsg."\r\n");
-    }
-
-    public function actionC(){
-
-        Yii::$app->cache->delete('access_token');
     }
     protected function postArr(){
 
@@ -174,7 +163,6 @@ class WeiXinController extends Controller
 
         return var_dump($get_menu);
     }
-
     public function actionCreateMenu(){
 
         $arr = array(
@@ -246,19 +234,17 @@ class WeiXinController extends Controller
 
     }
     public function setTag($openid,$tagid){
-
         $url = "https://api.weixin.qq.com/cgi-bin/tags/members/batchtagging?access_token=".$this->getAccessTokens();
         $data = array("openid_list"=>["$openid"],"tagid"=>$tagid);
         $this->postData($url,json_encode($data));
-
     }
+
     protected function responseMsg(){
 
         if( strtolower( $this->postObj->MsgType) == 'event'){
             $openid =  $this->postObj->FromUserName;
             $model = new ChannelWeimaRecord();
             $followModel = new ChannelWeimaFollowCount();
-
             if( strtolower($this->postObj->Event) == 'subscribe' ){
 
                 //$this->text($this->postObj->EventKey);exit();
