@@ -49,9 +49,8 @@ class WeiXinController extends Controller
     }
     public function actionIndex()
     {
-        //ob_clean();
+        ob_clean();
         $nonce     = Yii::$app->request->get('nonce');
-
         $token     = "3ba72affef961645695d33";
         $timestamp = Yii::$app->request->get('timestamp');
         $echostr   = Yii::$app->request->get('echostr');
@@ -69,8 +68,13 @@ class WeiXinController extends Controller
             exit;
 
         }else{
-            $this->postObj = $this->postArr();
-            $this->responseMsg();
+            try {
+                $this->postObj = $this->postArr();
+                $this->responseMsg();
+            }catch (\Exception $e){
+
+                SaveToLog::log($e->getMessage(),'wm.log');
+            }
         }
 
     }
@@ -241,9 +245,6 @@ class WeiXinController extends Controller
 
     protected function responseMsg(){
 
-        try{
-
-
         if( strtolower( $this->postObj->MsgType) == 'event'){
             $openid =  $this->postObj->FromUserName;
             $model = new ChannelWeimaRecord();
@@ -385,10 +386,7 @@ class WeiXinController extends Controller
                     break;
             }
         }//if end
-        }catch (\Exception $e){
 
-            SaveToLog::log($e->getMessage(),'wm.log');
-        }
     }//reponseMsg end
 
     /*get code*/
