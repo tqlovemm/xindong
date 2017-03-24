@@ -74,7 +74,7 @@ $this->registerCss("
 
 </table>
     <table class="table table-bordered table-striped">
-    <caption><?=$model[0]['wm']['customer_service']?>：渠道二维码统计</caption>
+    <caption><?=$model[0]['wm']['customer_service']?>：渠道二维码每日统计</caption>
     <thead>
     <tr>
         <th rowspan="2" style="line-height: 54px;">日期</th>
