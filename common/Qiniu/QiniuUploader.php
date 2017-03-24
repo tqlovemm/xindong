@@ -34,7 +34,7 @@ class QiniuUploader
 
         $upToken = $this->Auth()->uploadToken($bucket);
         $uploadMgr = new UploadManager();
-        list($ret, $err) = $uploadMgr->putFile($upToken, $key.'_'.md5($file_name), $filePath);
+        list($ret, $err) = $uploadMgr->putFile($upToken, $key.'_'.md5($file_name.rand(1000,9999)), $filePath);
         if ($err !== null) {
             var_dump($err);
         } else {
@@ -50,7 +50,7 @@ class QiniuUploader
         $watermark->imgMark($filePath,$filePath);
         $upToken = $this->Auth()->uploadToken($bucket);
         $uploadMgr = new UploadManager();
-        list($ret, $err) = $uploadMgr->putFile($upToken, $key.'_'.md5($file_name), $filePath);
+        list($ret, $err) = $uploadMgr->putFile($upToken, $key.'_'.md5($file_name.rand(1000,9999)), $filePath);
         if ($err !== null) {
             var_dump($err);
         } else {
