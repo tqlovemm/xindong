@@ -49,6 +49,31 @@ $this->registerCss("
     </div>
 </div>
 <table class="table table-bordered table-striped">
+    <caption><?=$model[0]['wm']['customer_service']?>：历史数据总计</caption>
+    <thead>
+    <tr>
+        <th rowspan="2" style="line-height: 54px;">日期</th>
+        <th colspan="2">新粉丝</th>
+        <th colspan="2">老粉丝</th>
+        <th colspan="2">总计</th>
+        <th rowspan="2" style="line-height: 54px;">增长</th>
+    </tr>
+    <tr>
+        <th>关注</th><th>取消</th>
+        <th>关注</th><th>取消</th>
+        <th>关注</th><th>取消</th>
+    </tr>
+    </thead>
+    <tr>
+        <td>历史统计</td>
+        <td><?=$count[0]['new_subscribe']?></td><td><?=$count[0]['new_unsubscribe']?></td>
+        <td><?=$count[0]['old_subscribe']?></td><td><?=$count[0]['old_unsubscribe']?></td>
+        <td><?=$count[0]['new_subscribe']+$count[0]['old_subscribe']?></td><td><?=$count[0]['new_unsubscribe']+$count[0]['old_unsubscribe']?></td>
+        <td><?=$count[0]['new_subscribe']+$count[0]['old_subscribe']-$count[0]['new_unsubscribe']-$count[0]['old_unsubscribe']?></td>
+    </tr>
+
+</table>
+    <table class="table table-bordered table-striped">
     <caption><?=$model[0]['wm']['customer_service']?>：渠道二维码统计</caption>
     <thead>
     <tr>

@@ -54,9 +54,12 @@ class ChannelWeimaController extends Controller
         $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '31']);
         $model = $data->offset($pages->offset)->limit($pages->limit)->all();
 
+        $count= ChannelWeimaFollowCount::find()->select("sum(new_subscribe) as new_subscribe,sum(new_unsubscribe) as new_unsubscribe,sum(old_subscribe) as old_subscribe,sum(old_unsubscribe) as old_unsubscribe")->where(['sence_id'=>$sence_id])->asArray()->all();
+
         return $this->render('tj',[
             'model' => $model,
             'pages' => $pages,
+            'count'=>$count
         ]);
     }
     public function actionFenSi($sence_id){
