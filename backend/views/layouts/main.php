@@ -293,7 +293,7 @@ $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii
                     <?php endif;?>
 
 
-                    <?php if(in_array(Yii::$app->user->id,[10000,10001,10002,10003,10015,20361])):?><!--超级管理员-->
+                    <?php if(in_array(Yii::$app->user->id,[10000,10001,10002,10003,10015,20361,21703])):?><!--超级管理员-->
 
                         <!--十三平台-->
                         <li style="font-size: 20px;color:red;padding:0 20px;">十三平台</li>
