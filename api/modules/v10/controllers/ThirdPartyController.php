@@ -9,6 +9,7 @@
 namespace api\modules\v10\controllers;
 
 use api\modules\v2\models\Profile;
+use common\Qiniu\QiniuUploader;
 use Yii;
 use yii\db\Query;
 use yii\myhelper\Easemob;
@@ -42,13 +43,26 @@ class ThirdPartyController extends Controller
 
     protected function UploadImg($img){
 
-        $img = base64_decode($img);
+        $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $avatar = base64_decode($img);
+        $path_1 ='uploads/';
+        $t = time();
+        $pre_url = Yii::$app->params['appimages'];
+        file_put_contents($path_1.$t.'.jpg',$avatar);
+        $avatar_path = $path_1.$t.'.jpg';
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.mt_rand(1000,9999);
+        $qiniu = $qn->upload_app('appimages','uploads/user/avatar/'.$mkdir,$avatar_path);
+        $url = $pre_url.$qiniu['key'];
+        @unlink($avatar_path);
+        return $url;
+
+    /*    $img = base64_decode($img);
         $path = '/uploads/user/files/';
         $savePath = Yii::getAlias('@apiweb').$path;
         $saveName = "_".time().'.png';
         $url = Yii::$app->params['hostname'].$path.$saveName;
         file_put_contents($savePath.$saveName,$img,FILE_USE_INCLUDE_PATH);
-        return $url;
+        return $url;*/
     }
 
     protected function testChinese($name){
