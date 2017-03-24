@@ -49,7 +49,7 @@ class WeiXinController extends Controller
     }
     public function actionIndex()
     {
-        ob_clean();
+        //ob_clean();
         $nonce     = Yii::$app->request->get('nonce');
 
         $token     = "3ba72affef961645695d33";
