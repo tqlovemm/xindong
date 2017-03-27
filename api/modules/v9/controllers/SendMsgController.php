@@ -151,11 +151,6 @@ class SendMsgController extends ActiveController
                 $text['from'] = "shisan-kefu";
                 $this->setMsg()->sendText($text);
             }
-            try{
-                @unlink("uploads/$fileImg[file_name]");
-            }catch (Exception $e){
-                return $e->getMessage();
-            }
             Response::show('200','发送成功');
         }else{
             Response::show('201','没有上传图片');
