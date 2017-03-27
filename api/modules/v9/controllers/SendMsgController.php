@@ -42,10 +42,54 @@ class SendMsgController extends ActiveController
             return 'error';
         }
     }
+    function getImage($url,$save_dir='',$filename='',$type=0){
+        if(trim($url)==''){
+            return array('file_name'=>'','save_path'=>'','error'=>1);
+        }
+        if(trim($save_dir)==''){
+            $save_dir='./';
+        }
+        if(trim($filename)==''){//保存文件名
+            $ext=strrchr($url,'.');
+            if($ext!='.gif'&&$ext!='.jpg'){
+                return array('file_name'=>'','save_path'=>'','error'=>3);
+            }
+            $filename=md5(rand(1000,9999).time()).$ext;
+        }
+        if(0!==strrpos($save_dir,'/')){
+            $save_dir.='/uploads/';
+        }
+        //创建保存目录
+        if(!file_exists($save_dir)&&!mkdir($save_dir,0777,true)){
+            return array('file_name'=>'','save_path'=>'','error'=>5);
+        }
+        //获取远程文件所采用的方法
+        if($type){
+            $ch=curl_init();
+            $timeout=5;
+            curl_setopt($ch,CURLOPT_URL,$url);
+            curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+            curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
+            $img=curl_exec($ch);
+            curl_close($ch);
+        }else{
+            ob_start();
+            readfile($url);
+            $img=ob_get_contents();
+            ob_end_clean();
+        }
+        //$size=strlen($img);
+        //文件大小
+        $fp2=@fopen($save_dir.$filename,'a');
+        fwrite($fp2,$img);
+        fclose($fp2);
+        unset($img,$url);
+        return array('file_name'=>$filename,'save_path'=>$save_dir.$filename,'error'=>0);
+    }
 
     public function actionCreate(){
-        /*$data = json_decode($_POST,true);
-       Response::show('205',$_POST);*/
+        //$data = json_decode($_POST,true);
+      // Response::show('205',$_POST);
         $data = array();
         $data['imgPath'] = $_POST['imgPath'];
         $data['username'] = $_POST['username'];
@@ -54,10 +98,12 @@ class SendMsgController extends ActiveController
             Response::show('201','图片和发送的用户名不能为空');
         }
         $msg1 = array();
-        if($data['imgPath']){
+        if(!empty($data['imgPath'])){
 
+            $fileImg = $this->getImage($data['imgPath']);
+            $iamge = "home/wwwroot/api/wei/uploads/$fileImg[file_name]";
             //上传图片
-            $result = $this->setMsg()->uploadFile($data['imgPath']);
+            $result = $this->setMsg()->uploadFile($iamge);
             $result = $result[0];
             $entities = $this->array2object($result->entities[0]);
             if($entities == 'error'){
@@ -65,6 +111,7 @@ class SendMsgController extends ActiveController
                 return $result;
             }
             $uri = $result->uri;
+
             $uuid = $result->entities[0]->uuid;
 
             $msg1['target_type']    = "users";
