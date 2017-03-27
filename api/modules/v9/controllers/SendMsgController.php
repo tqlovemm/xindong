@@ -104,6 +104,7 @@ class SendMsgController extends ActiveController
             $iamge = "/home/wwwroot/xindong/api/web/uploads/$fileImg[file_name]";
             //上传图片
             $result = $this->setMsg()->uploadFile($iamge);
+            @unlink("uploads/$fileImg[file_name]");
             $result = $result[0];
             $entities = $this->array2object($result->entities[0]);
             if($entities == 'error'){
