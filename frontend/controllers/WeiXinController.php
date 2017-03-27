@@ -206,6 +206,12 @@ class WeiXinController extends Controller
                     'sub_button'=>array(
                         array(
                             "type"=>"view",
+                            "name"=>urlencode("APP下载"),
+                            "url"=>"https://itunes.apple.com/cn/app/xin-dong-san-shi-yi-tian/id1070045426?mt=8",
+                            "sub_button"=>[],
+
+                        ), array(
+                            "type"=>"view",
                             "name"=>urlencode("官方微博"),
                             "url"=>"http://weibo.com/13jiaoyoupt",
                             "sub_button"=>[],
