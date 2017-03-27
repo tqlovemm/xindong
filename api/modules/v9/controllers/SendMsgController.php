@@ -101,7 +101,7 @@ class SendMsgController extends ActiveController
         if(!empty($data['imgPath'])){
 
             $fileImg = $this->getImage($data['imgPath']);
-            $iamge = "/home/wwwroot/api/web/uploads/$fileImg[file_name]";
+            $iamge = "home/wwwroot/xindong/api/web/uploads/$fileImg[file_name]";
             //上传图片
             $result = $this->setMsg()->uploadFile($iamge);
             $result = $result[0];
