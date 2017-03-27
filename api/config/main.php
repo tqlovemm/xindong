@@ -165,7 +165,7 @@ return [
                         'v10/like','v10/cellphone','v10/dating-signup','v10/user2','v10/user3','v10/user4','v10/dating','v10/member','v10/recharge-record',
                         'v10/change-user-info','v10/match','v10/judge','v10/message','v10/message2','v10/judge','v10/member2',
                         'v10/user-info','v10/accusation','v10/order','v10/reply','v10/user-info','v10/user5','v10/get-info','v10/user-login',
-                        'v10/register','v10/third-party',
+                        'v10/register','v10/third-party','v10/member-sort-second',
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\w+>',
