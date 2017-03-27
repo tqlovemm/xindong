@@ -61,6 +61,10 @@ class WordController extends ActiveController
                 ->join('left join','pre_user as user','user.id=pre_app_words.user_id')
                 ->where(['pre_app_words.flag'=>0,'pre_app_words.status'=>0,'sex'=>$sex]);
 
+        }elseif($sex == 2){
+            $query = Word::find()
+                ->join('left join','pre_user as user','user.id=pre_app_words.user_id')
+                ->where(['pre_app_words.flag'=>0,'pre_app_words.status'=>0]);
         }else{
             Response::show('201','操作失败','参数错误');
         }

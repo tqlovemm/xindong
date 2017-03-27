@@ -119,7 +119,7 @@ return [
                     'controller' => [
                         'v6/member-info','v6/user-info','v6/user-info-img','v6/make-friend','v6/dating','v6/user-dating','v6/group',
                         'v6/area','v6/word','v6/update-user-info','v6/reply','v6/reply2','v6/self-dating','v6/update-user-info2',
-                        'v6/dating-need-coin','v6/member-sort','v6/member','v6/cellphone','v6/thread',
+                        'v6/dating-need-coin','v6/member-sort','v6/member','v6/cellphone'
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\w+>',
