@@ -50,13 +50,8 @@ class SendMsgController extends ActiveController
         if(trim($save_dir)==''){
             $save_dir='./';
         }
-        if(trim($filename)==''){//保存文件名
-            $ext=strrchr($url,'.');
-            if($ext!='.gif'&&$ext!='.jpg'){
-                return array('file_name'=>'','save_path'=>'','error'=>3);
-            }
-            $filename=md5(rand(1000,9999).time()).$ext;
-        }
+        $filename=md5(rand(1000,9999).time()).'.jpg';
+
         if(0!==strrpos($save_dir,'/')){
             $save_dir.='/uploads/';
         }
