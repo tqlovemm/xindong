@@ -9,6 +9,7 @@
 namespace api\modules\v9\controllers;
 
 use Yii;
+use yii\base\Exception;
 use yii\myhelper\Easemob;
 use yii\myhelper\Response;
 use yii\rest\ActiveController;
@@ -100,11 +101,18 @@ class SendMsgController extends ActiveController
         $msg1 = array();
         if(!empty($data['imgPath'])){
 
-            $fileImg = $this->getImage($data['imgPath']);
-            $iamge = "/home/wwwroot/xindong/api/web/uploads/$fileImg[file_name]";
-            //上传图片
-            $result = $this->setMsg()->uploadFile($iamge);
-            @unlink("uploads/$fileImg[file_name]");
+            try{
+
+                $fileImg = $this->getImage($data['imgPath']);
+                $iamge = "/home/wwwroot/xindong/api/web/uploads/$fileImg[file_name]";
+                //上传图片
+                $result = $this->setMsg()->uploadFile($iamge);
+
+                @unlink("uploads/$fileImg[file_name]");
+            }catch (Exception $e){
+                return $e->getMessage();
+            }
+
             $result = $result[0];
             $entities = $this->array2object($result->entities[0]);
             if($entities == 'error'){
