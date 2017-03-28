@@ -33,7 +33,7 @@ $this->registerCss('
     .list-box h5{font-weight: bold;margin: 0;}
 
 ');
-
+$pre_url = Yii::$app->params['tqlmm'];
 $this->registerJsFile('@web/js/flop/masonry-docs.min.js', ['depends' => ['yii\web\JqueryAsset'], 'position' => \yii\web\View::POS_END]);
 ?>
 <script src="http://13loveme.com/js/jweixin-1.0.0.js"></script>
@@ -70,7 +70,7 @@ $this->registerJsFile('@web/js/flop/masonry-docs.min.js', ['depends' => ['yii\we
         $img = (new \yii\db\Query())->select('number,path,area')->from('pre_flop_content')->where(['id'=>$item['priority']])->one();
         ?>
         <div data-title="<?=$item['priority']?>" class="box priority-img"  style="position: relative;background-color: #fff;padding:10px;">
-            <img style="box-shadow: 3px 3px 5px #adadad;border-radius: 3px;" src="<?=$img['path']?>">
+            <img style="box-shadow: 3px 3px 5px #adadad;border-radius: 3px;" src="<?=$pre_url.$img['path']?>">
             <h5 style="margin-bottom: 0;">编号：<?=$img['number']?></h5>
             <h5 style="margin-bottom: 0;">地区：<?=$img['area']?></h5>
 
