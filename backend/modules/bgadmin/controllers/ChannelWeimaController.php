@@ -65,7 +65,7 @@ class ChannelWeimaController extends Controller
     public function actionFenSi($sence_id){
 
         $data = ChannelWeimaRecord::find()->where(['scene_id'=>$sence_id,'type'=>1])->asArray();
-        $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '40']);
+        $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '80']);
         $channel_weima = ChannelWeima::findOne(['sence_id'=>$sence_id]);
         $model = $data->offset($pages->offset)->limit($pages->limit)->all();
 
@@ -76,6 +76,11 @@ class ChannelWeimaController extends Controller
         ]);
     }
 
+    public function actionStatisticalChart(){
+
+
+        return $this->render('statistical-chart');
+    }
     /**
      * Displays a single ChannelWeima model.
      * @param integer $id
