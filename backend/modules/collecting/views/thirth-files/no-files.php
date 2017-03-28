@@ -26,7 +26,7 @@
     }
     ?>
     <div class="col-md-3" style="min-height: 50px;padding:10px;text-align: left;">
-        <a href="/index.php/collecting-file/thirth-files/view?id=<?=$query['id']?>">
+        <a href="/collecting-file/thirth-files/view?id=<?=$query['id']?>">
             <div style="background-color: #fff;padding: 10px;">
                 <h4>编号：<?=$query['id']?></h4>
                 <h4>资料状态：<?=$status?></h4>
