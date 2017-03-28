@@ -29,7 +29,7 @@ $this->registerCss('
     .list-box h5{font-weight: bold;margin: 0;}
 
 ');
-
+$pre_url = Yii::$app->params['tqlmm'];
 $this->registerJsFile('@web/js/flop/masonry-docs.min.js', ['depends' => ['yii\web\JqueryAsset'], 'position' => \yii\web\View::POS_END]);
 ?>
 <div style="padding:10px;background-color: #fff;text-align: center;margin-bottom: 10px;">此页面为会员分享页面，不可操作！图片点击可放大</div>
@@ -38,7 +38,7 @@ $this->registerJsFile('@web/js/flop/masonry-docs.min.js', ['depends' => ['yii\we
         $img = (new \yii\db\Query())->select('path,number,area')->from('pre_flop_content')->where(['id'=>$item['priority']])->one();
         ?>
         <a href="<?=$img['path']?>" data-lightbox="0" data-title="翻牌后宫" class="box priority-img"  style="position: relative;background-color: #fff;padding:10px;">
-            <img style="box-shadow: 3px 3px 5px #adadad;border-radius: 3px;" src="<?=$img['path']?>">
+            <img style="box-shadow: 3px 3px 5px #adadad;border-radius: 3px;" src="<?=$pre_url.$img['path']?>">
             <h5 style="margin-bottom: 0;">编号：<?=$img['number']?></h5>
             <h5 style="margin-bottom: 0;">地区：<?=$img['area']?></h5>
             <span class="priority" style="width: 60px;height:60px;position: absolute;top:30%;left:50%;margin-left:-30px;
