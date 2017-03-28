@@ -347,7 +347,6 @@ class WeiXinController extends Controller
 
                     $model::updateAll(['type'=>0],['openid'=>$openid,'type'=>1]);
 
-
                 }elseif(!empty($already_yesterday)){
 
                     $follow = $followModel::findOne(['created_at'=>strtotime('today'),'sence_id'=>$already_yesterday->scene_id]);
@@ -363,6 +362,7 @@ class WeiXinController extends Controller
                             SaveToLog::log($model->errors,'wm.log');
                         }
                     }
+                    $model::updateAll(['type'=>0],['openid'=>$openid,'type'=>1]);
                 }
             }
         }
