@@ -67,10 +67,10 @@ $this->registerJsFile('@web/js/flop/masonry-docs.min.js', ['depends' => ['yii\we
 
 <div id="masonry" class="container-fluid" style="padding: 10px 10px 50px;">
     <?php foreach($model as $item):
-        $img = (new \yii\db\Query())->select('number,path,area')->from('pre_flop_content')->where(['id'=>$item['priority']])->one();
+        $img = (new \yii\db\Query())->select('number,content,area')->from('pre_flop_content')->where(['id'=>$item['priority']])->one();
         ?>
         <div data-title="<?=$item['priority']?>" class="box priority-img"  style="position: relative;background-color: #fff;padding:10px;">
-            <img style="box-shadow: 3px 3px 5px #adadad;border-radius: 3px;" src="<?=$pre_url.$img['path']?>">
+            <img style="box-shadow: 3px 3px 5px #adadad;border-radius: 3px;" src="<?=$pre_url.$img['content']?>">
             <h5 style="margin-bottom: 0;">编号：<?=$img['number']?></h5>
             <h5 style="margin-bottom: 0;">地区：<?=$img['area']?></h5>
 
