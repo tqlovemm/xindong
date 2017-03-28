@@ -29,7 +29,7 @@ $this->registerCss('
     .list-box h5{font-weight: bold;margin: 0;}
 
 ');
-$pre_url = Yii::$app->params['tqlmm'];
+$pre_url = Yii::$app->params['imagetqlmm'];
 $this->registerJsFile('@web/js/flop/masonry-docs.min.js', ['depends' => ['yii\web\JqueryAsset'], 'position' => \yii\web\View::POS_END]);
 ?>
 <div style="padding:10px;background-color: #fff;text-align: center;margin-bottom: 10px;">此页面为会员分享页面，不可操作！图片点击可放大</div>

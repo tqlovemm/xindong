@@ -33,7 +33,7 @@ $this->registerCss('
     .list-box h5{font-weight: bold;margin: 0;}
 
 ');
-$pre_url = Yii::$app->params['tqlmm'];
+$pre_url = Yii::$app->params['imagetqlmm'];
 $this->registerJsFile('@web/js/flop/masonry-docs.min.js', ['depends' => ['yii\web\JqueryAsset'], 'position' => \yii\web\View::POS_END]);
 ?>
 <script src="http://13loveme.com/js/jweixin-1.0.0.js"></script>
