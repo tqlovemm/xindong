@@ -2,6 +2,7 @@
 namespace frontend\modules\weixin\controllers;
 
 use backend\modules\bgadmin\models\ChannelWeima;
+use backend\modules\bgadmin\models\KunsheWeima;
 use common\components\SaveToLog;
 use frontend\modules\weixin\models\ChannelWeimaFollowCount;
 use frontend\modules\weixin\models\ChannelWeimaRecord;
@@ -208,7 +209,7 @@ class KunSheController extends Controller
                                     SaveToLog::log($followModel->errors,'wm.log');
                                 }
                             }
-                            $weima = ChannelWeima::findOne($model->scene_id);
+                            $weima = KunsheWeima::findOne($model->scene_id);
                             $this->setTag($openid,$weima->tag_id);
                         }else{
                             SaveToLog::log($model->errors,'we13.log');
