@@ -156,10 +156,10 @@ class KunSheController extends Controller
     }
     protected function responseMsg(){
         if( strtolower( $this->postObj->MsgType) == 'event'){
-            $openid =  $this->postObj->FromUserName;
-            $model = new ChannelWeimaRecord();
-            $followModel = new ChannelWeimaFollowCount();
-            if( strtolower($this->postObj->Event) == 'subscribe' ){
+            //$openid =  $this->postObj->FromUserName;
+            //$model = new ChannelWeimaRecord();
+            //$followModel = new ChannelWeimaFollowCount();
+         /*   if( strtolower($this->postObj->Event) == 'subscribe' ){
 
                 //$this->text($this->postObj->EventKey);exit();
                 $user_info = json_decode($this->getUserInfo($openid));
@@ -276,23 +276,18 @@ class KunSheController extends Controller
                     }
                     $model::updateAll(['type'=>0],['openid'=>$openid,'type'=>1]);
                 }
-            }
+            }*/
             if(strtolower($this->postObj->Event) == 'CLICK'){
                 $evenKey = $this->postObj->EventKey;
-                try{
-                    if($evenKey=='boy_ru_kou'){
-                        $media_id = 'O6eLs8-Y0QQbm638hdjTsn4VEnrtMwU25BtI2_ec8Z8';
-                        $this->image($media_id);
-                        exit;
-                    }elseif($evenKey=='girl_ru_kou'){
-                        $media_id = 'O6eLs8-Y0QQbm638hdjTsp2XzF2JsEc1rSJyze5CyBM';
-                        $this->image($media_id);
-                        exit;
-                    }
-                }catch (Exception $e){
 
-                    $this->text(json_encode($e->getMessage()));
-
+                if($evenKey=='boy_ru_kou'){
+                    $media_id = 'O6eLs8-Y0QQbm638hdjTsn4VEnrtMwU25BtI2_ec8Z8';
+                    $this->image($media_id);
+                    exit;
+                }elseif($evenKey=='girl_ru_kou'){
+                    $media_id = 'O6eLs8-Y0QQbm638hdjTsp2XzF2JsEc1rSJyze5CyBM';
+                    $this->image($media_id);
+                    exit;
                 }
 
             }
