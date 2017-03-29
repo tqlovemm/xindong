@@ -1,11 +1,8 @@
 <?php
 namespace frontend\modules\weixin\controllers;
 
-use backend\modules\bgadmin\models\ChannelWeima;
 use backend\modules\bgadmin\models\KunsheWeima;
 use common\components\SaveToLog;
-use frontend\modules\weixin\models\ChannelWeimaFollowCount;
-use frontend\modules\weixin\models\ChannelWeimaRecord;
 use frontend\modules\weixin\models\KunsheWeimaFollowCount;
 use frontend\modules\weixin\models\KunsheWeimaRecord;
 use Yii;
