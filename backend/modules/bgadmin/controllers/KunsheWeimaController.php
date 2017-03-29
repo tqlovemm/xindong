@@ -13,7 +13,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ChannelWeimaController implements the CRUD actions for ChannelWeima model.
+ * KunsheWeimaController implements the CRUD actions for KunsheWeima model.
  */
 class KunsheWeimaController extends Controller
 {
@@ -44,7 +44,7 @@ class KunsheWeimaController extends Controller
 
     public function actionTongJi($sence_id){
 
-        $data = KunsheWeimaFollowCount::find()->joinWith('wm')->where(['pre_channel_weima_follow_count.sence_id'=>$sence_id])->asArray()->orderBy('pre_channel_weima_follow_count.created_at desc');
+        $data = KunsheWeimaFollowCount::find()->joinWith('wm')->where(['pre_kunshe_weima_follow_count.sence_id'=>$sence_id])->asArray()->orderBy('pre_kunshe_weima_follow_count.created_at desc');
         $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '31']);
         $model = $data->offset($pages->offset)->limit($pages->limit)->all();
 
