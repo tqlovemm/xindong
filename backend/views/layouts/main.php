@@ -569,7 +569,12 @@ $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii
                                 </li>
                                 <li>
                                     <a href="<?= Url::toRoute(['/bgadmin/channel-weima']) ?>">
-                                        <i class="glyphicon glyphicon-gift"></i> <span>渠道二维码生成与统计</span>
+                                        <i class="glyphicon glyphicon-gift"></i> <span>心动三十一天渠道二维码生成与统计</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/bgadmin/kunshe-weima']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>昆社渠道二维码生成与统计</span>
                                     </a>
                                 </li>
                             </ul>
@@ -997,7 +1002,12 @@ $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii
                                 </li>
                                 <li>
                                     <a href="<?= Url::toRoute(['/bgadmin/channel-weima']) ?>">
-                                        <i class="glyphicon glyphicon-gift"></i> <span>渠道二维码生成与统计</span>
+                                        <i class="glyphicon glyphicon-gift"></i> <span>心动三十一天渠道二维码生成与统计</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/bgadmin/kunshe-weima']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>昆社渠道二维码生成与统计</span>
                                     </a>
                                 </li>
                             </ul>
@@ -1050,7 +1060,12 @@ $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii
                     </li>
                     <li>
                         <a href="<?= Url::toRoute(['/bgadmin/channel-weima']) ?>">
-                            <i class="glyphicon glyphicon-gift"></i> <span>渠道二维码生成与统计</span>
+                            <i class="glyphicon glyphicon-gift"></i> <span>心动三十一天渠道二维码生成与统计</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= Url::toRoute(['/bgadmin/kunshe-weima']) ?>">
+                            <i class="glyphicon glyphicon-gift"></i> <span>昆社渠道二维码生成与统计</span>
                         </a>
                     </li>
 
