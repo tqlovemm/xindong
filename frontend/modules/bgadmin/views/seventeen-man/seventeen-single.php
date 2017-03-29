@@ -45,10 +45,7 @@ $qiniu = Yii::$app->params['qiniushiqi'];
             </div>
             <div class="bd" style="padding-top: 15px;">
                 <ul>
-                    <?php foreach ($imgs as $img):
-                        $extend = explode('.',$img->img);
-                        if(!in_array($extend[count($extend)-1],['jpg','png','jpeg','bmp','JPG','PNG','JPEG','BMP'])){continue;}
-                        ?>
+                    <?php foreach ($imgs as $img):?>
                         <li style="position: relative;">
                             <a href="<?=$qiniu.$img->img?>" data-lightbox="0" data-title="0" ><img class="img-responsive center-block" src="<?=$qiniu.$img->img?>"></a>
                             <div style="position: absolute;width: 100%;height: 100%;top:0;"></div>
