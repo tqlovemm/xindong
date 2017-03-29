@@ -109,14 +109,14 @@ class KunSheController extends Controller
                     'name'=>urlencode("幸福入口"),
                     'sub_button'=>array(
                         array(
-                            'type'=>'view',
+                            'type'=>'click',
                             'name'=>urlencode("男生入口"),
                             'url'=>'http://mp.weixin.qq.com/s/IhEg7rG-ls01lFpBAGri6w',
                             "key"=> "boy_ru_kou",
                             "sub_button"=>[],
                         ),
                         array(
-                            'type'=>'view',
+                            'type'=>'click',
                             'name'=>urlencode("女生入口"),
                             'url'=>'http://13loveme.com/',
                             "key"=> "girl_ru_kou",
@@ -134,7 +134,7 @@ class KunSheController extends Controller
                             "sub_button"=>[],
 
                         ), array(
-                            "type"=>"view",
+                            "type"=>"click",
                             "name"=>urlencode("跑圈 | 十三平台"),
                             "url"=>"http://weibo.com/13jiaoyoupt",
                             "key"=> "shisanpingtai",
@@ -142,7 +142,7 @@ class KunSheController extends Controller
 
                         ),
                         array(
-                            'type'=>'view',
+                            'type'=>'click',
                             'name'=>urlencode("聊sao | 神秘三角"),
                             "url"=>"http://13loveme.com/heart/34?top=bottom",
                             "key"=> "shenmisanjiao",
@@ -284,8 +284,15 @@ class KunSheController extends Controller
                     $model::updateAll(['type'=>0],['openid'=>$openid,'type'=>1]);
                 }
             }
+            if($this->postObj->EventKey=="boy_ru_kou"){
+                $this->image("O6eLs8-Y0QQbm638hdjTsn4VEnrtMwU25BtI2_ec8Z8");
+            }elseif($this->postObj->EventKey=="girl_ru_kou"){
+                $this->image("O6eLs8-Y0QQbm638hdjTsp2XzF2JsEc1rSJyze5CyBM");
+            }
         }
 
+        //O6eLs8-Y0QQbm638hdjTsn4VEnrtMwU25BtI2_ec8Z8男生入口
+        //O6eLs8-Y0QQbm638hdjTsp2XzF2JsEc1rSJyze5CyBM女生入口
         //用户关键词回复
         if( strtolower($this->postObj->MsgType) == 'text' ){
 
