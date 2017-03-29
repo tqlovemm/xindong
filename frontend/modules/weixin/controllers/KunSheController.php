@@ -156,10 +156,10 @@ class KunSheController extends Controller
         if( strtolower( $this->postObj->MsgType) == 'event'){
 
 
-            //$openid =  $this->postObj->FromUserName;
-            //$model = new ChannelWeimaRecord();
-            //$followModel = new ChannelWeimaFollowCount();
-         /*   if( strtolower($this->postObj->Event) == 'subscribe' ){
+            $openid =  $this->postObj->FromUserName;
+            $model = new ChannelWeimaRecord();
+            $followModel = new ChannelWeimaFollowCount();
+            if( strtolower($this->postObj->Event) == 'subscribe' ){
 
                 //$this->text($this->postObj->EventKey);exit();
                 $user_info = json_decode($this->getUserInfo($openid));
@@ -276,7 +276,7 @@ class KunSheController extends Controller
                     }
                     $model::updateAll(['type'=>0],['openid'=>$openid,'type'=>1]);
                 }
-            }*/
+            }
             if(strtolower($this->postObj->Event) == 'CLICK'){
                 $EventKey = $this->postObj->EventKey;
                 if($EventKey=='V1001_GOOD'){
