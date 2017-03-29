@@ -18,6 +18,7 @@ class KunSheController extends Controller
     public  $keyword;
     public  $time;
     public $cache;
+    public $enableCsrfValidation = false;
     public function behaviors()
     {
         return [
