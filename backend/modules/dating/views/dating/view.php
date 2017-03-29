@@ -4,17 +4,13 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use shiyang\masonry\Masonry;
 
-/* @var $this yii\web\View */
-/* @var $model app\modules\home\models\Album */
-
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Seeks'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerCssFile('@web/js/lightbox/css/lightbox.css');
-$this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii\web\JqueryAsset'], 'position' => \yii\web\View::POS_END]);
+$this->registerJsFile('@web/js/lightbox/js/lightbox.min.js');
 $pre_url = Yii::$app->params['shisangirl'];
 ?>
-
 <div class="album-view">
     <h1><?= Html::encode($this->title) ?></h1>
     <?= Html::a('<i class="glyphicon glyphicon-edit"></i> ' . Yii::t('app', 'Edit Seeks'), ['/dating/dating/update', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
