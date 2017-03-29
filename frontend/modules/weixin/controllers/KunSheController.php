@@ -59,8 +59,8 @@ class KunSheController extends Controller
         }else{
 
             $this->postObj = $this->postArr();
-            $this->text("fawef");
-           // $this->responseMsg();
+
+            $this->responseMsg();
 
         }
 
