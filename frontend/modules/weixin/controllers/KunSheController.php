@@ -112,12 +112,12 @@ class KunSheController extends Controller
                         array(
                             'type'=>'click',
                             'name'=>urlencode("男生入口"),
-                            "key"=> "boy_ru_kou",
+                            "key"=> "V1001_GOOD",
                         ),
                         array(
                             'type'=>'click',
                             'name'=>urlencode("女生入口"),
-                            "key"=> "girl_ru_kou",
+                            "key"=> "V1002_GOOD",
                         ),
                     )
                 ),
@@ -280,11 +280,11 @@ class KunSheController extends Controller
             if(strtolower($this->postObj->Event) == 'CLICK'){
                 $evenKey = $this->postObj->EventKey;
 
-                if($evenKey=='boy_ru_kou'){
+                if($evenKey=='V1001_GOOD'){
                     $media_id = 'O6eLs8-Y0QQbm638hdjTsn4VEnrtMwU25BtI2_ec8Z8';
                     $this->image($media_id);
                     exit;
-                }elseif($evenKey=='girl_ru_kou'){
+                }elseif($evenKey=='V1002_GOOD'){
                     $media_id = 'O6eLs8-Y0QQbm638hdjTsp2XzF2JsEc1rSJyze5CyBM';
                     $this->image($media_id);
                     exit;
