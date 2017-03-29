@@ -156,6 +156,9 @@ class KunSheController extends Controller
     }
     protected function responseMsg(){
         if( strtolower( $this->postObj->MsgType) == 'event'){
+
+            $this->text("fawef");
+            exit;
             //$openid =  $this->postObj->FromUserName;
             //$model = new ChannelWeimaRecord();
             //$followModel = new ChannelWeimaFollowCount();
