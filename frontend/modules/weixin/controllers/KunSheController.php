@@ -284,11 +284,15 @@ class KunSheController extends Controller
                     $model::updateAll(['type'=>0],['openid'=>$openid,'type'=>1]);
                 }
             }
-            if(strtolower($this->postObj->EventKey)=="boy_ru_kou"){
-                $this->image("O6eLs8-Y0QQbm638hdjTsn4VEnrtMwU25BtI2_ec8Z8");
-            }elseif(strtolower($this->postObj->EventKey)=="girl_ru_kou"){
-                $this->image("O6eLs8-Y0QQbm638hdjTsp2XzF2JsEc1rSJyze5CyBM");
+            if(strtolower($this->postObj->Event) == 'click'){
+
+                if($this->postObj->EventKey=="boy_ru_kou"){
+                    $this->image("O6eLs8-Y0QQbm638hdjTsn4VEnrtMwU25BtI2_ec8Z8");
+                }elseif($this->postObj->EventKey=="girl_ru_kou"){
+                    $this->image("O6eLs8-Y0QQbm638hdjTsp2XzF2JsEc1rSJyze5CyBM");
+                }
             }
+
         }
 
         //O6eLs8-Y0QQbm638hdjTsn4VEnrtMwU25BtI2_ec8Z8男生入口
