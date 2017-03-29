@@ -293,7 +293,7 @@ class KunSheController extends Controller
                             'title'=>"你一定想不到交友还可以这么玩！",
                             'description'=>"重新定义yp的新方式！",
                             'picUrl'=>'http://mmbiz.qpic.cn/mmbiz_jpg/ynej4OHDOHXUpRSP77SQKdkwNlpOmxaCFUmMFTbqLdYuMjPRvXSnhevUSufCcmqL2yqQ5S9YBRn1YVMxc1R2lg/0?wx_fmt=jpeg',
-                            'url'=>'https://mp.weixin.qq.com/cgi-bin/appmsg?t=media/appmsg_edit&action=edit&lang=zh_CN&token=929950662&type=10&appmsgid=100000014&isMul=1',
+                            'url'=>'http://mp.weixin.qq.com/s/Co8ASHDCwP9M72Hx9ekM7w',
                         ),
                     );
                     $this->news($data);
@@ -304,7 +304,7 @@ class KunSheController extends Controller
                             'title'=>"同城交友聊Sao，我们是认真的！",
                             'description'=>"让交友约会离你更近一点！",
                             'picUrl'=>'http://mmbiz.qpic.cn/mmbiz_jpg/ynej4OHDOHXUpRSP77SQKdkwNlpOmxaC64B794HryVsHP5w1H6VVcEiaWfX6D0NnaAPrF7ZB4xJnwZXQrNtN5TQ/0?wx_fmt=jpeg',
-                            'url'=>'https://mp.weixin.qq.com/s?__biz=MzI2MDY2MDc5OA==&tempkey=z84Kv10vT8UVoBY3lP2Nq45p2qbWZjXZjiLdZkg%2B2%2Bpw6pXoseqFysat9cMZsa6KwlMRk2jhiB3gYFUoTWTGLic08r5QSBJm7O0wukdn4DEAZia8ONs4cqNJdeniStNza%2B4mjlPxrSgargcBOk95ig%3D%3D&chksm=6a670a5d5d10834baa6fa88177025652864a93646e1d03e773694053d67c4f4d11331836acc2#rd',
+                            'url'=>'http://mp.weixin.qq.com/s/W-AuCbS3MkMo3rk6hjXBzw',
                         ),
                     );
                     $this->news($data);
