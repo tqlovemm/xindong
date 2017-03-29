@@ -92,7 +92,7 @@ class CollectingFilesText extends \yii\db\ActiveRecord
             'qq' => 'QQ号',
             'extra' => '备注',
             'created_at' => '链接生成时间',
-            'updated_at' => 'Updated At',
+            'updated_at' => '更新时间',
             'flag' => 'Flag',
             'status' => '填写进度',
             'already_pa' => '啪过几个',

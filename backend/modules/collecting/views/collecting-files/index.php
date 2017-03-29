@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'address_province',
                 'address_city',
                 'status',
-                'created_at:datetime',
+                'updated_at:datetime',
                 ['class' => 'yii\grid\ActionColumn', 'template' => '{view} {update} {delete}'],
             ],
         ]); ?>
