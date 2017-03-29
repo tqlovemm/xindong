@@ -16,6 +16,7 @@ $this->registerCss("
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
         <?= Html::a('创建渠道二维码', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('图形统计', ['statistical-chart'], ['class' => 'btn btn-warning']) ?>
     </p>
 </div>
 <table class="table table-bordered">

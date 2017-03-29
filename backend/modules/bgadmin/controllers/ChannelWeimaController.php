@@ -79,7 +79,9 @@ class ChannelWeimaController extends Controller
     public function actionStatisticalChart(){
 
 
-        return $this->render('statistical-chart');
+        $model = ChannelWeimaFollowCount::find()->select("created_at,sum(new_subscribe)+sum(old_subscribe) as ns,sum(new_subscribe) as nns,sum(new_unsubscribe)+sum(old_unsubscribe) as us,sum(new_subscribe)+sum(old_subscribe)-sum(new_unsubscribe)-sum(old_unsubscribe) as alls")->groupBy('created_at')->orderBy('created_at asc')->asArray()->all();
+
+        return $this->render('statistical-chart',['model'=>$model]);
     }
     /**
      * Displays a single ChannelWeima model.
