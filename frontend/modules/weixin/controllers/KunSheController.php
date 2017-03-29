@@ -134,13 +134,13 @@ class KunSheController extends Controller
                         ), array(
                             "type"=>"click",
                             "name"=>urlencode("跑圈 | 十三平台"),
-                            "key"=> "shisanpingtai",
+                            "key"=> "V1003_GOOD",
 
                         ),
                         array(
                             'type'=>'click',
                             'name'=>urlencode("聊sao | 神秘三角"),
-                            "key"=> "shenmisanjiao",
+                            "key"=> "V1004_GOOD",
                         ),
                     )
                 )
@@ -286,6 +286,28 @@ class KunSheController extends Controller
                 }elseif($EventKey=='V1002_GOOD'){
                     $media_id = 'O6eLs8-Y0QQbm638hdjTsp2XzF2JsEc1rSJyze5CyBM';
                     $this->image($media_id);
+                    exit;
+                }elseif($EventKey=='V1003_GOOD'){
+                    $data = array(
+                        array(
+                            'title'=>"你一定想不到交友还可以这么玩！",
+                            'description'=>"重新定义yp的新方式！",
+                            'picUrl'=>'http://mmbiz.qpic.cn/mmbiz_jpg/ynej4OHDOHXUpRSP77SQKdkwNlpOmxaCFUmMFTbqLdYuMjPRvXSnhevUSufCcmqL2yqQ5S9YBRn1YVMxc1R2lg/0?wx_fmt=jpeg',
+                            'url'=>'https://mp.weixin.qq.com/cgi-bin/appmsg?t=media/appmsg_edit&action=edit&lang=zh_CN&token=929950662&type=10&appmsgid=100000014&isMul=1',
+                        ),
+                    );
+                    $this->news($data);
+                    exit;
+                }elseif($EventKey=='V1004_GOOD'){
+                    $data = array(
+                        array(
+                            'title'=>"同城交友聊Sao，我们是认真的！",
+                            'description'=>"让交友约会离你更近一点！",
+                            'picUrl'=>'http://mmbiz.qpic.cn/mmbiz_jpg/ynej4OHDOHXUpRSP77SQKdkwNlpOmxaC64B794HryVsHP5w1H6VVcEiaWfX6D0NnaAPrF7ZB4xJnwZXQrNtN5TQ/0?wx_fmt=jpeg',
+                            'url'=>'https://mp.weixin.qq.com/s?__biz=MzI2MDY2MDc5OA==&tempkey=z84Kv10vT8UVoBY3lP2Nq45p2qbWZjXZjiLdZkg%2B2%2Bpw6pXoseqFysat9cMZsa6KwlMRk2jhiB3gYFUoTWTGLic08r5QSBJm7O0wukdn4DEAZia8ONs4cqNJdeniStNza%2B4mjlPxrSgargcBOk95ig%3D%3D&chksm=6a670a5d5d10834baa6fa88177025652864a93646e1d03e773694053d67c4f4d11331836acc2#rd',
+                        ),
+                    );
+                    $this->news($data);
                     exit;
                 }
             }
