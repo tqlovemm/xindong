@@ -106,69 +106,48 @@ class KunSheController extends Controller
         $arr = array(
             'button' =>array(
                 array(
-                    'name'=>urlencode("新人必看"),
+                    'name'=>urlencode("幸福入口"),
                     'sub_button'=>array(
                         array(
                             'type'=>'view',
-                            'name'=>urlencode("平台简介"),
+                            'name'=>urlencode("男生入口"),
                             'url'=>'http://mp.weixin.qq.com/s/IhEg7rG-ls01lFpBAGri6w',
+                            "key"=> "boy_ru_kou",
                             "sub_button"=>[],
                         ),
                         array(
                             'type'=>'view',
-                            'name'=>urlencode("官方网站"),
+                            'name'=>urlencode("女生入口"),
                             'url'=>'http://13loveme.com/',
+                            "key"=> "girl_ru_kou",
                             "sub_button"=>[],
                         ),
-                        array(
-                            "type"=>"view",
-                            "name"=>urlencode("往日觅约"),
-                            "url"=>"http://13loveme.com/red",
-                            "sub_button"=>[],
-
-                        )
                     )
                 ),
                 array(
-                    "type"=>"view",
-                    "name"=>urlencode("加入平台"),
-                    "url"=>"http://www.13loveme.com/contact",
-                    "sub_button"=>[],
-                ),
-                array(
-                    'name'=>urlencode("平台相关"),
+                    'name'=>urlencode("撩一撩"),
                     'sub_button'=>array(
                         array(
                             "type"=>"view",
-                            "name"=>urlencode("APP下载"),
+                            "name"=>urlencode("SM|西檬之家"),
                             "url"=>"https://itunes.apple.com/cn/app/xin-dong-san-shi-yi-tian/id1070045426?mt=8",
                             "sub_button"=>[],
 
                         ), array(
                             "type"=>"view",
-                            "name"=>urlencode("官方微博"),
+                            "name"=>urlencode("跑圈 | 十三平台"),
                             "url"=>"http://weibo.com/13jiaoyoupt",
+                            "key"=> "shisanpingtai",
                             "sub_button"=>[],
 
                         ),
                         array(
                             'type'=>'view',
-                            'name'=>urlencode("会员分布"),
+                            'name'=>urlencode("聊sao | 神秘三角"),
                             "url"=>"http://13loveme.com/heart/34?top=bottom",
+                            "key"=> "shenmisanjiao",
                             "sub_button"=>[],
                         ),
-                        array(
-                            'type'=>'view',
-                            'name'=>urlencode("玩点神马"),
-                            "url"=>"http://mp.weixin.qq.com/mp/homepage?__biz=MzAxMDIwMDIxMw==&hid=4&sn=422bb1b056dd63f8c212eb9fedcfbb05#wechat_redirect",
-                            "sub_button"=>[],
-                        ),
-                        array(
-                            'type'=>'view',
-                            'name'=>urlencode("免责声明"),
-                            "url"=>"http://13loveme.com/attention/disclaimers?top=bottom",
-                            "sub_button"=>[],
-                        )
                     )
                 )
             )
@@ -183,7 +162,6 @@ class KunSheController extends Controller
         $this->postData($url,json_encode($data));
     }
     protected function responseMsg(){
-
         if( strtolower( $this->postObj->MsgType) == 'event'){
             $openid =  $this->postObj->FromUserName;
             $model = new ChannelWeimaRecord();
@@ -247,15 +225,23 @@ class KunSheController extends Controller
                     SaveToLog::log($e->getMessage(),'we13.log');
                 }finally{
 
-                    $content = "欢迎来到有节操有内涵有故事的十三平台！\n
-<a href='http://mp.weixin.qq.com/s/IhEg7rG-ls01lFpBAGri6w'>☞如何.·玩转☜</a>
-十三在手！天下我有！\n
-<a href='http://13loveme.com/date-past?title=%E6%B1%9F%E8%8B%8F&company=13pt'>☞那些.·觅约☜</a>
-速效配对！有求必硬！\n
-<a href='http://mp.weixin.qq.com/mp/homepage?__biz=MzAxMDIwMDIxMw==&hid=4&sn=422bb1b056dd63f8c212eb9fedcfbb05#wechat_redirect'>☞玩点.·神马☜</a>
-真实互动，展开自我！\n
-<a href='http://www.13loveme.com/contact'>☞PAO圈.·入口☜</a>
-撩起来！约一啪！";
+                    $content = "欢迎来到全国最大的情趣社区联盟mo-得意
+拥有众多文化社交平台
+在这里你可以尽情展现自己！
+
+【十三交友平台】
+<a href=\"https://mp.weixin.qq.com/s?__biz=MzI1MTEyMDI0Mw==&mid=2667464720&idx=3&sn=017159a5989c3d238a254cf959b225a8&chksm=f2fd370cc58abe1aacb776cb925c64ba02658e217640d8d627875695af251c2ba3b692364f6f#rd\">☞ 全球最大华人高端交友社区☜ </a> 
+只有来了才知道其中的乐趣！
+
+
+【西檬之家】
+<a href=\"http://mp.weixin.qq.com/s/0Q_DAaB6Qg8q0pzN7nG1JA\">☞ SM亚文化圈层社区☜ </a>
+你懂得，老司机聚集地！
+
+
+【江浙沪豫高端线下交友】
+<a href=\"http://mp.weixin.qq.com/s/6zyGq4Om2gldkq9Pao97mw\">☞ 华中及长三角最大线下高端交友聚会社群☜ </a>
+区域化交友，交流更方便！";
                     $this->text($content);
                 }
             }
@@ -301,30 +287,11 @@ class KunSheController extends Controller
         }
 
         //用户关键词回复
-        if( strtolower($this->postObj->MsgType) == 'text' && in_array(trim($this->postObj->Content),['入口', '炮圈', '炮友', '约炮', '平台', '注册', '约', '会员', '加入', '入会', '费用', '交费', '客服','觅约', '啪']) ){
+        if( strtolower($this->postObj->MsgType) == 'text' ){
 
-            $content = "<a href='http://13loveme.com/contact'>☞PAO圈.·入口☜</a>
-撩起来！约一啪！";
-            $this->text($content);
         } else{
-            switch( trim($this->postObj->Content) ){
-                case "深夜":
-                    $data = array(
-                        array(
-                            'title'=>"解锁男女“小黑屋”",
-                            'description'=>"深夜性趣部落：深夜小游戏，虽然无节操无下限，但很有料哦！",
-                            'picUrl'=>'http://13loveme.com/images/weixin/688526311119687689.jpg',
-                            'url'=>'http://www.13loveme.com/heart/38?top=bottom',
-                        ),
-                    );
-                    $this->news($data);
-                    break;
-                case "17link":
-                    $content = "http://17.tecclub.cn/bgadmin/verification";
-                    $this->text($content);
-                    break;
-            }
-        }//if end
+
+        }
 
     }//reponseMsg end
     /**
@@ -343,6 +310,12 @@ class KunSheController extends Controller
         $url = "https://api.weixin.qq.com/cgi-bin/material/get_material?access_token=".$this->getAccessTokens();
         $data = file_get_contents($url);
         return $data;
+    }
+    public function actionMedia(){
+
+        echo "<pre>";
+        return var_dump($this->getMediaList('image',0,15));
+
     }
     /**
      * @param $data
