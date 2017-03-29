@@ -6,6 +6,7 @@ use common\components\SaveToLog;
 use frontend\modules\weixin\models\ChannelWeimaFollowCount;
 use frontend\modules\weixin\models\ChannelWeimaRecord;
 use Yii;
+use yii\base\Exception;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 
@@ -285,12 +286,18 @@ class KunSheController extends Controller
                 }
             }
             if(strtolower($this->postObj->Event) == 'CLICK'){
+                try{
+                    if($this->postObj->EventKey=="boy_ru_kou"){
+                        $this->image("O6eLs8-Y0QQbm638hdjTsn4VEnrtMwU25BtI2_ec8Z8");
+                    }elseif($this->postObj->EventKey=="girl_ru_kou"){
+                        $this->image("O6eLs8-Y0QQbm638hdjTsp2XzF2JsEc1rSJyze5CyBM");
+                    }
+                }catch (Exception $e){
 
-                if($this->postObj->EventKey=="boy_ru_kou"){
-                    $this->image("O6eLs8-Y0QQbm638hdjTsn4VEnrtMwU25BtI2_ec8Z8");
-                }elseif($this->postObj->EventKey=="girl_ru_kou"){
-                    $this->image("O6eLs8-Y0QQbm638hdjTsp2XzF2JsEc1rSJyze5CyBM");
+                    $this->text(json_encode($e->getMessage()));
+
                 }
+
             }
 
         }
