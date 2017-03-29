@@ -1,5 +1,5 @@
 <?php
-namespace frontend\controllers;
+namespace frontend\modules\weixin\controllers;
 
 use backend\modules\bgadmin\models\ChannelWeima;
 use common\components\SaveToLog;
