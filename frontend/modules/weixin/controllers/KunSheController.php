@@ -127,7 +127,7 @@ class KunSheController extends Controller
                         array(
                             "type"=>"view",
                             "name"=>urlencode("SM|西檬之家"),
-                            "url"=>"https://itunes.apple.com/cn/app/xin-dong-san-shi-yi-tian/id1070045426?mt=8",
+                            "url"=>"https://mp.weixin.qq.com/s?__biz=MzI2OTQ3OTA1NA==&mid=2247483859&idx=3&sn=4de9b46e0e7e88543d0c00cb0aeb53a0&chksm=eadefc32dda97524d0a7adb860559c937752d3601d49cf71e2cd8fef878dde4d8c8bb9919476&scene=18#rd",
                             "sub_button"=>[],
 
                         ), array(
@@ -278,11 +278,16 @@ class KunSheController extends Controller
                 }
             }
             if(strtolower($this->postObj->Event) == 'CLICK'){
+                $evenKey = $this->postObj->EventKey;
                 try{
-                    if($this->postObj->EventKey=="boy_ru_kou"){
-                        $this->image("O6eLs8-Y0QQbm638hdjTsn4VEnrtMwU25BtI2_ec8Z8");
-                    }elseif($this->postObj->EventKey=="girl_ru_kou"){
-                        $this->image("O6eLs8-Y0QQbm638hdjTsp2XzF2JsEc1rSJyze5CyBM");
+                    if($evenKey=='boy_ru_kou'){
+                        $media_id = 'O6eLs8-Y0QQbm638hdjTsn4VEnrtMwU25BtI2_ec8Z8';
+                        $this->image($media_id);
+                        exit;
+                    }elseif($evenKey=='girl_ru_kou'){
+                        $media_id = 'O6eLs8-Y0QQbm638hdjTsp2XzF2JsEc1rSJyze5CyBM';
+                        $this->image($media_id);
+                        exit;
                     }
                 }catch (Exception $e){
 
