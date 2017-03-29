@@ -5,8 +5,9 @@ use backend\modules\bgadmin\models\ChannelWeima;
 use common\components\SaveToLog;
 use frontend\modules\weixin\models\ChannelWeimaFollowCount;
 use frontend\modules\weixin\models\ChannelWeimaRecord;
+use frontend\modules\weixin\models\KunsheWeimaFollowCount;
+use frontend\modules\weixin\models\KunsheWeimaRecord;
 use Yii;
-use yii\base\Exception;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 
@@ -158,8 +159,8 @@ class KunSheController extends Controller
     protected function responseMsg(){
         if( strtolower( $this->postObj->MsgType) == 'event'){
             $openid =  $this->postObj->FromUserName;
-            $model = new ChannelWeimaRecord();
-            $followModel = new ChannelWeimaFollowCount();
+            $model = new KunsheWeimaRecord();
+            $followModel = new KunsheWeimaFollowCount();
             if( strtolower($this->postObj->Event) == 'subscribe' ){
 
                 $user_info = json_decode($this->getUserInfo($openid));
