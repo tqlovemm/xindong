@@ -15,7 +15,7 @@ $this->registerCss('
     .form-signup input[type="password"] {margin-bottom: 10px;border-top-left-radius: 0;border-top-right-radius: 0;}
     .field-passwordresetmobileform-smscode{width:60%;float:left;margin-bottom:0;}
     .field-signupform-smscode p{margin-bottom:0;}
-    #second{float:right;width:36%;}
+    #second{float:right;width:36%;cursor: pointer}
     .container-fluid{padding:0;}
 ');
 
