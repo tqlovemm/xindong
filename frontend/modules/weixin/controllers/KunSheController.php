@@ -162,7 +162,7 @@ class KunSheController extends Controller
             $followModel = new ChannelWeimaFollowCount();
             if( strtolower($this->postObj->Event) == 'subscribe' ){
 
-                $this->text($this->postObj->EventKey);exit();
+                $this->text($this->postObj->Event);exit();
                 $user_info = json_decode($this->getUserInfo($openid));
                 try{
                     if (!empty($this->postObj->EventKey)) {
