@@ -112,16 +112,12 @@ class KunSheController extends Controller
                         array(
                             'type'=>'click',
                             'name'=>urlencode("男生入口"),
-                            'url'=>'http://mp.weixin.qq.com/s/IhEg7rG-ls01lFpBAGri6w',
                             "key"=> "boy_ru_kou",
-                            "sub_button"=>[],
                         ),
                         array(
                             'type'=>'click',
                             'name'=>urlencode("女生入口"),
-                            'url'=>'http://13loveme.com/',
                             "key"=> "girl_ru_kou",
-                            "sub_button"=>[],
                         ),
                     )
                 ),
@@ -137,17 +133,13 @@ class KunSheController extends Controller
                         ), array(
                             "type"=>"click",
                             "name"=>urlencode("跑圈 | 十三平台"),
-                            "url"=>"http://weibo.com/13jiaoyoupt",
                             "key"=> "shisanpingtai",
-                            "sub_button"=>[],
 
                         ),
                         array(
                             'type'=>'click',
                             'name'=>urlencode("聊sao | 神秘三角"),
-                            "url"=>"http://13loveme.com/heart/34?top=bottom",
                             "key"=> "shenmisanjiao",
-                            "sub_button"=>[],
                         ),
                     )
                 )
