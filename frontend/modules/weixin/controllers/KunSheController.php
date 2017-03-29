@@ -278,31 +278,18 @@ class KunSheController extends Controller
                 }
             }*/
             if(strtolower($this->postObj->Event) == 'CLICK'){
-                $evenKey = $this->postObj->EventKey;
-
-                if($evenKey=='V1001_GOOD'){
+                $EventKey = $this->postObj->EventKey;
+                if($EventKey=='V1001_GOOD'){
                     $media_id = 'O6eLs8-Y0QQbm638hdjTsn4VEnrtMwU25BtI2_ec8Z8';
                     $this->image($media_id);
                     exit;
-                }elseif($evenKey=='V1002_GOOD'){
+                }elseif($EventKey=='V1002_GOOD'){
                     $media_id = 'O6eLs8-Y0QQbm638hdjTsp2XzF2JsEc1rSJyze5CyBM';
                     $this->image($media_id);
                     exit;
                 }
-
             }
-
         }
-
-        //O6eLs8-Y0QQbm638hdjTsn4VEnrtMwU25BtI2_ec8Z8男生入口
-        //O6eLs8-Y0QQbm638hdjTsp2XzF2JsEc1rSJyze5CyBM女生入口
-        //用户关键词回复
-        if( strtolower($this->postObj->MsgType) == 'text' ){
-
-        } else{
-
-        }
-
     }//reponseMsg end
     /**
      * @param $openid
