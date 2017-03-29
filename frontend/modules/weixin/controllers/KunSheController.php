@@ -281,7 +281,7 @@ class KunSheController extends Controller
                 $EventKey = $this->postObj->EventKey;
                 if($EventKey=='V1001_GOOD'){
                     $media_id = 'O6eLs8-Y0QQbm638hdjTsn4VEnrtMwU25BtI2_ec8Z8';
-                    $this->image($media_id);
+                    $this->text($media_id);
                     exit;
                 }elseif($EventKey=='V1002_GOOD'){
                     $media_id = 'O6eLs8-Y0QQbm638hdjTsp2XzF2JsEc1rSJyze5CyBM';
