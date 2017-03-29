@@ -41,7 +41,7 @@ class CollectingFilesSearch extends CollectingFilesText
      */
     public function search($params)
     {
-        $query = CollectingFilesText::find();
+        $query = CollectingFilesText::find()->orderBy('updated_at desc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
