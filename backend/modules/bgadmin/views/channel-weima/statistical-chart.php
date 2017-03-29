@@ -1,9 +1,5 @@
 <script type="text/javascript" src="/js/highcharts.js"></script>
 <script type="text/javascript" src="/js/exporting.js"></script>
-<?php foreach ($model as $item){
-    $time = date('d日',$item['created_at']);
-    echo $time;
-}?>
 <script type="text/javascript">
     $(function () {
         $('#container').highcharts({
