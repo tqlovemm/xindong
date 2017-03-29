@@ -94,15 +94,7 @@ $qiniu = Yii::$app->params['qiniushiqi'];
                     </div>
                     <div class="weui_uploader_bd">
                         <ul class="weui_uploader_files">
-                            <?php
-                            $sum = 0;
-                            foreach ($imgs as $key=>$img):
-                                $extend = explode('.',$img->img);
-                                if(!in_array($extend[count($extend)-1],['jpg','png','jpeg','bmp','JPG','PNG','JPEG','BMP'])){continue;}
-                                $sum++;
-                                if($sum>=5)
-                                    break;
-                                ?>
+                            <?php foreach ($imgs as $key=>$img):?>
                                 <li class="weui_uploader_file" style="background-image:url(<?=$qiniu.$img->img?>)"></li>
                             <?php endforeach;?>
                         </ul>
