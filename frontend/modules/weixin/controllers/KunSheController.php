@@ -157,8 +157,7 @@ class KunSheController extends Controller
     protected function responseMsg(){
         if( strtolower( $this->postObj->MsgType) == 'event'){
 
-            $this->text("fawef");
-            exit;
+
             //$openid =  $this->postObj->FromUserName;
             //$model = new ChannelWeimaRecord();
             //$followModel = new ChannelWeimaFollowCount();
@@ -281,16 +280,8 @@ class KunSheController extends Controller
                 }
             }*/
             if(strtolower($this->postObj->Event) == 'CLICK'){
-                $EventKey = $this->postObj->EventKey;
-                if($EventKey=='V1001_GOOD'){
-                    $media_id = 'O6eLs8-Y0QQbm638hdjTsn4VEnrtMwU25BtI2_ec8Z8';
-                    $this->text($media_id);
-                    exit;
-                }elseif($EventKey=='V1002_GOOD'){
-                    $media_id = 'O6eLs8-Y0QQbm638hdjTsp2XzF2JsEc1rSJyze5CyBM';
-                    $this->image($media_id);
-                    exit;
-                }
+                $this->text("fawef");
+
             }
         }
     }//reponseMsg end
