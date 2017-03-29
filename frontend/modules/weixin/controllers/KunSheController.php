@@ -225,11 +225,9 @@ class KunSheController extends Controller
 <a href=\"https://mp.weixin.qq.com/s?__biz=MzI1MTEyMDI0Mw==&mid=2667464720&idx=3&sn=017159a5989c3d238a254cf959b225a8&chksm=f2fd370cc58abe1aacb776cb925c64ba02658e217640d8d627875695af251c2ba3b692364f6f#rd\">☞ 全球最大华人高端交友社区☜ </a> 
 只有来了才知道其中的乐趣！
 
-
 【西檬之家】
 <a href=\"http://mp.weixin.qq.com/s/0Q_DAaB6Qg8q0pzN7nG1JA\">☞ SM亚文化圈层社区☜ </a>
 你懂得，老司机聚集地！
-
 
 【江浙沪豫高端线下交友】
 <a href=\"http://mp.weixin.qq.com/s/6zyGq4Om2gldkq9Pao97mw\">☞ 华中及长三角最大线下高端交友聚会社群☜ </a>
