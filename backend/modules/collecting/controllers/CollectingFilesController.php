@@ -233,12 +233,12 @@ class CollectingFilesController extends Controller
             $objPHPExcel->getActiveSheet()->setCellValue('M' . ($i + 3), $model[$i]['job']);
             $objPHPExcel->getActiveSheet()->setCellValue('N' . ($i + 3), $model[$i]['job_detail']);
             $objPHPExcel->getActiveSheet()->setCellValue('O' . ($i + 3), $model[$i]['pay']);
-            $objPHPExcel->getActiveSheet()->setCellValue('P' . ($i + 3), $model[$i]['qq']);
+            $objPHPExcel->getActiveSheet()->setCellValue('P' . ($i + 3), "$model[$i]['qq']");
             $objPHPExcel->getActiveSheet()->setCellValue('Q' . ($i + 3), $model[$i]['already_pa']);
             $objPHPExcel->getActiveSheet()->setCellValue('R' . ($i + 3), $model[$i]['extra']);
             $objPHPExcel->getActiveSheet()->setCellValue('S' . ($i + 3), $model[$i]['address_province2']);
             $objPHPExcel->getActiveSheet()->setCellValue('T' . ($i + 3), $model[$i]['address_city2']);
-            $objPHPExcel->getActiveSheet()->setCellValue('Y' . ($i + 3), $model[$i]['address_province3']);
+            $objPHPExcel->getActiveSheet()->setCellValue('U' . ($i + 3), $model[$i]['address_province3']);
             $objPHPExcel->getActiveSheet()->setCellValue('V' . ($i + 3), $model[$i]['address_city3']);
             $objPHPExcel->getActiveSheet()->setCellValue('W' . ($i + 3), date('Y-m-d H:i:s',$model[$i]['updated_at']));
             $objPHPExcel->getActiveSheet()->getStyle('A' . ($i + 3) . ':W' . ($i + 3))->getAlignment()->setVertical(5);
