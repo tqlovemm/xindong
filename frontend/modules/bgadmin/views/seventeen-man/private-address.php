@@ -6,7 +6,7 @@
 <div class="container-fluid" style="padding: 0;">
     <div class="row">
         <p style="padding: 10px;background-color: #fff;font-size: 16px;">
-            以下是您可进入的地区，想要更多地区您可以直接点击底部开通新地区也可以联系客服开通哦。
+            以下是您可进入的地区，想要更多地区您可以直接点击底部开通新地区也可以联系客服开通哦。您的编号是：<?=$user_id?>
         </p>
     </div>
     <div class="row">

@@ -206,7 +206,7 @@ class SeventeenManController extends Controller
         if(empty($userModel->address)){
             return $this->redirect('choice-address');
         }
-        return $this->render('private-address',['already_areas'=>array_filter(explode('，',$userModel->address)),'signPackage'=>$this->signPackage]);
+        return $this->render('private-address',['user_id'=>$userModel->id,'already_areas'=>array_filter(explode('，',$userModel->address)),'signPackage'=>$this->signPackage]);
 
     }
 
