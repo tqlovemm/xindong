@@ -233,7 +233,7 @@ class CollectingFilesController extends Controller
             $objPHPExcel->getActiveSheet()->setCellValue('M' . ($i + 3), $model[$i]['job']);
             $objPHPExcel->getActiveSheet()->setCellValue('N' . ($i + 3), $model[$i]['job_detail']);
             $objPHPExcel->getActiveSheet()->setCellValue('O' . ($i + 3), $model[$i]['pay']);
-            $objPHPExcel->getActiveSheet()->setCellValue('P' . ($i + 3), "$model[$i]['qq']");
+            $objPHPExcel->getActiveSheet()->setCellValue('P' . ($i + 3), "{$model[$i]['qq']}");
             $objPHPExcel->getActiveSheet()->setCellValue('Q' . ($i + 3), $model[$i]['already_pa']);
             $objPHPExcel->getActiveSheet()->setCellValue('R' . ($i + 3), $model[$i]['extra']);
             $objPHPExcel->getActiveSheet()->setCellValue('S' . ($i + 3), $model[$i]['address_province2']);
