@@ -241,8 +241,8 @@ class CollectingFilesController extends Controller
             $objPHPExcel->getActiveSheet()->setCellValue('Y' . ($i + 3), $model[$i]['address_province3']);
             $objPHPExcel->getActiveSheet()->setCellValue('V' . ($i + 3), $model[$i]['address_city3']);
             $objPHPExcel->getActiveSheet()->setCellValue('W' . ($i + 3), date('Y-m-d H:i:s',$model[$i]['updated_at']));
-            $objPHPExcel->getActiveSheet()->getStyle('A' . ($i + 3) . ':J' . ($i + 3))->getAlignment()->setVertical(5);
-            $objPHPExcel->getActiveSheet()->getStyle('A' . ($i + 3) . ':J' . ($i + 3))->getBorders()->getAllBorders()->setBorderStyle(5);
+            $objPHPExcel->getActiveSheet()->getStyle('A' . ($i + 3) . ':W' . ($i + 3))->getAlignment()->setVertical(5);
+            $objPHPExcel->getActiveSheet()->getStyle('A' . ($i + 3) . ':W' . ($i + 3))->getBorders()->getAllBorders()->setBorderStyle(5);
             $objPHPExcel->getActiveSheet()->getRowDimension($i + 3)->setRowHeight(16);
         }
 
