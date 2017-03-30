@@ -8,6 +8,7 @@ use Yii;
 use backend\models\CollectingFilesText;
 use backend\modules\collecting\models\CollectingFilesSearch;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -269,6 +270,9 @@ class CollectingFilesController extends Controller
     public function actionDeleteWechat(){
         if(Yii::$app->user->id==10006){
             CollectingFilesText::updateAll(['weichat'=>'*****'],['status'=>[1,2]]);
+        }else{
+
+            throw new ForbiddenHttpException("禁止操作");
         }
 
     }
