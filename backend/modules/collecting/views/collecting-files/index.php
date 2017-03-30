@@ -10,7 +10,7 @@ use yii\grid\GridView;
 $this->title = '十七平台女生档案';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<form class="form-group" action="excel" method="get">
+<form class="form-group" action="/collecting-file/collecting-files/excel" method="get">
     <label>选择起始结束时间</label>
     <br>
     <input required class="form-control pull-left" style="width: 200px;" name="start_time" type="date">
@@ -43,6 +43,6 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <script>
     function exportFile(type) {
-        location.href = 'excel?type='+type;
+        location.href = '/collecting-file/collecting-files/excel?type='+type;
     }
 </script>
