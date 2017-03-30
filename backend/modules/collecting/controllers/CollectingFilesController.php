@@ -199,10 +199,23 @@ class CollectingFilesController extends Controller
             ->setCellValue('D2', '手机号')
             ->setCellValue('E2', '省份')
             ->setCellValue('F2', '城市')
-            ->setCellValue('G2', '身高')
-            ->setCellValue('H2', '体重')
-            ->setCellValue('I2', '罩杯')
-            ->setCellValue('J2', '填写时间');
+            ->setCellValue('G2', '地区详情')
+            ->setCellValue('H2', '学历')
+            ->setCellValue('I2', '年龄')
+            ->setCellValue('J2', '身高')
+            ->setCellValue('K2', '体重')
+            ->setCellValue('L2', '罩杯')
+            ->setCellValue('M2', '工作')
+            ->setCellValue('N2', '工作详情')
+            ->setCellValue('O2', '包养费')
+            ->setCellValue('P2', 'QQ号')
+            ->setCellValue('Q2', 'pa过几个')
+            ->setCellValue('R2', '其他')
+            ->setCellValue('S2', '省份2')
+            ->setCellValue('T2', '城市2')
+            ->setCellValue('U2', '省份3')
+            ->setCellValue('V2', '城市3')
+            ->setCellValue('W2', '填写时间');
 
         for ($i = 0; $i < count($model); $i++) {
             $objPHPExcel->getActiveSheet()->setCellValue('A' . ($i + 3), $i+1);
@@ -211,10 +224,23 @@ class CollectingFilesController extends Controller
             $objPHPExcel->getActiveSheet()->setCellValue('D' . ($i + 3), $model[$i]['cellphone']);
             $objPHPExcel->getActiveSheet()->setCellValue('E' . ($i + 3), $model[$i]['address_province']);
             $objPHPExcel->getActiveSheet()->setCellValue('F' . ($i + 3), $model[$i]['address_city']);
-            $objPHPExcel->getActiveSheet()->setCellValue('G' . ($i + 3), $model[$i]['height']);
-            $objPHPExcel->getActiveSheet()->setCellValue('H' . ($i + 3), $model[$i]['weight']);
-            $objPHPExcel->getActiveSheet()->setCellValue('I' . ($i + 3), $model[$i]['cup']);
-            $objPHPExcel->getActiveSheet()->setCellValue('J' . ($i + 3), date('Y-m-d H:i:s',$model[$i]['updated_at']));
+            $objPHPExcel->getActiveSheet()->setCellValue('G' . ($i + 3), $model[$i]['address_detail']);
+            $objPHPExcel->getActiveSheet()->setCellValue('H' . ($i + 3), $model[$i]['education']);
+            $objPHPExcel->getActiveSheet()->setCellValue('I' . ($i + 3), $model[$i]['age']);
+            $objPHPExcel->getActiveSheet()->setCellValue('J' . ($i + 3), $model[$i]['height']);
+            $objPHPExcel->getActiveSheet()->setCellValue('K' . ($i + 3), $model[$i]['weight']);
+            $objPHPExcel->getActiveSheet()->setCellValue('L' . ($i + 3), $model[$i]['cup']);
+            $objPHPExcel->getActiveSheet()->setCellValue('M' . ($i + 3), $model[$i]['job']);
+            $objPHPExcel->getActiveSheet()->setCellValue('N' . ($i + 3), $model[$i]['job_detail']);
+            $objPHPExcel->getActiveSheet()->setCellValue('O' . ($i + 3), $model[$i]['pay']);
+            $objPHPExcel->getActiveSheet()->setCellValue('P' . ($i + 3), $model[$i]['qq']);
+            $objPHPExcel->getActiveSheet()->setCellValue('Q' . ($i + 3), $model[$i]['already_pa']);
+            $objPHPExcel->getActiveSheet()->setCellValue('R' . ($i + 3), $model[$i]['extra']);
+            $objPHPExcel->getActiveSheet()->setCellValue('S' . ($i + 3), $model[$i]['address_province2']);
+            $objPHPExcel->getActiveSheet()->setCellValue('T' . ($i + 3), $model[$i]['address_city2']);
+            $objPHPExcel->getActiveSheet()->setCellValue('Y' . ($i + 3), $model[$i]['address_province3']);
+            $objPHPExcel->getActiveSheet()->setCellValue('V' . ($i + 3), $model[$i]['address_city3']);
+            $objPHPExcel->getActiveSheet()->setCellValue('W' . ($i + 3), date('Y-m-d H:i:s',$model[$i]['updated_at']));
             $objPHPExcel->getActiveSheet()->getStyle('A' . ($i + 3) . ':J' . ($i + 3))->getAlignment()->setVertical(5);
             $objPHPExcel->getActiveSheet()->getStyle('A' . ($i + 3) . ':J' . ($i + 3))->getBorders()->getAllBorders()->setBorderStyle(5);
             $objPHPExcel->getActiveSheet()->getRowDimension($i + 3)->setRowHeight(16);
@@ -234,6 +260,10 @@ class CollectingFilesController extends Controller
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');
 
+    }
+
+    public function actionDeleteWechat(){
+        CollectingFilesText::updateAll(['weichat'=>'*****'],['status'=>[1,2]]);
     }
 
 }
