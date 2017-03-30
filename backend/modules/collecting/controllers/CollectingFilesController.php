@@ -149,10 +149,19 @@ class CollectingFilesController extends Controller
         }
     }
 
+    public function actionExcel($type=''){
 
-    public function actionExcel(){
-
-        $model = CollectingFilesText::find()->where(['status'=>[1,2]])->asArray()->all();
+        if($type==''){
+            $start_time = strtotime($_GET['start_time']);
+            $end_time = strtotime($_GET['end_time']);
+            $model = CollectingFilesText::find()->where(['status'=>[1,2]])->andWhere(['between','updated_at',$start_time,$end_time])->orderBy('id desc')->asArray()->all();
+        }elseif($type==1){
+            $model = CollectingFilesText::find()->where(['status'=>[1,2]])->orderBy('id desc')->asArray()->all();
+        }elseif($type==2){
+            $model = CollectingFilesText::find()->where(['status'=>[1,2]])->andWhere(['>','updated_at',time()-86400*7])->orderBy('id desc')->asArray()->all();
+        }elseif($type==3){
+            $model = CollectingFilesText::find()->where(['status'=>[1,2]])->andWhere(['>','updated_at',time()-86400*30])->orderBy('id desc')->asArray()->all();
+        }
 
         $objPHPExcel = new \PHPExcel();
         $objPHPExcel->getProperties()->setCreator("ctos")
@@ -225,17 +234,6 @@ class CollectingFilesController extends Controller
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');
 
-        /*        $phpReader = new \PHPExcel_Reader_Excel2007();
-                if (!$phpReader->canRead($filePath)) { // 这里是用Reader尝试去读文件，07不行用05，05不行就报错。注意，这里的return是Yii框架的方式。
-                    $PHPReader = new \PHPExcel_Reader_Excel5();
-                    if (!$PHPReader->canRead($filePath)) {
-                        $errorMessage = "Can not read file.";
-                        return $this->render('error', ['errorMessage' => $errorMessage]);
-                    }
-                }else{
-
-                    return var_dump($phpReader->canRead($filePath));
-                }*/
     }
 
 }

@@ -10,7 +10,16 @@ use yii\grid\GridView;
 $this->title = 'Collecting17 Files Texts';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<button id="export">导出EXCEL表格</button>
+<form class="form-group" action="excel" method="get">
+    <label>选择起始结束时间</label>
+    <br>
+    <input required class="form-control pull-left" style="width: 200px;" name="start_time" type="date">
+    <input required class="form-control pull-left" style="width: 200px;" name="end_time" type="date">
+    <button class="btn btn-default" type="submit">导出选定日期的女生</button>
+</form>
+<button class="btn btn-primary" onclick="exportFile(1)">导出全部女生</button>
+<button class="btn btn-success" onclick="exportFile(2)">导出一周内女生</button>
+<button class="btn btn-warning" onclick="exportFile(3)">导出一个月内女生</button>
 <div class="collecting17-files-text-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -33,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]); ?>
 </div>
 <script>
-    $('#export').click(function () {
-        location.href = 'excel';
-    })
+    function exportFile(type) {
+        location.href = 'excel?type='+type;
+    }
 </script>
