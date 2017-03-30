@@ -7,7 +7,7 @@ use shiyang\masonry\Masonry;
 $this->title = $model->area;
 
 $this->registerCssFile('@web/js/lightbox/css/lightbox.css');
-$this->registerJsFile('@web/js/lightbox/js/lightbox.min.js']);
+$this->registerJsFile('@web/js/lightbox/js/lightbox.min.js');
 $pre_url = Yii::$app->params['imagetqlmm'];
 ?>
 
