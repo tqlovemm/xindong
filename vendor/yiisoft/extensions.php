@@ -39,6 +39,15 @@ return array (
       '@yii/imagine' => $vendorDir . '/yiisoft/yii2-imagine',
     ),
   ),
+    'phpoffice/phpoffice-phpexcel' =>
+        array (
+            'name' => 'phpoffice/phpoffice-phpexcel',
+            'version' => '2.0.6.0',
+            'alias' =>
+                array (
+                    '@yii/phpexcel' => $vendorDir . '/phpoffice/phpoffice-phpexcel',
+                ),
+        ),
   'yiisoft/yii2-faker' => 
   array (
     'name' => 'yiisoft/yii2-faker',

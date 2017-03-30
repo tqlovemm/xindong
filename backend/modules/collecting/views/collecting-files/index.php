@@ -10,6 +10,7 @@ use yii\grid\GridView;
 $this->title = 'Collecting17 Files Texts';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<button id="export">导出EXCEL表格</button>
 <div class="collecting17-files-text-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -31,3 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]); ?>
 </div>
+<script>
+    $('#export').click(function () {
+        location.href = 'excel';
+    })
+</script>
