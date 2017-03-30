@@ -215,7 +215,8 @@ class CollectingFilesController extends Controller
             ->setCellValue('T2', '城市2')
             ->setCellValue('U2', '省份3')
             ->setCellValue('V2', '城市3')
-            ->setCellValue('W2', '填写时间');
+            ->setCellValue('W2', '填写时间')
+            ->setCellValue('X2', '填写时间');
 
         for ($i = 0; $i < count($model); $i++) {
             $objPHPExcel->getActiveSheet()->setCellValue('A' . ($i + 3), $i+1);
@@ -241,8 +242,9 @@ class CollectingFilesController extends Controller
             $objPHPExcel->getActiveSheet()->setCellValue('U' . ($i + 3), $model[$i]['address_province3']);
             $objPHPExcel->getActiveSheet()->setCellValue('V' . ($i + 3), $model[$i]['address_city3']);
             $objPHPExcel->getActiveSheet()->setCellValue('W' . ($i + 3), date('Y-m-d H:i:s',$model[$i]['updated_at']));
-            $objPHPExcel->getActiveSheet()->getStyle('A' . ($i + 3) . ':W' . ($i + 3))->getAlignment()->setVertical(5);
-            $objPHPExcel->getActiveSheet()->getStyle('A' . ($i + 3) . ':W' . ($i + 3))->getBorders()->getAllBorders()->setBorderStyle(5);
+            $objPHPExcel->getActiveSheet()->setCellValue('X' . ($i + 3), $model[$i]['updated_at']);
+            $objPHPExcel->getActiveSheet()->getStyle('A' . ($i + 3) . ':X' . ($i + 3))->getAlignment()->setVertical(5);
+            $objPHPExcel->getActiveSheet()->getStyle('A' . ($i + 3) . ':X' . ($i + 3))->getBorders()->getAllBorders()->setBorderStyle(5);
             $objPHPExcel->getActiveSheet()->getRowDimension($i + 3)->setRowHeight(16);
         }
 
