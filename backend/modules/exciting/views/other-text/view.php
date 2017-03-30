@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 $this->registerCssFile('@web/js/lightbox/css/lightbox.css');
-$this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii\web\JqueryAsset'], 'position' => \yii\web\View::POS_END]);
+$this->registerJsFile('@web/js/lightbox/js/lightbox.min.js');
 $pre_url = Yii::$app->params['threadimg'];
 ?>
 <form action="">
