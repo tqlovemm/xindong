@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\modules\collecting\models\Collecting17FilesSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Collecting17 Files Texts';
+$this->title = '十七平台女生档案';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <form class="form-group" action="excel" method="get">
