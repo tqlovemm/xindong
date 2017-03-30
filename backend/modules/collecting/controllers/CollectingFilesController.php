@@ -161,6 +161,8 @@ class CollectingFilesController extends Controller
             $model = CollectingFilesText::find()->where(['status'=>[1,2]])->andWhere(['>','updated_at',time()-86400*7])->orderBy('id desc')->asArray()->all();
         }elseif($type==3){
             $model = CollectingFilesText::find()->where(['status'=>[1,2]])->andWhere(['>','updated_at',time()-86400*30])->orderBy('id desc')->asArray()->all();
+        }elseif($type==4){
+            return $this->redirect('delete-wechat');
         }
 
         $objPHPExcel = new \PHPExcel();
@@ -265,7 +267,10 @@ class CollectingFilesController extends Controller
     }
 
     public function actionDeleteWechat(){
-        CollectingFilesText::updateAll(['weichat'=>'*****'],['status'=>[1,2]]);
+        if(Yii::$app->user->id==10006){
+            CollectingFilesText::updateAll(['weichat'=>'*****'],['status'=>[1,2]]);
+        }
+
     }
 
 }

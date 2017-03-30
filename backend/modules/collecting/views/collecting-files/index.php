@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <button class="btn btn-primary" onclick="exportFile(1)">导出全部女生</button>
 <button class="btn btn-success" onclick="exportFile(2)">导出一周内女生</button>
 <button class="btn btn-warning" onclick="exportFile(3)">导出一个月内女生</button>
+<button class="btn btn-danger" onclick="exportFile(4)">删除女生微信号</button>
 <div class="collecting17-files-text-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
