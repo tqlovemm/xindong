@@ -44,10 +44,7 @@ class CollectingSeventeenFilesController extends Controller
         }
 
         if(!empty($query)){
-/*
-            if($query->status!=0){
-                return $this->render('success',['id'=>$save_mobile]);
-            }*/
+
             return $this->render('index',['queries'=>$query,'img'=>$img,'wei_img'=>$wei_img]);
         }
     }
@@ -119,7 +116,6 @@ class CollectingSeventeenFilesController extends Controller
             return var_dump($model->errors);
         }
 
-        return $this->redirect('/17-files');
     }
 
     public function actionSuccess($id){
@@ -169,15 +165,9 @@ defo;
         $model = $this->findModelImg($id);
         $model->delete();
         $qn = new QiniuUploader('files',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
-        $ret = $qn->delete('shisan',$model->img);
-        return $ret;
+        $qn->delete('shisan',$model->img);
         echo $id;
 
-    }
-    protected function extend($file_name){
-        $extend = pathinfo($file_name);
-        $extend = strtolower($extend["extension"]);
-        return $extend;
     }
 
     protected function findModel($id)
