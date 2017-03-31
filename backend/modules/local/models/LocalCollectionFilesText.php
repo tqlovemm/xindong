@@ -141,7 +141,7 @@ class LocalCollectionFilesText extends \yii\db\ActiveRecord
         $files_img->member_id = $this->member_id;
         $files_img->save();
 
-        $data = array('id'=>$files_img->img_id,'path'=>Yii::$app->params['localansm'].$qiniu['key']);
+        $data = array('id'=>$files_img->img_id,'path'=>Yii::$app->params['localandsm'].$qiniu['key']);
         return $data;
     }
     public function uploadw()
@@ -163,7 +163,7 @@ class LocalCollectionFilesText extends \yii\db\ActiveRecord
         //存入数据库
         $this->weima = $qiniu['key'];
         $this->save();
-        $data = array('id'=>$this->member_id,'path'=>Yii::$app->params['localansm'].$qiniu['key']);
+        $data = array('id'=>$this->member_id,'path'=>Yii::$app->params['localandsm'].$qiniu['key']);
         return $data;
     }
 }
