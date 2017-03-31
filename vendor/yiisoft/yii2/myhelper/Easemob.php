@@ -419,9 +419,9 @@ class Easemob
     }
 
     public function disconnect($username){
-        $url = $this->host."/$this->org_name/$this->app_name/".'users/'.$username."/disconnect";
-        $header = array('enctype:multipart/form-data',"Authorization: Bearer ".$this->getToken(),"restrict-access:true");
-        $result = $this->myRequest($url,"get",$header);
+        $url = $this->host."/$this->org_name/$this->app_name/".'users/'.$username.'/disconnect';
+        $header = array("Content-Type:application/json","Authorization: Bearer ".$this->getToken());
+        $result = $this->myRequest($url,"GET",$header);
         return $result;
     }
 
