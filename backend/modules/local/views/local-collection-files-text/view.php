@@ -66,7 +66,7 @@ $pre_url = Yii::$app->params['localandsm'];
             ],
             [
                 'label'=>'flag',
-                'value'=>"http://13loveme.com/sm?id=".$model['flag'],
+                'value'=>"http://13loveme.com/local?id=".$model['flag'],
             ],
             [
                 'label'=>'status',
