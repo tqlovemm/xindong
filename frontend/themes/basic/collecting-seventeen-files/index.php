@@ -39,7 +39,7 @@ $pre_url = Yii::$app->params['qiniushiqi'];
                                         if(!empty($img)):
                                             foreach ($img as $item):
                                     ?>
-                                        <img src="<?=$pre_url.$item['img']?>" data-id="<?=$item['id']?>" class="preview collecting-files-img">
+                                        <img src="<?=$pre_url.$item['img']?>" onclick="deleteImg(<?=$item['id']?>)" class="preview collecting-files-img">
                                     <?php
                                             endforeach;
                                         endif;
@@ -74,7 +74,7 @@ $pre_url = Yii::$app->params['qiniushiqi'];
                                     <?php
                                     if(!empty($wei_img)):
                                         foreach ($wei_img as $key=>$item): ?>
-                                            <img src="<?=$pre_url.$item['img']?>" data-id="<?=$item['id']?>" class="preview collecting-files-img">
+                                            <img src="<?=$pre_url.$item['img']?>" onclick="deleteImg(<?=$item['id']?>)" class="preview collecting-files-img">
                                         <?php endforeach;endif;?>
                                 </div>
                                 <?php if(count($wei_img)<1):?>
@@ -271,18 +271,6 @@ $pre_url = Yii::$app->params['qiniushiqi'];
                 </div>
             </div>
         </div>
-
-        <div class="weui_dialog_confirm" id="dialog__delete" style="display: none;">
-            <div class="weui_mask"></div>
-            <div class="weui_dialog">
-                <div class="weui_dialog_hd"><strong class="weui_dialog_title">通知</strong></div>
-                <div class="weui_dialog_bd">确定删除当前图片信息吗</div>
-                <div class="weui_dialog_ft">
-                    <a href="javascript:;" class="weui_btn_dialog default iknow">取消</a>
-                    <a href="javascript:;" id="delete-img" class="weui_btn_dialog primary" data-id="">确定</a>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -352,21 +340,6 @@ $pre_url = Yii::$app->params['qiniushiqi'];
 
     $(function () {
 
-        $('.collecting-files-img',this).on('click',function () {
-            $('#delete-img').attr('data-id',$(this).attr('data-id'));
-            $('#dialog__delete').show();
-        });
-
-        $('#delete-img',this).on('click',function () {
-
-            $.get('/collecting-seventeen-files/delete?id='+$(this).attr('data-id'),function (data) {
-
-               history.go(0);
-            });
-
-        });
-
-
         $('.weui_textarea',this).keyup(function () {
 
             $(this).siblings('.weui_textarea_counter').children('span').html( $(this).val().length);
@@ -418,21 +391,14 @@ $pre_url = Yii::$app->params['qiniushiqi'];
                 } }).submit();
         });
 
-
-        $('#preview').on('click',function () {
-            if(confirm('确定删除吗')){
-                $.get('/collecting-files/delete?id='+$('#preview .preview').attr('data-id'),function (data) {
-                    history.go(0);
-                });
-            }
-        });
-        $('#preview2').on('click',function () {
-            if(confirm('确定删除吗')){
-                $.get('/collecting-files/delete?id='+$('#preview2 .preview').attr('data-id'),function (data) {
-                    history.go(0);
-                });
-            }
-        })
     });
+
+    function deleteImg(id) {
+        if(confirm('确定删除吗')){
+            $.get('/collecting-seventeen-files/delete?id='+id,function (data) {
+                history.go(0);
+            });
+        }
+    }
 
 </script>

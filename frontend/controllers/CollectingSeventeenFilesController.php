@@ -1,6 +1,7 @@
 <?php
 
 namespace frontend\controllers;
+use common\Qiniu\QiniuUploader;
 use frontend\models\CollectingSeventeenFilesImg;
 use frontend\models\CollectingSeventeenFilesText;
 use Yii;
@@ -138,7 +139,7 @@ class CollectingSeventeenFilesController extends Controller
         $data = $collecting_text->upload();
 
         $html = <<<defo
-        <img src=$data[path] data-id=$data[id] class="preview collecting-files-img">
+        <img src=$data[path] onclick=deleteImg($data[id]) class="preview collecting-files-img">
 defo;
 
         echo $html;
@@ -157,7 +158,7 @@ defo;
         $data = $collecting_text->uploadw();
 
         $html = <<<defo
-        <img src=$data[path] data-id=$data[id] class="preview collecting-files-img">
+        <img src=$data[path]  onclick=deleteImg($data[id]) class="preview collecting-files-img">
 defo;
         echo $html;
     }
@@ -167,6 +168,9 @@ defo;
 
         $model = $this->findModelImg($id);
         $model->delete();
+        $qn = new QiniuUploader('files',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $ret = $qn->delete('shisan',$model->img);
+        return $ret;
         echo $id;
 
     }
