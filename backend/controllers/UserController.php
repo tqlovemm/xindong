@@ -109,7 +109,8 @@ class UserController extends BaseController
 
     public function actionDisconnect($username){
 
-        $this->setMes()->disconnect($username);
+        $data = $this->setMes()->disconnect($username);
+        return var_dump($data);
 
     }
     protected function setMes(){
