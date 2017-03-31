@@ -175,7 +175,7 @@ defo;
         $model = $this->findModelImg($id);
         $model->delete();
         $qn = new QiniuUploader('files',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
-        $qn->delete('localansm',$model->img_path);
+        $qn->delete('localandsm',$model->img_path);
         echo $id;
     }
     public function actionDeleteWeima($id){
@@ -185,7 +185,7 @@ defo;
         $model->weima = null;
         if($model->update()){
             $qn = new QiniuUploader('files',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
-            $qn->delete('localansm',$weima);
+            $qn->delete('localandsm',$weima);
         }
 
     }
