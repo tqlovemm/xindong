@@ -213,46 +213,14 @@ class Weekly extends \yii\db\ActiveRecord
         }else{
             return var_dump($weeklyContent->errors);
         }
-/*
-        $data = array('id'=>$files_img->id,'path'=>Yii::$app->params['imagetqlmm'].$qiniu['key']);
-        return $data;
-
-
-        $config = [
-            'savePath' => Yii::getAlias('@frontend').'/web/uploads/bgadmin/', //存储文件夹
-            'maxSize' => 2048 ,//允许的文件最大尺寸，单位KB
-            'allowFiles' => ['.gif' , '.png' , '.jpg' , '.jpeg' , '.bmp'],  //允许的文件格式
-        ];
-        $up = new Uploader("photoimg", $config, 'bgadmin'.$this->id);
-        $info = $up->getFileInfo();
-        $weeklyContent = new WeeklyContent();
-        $weeklyContent->name = !empty($this->title)?$this->title:"error";
-        $weeklyContent->thumb = 'http://13loveme.com/uploads/bgadmin/' . $info['name'];
-        $weeklyContent->path = 'http://13loveme.com/uploads/bgadmin/' . $info['name'];
-        $weeklyContent->store_name = $info['name'];
-        $weeklyContent->album_id = $this->id;
-        $weeklyContent->created_at = time();
-        $weeklyContent->created_by = 1;
-        if($weeklyContent->save()){
-            $data = array('id'=>$weeklyContent->id,'path'=>$weeklyContent->path);
-            return $data;
-        }else{
-            return var_dump($weeklyContent->errors);
-        }*/
 
     }
     public function uploadw()
     {
 
         $qn = new QiniuUploader('weimaimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
-        $qiniu = $qn->upload('shisangirl',"uploads/bgadmin/weima/$this->id");
-/*        $config = [
-            'savePath' => Yii::getAlias('@frontend').'/web/uploads/bgadmin/', //存储文件夹
-            'maxSize' => 2048 ,//允许的文件最大尺寸，单位KB
-            'allowFiles' => ['.gif' , '.png' , '.jpg' , '.jpeg' , '.bmp'],  //允许的文件格式
-        ];
-        $up = new Uploader("weimaimg", $config, 'bgadmin'.$this->id);
-        $info = $up->getFileInfo();*/
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
+        $qiniu = $qn->upload('shisangirl',"uploads/bgadmin/weima/$mkdir");
 
         $weeklyContent = new WeeklyContent();
         $weeklyContent->name = !empty($this->title)?$this->title:"error";
