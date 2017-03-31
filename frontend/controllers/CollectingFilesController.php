@@ -177,74 +177,24 @@ defo;
                 echo $html;
     }
 
-    public function actionUpload(){
-
-        $id = Yii::$app->request->post('id');
-        $collecting_text = $this->findModel($id);
-
-        if($collecting_text->status==1){
-            throw new ForbiddenHttpException('无效链接');
-        }
-
-        $path = "uploads/collecting/";
-
-        $extArr = array("jpg","png","jpeg","bmp","JPG","PNG","JPEG","BMP");
-
-        if(isset($_POST) and $_SERVER['REQUEST_METHOD'] == "POST"){
-            $name = $_FILES['photoimg']['name'];
-            $size = $_FILES['photoimg']['size'];
-
-            if(empty($name)){
-                echo '请选择要上传的图片';
-                exit;
-            }
-            $ext = $this->extend($name);
-            if(!in_array($ext,$extArr)){
-                echo '图片格式错误！';
-                exit;
-            }
-            if($size>(5000*1024)){
-                echo '图片大小不能超过5MB';
-                exit;
-            }
-            $image_name = time().rand(1000,9999).".".$ext;
-            $tmp = $_FILES['photoimg']['tmp_name'];
-            if(move_uploaded_file($tmp, $path.$image_name)){
-
-                $model = new CollectingFilesImg();
-                $model->text_id = $id;
-                $model->img = $path.$image_name;
-                $model->save();
-
-                $html = <<<defo
-                    <img src=/$path$image_name data-id=$model->id class="preview collecting-files-img">
-defo;
-                echo $html;
-            }else{
-                echo '上传出错了！';
-            }
-            exit;
-        }
-        exit;
-    }
-
     public function actionDelete($id){
 
         $model = $this->findModelImg($id);
         $model->delete();
+        $qn = new QiniuUploader('files',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $qn->delete('tqlmm',$model->img);
         echo $id;
     }
     public function actionDeleteWeima($id){
 
         $model = $this->findModel($id);
+        $weima =  $model->weima;
         $model->weima = null;
-        $model->update();
-    }
+        if($model->update()){
+            $qn = new QiniuUploader('files',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+            $qn->delete('tqlmm',$weima);
+        }
 
-    protected function extend($file_name){
-        $extend = pathinfo($file_name);
-        $extend = strtolower($extend["extension"]);
-        return $extend;
     }
 
     public function actionSendCollectingUrl(){
