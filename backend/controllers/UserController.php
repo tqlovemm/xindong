@@ -135,10 +135,9 @@ class UserController extends BaseController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-
-            $old = json_encode($model->oldAttributes);
-            $new = json_encode($model->attributes);
-
+            if($model->status == 0){
+                $this->setMes()->disconnect($model->username);
+            }
             if ($model->update()) {
                 $bg = BgadminMember::findOne(['number'=>User::getNumber($model->id)]);
                 if(!empty($bg)){
@@ -146,8 +145,6 @@ class UserController extends BaseController
                     $bg->update();
                 }
 
-                $data_arr = array('description'=>"修改网站会员{$id}的资料信息",'data'=>'','old_data'=>$old,'new_data'=>$new,'type'=>3);
-                AddRecord::record($data_arr);
                 Yii::$app->getSession()->setFlash('success', 'Save successfully');
             }
         }

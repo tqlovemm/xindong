@@ -13,24 +13,11 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'id')->textInput(['maxlength' => 32,'disabled'=>true]) ?>
-
     <?= $form->field($model, 'username')->textInput(['maxlength' => 32,'disabled'=>true]) ?>
-
     <?= $form->field($model, 'groupid')->dropDownList([2 =>'普通会员',3=>'高端会员',4=>'至尊会员',5=>'私人定制']) ?>
-
     <?= $form->field($model, 'email')->textInput(['maxlength' => 64]) ?>
     <?= $form->field($model, 'cellphone')->textInput() ?>
-
-    <?= $form->field($model, 'identify')->textInput(['maxlength' => 64])->label('微信号') ?>
-
-    <?= $form->field($model, 'status')->textInput()->label('状态码：10为正常访问网址，0则封号无法登陆网址') ?>
-
-    <?php echo $form->field($model, 'salary')->textInput() ?>
-
-    <?php  echo $form->field($model, 'job')->textInput()->label('职业') ?>
-    <?php  echo $form->field($model, 'car')->textInput()->label('车型') ?>
-    <?php  echo $form->field($model, 'weibo_num')->textInput() ?>
-    <?php  echo $form->field($model, 'cup')->textInput() ?>
+    <?= $form->field($model, 'status')->dropDownList([0=>'封号',10=>'开通'])->label('状态码：10为正常访问网址，0则封号无法登陆网址') ?>
 
     <label>用户头像</label>
     <img src="<?=$model->avatar?>">
