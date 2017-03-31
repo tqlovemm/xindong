@@ -54,32 +54,6 @@ $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii
 
                 </div>
 
-                <?php
-                    $this->registerJs("
-                        getMessage();
-                    ");
-                ?>
-
-                <script>
-                    function blink(selector){
-
-                        $(selector).fadeOut('slow', function(){
-                            $(this).fadeIn('slow', function(){
-                                blink(this);
-                            });
-                        });
-                    }
-
-                    function getMessage() {
-                        window.setInterval(function () {
-                            $.get('/index.php/site/get-notice-message',function (data) {
-                                var result = $.parseJSON(data);
-                                $(".notice-message").before('<div class="blink" style="float: left;padding: 15px 15px;color:#fff;"><span>【'+result+'】</span></div>');
-                                blink(".blink span");
-                            });
-                        }, 300000);
-                    }
-                </script>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
                         <!-- User Account: style can be found in dropdown.less -->
