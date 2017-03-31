@@ -273,7 +273,7 @@ $pre_url = Yii::$app->params['localandsm'];
     function delete_img(id){
 
         if(confirm('确认删除')){
-            $.get('/local/default/delete-img?id='+id, function (data) {
+            $.get('/local/default/delete?id='+id, function (data) {
                 history.go(0);
             });
         }
