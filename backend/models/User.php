@@ -13,6 +13,7 @@ use yii\helpers\ArrayHelper;
  *
  * @property integer $id
  * @property string $username
+ * @property string $cid
  * @property string $nickname
  * @property string $password_hash
  * @property string $password_reset_token
@@ -50,11 +51,11 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             [['role', 'status', 'created_at','groupid', 'updated_at', 'sex'], 'integer'],
-            [['username','cup','number','nickname'], 'string', 'max' => 32],
+            [['username','nickname'], 'string', 'max' => 32],
             [['password_hash', 'new_password', 'password_reset_token', 'auth_key'], 'string', 'max' => 255],
             [['email','cid','nickname','identify','weibo_num'], 'string', 'max' => 64],
-            [['avatar','cellphone','job','car'], 'string'],
-            [['salary',], 'double']
+            [['avatar','cellphone'], 'string'],
+
         ];
     }
 
@@ -72,13 +73,7 @@ class User extends \yii\db\ActiveRecord
             'password_reset_token' => Yii::t('app', 'Password Reset Token'),
             'auth_key' => Yii::t('app', 'Auth Key'),
             'groupid' => '用户等级',
-            'identify' => '微信号',
-            'weibo_num' => '微博号',
-            'job' => '职业',
-            'car' => '车型',
-            'salary' => '年薪',
-            'cup' => '罩杯',
-            'number' => '会员编号',
+            'identify' => 'Identify',
             'role' => Yii::t('app', 'Role'),
             'email' => Yii::t('app', 'Email'),
             'cellphone' => Yii::t('app', 'Cellphone'),
