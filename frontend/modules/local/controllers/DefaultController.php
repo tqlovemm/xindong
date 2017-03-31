@@ -5,6 +5,7 @@ namespace frontend\modules\local\controllers;
 use backend\modules\local\models\LocalCollectionCount;
 use backend\modules\setting\models\AuthAssignment;
 use backend\modules\sm\models\Province;
+use common\Qiniu\QiniuUploader;
 use Yii;
 use yii\db\Query;
 use backend\modules\local\models\LocalCollectionFilesImg;
@@ -77,22 +78,6 @@ class DefaultController extends Controller
         foreach ($_POST as $key=>$list){
             $model->$key = $list;
         }
-        /* $model->weichat = Yii::$app->request->post('weichat');
-         $model->weibo = Yii::$app->request->post('weibo');
-         $model->email = Yii::$app->request->post('email');
-         $model->qq = Yii::$app->request->post('qq');
-         $model->cellphone = Yii::$app->request->post('cellphone');
-         $model->birthday = Yii::$app->request->post('birthday');
-         $model->height = Yii::$app->request->post('height');
-         $model->weight = Yii::$app->request->post('weight');
-         $model->hobby = Yii::$app->request->post('hobby');
-         $model->annual_salary = Yii::$app->request->post('annual_salary');
-         $model->car_type = Yii::$app->request->post('car_type');
-         $model->often_go = Yii::$app->request->post('often_go');
-         $model->marry = Yii::$app->request->post('marry');
-         $model->job = Yii::$app->request->post('job');
-         $model->extra = Yii::$app->request->post('extra');
-        */
          $model->status = 1;
 
         if($model->update()){
@@ -165,7 +150,7 @@ class DefaultController extends Controller
         $data = $collecting_text->upload();
 
         $html = <<<defo
-        <img onclick="delete_img($data[id])" src=$data[path] data-id=$data[id] class="preview collecting-files-img">
+        <img onclick="delete_img($data[id])" src=$data[path] class="preview collecting-files-img">
 defo;
         echo $html;
     }
@@ -180,7 +165,7 @@ defo;
         $data = $collecting_text->uploadw();
 
         $html = <<<defo
-        <img src=$data[path] data-id=$data[id] class="preview">
+        <img onclick="delete_weima($data[id])" src=$data[path] class="preview">
 defo;
         echo $html;
     }
@@ -189,14 +174,20 @@ defo;
 
         $model = $this->findModelImg($id);
         $model->delete();
+        $qn = new QiniuUploader('files',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $qn->delete('localansm',$model->img_path);
         echo $id;
     }
     public function actionDeleteWeima($id){
 
         $model = $this->findModel($id);
-        @unlink(str_replace('/uploads','uploads',$model->weima));
+        $weima = $model->weima;
         $model->weima = null;
-        $model->update();
+        if($model->update()){
+            $qn = new QiniuUploader('files',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+            $qn->delete('localansm',$weima);
+        }
+
     }
 
     public function actionSendCollectingUrl(){

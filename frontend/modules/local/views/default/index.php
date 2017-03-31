@@ -35,7 +35,7 @@ $pre_url = Yii::$app->params['localandsm'];
                                     if(!empty($img)):
                                         foreach ($img as $item):
                                             ?>
-                                            <img onclick="delete_img(<?=$item['img_id']?>)"  src="<?=$pre_url.$item['img_path']?>" data-id="<?=$item['img_id']?>" class="preview collecting-files-img">
+                                            <img onclick="delete_img(<?=$item['img_id']?>)"  src="<?=$pre_url.$item['img_path']?>" class="preview collecting-files-img">
                                             <?php
                                         endforeach;
                                     endif;
@@ -65,7 +65,7 @@ $pre_url = Yii::$app->params['localandsm'];
                             <div class="weui_uploader_bd">
                                 <div class="weui_uploader_files" id="preview_weima">
                                     <?php if(!empty($queries['weima'])):?>
-                                        <img src="<?=$pre_url.$queries['weima']?>" data-id="<?=$queries['member_id']?>" class="preview">
+                                        <img onclick="delete_img(<?=$queries['member_id']?>)" src="<?=$pre_url.$queries['weima']?>"  class="preview">
                                     <?php endif;?>
                                 </div>
                                 <?php if(empty($queries['weima'])):?>
@@ -273,7 +273,16 @@ $pre_url = Yii::$app->params['localandsm'];
     function delete_img(id){
 
         if(confirm('确认删除')){
-            $.get('/local/default/delete?id='+id, function (data) {
+            $.get('/local/default/delete-img?id='+id, function (data) {
+                history.go(0);
+            });
+        }
+
+    }
+    function delete_weima(id){
+
+        if(confirm('确认删除')){
+            $.get('/local/default/delete-weima?id='+id, function (data) {
                 history.go(0);
             });
         }
@@ -380,19 +389,4 @@ $pre_url = Yii::$app->params['localandsm'];
         });
     });
 
-    /*    $(".collecting-files-img").on('click',function(e){
-     if(confirm('确定删除吗')) {
-     $.get('/collecting-files/delete?id=' + $(this).attr('data-id'), function (data) {
-     history.go(0);
-     });
-     }
-     });*/
-
-    $('#preview_weima').on('click',function () {
-        if(confirm('确定删除吗')){
-            $.get('/local/default/delete-weima?id='+$('#preview_weima .preview').attr('data-id'),function (data) {
-                history.go(0);
-            });
-        }
-    })
 </script>
