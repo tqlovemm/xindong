@@ -41,11 +41,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at:date',
             'updated_at:date',
             'avatar:image',
-            'salary',
-            'car',
-            'job',
-            'weibo_num',
-            'cup',
         ],
     ]) ?>
 
