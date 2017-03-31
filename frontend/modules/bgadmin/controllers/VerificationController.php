@@ -1,7 +1,9 @@
 <?php
 namespace frontend\modules\bgadmin\controllers;
 use app\components\SendTemplateSMS;
+use common\Qiniu\QiniuUploader;
 use frontend\models\CollectingSeventeenFilesText;
+use yii\myhelper\WaterMark;
 use yii\web\Controller;
 class VerificationController extends Controller
 {

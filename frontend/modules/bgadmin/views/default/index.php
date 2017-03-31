@@ -34,7 +34,7 @@ $pre_url = Yii::$app->params['shisangirl'];
                             <div class="weui_uploader_bd">
                                 <div class="weui_uploader_files" id="preview">
                                     <?php if(!empty($img)): foreach ($img as $item):?>
-                                        <img onclick="delete_img(<?=$item['id']?>)"  src="<?=$pre_url.$item['path']?>" data-id="<?=$item['id']?>" class="preview collecting-files-img">
+                                        <img onclick="delete_img(<?=$item['id']?>)"  src="<?=$pre_url.$item['path']?>" class="preview collecting-files-img">
                                     <?php endforeach;endif; ?>
                                 </div>
                                 <?php if(count($img)<6):?>
@@ -61,7 +61,7 @@ $pre_url = Yii::$app->params['shisangirl'];
                             <div class="weui_uploader_bd">
                                 <div class="weui_uploader_files" id="preview_weima">
                                     <?php if(!empty($weima)):?>
-                                        <img src="<?=$pre_url.$weima['path']?>" data-id="<?=$weima['id']?>" class="preview">
+                                        <img onclick="delete_img(<?=$weima['id']?>)" src="<?=$pre_url.$weima['path']?>" data-id="<?=$weima['id']?>" class="preview">
                                     <?php endif;?>
                                 </div>
                                 <?php if(empty($weima)):?>
@@ -413,20 +413,4 @@ $pre_url = Yii::$app->params['shisangirl'];
             }).submit();
         });
     });
-
-    /*$(".collecting-files-img").on('click',function(e){
-     if(confirm('确定删除吗')) {
-     $.get('/collecting-files/delete?id=' + $(this).attr('data-id'), function (data) {
-     history.go(0);
-     });
-     }
-     });*/
-
-    $('#preview_weima').on('click',function () {
-        if(confirm('确定删除吗')){
-            $.get('/bgadmin/default/delete-weima?id='+$('#preview_weima .preview').attr('data-id'),function (data) {
-                history.go(0);
-            });
-        }
-    })
 </script>

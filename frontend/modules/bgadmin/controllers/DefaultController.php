@@ -10,6 +10,7 @@ use backend\modules\setting\models\AuthAssignment;
 use backend\modules\sm\models\Province;
 use backend\modules\weekly\models\Weekly;
 use backend\modules\weekly\models\WeeklyContent;
+use common\Qiniu\QiniuUploader;
 use frontend\modules\bgadmin\models\UserMark;
 use Yii;
 use yii\db\Query;
@@ -224,7 +225,7 @@ class DefaultController extends Controller
         $data = $collecting_text->uploadf();
 
         $html = <<<defo
-        <img onclick="delete_img($data[id])" src=$data[path] data-id=$data[id] class="preview collecting-files-img">
+        <img onclick="delete_img($data[id])" src=$data[path] class="preview collecting-files-img">
 defo;
         echo $html;
     }
@@ -240,7 +241,7 @@ defo;
         $data = $collecting_text->uploadw();
 
         $html = <<<defo
-        <img src=$data[path] data-id=$data[id] class="preview">
+        <img onclick="delete_img($data[id])" src=$data[path] class="preview">
 defo;
         echo $html;
     }
@@ -249,6 +250,8 @@ defo;
 
         $model = $this->findModelImg($id);
         $model->delete();
+        $qn = new QiniuUploader('files',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $qn->delete('shisangirl',$model->path);
         echo $id;
     }
 
