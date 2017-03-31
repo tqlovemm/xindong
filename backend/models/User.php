@@ -53,7 +53,7 @@ class User extends \yii\db\ActiveRecord
             [['role', 'status', 'created_at','groupid', 'updated_at', 'sex'], 'integer'],
             [['username','nickname'], 'string', 'max' => 32],
             [['password_hash', 'new_password', 'password_reset_token', 'auth_key'], 'string', 'max' => 255],
-            [['email','cid','nickname','identify','weibo_num'], 'string', 'max' => 64],
+            [['email','cid','nickname','identify'], 'string', 'max' => 64],
             [['avatar','cellphone'], 'string'],
 
         ];
