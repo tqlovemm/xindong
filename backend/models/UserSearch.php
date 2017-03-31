@@ -20,8 +20,7 @@ class UserSearch extends User
     {
         return [
             [['groupid', 'role', 'status', 'created_at', 'updated_at','sex'], 'integer'],
-            [['salary', ], 'double'],
-            [['id','weibo_num','number','job','car','username','identify', 'password_hash', 'password_reset_token', 'auth_key', 'email', 'avatar','cellphone','sex','cid','nickname'], 'safe'],
+            [['id','username','identify', 'password_hash', 'password_reset_token', 'auth_key', 'email', 'avatar','cellphone','sex','cid','nickname','cid'], 'safe'],
         ];
     }
 
@@ -75,7 +74,6 @@ class UserSearch extends User
             'updated_at' => $this->updated_at,
             'sex' => $this->sex,
             'cid' => $this->cid,
-            'salary' => $this->salary,
             'nickname' => $this->nickname,
         ]);
 
