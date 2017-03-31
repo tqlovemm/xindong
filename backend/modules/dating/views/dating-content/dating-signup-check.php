@@ -106,7 +106,7 @@ $pre_url = Yii::$app->params['shisangirl'];
                                     if(!empty($file['memberFiles'])){
                                         echo "二维码：<a href=$pre_url{$file['memberFiles'][0]['path']}  data-lightbox='s' data-title='s'><img class='img-responsive img-thumbnail' style='width: 100px;height: 100px;' src=$pre_url{$file['memberFiles'][0]['path']}></a>";
                                         $weiuser = \frontend\modules\weixin\models\UserWeichat::findOne(['number'=>$boy_number]);
-                                        if(!empty($weiuser)&&$model['status']==11&&$model['platform']!=2):
+                                        if(!empty($weiuser)&&$model['platform']!=2):
                                             echo '<button onclick="pushweixin(this)" data-openid="'.$weiuser->openid.'" data-number="'.$girl_info['number'].'" class="btn btn-success">微信推送联系方式</button>';
                                             echo '<button onclick="deletepushweixin(this)" data-openid="'.$weiuser->openid.'" data-number="'.$girl_info['number'].'" class="btn btn-warning">清空记录重新推送</button>';
                                         elseif($model['status']==11&&$model['platform']==2):
