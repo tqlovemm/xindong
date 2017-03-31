@@ -152,6 +152,7 @@ class CollectingSeventeenFilesText extends \yii\db\ActiveRecord
         $model = new CollectingSeventeenFilesImg();
         $model->img = $qiniu['key'];
         $model->text_id = $this->id;
+        $model->type= 1;
         if($model->save()){
             $data = array('id'=>$model->id,'path'=>Yii::$app->params['qiniushiqi'].$qiniu['key']);
             return $data;
