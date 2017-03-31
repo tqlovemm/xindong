@@ -133,31 +133,14 @@ class CollectingSeventeenFilesText extends \yii\db\ActiveRecord
         $qn = new QiniuUploader('photoimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
         $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
         $qiniu = $qn->upload('shisan',"uploads/collecting-17/$mkdir");
- /*       $config = [
-            'savePath' => Yii::getAlias('@webroot/uploads/collecting-17/'), //存储文件夹
-            'maxSize' => 10240 ,//允许的文件最大尺寸，单位KB
-            'allowFiles' => ['.png' , '.jpg' , '.jpeg' , '.bmp'],  //允许的文件格式
-        ];*/
-        Yii::$app->db->createCommand()->insert('{{%collecting_17_files_img}}', [
-            'img' => $qiniu['key'], //存储路径
-            'text_id' => $this->id, //保存的名称
-        ])->execute();
-        $data = array('id'=>$this->id,'path'=>Yii::$app->params['qiniushiqi'].$qiniu['key']);
-        return $data;
 
-      /*  $up = new Uploader("photoimg", $config, 'collecting_17_files');
-
-        $save_path =  Yii::getAlias('@web/uploads/collecting-17/');
-
-        $info = $up->getFileInfo();
-
-        //存入数据库
-        Yii::$app->db->createCommand()->insert('{{%collecting_17_files_img}}', [
-            'img' => $qiniu['key'], //存储路径
-            'text_id' => $this->id, //保存的名称
-        ])->execute();
-        $data = array('id'=>$this->id,'path'=>$save_path.$info['name']);
-        return $data;*/
+        $model = new CollectingSeventeenFilesImg();
+        $model->img = $qiniu['key'];
+        $model->text_id = $this->id;
+        if($model->save()){
+            $data = array('id'=>$model->id,'path'=>Yii::$app->params['qiniushiqi'].$qiniu['key']);
+            return $data;
+        }
     }
 
     public function uploadw()
@@ -166,32 +149,12 @@ class CollectingSeventeenFilesText extends \yii\db\ActiveRecord
         $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
         $qiniu = $qn->upload('shisan',"uploads/collecting-17/weima/$mkdir");
 
-        Yii::$app->db->createCommand()->insert('{{%collecting_17_files_img}}', [
-            'img' =>$qiniu['key'], //存储路径
-            'text_id' => $this->id, //保存的名称
-            'type' => 1, //保存的名称
-        ])->execute();
-        $data = array('id'=>$this->id,'path'=>Yii::$app->params['qiniushiqi'].$qiniu['key']);
-        return $data;
-        /*$config = [
-            'savePath' => Yii::getAlias('@webroot/uploads/collecting-17/'), //存储文件夹
-            'maxSize' => 10240 ,//允许的文件最大尺寸，单位KB
-            'allowFiles' => ['.png' , '.jpg' , '.jpeg' , '.bmp'],  //允许的文件格式
-        ];
-
-        $up = new Uploader("weimaimg", $config, 'collecting_17_files');
-
-        $save_path =  Yii::getAlias('@web/uploads/collecting-17/');
-
-        $info = $up->getFileInfo();
-
-        //存入数据库
-        Yii::$app->db->createCommand()->insert('{{%collecting_17_files_img}}', [
-            'img' => $save_path.$info['name'], //存储路径
-            'text_id' => $this->id, //保存的名称
-            'type' => 1, //保存的名称
-        ])->execute();
-        $data = array('id'=>$this->id,'path'=>$save_path.$info['name']);
-        return $data;*/
+        $model = new CollectingSeventeenFilesImg();
+        $model->img = $qiniu['key'];
+        $model->text_id = $this->id;
+        if($model->save()){
+            $data = array('id'=>$model->id,'path'=>Yii::$app->params['qiniushiqi'].$qiniu['key']);
+            return $data;
+        }
     }
 }
