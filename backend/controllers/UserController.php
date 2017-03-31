@@ -21,6 +21,7 @@ use backend\models\User;
 use backend\models\UserSearch;
 use common\components\BaseController;
 use yii\db\Query;
+use yii\myhelper\Easemob;
 use yii\myhelper\SystemMsg;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -106,6 +107,22 @@ class UserController extends BaseController
         }
     }
 
+    public function actionDisconnect($username){
+
+        $this->setMes()->disconnect($username);
+
+    }
+    protected function setMes(){
+
+        $options = array(
+            'client_id'  => Yii::$app->params['client_id'],   //你的信息
+            'client_secret' => Yii::$app->params['client_secret'],//你的信息
+            'org_name' => Yii::$app->params['org_name'],//你的信息
+            'app_name' => Yii::$app->params['app_name'] ,//你的信息
+        );
+        $e = new Easemob($options);
+        return $e;
+    }
     /**
      * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.

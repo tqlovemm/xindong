@@ -418,6 +418,13 @@ class Easemob
         return $result;
     }
 
+    public function disconnect($username){
+        $url = $this->host."/$this->org_name/$this->app_name/".'users/'.$username."/disconnect";
+        $header = array('enctype:multipart/form-data',"Authorization: Bearer ".$this->getToken(),"restrict-access:true");
+        $result = $this->myRequest($url,"get",$header);
+        return $result;
+    }
+
     /*
      * ------------------------------------
      * 群组方法             结束
