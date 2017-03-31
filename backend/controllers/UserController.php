@@ -47,7 +47,7 @@ class UserController extends BaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'create', 'delete','address-info', 'upload', 'update','update-address','user-info','user-dating','user-dating-total','user-file-total','delete-payment','show-payment','dating-success-dropped'],
+                        'actions' => ['index', 'view', 'create', 'delete','disconnect','address-info', 'upload', 'update','update-address','user-info','user-dating','user-dating-total','user-file-total','delete-payment','show-payment','dating-success-dropped'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
