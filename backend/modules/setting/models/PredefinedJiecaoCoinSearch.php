@@ -18,7 +18,7 @@ class PredefinedJiecaoCoinSearch extends PredefinedJiecaoCoin
     public function rules()
     {
         return [
-            [['id', 'money', 'giveaway', 'status'], 'integer'],
+            [['id', 'money', 'giveaway', 'status','is_activity','member_type'], 'integer'],
         ];
     }
 
@@ -59,6 +59,8 @@ class PredefinedJiecaoCoinSearch extends PredefinedJiecaoCoin
             'money' => $this->money,
             'giveaway' => $this->giveaway,
             'status' => $this->status,
+            'is_activity' => $this->is_activity,
+            'member_type' => $this->member_type,
         ]);
 
         return $dataProvider;

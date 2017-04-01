@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'status',
             'type',
             'member_type',
+            'is_activity',
         ],
     ]) ?>
 

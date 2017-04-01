@@ -13,6 +13,7 @@ use Yii;
  * @property integer $status
  * @property integer $type
  * @property integer $member_type
+ * @property integer $is_activity
  */
 class PredefinedJiecaoCoin extends \yii\db\ActiveRecord
 {
@@ -31,7 +32,7 @@ class PredefinedJiecaoCoin extends \yii\db\ActiveRecord
     {
         return [
             [['giveaway','money','type'], 'required'],
-            [['giveaway', 'status','type','member_type'], 'integer'],
+            [['giveaway', 'status','type','member_type','is_activity'], 'integer'],
             [['money'],'number']
         ];
     }
@@ -63,6 +64,7 @@ class PredefinedJiecaoCoin extends \yii\db\ActiveRecord
             'status' => '状态',
             'type' => '平台',
             'member_type' => '会员等级',
+            'is_activity' => '活动充值',
         ];
     }
 }

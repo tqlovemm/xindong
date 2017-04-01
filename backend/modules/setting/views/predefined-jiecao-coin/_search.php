@@ -23,6 +23,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'status') ?>
 
+    <?= $form->field($model, 'is_activity') ?>
+
     <div class="form-group">
         <?= Html::submitButton('搜索', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('复位', ['class' => 'btn btn-default']) ?>
