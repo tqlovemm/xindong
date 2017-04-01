@@ -40,7 +40,7 @@
         .announcement a{font-size: 14px;}
         .bar-active{color: rgba(239, 68, 80, 1);background:none;}
         .contact-phone{width: 100%;height: 50px;background-color:  white;overflow: hidden;text-align: center;line-height: 50px;margin-bottom:10px;margin-top: 10px;margin-left: 0px;position: relative;}
-        .contact-phone li{width: 50%;height: 100%;padding: 0;float:left;margin-left:-1px;}
+        .contact-phone li{width: 33%;height: 100%;padding: 0;float:left;margin-left:-1px;}
         .contact-phone li:hover{background-color:#F7E5E5;}
         .contact-phone li a{padding:15px 38px;text-decoration: none;}
         .contact-phone li a img{width:25px;}
@@ -177,21 +177,40 @@ $rand_url = AccessToken::antiBlocking();
                     </div>
                 </div>
                 <!--微信公众号以及联系方式start-->
-                <div class="col-md-2 text-center">
+                <div class="col-md-4 text-center">
                     <div class="visible-sm visible-xs">
                         <ul class="list-inline contact-phone">
-                            <li><a href="<?=Yii::getAlias('@web')?>/images/weixin/3.jpg" data-lightbox="image" data-title="微信搜索公众号：心动三十一天" ><img alt="十三平台微信公众号" src="<?=Yii::getAlias('@web')?>/images/weichat-top.png"></a></li>
+                            <li><a href="<?=Yii::getAlias('@web')?>/images/weixin/thirteenpingtai.jpg" data-lightbox="image" data-title="微信搜索公众号：心动三十一天" ><img alt="十三平台微信公众号" src="<?=Yii::getAlias('@web')?>/images/weichat-top.png"></a></li>
+                            <span></span>
+                            <li><a href="<?=Yii::getAlias('@web')?>/images/weixin/ed9e98fbedd51d1e26ed6a7b397c4b27.png" data-lightbox="image" data-title="IOS APP 下载" ><img alt="APP  下载" src="<?=Yii::getAlias('@web')?>/images/weixin/210712181883005415.png"></a></li>
                             <span></span>
                             <li><a href="http://wpa.qq.com/msgrd?v=3&uin=8495167&site=qq&menu=yes" target="_blank" ><img src="<?=Yii::getAlias('@web')?>/images/qq-top.png"></a></li>
                         </ul>
                     </div>
-                    <div class="visible-lg visible-md">
+                    <div class="visible-lg visible-md" style="width: 49%;float: left;margin-right: 2%;">
+                        <img class="img-responsive center-block" alt="IOS APP下载" src="<?=Yii::getAlias('@web')?>/images/weixin/ed9e98fbedd51d1e26ed6a7b397c4b27.png" width="100%">
+                        <div class="weixin">IOS - APP - 下载</div>
+                    </div>
+                    <div class="visible-lg visible-md" style="width: 49%;float: left;">
                         <img class="img-responsive center-block" alt="十三平台微信公众号" src="<?=Yii::getAlias('@web')?>/images/weixin/thirteenpingtai.jpg" width="100%">
                         <div class="weixin-spacing">微信公众号</div>
                     </div>
                 </div>
+        <!--        <div class="col-md-2 text-center">
+                    <div class="visible-sm visible-xs">
+                        <ul class="list-inline contact-phone">
+                            <li><a href="<?/*=Yii::getAlias('@web')*/?>/images/weixin/3.jpg" data-lightbox="image" data-title="微信搜索公众号：心动三十一天" ><img alt="十三平台微信公众号" src="<?/*=Yii::getAlias('@web')*/?>/images/weichat-top.png"></a></li>
+                            <span></span>
+                            <li><a href="http://wpa.qq.com/msgrd?v=3&uin=8495167&site=qq&menu=yes" target="_blank" ><img src="<?/*=Yii::getAlias('@web')*/?>/images/qq-top.png"></a></li>
+                        </ul>
+                    </div>
+                    <div class="visible-lg visible-md">
+                        <img class="img-responsive center-block" alt="十三平台微信公众号" src="<?/*=Yii::getAlias('@web')*/?>/images/weixin/thirteenpingtai.jpg" width="100%">
+                        <div class="weixin-spacing">微信公众号</div>
+                    </div>
+                </div>-->
                 <!--微信公众号以及联系方式end-->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <table class="table table-condensed table-hover" style="margin-bottom: 0;">
                         <tbody>
                         <tr><th>关于</th><th>服务</th><th>联系</th><th>帮助</th></tr>
