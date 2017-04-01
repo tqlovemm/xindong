@@ -2,11 +2,8 @@
 
 $this->title='节操币';
 $this->registerCss("
-
-
     .jiecao-value{background-color:#fff;padding:10px 20px 20px;}
     .jiecao-recharge{margin-top:10px;}
-
     .member-jiecao{background-color:#969393;text-align:center;}
     .member-jiecao .col-xs-4 a,.member-jiecao .col-xs-4{color:white;}
     .navbar{margin-bottom:1em;}
@@ -55,65 +52,20 @@ $query = \frontend\models\UserData::find()->where(['user_id'=>Yii::$app->user->i
     </div>
 <?php endforeach;?>
 
-
+<div class="row" style="background-color: #fff;padding:10px;border-bottom: 1px solid #e8e8e8;line-height: 30px;margin-top: 10px;">
+    <div class="col-xs-8" style="padding:0;">更多优惠活动详见APP</div>
+    <div class="col-xs-4 app_download" style="padding:0"><a class="btn btn-default pull-right" style="padding:4px 15px;cursor: pointer;">去下载</a></div>
+</div>
 <?php
 
 $this->registerJs("
- $('.directer',this).on('click',function(){
-
+    $('.directer',this).on('click',function(){
         window.location.href = 'pay-type?id='+$(this).attr('data-id');
-
+    }); 
+    $('.app_download').on('click',function(){
+        window.location.href = 'https://itunes.apple.com/us/app/shi-san-jiao-you/id1070045426?l=zh&ls=1&mt=8';
     });
 ");
 
 
 ?>
-
-<!--<div class="row member-jiecao hidden">
-
-    <div class="col-xs-4" style="background-color: #698dff;padding:10px;">
-        <a href="/member-ship/jiecao-recharge">
-            <div class="jiecao-icon">
-                <span class="glyphicon glyphicon-glass" style="font-size: 20px;"></span>
-            </div>
-            <h4>充值</h4>
-            <h5>支付宝</h5>
-        </a>
-    </div>
-    <div class="col-xs-4" style="background-color: #ff8051;padding:10px;">
-        <div class="jiecao-icon">
-            <span class=" glyphicon glyphicon-credit-card" style="font-size: 20px;"></span>
-        </div>
-        <h4>节操币</h4>
-        <h5><?/*=$userData['jiecao_coin']*/?></h5>
-    </div>
-    <div class="col-xs-4" style="background-color: #c56aff;padding:10px;">
-        <a href="/member-ship/recharge-record">
-            <div class="jiecao-icon">
-                <span class="glyphicon glyphicon-time" style="font-size: 20px;"></span>
-            </div>
-            <h4>充值记录</h4>
-            <h5>支付宝</h5>
-        </a>
-    </div>
-</div>
-<div class="row jiecao-service-title hidden">
-    <h5>十三服务</h5>
-</div>
-<div class="row jiecao-service-content text-center hidden">
-    <div class="col-xs-4">
-        <a href="/date-today">
-            <div class="service-icon"><span class="glyphicon glyphicon-asterisk"></span></div>
-            <h5>今日密约</h5>
-        </a>
-    </div>
-    <div class="col-xs-4" style="border-left:none;border-right:none;">
-        <a href="http://13loveme.com:8888/red">
-            <div class="service-icon"><span class="glyphicon glyphicon-time"></span></div>
-            <h5>往日密约</h5>
-        </a>
-
-    </div>
-    <div class="col-xs-4"></div>
-
-</div>-->
