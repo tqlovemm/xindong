@@ -172,7 +172,7 @@ $rand_url = AccessToken::antiBlocking();
                         <p style="width: 80%;" class="center-block">
                             <a class="btn btn-lg btn-primary btn-block" style="box-shadow: 0 1px 3px #7c7c7c;margin-bottom: 10px;color: #eee;" href="/forum/default" target="_blank">骗子&红包婊打击行动</a>
                             <a class="btn btn-lg btn-danger btn-block" style="box-shadow: 0 1px 3px #7c7c7c;margin-bottom: 10px;color: #eee" href="/test/check-service/index" target="_blank">十三客服微信号防伪查询</a>
-                            <a class="btn btn-lg btn-default btn-block" style="margin-bottom: 10px;box-shadow: 0 1px 3px #7c7c7c;" href="https://itunes.apple.com/us/app/shi-san-jiao-you/id1070045426?l=zh&ls=1&mt=8" ios版APP 即将上线</a>
+                            <a class="btn btn-lg btn-default btn-block" style="margin-bottom: 10px;box-shadow: 0 1px 3px #7c7c7c;" href="https://itunes.apple.com/us/app/shi-san-jiao-you/id1070045426?l=zh&ls=1&mt=8" ios版APP 已上线</a>
                         </p>
                     </div>
                 </div>
