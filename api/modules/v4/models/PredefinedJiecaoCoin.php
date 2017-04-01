@@ -13,6 +13,9 @@ use Yii;
  * @property integer $money
  * @property integer $status
  * @property integer $giveaway
+ * @property integer $type
+ * @property integer $member_type
+ * @property integer $is_activity
  */
 class PredefinedJiecaoCoin extends ActiveRecord
 {
@@ -26,7 +29,7 @@ class PredefinedJiecaoCoin extends ActiveRecord
     {
         return [
 
-            [['money','status','giveaway'], 'integer'],
+            [['money','status','giveaway','type','member_type','is_activity'], 'integer'],
         ];
     }
     public function attributeLabels()
@@ -36,6 +39,9 @@ class PredefinedJiecaoCoin extends ActiveRecord
             'money' => 'Money',
             'giveaway' => 'Giveaway',
             'status' => 'Status',
+            'type' => 'Type',
+            'member_type' => 'Member Type',
+            'is_activity' => 'IS Activity',
         ];
     }
 
@@ -55,6 +61,18 @@ class PredefinedJiecaoCoin extends ActiveRecord
             'status'=>function($model){
 
                 return (string)$model['status'];
+            },
+            'type'=>function($model){
+
+                return (string)$model['type'];
+            },
+            'member_type'=>function($model){
+
+                return (string)$model['member_type'];
+            },
+            'is_activity'=>function($model){
+
+                return (string)$model['is_activity'];
             },
 
         ];

@@ -140,7 +140,7 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => [
                         'v8/member-sort','v8/user','v8/user2','v8/member-sort2','v8/user3','v8/hx-group','v8/hx-group2','v8/dating','v8/order','v8/recharge-record',
-                        'v8/user-info'
+                        'v8/user-info','v8/order-second',
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\w+>',
