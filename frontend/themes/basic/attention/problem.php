@@ -19,24 +19,30 @@ $this->registerCss('
         <div class="col-md-9">
             <h1 class="text-center"><?=\yii\helpers\Html::encode($this->title)?></h1>
             <ol class="list-group attention">
-                <li  class="list-group-item"><h5 class="text-danger"><span>1～</span>那在哪里能看到妹子信息呢？</h5>
-                    <p class="text-warning">答：我有整理好的妹子历史信息可供你查看。 我们的官网每天都有大量妹子寻约信息发布。
-                    每天的妹子信息更新只有入会后你的会员客服的朋友圈（普通会员为十三爷交友平台，高端及以上会员为私人客服）会发布。
-                    入会后有机会加上平台福利君号，每天定时推送妹子信息。</p></li>
-                <li class="list-group-item"><h5 class="text-danger"><span>2～</span>平台有多久历史了？男女会员各有多少了呀？</h5>
-                    <p class="text-warning">答：十三平台建于13年10月份，已有两年历史。  男女人数总人数已经10000+。</p></li>
-                <li class="list-group-item"><h5 class="text-danger"><span>3～</span>我在国外能不能约到妹子？</h5>
-                        <p class="text-warning">答：我们的会员遍布全球（包括非洲和南美洲）。海外资源比较多的地区有英法美加澳。</p></li>
-                <li class="list-group-item"><h5 class="text-danger"><span>4～</span>平台里的妹子约会的时候还要不要给她钱？</h5>
-                    <p class="text-warning">答：平台里的妹子也是跟你们一样从微博！ins等我们的宣传渠道看到或者是朋友介绍加过来的。
-                    都是良家妹子（我们不知情的情况除外），平台和妹子、妹子和汉子之间均无金钱交易。</li>
-                <li class="list-group-item"><h5 class="text-danger"><span>5～</span>十三爷，我有钱可是没时间跟妹子聊，想约怎么办？</h5>
-                    <p class="text-warning">答：首先我们有能提高成功率、简化沟通过程的私人订制服务；其次我们平台有一些来求互助的妹子。具体情况联系我知晓。</p></li>
-                <li class="list-group-item"><h5 class="text-danger"><span>6～</span>我第一次用这种平台，可以先试用么？</h5>
-                    <p class="text-warning">答：没有试用。平台各个号各司其职，我只负责入会。  我们会给你充分证明我们真实性的资料，妹子推荐按照会员制度进行。</p></li>
-                <li class="list-group-item"><h5 class="text-danger"><span>7～</span>普通会员我们制作的档案是放哪里的？翻牌是怎么进行？</h5>
+                <li  class="list-group-item"><h5 class="text-danger"><span>1～</span>平台有多久历史了？</h5>
+                    <p class="text-warning">答：十三平台创建于13年10月份，至今已有3年半历史，男女会员总数50000+。</p></li>
+                <li class="list-group-item"><h5 class="text-danger"><span>2～</span>朋友圈报名、网站报名是什么意思？会员是什么？有什么用？</h5>
+                    <p class="text-warning">答：朋友圈报名和网站报名这个是针对会员的权限，朋友圈报名就是我们发布在朋友圈并说明接受报名的女生你可以在朋友圈直接报名，网站报名就是网站“最新觅约”和“十三救我”里面发布的女生可以在网站上操作报名；
+                        会员的话，因为我们平台是会员制的，如果不是平台会员就享受不到平台上相应的福利哦；
+                        会员的用处嘛，无非是勾搭妹子，心照不宣啦。</p></li>
+                <li class="list-group-item"><h5 class="text-danger"><span>3～</span>男生可以在哪里看到女生的信息？看到了怎么联系？</h5>
+                        <p class="text-warning">答：入会前，你可以在我们的官网13loveme.com的“最新觅约”版块的“今日觅约”、“往日觅约”和“十三救我”栏目查看各地区的女生，入会之前肯定是不能联系的哦；
+                            入会后，你可以在会员号朋友圈和上述的官网都可以看到女生的信息，入户会可以根据你办理的相应会员权限进行报名。</p></li>
+                <li class="list-group-item"><h5 class="text-danger"><span>4～</span>女生分布，哪些地区多？哪些地区少？</h5>
+                    <p class="text-warning">答：国内所有的省会城市、一线城市、二线城市、大部分三四线城市（包括港澳台在内）都有十三女生会员，其中尤以北上广深江浙川渝为最多；
+                        海外的话，在欧洲的英法德意西瑞士比利时波兰，亚洲的日韩、迪拜、新马泰，大洋洲的澳大利亚、新西兰，南美的巴西、阿根廷，北美的美国、加拿大，也都有我们的女会员。</li>
+                <li class="list-group-item"><h5 class="text-danger"><span>5～</span>女生是怎么加入十三平台的？</h5>
+                    <p class="text-warning">答：女生是和男生一样从我们的推广渠道看到，然后加到我们的，完成资料提交和交会费之后，女生也就完成入会的，男女平等哦~</p></li>
+                <li class="list-group-item"><h5 class="text-danger"><span>6～</span>对于刚接触这类交友平台的男生，可以先免费试用吗？</h5>
+                    <p class="text-warning">答：我们是不提供免费试用的，首先我们有各种官方微博、APP、微信公众号、网站等证明我们的真实性，其次我们有提供非常低价的会员可供尝试性入会。</p></li>
+                <li class="list-group-item"><h5 class="text-danger"><span>7～</span>女会员是怎么看到男会员档案资料的？男生的档案是什么样子的？</h5>
 
-                    <p class="text-warning">答：会员的档案我们放在云盘，首先保证隐私安全。  妹子来寻约的时候我们会把该地区汉子的档案发给她，她挑中了谁我们就会通知汉子并把妹子联系方式给他。</p>
+                    <p class="text-warning">答：男生入会之后我们都会给个资料链接给你们填写，填写完提交我们审核，通过审核之后你的资料就会出现在该地区的男生档案里，该地区的女生就可以看到你啦~；
+                        你的档案就是当时你填写的资料，我们以网页形式呈现给女生。</p>
+                    </li>
+                <li class="list-group-item"><h5 class="text-danger"><span>8～</span>怎么证明我们的真实性？</h5>
+
+                    <p class="text-warning">答：我们有官方微博：十三交友官博，微信服务号：心动三十一天，微信订阅号：十三平台，官方网站：13loveme.com，这些都会发布很多平台活动、互动话题、原创文章、交友信息，足够让你信任我们；然后我们自主研发的APP：心动三十一天，已经上架并有不少真实用户，并且APP会不断更新新版本~</p>
                     </li>
 
             </ol>
