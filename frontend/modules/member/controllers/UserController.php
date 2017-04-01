@@ -422,7 +422,7 @@ class UserController extends Controller
             $collectModel = new CollectingFilesText();
             $collectModel->id = $number;
             $collectModel->address = $address_1;
-            $collectModel->flop_id = array_keys($area,$address_1)[0];
+            $collectModel->flop_id = isset(array_keys($area,$address_1)[0])?array_keys($area,$address_1)[0]:0;
             $collectModel->flag = md5(time().md5(rand(10000,99999)));
 
             if($collectModel->save()){
