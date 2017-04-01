@@ -70,7 +70,7 @@ class OrderSecondController extends ActiveController
                 $str = array(
                     'code'  => "2010",
                     'msg'   =>  '您已经参与过本次活动',
-                    'data'  =>  json_encode('您已经参与过本次活动'),
+                    'data'  =>  json_encode(array('message'=>'您已经参与过本次活动')),
                 );
                 return $str;
             }
