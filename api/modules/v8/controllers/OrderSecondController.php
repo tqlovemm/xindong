@@ -68,9 +68,9 @@ class OrderSecondController extends ActiveController
         if($jiecaoModel->is_activity==1){
             if(!empty($activityModel)){
                 $str = array(
-                    'code'  => "2010",
+                    'code'  => "200",
                     'msg'   =>  '您已经参与过本次活动',
-                    'data'  =>  '您已经参与过本次活动',
+                    'data'  =>  json_encode('您已经参与过本次活动'),
                 );
                 return $str;
             }
