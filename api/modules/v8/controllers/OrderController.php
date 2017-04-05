@@ -265,7 +265,7 @@ class OrderController extends ActiveController
                 if($model->save()){
                     Yii::$app->db->createCommand("update pre_user_data set jiecao_coin = jiecao_coin+{$model->total_fee} where user_id={$model->user_id}")->execute();
                 }else{
-                    SaveToLog::log2('save到数据失败','ping.log');
+                    SaveToLog::log2(json_encode($model->errors),'ping.log');
                     http_response_code(400);
                     exit();
                 }
