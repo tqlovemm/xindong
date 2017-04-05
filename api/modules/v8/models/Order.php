@@ -76,6 +76,8 @@ class Order extends ActiveRecord
             if($this->isNewRecord){
                 $this->created_at = strtotime('today');
                 $this->updated_at = time();
+                $this->week_time = strtotime('next sunday');
+                $this->month_time = mktime(23,59,59,date('m'),date('t'),date('Y'))+1;
             }else{
                 $this->updated_at = time();
             }
