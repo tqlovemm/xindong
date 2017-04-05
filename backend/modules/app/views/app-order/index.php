@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('会员充值统计', ['static'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('图形统计', ['statistical-chart'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
