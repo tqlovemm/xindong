@@ -5,6 +5,7 @@ namespace backend\modules\app\controllers;
 use Yii;
 use backend\modules\app\models\AppOrderList;
 use backend\modules\app\models\AppOrderListSearch;
+use yii\db\Query;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -35,11 +36,22 @@ class AppOrderController extends Controller
         $searchModel = new AppOrderListSearch();
         $data['sort'] = '-updated_at';
         $dataProvider = $searchModel->search($data);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public function actionStatic(){
+
+        $model_1 = AppOrderList::find()->select('count(*) as n,sum(total_fee) as t,type,max(updated_at) as max,min(updated_at) as min')->groupBy('type')->orderBy('updated_at desc')->asArray()->all();
+        $model_2 = AppOrderList::find()->select('count(*) as n,sum(total_fee) as t,week_time as w,max(updated_at) as max,min(updated_at) as min')->groupBy('week_time')->orderBy('week_time desc')->asArray()->all();
+        $model_3 = AppOrderList::find()->select('count(*) as n,sum(total_fee) as t,month_time as w,max(updated_at) as max,min(updated_at) as min')->groupBy('month_time')->orderBy('month_time desc')->asArray()->all();
+        $model_4 = AppOrderList::find()->select('count(*) as n,sum(total_fee) as t,max(updated_at) as max,min(updated_at) as min')->asArray()->all();
+        $model_5 = AppOrderList::find()->select('count(*) as n,sum(total_fee) as t,max(updated_at) as max,min(updated_at) as min,channel')->groupBy('channel')->asArray()->all();
+/*      echo "<pre>";
+        return var_dump($model_2);*/
+        return $this->render('static',['model_1'=>$model_1,'model_2'=>$model_2,'model_3'=>$model_3,'model_4'=>$model_4,'model_5'=>$model_5,]);
     }
 
     /**

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\modules\app\models\AppOrderListSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'App Order Lists';
+$this->title = 'APP统计';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="app-order-list-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create App Order List', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('会员充值统计', ['static'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
