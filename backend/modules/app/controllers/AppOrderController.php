@@ -49,9 +49,10 @@ class AppOrderController extends Controller
         $model_3 = AppOrderList::find()->select('count(*) as n,sum(total_fee) as t,month_time as w,max(updated_at) as max,min(updated_at) as min')->groupBy('month_time')->orderBy('month_time desc')->asArray()->all();
         $model_4 = AppOrderList::find()->select('count(*) as n,sum(total_fee) as t,max(updated_at) as max,min(updated_at) as min')->asArray()->all();
         $model_5 = AppOrderList::find()->select('count(*) as n,sum(total_fee) as t,max(updated_at) as max,min(updated_at) as min,channel')->groupBy('channel')->asArray()->all();
+        $model_6 = AppOrderList::find()->select('count(*) as n,sum(total_fee) as t,created_at as c')->groupBy('created_at')->orderBy('created_at desc')->asArray()->all();
 /*      echo "<pre>";
         return var_dump($model_2);*/
-        return $this->render('static',['model_1'=>$model_1,'model_2'=>$model_2,'model_3'=>$model_3,'model_4'=>$model_4,'model_5'=>$model_5,]);
+        return $this->render('static',['model_1'=>$model_1,'model_2'=>$model_2,'model_3'=>$model_3,'model_4'=>$model_4,'model_5'=>$model_5,'model_6'=>$model_6,]);
     }
 
     /**
