@@ -65,6 +65,7 @@ class OrderController extends ActiveController
         $model->load(Yii::$app->getRequest()->getBodyParams(),'');
         $jiecaoModel = PredefinedJiecaoCoin::findOne(['money'=>$model->total_fee]);
         $activityModel = ActivityRechargeRecord::findOne(['user_id'=>$model->user_id,'money_id'=>$jiecaoModel->id,'is_activity'=>1]);
+
         if($jiecaoModel->is_activity==1){
             if(!empty($activityModel)){
                 $str = array(
@@ -75,8 +76,10 @@ class OrderController extends ActiveController
                 return $str;
             }
         }
-        $model->channel = strtolower($model->channel);
+   /*   $model->channel = strtolower($model->channel);
         $model->order_number = date('YmdH',time()).time();
+        */
+
 
         //监听支付状态
         if($this->getSignature()){
@@ -263,7 +266,9 @@ class OrderController extends ActiveController
                 }
 
                 if($model->save()){
-                    Yii::$app->db->createCommand("update pre_user_data set jiecao_coin = jiecao_coin+{$model->total_fee} where user_id={$model->user_id}")->execute();
+                    $res = Yii::$app->db->createCommand("update pre_user_data set jiecao_coin = jiecao_coin+{$model->total_fee} where user_id={$model->user_id}")->execute();
+                    SaveToLog::log($res,'ping.log');
+                    exit();
                 }else{
                     SaveToLog::log2(json_encode($model->errors),'ping.log');
                     http_response_code(400);
