@@ -173,9 +173,10 @@ class OrderController extends ActiveController
                     http_response_code(400);
                     exit();
                 }
+                $total = $model->total_fee+$price['giveaway'];
                 //充值节操币
                 if($model->save()){
-                    Yii::$app->db->createCommand("update pre_user_data set jiecao_coin = jiecao_coin+{$model->total_fee} where user_id={$model->user_id}")->execute();
+                    Yii::$app->db->createCommand("update pre_user_data set jiecao_coin = jiecao_coin+{$total} where user_id={$model->user_id}")->execute();
                 }
             }elseif($model->type == 3){
                 //觅约报名
