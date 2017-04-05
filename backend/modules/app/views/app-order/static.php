@@ -34,12 +34,11 @@
         <div class="col-md-6">
             <table class="table table-bordered">
                 <caption>渠道统计</caption>
-                <tr class="danger"><th>序号</th><th>渠道</th><th>总计</th><th>单数</th><th>时间</th><th>图形统计</th></tr>
+                <tr class="danger"><th>序号</th><th>渠道</th><th>总计</th><th>单数</th><th>时间</th></tr>
                 <?php foreach ($model_5 as $key=>$item):?>
                     <tr class="success">
                         <td><?=$key+1?></td><td><?=$item['channel']?></td><td><?=$item['t']?>元</td><td><?=$item['n']?>笔</td><td>从 <?=date('Y年m月d日',$item['min'])?> 到 <?=date('Y年m月d日',$item['max'])?></td>
-                        <td><a href="#" onclick="window.open('<?=\yii\helpers\Url::to(['statistical-chart','type'=>3])?>','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-600)/2+',left='+(window.screen.availWidth-1000)/2+',height=600,width=760')">统计图</a></td>
-                    </tr>
+                   </tr>
                 <?php endforeach;?>
             </table>
         </div>
