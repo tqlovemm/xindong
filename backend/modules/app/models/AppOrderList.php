@@ -91,8 +91,8 @@ class AppOrderList extends \yii\db\ActiveRecord
             if($this->isNewRecord){
                 $this->created_at = strtotime('today');
                 $this->updated_at = time();
-            }else{
-                $this->updated_at = time();
+                $this->week_time = strtotime('next sunday');
+                $this->month_time = mktime(23,59,59,date('m'),date('t'),date('Y'))+1;
             }
             return true;
         }
