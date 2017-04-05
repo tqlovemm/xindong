@@ -78,8 +78,6 @@ class Order extends ActiveRecord
                 $this->updated_at = time();
                 $this->week_time = strtotime('next sunday');
                 $this->month_time = mktime(23,59,59,date('m'),date('t'),date('Y'))+1;
-            }else{
-                $this->updated_at = time();
             }
             return true;
         }
