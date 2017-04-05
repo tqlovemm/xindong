@@ -82,7 +82,7 @@ class OrderController extends ActiveController
 
 
         //监听支付状态
-        if($this->getSignature()){
+        if(true){
 
             $this->ListenWebhooks();exit();
         }
