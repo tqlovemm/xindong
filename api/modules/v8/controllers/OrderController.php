@@ -11,6 +11,7 @@ use Pingpp\Error\Base;
 use Pingpp\Util\Util;
 use Yii;
 use Pingpp\Pingpp;
+use yii\base\Exception;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 class OrderController extends ActiveController
@@ -42,24 +43,28 @@ class OrderController extends ActiveController
     public function actionCreate(){
         $model = new Order();
         $model->load(Yii::$app->getRequest()->getBodyParams(),'');
-        $jiecaoModel = PredefinedJiecaoCoin::findOne(['money'=>$model->total_fee]);
-        $activityModel = ActivityRechargeRecord::findOne(['user_id'=>$model->user_id,'money_id'=>$jiecaoModel->id,'is_activity'=>1]);
-        if($jiecaoModel->is_activity==1){
-            if(!empty($activityModel)){
-                $str = array(
-                    'code'  => "2010",
-                    'msg'   =>  '您已经参与过本次活动',
-                    'data'  =>  array('message'=>'您已经参与过本次活动'),
-                );
-                return $str;
+        try{
+            $jiecaoModel = PredefinedJiecaoCoin::findOne(['money'=>$model->total_fee]);
+            $activityModel = ActivityRechargeRecord::findOne(['user_id'=>$model->user_id,'money_id'=>$jiecaoModel->id,'is_activity'=>1]);
+            if($jiecaoModel->is_activity==1){
+                if(!empty($activityModel)){
+                    $str = array(
+                        'code'  => "2010",
+                        'msg'   =>  '您已经参与过本次活动',
+                        'data'  =>  array('message'=>'您已经参与过本次活动'),
+                    );
+                    return $str;
+                }
             }
-        }
-        $model->channel = strtolower($model->channel);
-        $model->order_number = date('YmdH',time()).time();
+            $model->channel = strtolower($model->channel);
+            $model->order_number = date('YmdH',time()).time();
+            //监听支付状态
+            if($this->getSignature()){
+                $this->ListenWebhooks($jiecaoModel);exit();
+            }
+        }catch (Exception $e){
 
-        //监听支付状态
-        if($this->getSignature()){
-            $this->ListenWebhooks($jiecaoModel);exit();
+            SaveToLog::log2($e->getMessage(),'ping.log');
         }
         //创建支付凭证
         $charge = $this->createCharge($model);
