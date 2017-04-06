@@ -267,7 +267,7 @@ $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii
                     <?php endif;?>
 
 
-                    <?php if(in_array(Yii::$app->user->id,[10000,10001,10002,10003,10015,20361,21703])):?><!--超级管理员-->
+                    <?php if(in_array(Yii::$app->user->id,[10000,10001,10015])):?><!--超级管理员-->
 
                         <!--十三平台-->
                         <li style="font-size: 20px;color:red;padding:0 20px;">十三平台</li>
@@ -712,6 +712,418 @@ $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii
                             </ul>
                         </li>
                     <?php endif;?>
+                    <?php if(in_array(Yii::$app->user->id,[10002,10003,20361,21703])):?><!--超级管理员没有十七平台-->
+
+                        <!--十三平台-->
+                        <li style="font-size: 20px;color:red;padding:0 20px;">十三平台</li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i>13</i>
+                                <span>节操币</span>
+                                <i class="glyphicon glyphicon-menu-down pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="<?= Url::toRoute(['/app/app-order']) ?>"><i class="glyphicon glyphicon-sd-video"></i> app充值记录</a></li>
+                                <li><a href="<?= Url::toRoute(['/seek/alipay-coin-recharge-record']) ?>"><i class="glyphicon glyphicon-sd-video"></i> 支付宝充值统计</a></li>
+                                <li><a href="<?= Url::toRoute(['/jiecao/jiecao-wxpay']) ?>"><i class="glyphicon glyphicon-hd-video"></i> 微信充值记录</a></li>
+                                <li><a href="<?= Url::toRoute(['/jiecao/list']) ?>"><i class="glyphicon glyphicon-sort"></i> 调整会员节操币</a></li>
+                                <li><a href="<?= Url::toRoute(['/jiecao/statistics']) ?>"><i class="glyphicon glyphicon-stats"></i> 节操币消费统计</a></li>
+                                <li><a href="<?= Url::toRoute(['/jiecao/ranking-list']) ?>"><i class="glyphicon glyphicon-arrow-up"></i> 会员节操币排行榜</a></li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/setting/predefined-jiecao-coin']) ?>">
+                                        <i class="glyphicon glyphicon-sort"></i> <span>节操币充值金额调整</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/jiecao/weipay-rank']) ?>">
+                                        <i class="glyphicon glyphicon-sort"></i> <span>会员微信充值排名</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i>13</i>
+                                <span>会员管理</span>
+                                <i class="glyphicon glyphicon-menu-down pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a href="<?= Url::toRoute(['/collecting-file/thirth-files']) ?>">
+                                        <i class="glyphicon glyphicon-cog"></i> <span>平台入会表格资料管理</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/collecting-file/thirth-files/have-no-file?id=4']) ?>">
+                                        <i class="glyphicon glyphicon-eye-open"></i> <span>入会无翻牌档案编号</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute('/user') ?>">
+                                        <i class="glyphicon glyphicon-cog"></i> <span>平台网站会员信息管理</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/setting/default/send-collecting-url']) ?>">
+                                        <i class="glyphicon glyphicon-link"></i> <span>生成收集男生会员信息链接</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/setting/member-sorts']) ?>">
+                                        <i class="glyphicon glyphicon-queen"></i> <span>会员等级介绍和价格管理</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute('/user/user-info') ?>">
+                                        <i class="glyphicon glyphicon-qrcode"></i> <span>会员详情信息查询</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/setting/member-ship']) ?>">
+                                        <i class="glyphicon glyphicon-user"></i> <span>会员信誉度设置</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/setting/default/vip-temp']) ?>">
+                                        <i class="glyphicon glyphicon-user"></i> <span>至尊高端试用包添加</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/setting/default/vip-temp-tj']) ?>">
+                                        <i class="glyphicon glyphicon-user"></i> <span>至尊高端试用包统计</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="treeview">
+                            <a href="#">
+                                <i>13</i>
+                                <span>会员反馈</span>
+                                <i class="glyphicon glyphicon-menu-down pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a href="<?= Url::toRoute(['/site/claims']) ?>">
+                                        <i class="glyphicon glyphicon-wrench"></i> <span>举报投诉</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/site/feedback']) ?>">
+                                        <i class="glyphicon glyphicon-road"></i> <span>会员反馈</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/dating/dating-cuicu']) ?>">
+                                        <i class="glyphicon glyphicon-road"></i> <span>密约催促</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/dating/dating-vip']) ?>">
+                                        <i class="glyphicon glyphicon-road"></i> <span>开通密约的人</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i>13</i>
+                                <span>消息管理</span>
+                                <i class="glyphicon glyphicon-menu-down pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a href="<?= Url::toRoute(['/setting/system-msg']) ?>">
+                                        <i class="glyphicon glyphicon-comment"></i> <span>系统消息</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i>13</i>
+                                <span>投票管理</span>
+                                <i class="glyphicon glyphicon-menu-down pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                        <!--        <li>
+                                    <a href="<?/*= Url::toRoute(['/note/note']) */?>">
+                                        <i class="glyphicon glyphicon-print"></i> <span>炫腹肌投票</span>
+                                    </a>
+                                </li>-->
+                                <li>
+                                    <a href="<?= Url::toRoute(['/note/vote-sign-info']) ?>">
+                                        <i class="glyphicon glyphicon-print"></i> <span>男神女神投票</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/good/weichat-vote']) ?>">
+                                        <i class="glyphicon glyphicon-print"></i> <span>ID照发布</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/good/weichat-dazzle']) ?>">
+                                        <i class="glyphicon glyphicon-print"></i> <span>炫腹季投票</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/active/new-year']) ?>">
+                                        <i class="glyphicon glyphicon-print"></i> <span>新年投票</span>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i>13</i>
+                                <span>网站内容管理</span>
+                                <i class="glyphicon glyphicon-menu-down pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a href="<?= Url::toRoute(['/dating/heart-week']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>心动周刊</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="<?= Url::toRoute(['/exciting/exciting']) ?>">
+                                        <i class="glyphicon glyphicon-heart"></i> <span>心动故事</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/flop/flop']) ?>">
+                                        <i class="glyphicon glyphicon-shopping-cart"></i> <span>翻牌资料</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/dating/dating']) ?>">
+                                        <i class="glyphicon glyphicon-cog"></i> <span>最新觅约资料</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/exciting/other-text']) ?>">
+                                        <i class="glyphicon glyphicon-cog"></i> <span>十三救火优质男女</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/good/check-service']) ?>">
+                                        <i class="glyphicon glyphicon-cog"></i> <span>客服微信信息管理</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/setting']) ?>">
+                                        <i class="glyphicon glyphicon-cog"></i> <span>网站seo设置</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/exciting/website']) ?>">
+                                        <i class="glyphicon glyphicon-cog"></i> <span>网站联系我们二维码设置</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/good/user-how-play']) ?>">
+                                        <i class="glyphicon glyphicon-cog"></i> <span>会员守则管理</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/good/default/index']) ?>">
+                                        <i class="glyphicon glyphicon-cog"></i> <span>生活爆料</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i>13</i>
+                                <span>觅约报名审核</span>
+                                <i class="glyphicon glyphicon-menu-down pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+
+                                <li>
+                                    <a href="<?= Url::toRoute(['/dating/dating-content/dating-signup-check']) ?>">
+                                        <i class="glyphicon glyphicon-copy"></i> <span>私人客服审核</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/exciting/firefighters-sign-up']) ?>">
+                                        <i class="glyphicon glyphicon-copy"></i> <span>救火福利审核</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/bgadmin/bgadmin-member-flop/flop-push']) ?>">
+                                        <i class="glyphicon glyphicon-copy"></i> <span>翻牌审核</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/dating/dating-content/to-check']) ?>">
+                                        <i class="glyphicon glyphicon-paste"></i> <span>转交客服组长审核</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/dating/dating-other']) ?>">
+                                        <i class="glyphicon glyphicon-folder-open"></i> <span>觅约报名满10</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i>13</i>
+                                <span>自动入会系统</span>
+                                <i class="glyphicon glyphicon-menu-down pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a href="<?= Url::toRoute(['/collecting-file/auto-join-link']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>自动入会链接详情</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/collecting-file/auto-join-record']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>自动入会记录</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/bgadmin/channel-weima']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>心动三十一天渠道二维码生成与统计</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/bgadmin/kunshe-weima']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>昆社渠道二维码生成与统计</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i>13</i>
+                                <span>会员信息跟踪</span>
+                                <i class="glyphicon glyphicon-menu-down pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a href="<?= Url::toRoute(['/bgadmin']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>十三平台男生会员跟踪列表</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/bgadmin/girl-default/index']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>十三平台女生会员跟踪列表</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/bgadmin/record']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>管理员操作跟踪</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/bgadmin/user-bg-record']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>会员节操币消费跟踪</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/bgadmin/user-weichat']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>微信绑定平台账号查询</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--APP-->
+                        <li style="padding:0 20px;font-size: 20px;background-color: #fff;color:#0772ff;">APP</li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i>app</i>
+                                <span>相关内容</span>
+                                <i class="glyphicon glyphicon-menu-down pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="<?= Url::toRoute('/forum/forum/index') ?>"><i class="glyphicon glyphicon-baby-formula"></i> <span>朋友圈帖子管理</span></a></li>
+                                <li><a href="<?= Url::toRoute('/good/app-words/index') ?>"><i class="glyphicon glyphicon-baby-formula"></i> <span>新帖子管理</span></a></li>
+
+                                <li>
+                                    <a href="<?= Url::toRoute(['/setting/app-version']) ?>">
+                                        <i class="glyphicon glyphicon-phone"></i> <span class="text-red">版本控制（仅徐冬冬用）</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/setting/app-push-search']) ?>">
+                                        <i class="glyphicon glyphicon-plane"></i> <span class="text-red">消息推送（闲人免用）</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/setting/member-ship']) ?>">
+                                        <i class="glyphicon glyphicon-user"></i> <span>会员信誉度设置</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/app/audit']) ?>">
+                                        <i class="glyphicon glyphicon-user"></i> <span>密约信息审核</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/good/hx-group']) ?>">
+                                        <i class="glyphicon glyphicon-user"></i> <span>app聊天群头像上传</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/app/turn-over-card']) ?>">
+                                        <i class="glyphicon glyphicon-user"></i> <span>翻牌信息</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!--西蒙之家-->
+                        <li style="padding:0 20px;font-size: 20px;background-color: #fff;color:#ff0688;">西檬之家</li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i>SM</i>
+                                <span>会员信息跟踪</span>
+                                <i class="glyphicon glyphicon-menu-down pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a href="<?= Url::toRoute(['/bgadmin/sm-default']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>西檬之家会员跟踪列表</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/sm/default/send-collection-url']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>西檬之家会员信息录入表格</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/sm/sm-collection-files-text']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>西檬之家会员信息查询</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li style="padding:0 20px;font-size: 20px;background-color: #fff;color:#874fff;">地方啪</li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i>LOCAL</i>
+                                <span>地方啪</span>
+                                <i class="glyphicon glyphicon-menu-down pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a href="<?= Url::toRoute(['/local/default/send-collection-url']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>地方啪会员信息录入表格</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= Url::toRoute(['/local/local-collection-files-text']) ?>">
+                                        <i class="glyphicon glyphicon-gift"></i> <span>地方啪会员信息查询</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    <?php endif;?>
                     <?php if(in_array(Yii::$app->user->id,[10024,10004])):?><!--陈蕾，沈亚娜-->
 
                         <!--十三平台-->
@@ -1021,7 +1433,7 @@ $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii
                             </ul>
                         </li>
                     <?php endif;?>
-                    <?php if(in_array(Yii::$app->user->id,[10020,10021])):?><!--jiangxiaohua sunyuntong-->
+                    <?php if(in_array(Yii::$app->user->id,[10020])):?><!--jiangxiaohua sunyuntong-->
                     <li>
                         <a href="<?= Url::toRoute(['/collecting-file/auto-join-link']) ?>">
                             <i class="glyphicon glyphicon-gift"></i> <span>自动入会链接详情</span>
