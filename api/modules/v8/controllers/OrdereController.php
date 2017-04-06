@@ -70,7 +70,14 @@ class OrdereController extends ActiveController
         }
         //创建支付凭证
         $charge = $this->createCharge($model);
-        if(!$charge){
+        if($charge){
+            $str = array(
+                'code'  => "200",
+                'msg'   =>  '操作成功',
+                'data'  =>  $charge,
+            );
+            return $str;
+        }else{
             SaveToLog::log2('支付失败2','ping.log');
             http_response_code(400);
             exit();
