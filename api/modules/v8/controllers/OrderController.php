@@ -44,7 +44,7 @@ class OrderController extends ActiveController
         $model = new Order();
         $model->load(Yii::$app->getRequest()->getBodyParams(),'');
         $jiecaoModel = PredefinedJiecaoCoin::findOne(['money'=>(int)$model->total_fee]);
-        SaveToLog::log2($model->total_fee,'ping.log');
+        SaveToLog::log2($model->total_fee,'ping_2.log');
         try{
             $activityModel = ActivityRechargeRecord::findOne(['user_id'=>$model->user_id,'money_id'=>$jiecaoModel->id,'is_activity'=>1]);
             if($jiecaoModel->is_activity==1){
