@@ -64,8 +64,8 @@ class OrderController extends ActiveController
             }
         }
 
-        $model->channel = strtolower($model->channel);
-        $model->order_number = date('YmdH',time()).time();
+/*        $model->channel = strtolower($model->channel);
+        $model->order_number = date('YmdH',time()).time();*/
         //监听支付状态
         if($this->getSignature()){
             $this->ListenWebhooks();exit();
