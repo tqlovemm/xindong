@@ -43,11 +43,11 @@ class OrderController extends ActiveController
     public function actionCreate(){
         $model = new Order();
         $model->load(Yii::$app->getRequest()->getBodyParams(),'');
-        $jiecaoModel = PredefinedJiecaoCoin::findOne(['money'=>(int)$model->total_fee]);
+        $jiecaoModel = PredefinedJiecaoCoin::find()->where(['money'=>$model->total_fee])->asArray()->one();
         SaveToLog::log2($model->total_fee,'ping_2.log');
         try{
-            $activityModel = ActivityRechargeRecord::findOne(['user_id'=>$model->user_id,'money_id'=>$jiecaoModel->id,'is_activity'=>1]);
-            if($jiecaoModel->is_activity==1){
+            $activityModel = ActivityRechargeRecord::findOne(['user_id'=>$model->user_id,'money_id'=>$jiecaoModel['id'],'is_activity'=>1]);
+            if($jiecaoModel['is_activity']==1){
                 if(!empty($activityModel)){
                     $str = array(
                         'code'  => "2010",
@@ -184,14 +184,14 @@ class OrderController extends ActiveController
                     http_response_code(400);
                     exit();
                 }
-                $total = $model->total_fee+$jiecaoModel->giveaway;
+                $total = $model->total_fee+$jiecaoModel['giveaway'];
                 if($model->save()){
                     $recharge = Yii::$app->db->createCommand("update pre_user_data set jiecao_coin = jiecao_coin+{$total} where user_id={$model->user_id}")->execute();
                     if($recharge){
                         $activity = new ActivityRechargeRecord();
                         $activity->user_id = $model->user_id;
-                        $activity->money_id = $jiecaoModel->id;
-                        $activity->is_activity = $jiecaoModel->is_activity;
+                        $activity->money_id = $jiecaoModel['id'];
+                        $activity->is_activity = $jiecaoModel['is_activity'];
                         if(!$activity->save()){
                             SaveToLog::log2($activity->errors,'record.log');
                             http_response_code(400);
