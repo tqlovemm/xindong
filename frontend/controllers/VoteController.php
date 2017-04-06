@@ -176,7 +176,7 @@ class VoteController extends Controller
 
     protected function responseMsg(){
 
-        //2.处理消息类型，并设置回复类型和内容
+        //2.处理消息类型，并设置回复类型和内容fcedasFwf
 
         //判断该数据包是否是订阅的事件推送
         if( strtolower( $this->postObj->MsgType) == 'event'){
