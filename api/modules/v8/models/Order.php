@@ -15,6 +15,7 @@ use app\components\db\ActiveRecord;
 /**
  * This is the model class for table "pre_app_order_list".
  *
+ * @property integer $id
  * @property integer $user_id
  * @property integer $order_number
  * @property integer $alipay_order
