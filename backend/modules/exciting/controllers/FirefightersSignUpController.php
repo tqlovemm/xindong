@@ -235,6 +235,7 @@ class FirefightersSignUpController extends Controller
         }
         $model->number = $number;
         $model->openid = $openid;
+        $model->remark = Yii::$app->setting->get('remarks');
         $model->status = 2;
         if($model->save()) {
             $url = "http://13loveme.com/weixin/firefighters/pull-fire?number=$number&id=".$model->id;

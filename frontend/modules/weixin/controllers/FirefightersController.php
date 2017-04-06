@@ -307,8 +307,10 @@ class FirefightersController extends Controller
         $member = !empty($r)?$r:BgadminGirlMember::findOne(['number'=>$number]);
 
         //$member = BgadminGirlMember::findOne(['number'=>$number]);
+        $remark = '';
         if($id!=0){
             $push = UserWeichatPush::findOne(['id'=>$id]);
+            $remark = $push->remark;
             if(empty($push)){
                 return '对不起!!该链接已经失效!!';
             }
@@ -320,7 +322,7 @@ class FirefightersController extends Controller
             $file = $member->getMemberText(0)->asArray()->one();
             if(!empty($file)){
                 if(!empty($file['memberFiles'])){
-                    return $this->render('pull-fire',['file'=>$file['memberFiles'][0]['path'],'contents'=>$contents]);
+                    return $this->render('pull-fire',['file'=>$file['memberFiles'][0]['path'],'contents'=>$contents,'remark'=>$remark]);
                 }
             }
         }
