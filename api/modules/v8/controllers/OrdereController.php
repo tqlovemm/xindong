@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2016/12/7
- * Time: 17:11
- */
 namespace api\modules\v8\controllers;
 use api\modules\v8\models\Order;
 use frontend\models\ActivityRechargeRecord;
@@ -18,7 +12,6 @@ use Pingpp\Util\Util;
 use Yii;
 use Pingpp\Pingpp;
 use yii\data\ActiveDataProvider;
-use yii\db\Query;
 use yii\rest\ActiveController;
 class OrdereController extends ActiveController
 {
