@@ -207,8 +207,6 @@ class OrderController extends ActiveController
                 if($model->save()){
                     Yii::$app->db->createCommand("update pre_user_data set jiecao_coin = jiecao_coin+{$total} where user_id={$model->user_id}")->execute();
                 }
-            }elseif($model->type == 3){
-                //觅约报名
             }elseif($model->type == 2){
                 //会员升级
                 $userInfo = User::find()->where(['id'=>$model->user_id])->asArray()->one();
@@ -255,10 +253,10 @@ class OrderController extends ActiveController
                 }
             }
             //本周末时间戳
-            $week = strtotime('next sunday');
+            //$week = strtotime('next sunday');
             //当月第一天
-            $month = mktime(23,59,59,date('m'),date('t'),date('Y'))+1;
-            Yii::$app->db->createCommand("update pre_app_order_list set week_time={$week},month_time={$month} where id={$listId}")->execute();
+            //$month = mktime(23,59,59,date('m'),date('t'),date('Y'))+1;
+            //Yii::$app->db->createCommand("update pre_app_order_list set week_time={$week},month_time={$month} where id={$listId}")->execute();
             header($_SERVER['SERVER_PROTOCOL'] . ' 200 OK');
             exit();
         }else{
