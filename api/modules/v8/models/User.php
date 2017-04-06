@@ -36,9 +36,6 @@ class User extends ActiveRecord
             [['id','sex','created_at','updated_at'], 'integer'],
             [['username','avatar','nickname','identify','openId','address','cid','none','password_reset_token'], 'string'],
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => '该用户名已注册.'],
-            [['job','car','weibo_num'],'string','max'=>60],
-            [['cup',],'string','max'=>32],
-            [['salary',],'double'],
         ];
     }
     public function attributeLabels()
@@ -56,11 +53,6 @@ class User extends ActiveRecord
             'address' => '用户地址',
             'none' => '环信密码',
             'identify' => '微信号',
-            'weibo_num' => '微博号',
-            'job' => '职业',
-            'car' => '车型',
-            'cup' => 'cup',
-            'salary' => '年薪',
         ];
     }
 
@@ -71,11 +63,6 @@ class User extends ActiveRecord
             'id','cid','username','avatar','nickname','sex','address','openId','birthdate','created_at','none',
             'password_reset_token',
             'identify',
-            'weibo_num',
-            'job',
-            'car',
-            'cup',
-            'salary',
         ];
 
     }
