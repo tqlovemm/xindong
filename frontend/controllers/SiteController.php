@@ -1,6 +1,5 @@
 <?php
 namespace frontend\controllers;
-
 use common\components\SaveToLog;
 use frontend\models\ContactIpLimits;
 use frontend\modules\weixin\models\FirefightersSignUp;
@@ -36,7 +35,6 @@ use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 use yii\myhelper\Easemob;
 use yii\myhelper\Address;
-//fawef
 class SiteController extends BaseController
 {
     public  $enableCsrfValidation = false;
