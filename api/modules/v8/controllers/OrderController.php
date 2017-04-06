@@ -6,10 +6,12 @@
  * Time: 17:11
  */
 namespace api\modules\v8\controllers;
+use api\modules\v4\models\PredefinedJiecaoCoin;
 use api\modules\v8\models\Order;
 use api\modules\v9\models\MemberSort;
 use api\modules\v5\models\User;
 use common\components\SaveToLog;
+use frontend\models\ActivityRechargeRecord;
 use Pingpp\Charge;
 use Pingpp\Error\Base;
 use Pingpp\Util\Util;
@@ -48,6 +50,20 @@ class OrderController extends ActiveController
     public function actionCreate(){
         $model = new Order();
         $model->load(Yii::$app->getRequest()->getBodyParams(),'');
+
+        $jiecaoModel = PredefinedJiecaoCoin::findOne(['money'=>$model->total_fee]);
+        $activityModel = ActivityRechargeRecord::findOne(['user_id'=>$model->user_id,'money_id'=>$jiecaoModel->id,'is_activity'=>1]);
+        if($jiecaoModel->is_activity==1){
+            if(!empty($activityModel)){
+                $str = array(
+                    'code'  => "2010",
+                    'msg'   =>  '您已经参与过本次活动',
+                    'data'  =>  array('message'=>'您已经参与过本次活动'),
+                );
+                return $str;
+            }
+        }
+
         $model->channel = strtolower($model->channel);
         $model->order_number = date('YmdH',time()).time();
         //监听支付状态
@@ -57,12 +73,25 @@ class OrderController extends ActiveController
         //创建支付凭证
         $charge = $this->createCharge($model);
         if($charge){
-            $str = array(
-                'code'  => "200",
-                'msg'   =>  '操作成功',
-                'data'  =>  $charge,
-            );
-            return $str;
+
+            $activity = new ActivityRechargeRecord();
+            $activity->user_id = $model->user_id;
+            $activity->money_id = $jiecaoModel->id;
+            $activity->is_activity = $jiecaoModel->is_activity;
+            if($activity->save()){
+                $str = array(
+                    'code'  => "200",
+                    'msg'   =>  '操作成功',
+                    'data'  =>  $charge,
+
+                );
+                return $str;
+            }else{
+                SaveToLog::log2('保存活动记录失败','record.log');
+                http_response_code(400);
+                exit();
+            }
+
         }else{
             SaveToLog::log2('支付失败2','ping.log');
             http_response_code(400);
