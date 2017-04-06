@@ -179,7 +179,7 @@ class OrderController extends ActiveController
             $model->type = $charge['metadata']['type'];
             if($model->type == 1 ){
                 if(empty($jiecaoModel)){
-                    SaveToLog::log2('没有这个充值价格','ping.log');
+                    SaveToLog::log2('no this price','ping.log');
                     http_response_code(400);
                     exit();
                 }
