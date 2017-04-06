@@ -161,8 +161,7 @@ class OrdereController extends ActiveController
         $model = new Order();
         if ($event['type'] == 'charge.succeeded') {
             $charge = $event['data']['object'];
-            $sorts_id = $charge['metadata']['sort_id'];
-            $price2 = MemberSort::find()->where(['id'=>$sorts_id])->asArray()->one();
+
             //支付宝生成的订单号
             $model->alipay_order = $charge['id'];
             $model->order_number = $charge['order_no'];
@@ -199,6 +198,8 @@ class OrdereController extends ActiveController
 
             }elseif($model->type == 2){
                 //会员升级
+                $sorts_id = $charge['metadata']['sort_id'];
+                $price2 = MemberSort::find()->where(['id'=>$sorts_id])->asArray()->one();
                 $userInfo = User::find()->where(['id'=>$model->user_id])->asArray()->one();
                 if((int)$userInfo['groupid'] == 1){
                     $self_data['realPrice'] = $price2['price_1'];
