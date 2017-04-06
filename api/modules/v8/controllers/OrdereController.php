@@ -66,30 +66,11 @@ class OrdereController extends ActiveController
 
         //监听支付状态
         if($this->getSignature()){
-            $this->ListenWebhooks();exit();
+            $this->ListenWebhooks($jiecaoModel);exit();
         }
         //创建支付凭证
         $charge = $this->createCharge($model);
-        if($charge){
-            $activity = new ActivityRechargeRecord();
-            $activity->user_id = $model->user_id;
-            $activity->money_id = $jiecaoModel->id;
-            $activity->is_activity = $jiecaoModel->is_activity;
-            if($activity->save()){
-
-                $str = array(
-                    'code'  => "200",
-                    'msg'   =>  '操作成功',
-                    'data'  =>  $charge,
-
-                );
-                return $str;
-            }else{
-                SaveToLog::log2('保存活动记录失败','record.log');
-                http_response_code(400);
-                exit();
-            }
-        }else{
+        if(!$charge){
             SaveToLog::log2('支付失败2','ping.log');
             http_response_code(400);
             exit();
@@ -159,7 +140,7 @@ class OrdereController extends ActiveController
         return $signature;
     }
     //监听支付状态
-    public function ListenWebhooks(){
+    public function ListenWebhooks($jiecaoModel){
         $data = file_get_contents("php://input");
         $pub_key_path = Yii::getAlias('@config').'/ping_public_key.pem';
         $signature = $this->getSignature();
@@ -193,15 +174,27 @@ class OrdereController extends ActiveController
             $model->extra = serialize($event['data']['object']);
             $model->type = $charge['metadata']['type'];
             if($model->type == 1 ){
-                $price = (new Query())->from('pre_predefined_jiecao_coin')->where(['money'=>$model->total_fee])->one();
-                if(!$price){
+                if(empty($jiecaoModel)){
                     SaveToLog::log2('没有这个充值价格','ping.log');
                     http_response_code(400);
                     exit();
                 }
-                $total = $model->total_fee+$price['giveaway'];
+                $total = $model->total_fee+$jiecaoModel->giveaway;
                 if($model->save()){
-                    Yii::$app->db->createCommand("update pre_user_data set jiecao_coin = jiecao_coin+{$total} where user_id={$model->user_id}")->execute();
+                    $recharge = Yii::$app->db->createCommand("update pre_user_data set jiecao_coin = jiecao_coin+{$total} where user_id={$model->user_id}")->execute();
+                    if($recharge){
+                        $activity = new ActivityRechargeRecord();
+                        $activity->user_id = $model->user_id;
+                        $activity->money_id = $jiecaoModel->id;
+                        $activity->is_activity = $jiecaoModel->is_activity;
+                        if(!$activity->save()){
+                            SaveToLog::log2($activity->errors,'record.log');
+                            http_response_code(400);
+                            exit();
+                        }
+                    }
+                }else{
+                    SaveToLog::log2($model->errors,'ping.log');
                 }
 
             }elseif($model->type == 2){
