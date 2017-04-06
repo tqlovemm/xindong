@@ -43,8 +43,8 @@ class OrderController extends ActiveController
     public function actionCreate(){
         $model = new Order();
         $model->load(Yii::$app->getRequest()->getBodyParams(),'');
+        $jiecaoModel = PredefinedJiecaoCoin::findOne(['money'=>$model->total_fee]);
         try{
-            $jiecaoModel = PredefinedJiecaoCoin::findOne(['money'=>$model->total_fee]);
             $activityModel = ActivityRechargeRecord::findOne(['user_id'=>$model->user_id,'money_id'=>$jiecaoModel->id,'is_activity'=>1]);
             if($jiecaoModel->is_activity==1){
                 if(!empty($activityModel)){
@@ -56,15 +56,15 @@ class OrderController extends ActiveController
                     return $str;
                 }
             }
+        }catch (Exception $e){
+            SaveToLog::log2($e->getMessage(),'ping.log');
+        }finally{
             $model->channel = strtolower($model->channel);
             $model->order_number = date('YmdH',time()).time();
             //监听支付状态
             if($this->getSignature()){
                 $this->ListenWebhooks($jiecaoModel);exit();
             }
-        }catch (Exception $e){
-
-            SaveToLog::log2($e->getMessage(),'ping.log');
         }
         //创建支付凭证
         $charge = $this->createCharge($model);
