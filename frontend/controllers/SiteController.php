@@ -42,7 +42,7 @@ class SiteController extends BaseController
     /**
      * @return array
      * 登陆验证
-     * ddd
+     * dddccdd
      */
     public function behaviors()
     {
