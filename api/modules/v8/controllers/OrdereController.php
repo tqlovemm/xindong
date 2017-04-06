@@ -43,10 +43,8 @@ class OrdereController extends ActiveController
     public function actionCreate(){
         $model = new Order();
         $model->load(Yii::$app->getRequest()->getBodyParams(),'');
-        $jiecaoModel = PredefinedJiecaoCoin::find()->where(['money'=>$model->total_fee])->asArray()->one();
-        SaveToLog::log2($model->total_fee,'ping_2.log');
-        return $jiecaoModel;
         try{
+            $jiecaoModel = PredefinedJiecaoCoin::find()->where(['money'=>$model->total_fee])->asArray()->one();
             $activityModel = ActivityRechargeRecord::findOne(['user_id'=>$model->user_id,'money_id'=>$jiecaoModel['id'],'is_activity'=>1]);
             if($jiecaoModel['is_activity']==1){
                 if(!empty($activityModel)){
@@ -65,7 +63,7 @@ class OrdereController extends ActiveController
             $model->order_number = date('YmdH',time()).time();
             //监听支付状态
             if($this->getSignature()){
-                $this->ListenWebhooks($jiecaoModel);exit();
+                $this->ListenWebhooks();exit();
             }
         }
         //创建支付凭证
@@ -147,7 +145,7 @@ class OrdereController extends ActiveController
         return $signature;
     }
     //监听支付状态
-    public function ListenWebhooks($jiecaoModel){
+    public function ListenWebhooks(){
         $data = file_get_contents("php://input");
         $pub_key_path = Yii::getAlias('@config').'/ping_public_key.pem';
         $signature = $this->getSignature();
@@ -180,6 +178,7 @@ class OrdereController extends ActiveController
             $model->extra = serialize($event['data']['object']);
             $model->type = $charge['metadata']['type'];
             if($model->type == 1 ){
+                $jiecaoModel = PredefinedJiecaoCoin::find()->where(['money'=>$model->total_fee])->asArray()->one();
                 if(empty($jiecaoModel)){
                     SaveToLog::log2('no this price','ping.log');
                     http_response_code(400);
