@@ -29,7 +29,6 @@ class ActivityRechargeRecord extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'money_id'], 'required'],
             [['user_id', 'money_id', 'is_activity','created_at'], 'integer']
         ];
     }
