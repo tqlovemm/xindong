@@ -6,12 +6,10 @@
  * Time: 17:11
  */
 namespace api\modules\v8\controllers;
-use api\modules\v4\models\PredefinedJiecaoCoin;
 use api\modules\v8\models\Order;
 use api\modules\v9\models\MemberSort;
 use api\modules\v5\models\User;
 use common\components\SaveToLog;
-use frontend\models\ActivityRechargeRecord;
 use Pingpp\Charge;
 use Pingpp\Error\Base;
 use Pingpp\Util\Util;
@@ -50,48 +48,21 @@ class OrderController extends ActiveController
     public function actionCreate(){
         $model = new Order();
         $model->load(Yii::$app->getRequest()->getBodyParams(),'');
-
-        $jiecaoModel = PredefinedJiecaoCoin::findOne(['money'=>$model->total_fee]);
-        $activityModel = ActivityRechargeRecord::findOne(['user_id'=>$model->user_id,'money_id'=>$jiecaoModel->id,'is_activity'=>1]);
-        if($jiecaoModel->is_activity==1){
-            if(!empty($activityModel)){
-                $str = array(
-                    'code'  => "2010",
-                    'msg'   =>  '您已经参与过本次活动',
-                    'data'  =>  array('message'=>'您已经参与过本次活动'),
-                );
-                return $str;
-            }
-        }
-
-/*        $model->channel = strtolower($model->channel);
-        $model->order_number = date('YmdH',time()).time();*/
+        $model->channel = strtolower($model->channel);
+        $model->order_number = date('YmdH',time()).time();
         //监听支付状态
         if($this->getSignature()){
-            $this->ListenWebhooks($jiecaoModel);exit();
+            $this->ListenWebhooks();exit();
         }
         //创建支付凭证
         $charge = $this->createCharge($model);
         if($charge){
-
-            $activity = new ActivityRechargeRecord();
-            $activity->user_id = $model->user_id;
-            $activity->money_id = $jiecaoModel->id;
-            $activity->is_activity = $jiecaoModel->is_activity;
-            if($activity->save()){
-                $str = array(
-                    'code'  => "200",
-                    'msg'   =>  '操作成功',
-                    'data'  =>  $charge,
-
-                );
-                return $str;
-            }else{
-                SaveToLog::log2($activity->errors,'record.log');
-                http_response_code(400);
-                exit();
-            }
-
+            $str = array(
+                'code'  => "200",
+                'msg'   =>  '操作成功',
+                'data'  =>  $charge,
+            );
+            return $str;
         }else{
             SaveToLog::log2('支付失败2','ping.log');
             http_response_code(400);
@@ -162,7 +133,7 @@ class OrderController extends ActiveController
         return $signature;
     }
     //监听支付状态
-    public function ListenWebhooks($jiecaoModel){
+    public function ListenWebhooks(){
         $data = file_get_contents("php://input");
         $pub_key_path = Yii::getAlias('@config').'/ping_public_key.pem';
         $signature = $this->getSignature();
@@ -196,18 +167,19 @@ class OrderController extends ActiveController
             $model->extra = serialize($event['data']['object']);
             $model->type = $charge['metadata']['type'];
             if($model->type == 1 ){
-                if(empty($jiecaoModel)){
+                $price = (new Query())->from('pre_predefined_jiecao_coin')->where(['money'=>$model->total_fee])->one();
+                if(!$price){
                     SaveToLog::log2('没有这个充值价格','ping.log');
                     http_response_code(400);
                     exit();
                 }
-                $total = $model->total_fee+$jiecaoModel->giveaway;
-                //充值节操币
+                $total = $model->total_fee+$price['giveaway'];
                 if($model->save()){
                     Yii::$app->db->createCommand("update pre_user_data set jiecao_coin = jiecao_coin+{$total} where user_id={$model->user_id}")->execute();
-                }else{
-                    SaveToLog::log2($model->errors,'ping.log');
                 }
+
+            }elseif($model->type == 3){
+                //觅约报名
             }elseif($model->type == 2){
                 //会员升级
                 $userInfo = User::find()->where(['id'=>$model->user_id])->asArray()->one();
@@ -254,10 +226,10 @@ class OrderController extends ActiveController
                 }
             }
             //本周末时间戳
-            //$week = strtotime('next sunday');
+            $week = strtotime('next sunday');
             //当月第一天
-            //$month = mktime(23,59,59,date('m'),date('t'),date('Y'))+1;
-            //Yii::$app->db->createCommand("update pre_app_order_list set week_time={$week},month_time={$month} where id={$listId}")->execute();
+            $month = mktime(23,59,59,date('m'),date('t'),date('Y'))+1;
+            Yii::$app->db->createCommand("update pre_app_order_list set week_time={$week},month_time={$month} where id={$listId}")->execute();
             header($_SERVER['SERVER_PROTOCOL'] . ' 200 OK');
             exit();
         }else{
