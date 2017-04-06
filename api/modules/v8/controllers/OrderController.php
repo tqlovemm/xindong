@@ -87,7 +87,7 @@ class OrderController extends ActiveController
                 );
                 return $str;
             }else{
-                SaveToLog::log2('保存活动记录失败','record.log');
+                SaveToLog::log2($activity->errors,'record.log');
                 http_response_code(400);
                 exit();
             }
@@ -205,6 +205,8 @@ class OrderController extends ActiveController
                 //充值节操币
                 if($model->save()){
                     Yii::$app->db->createCommand("update pre_user_data set jiecao_coin = jiecao_coin+{$total} where user_id={$model->user_id}")->execute();
+                }else{
+                    SaveToLog::log2($model->errors,'ping.log');
                 }
             }elseif($model->type == 2){
                 //会员升级
