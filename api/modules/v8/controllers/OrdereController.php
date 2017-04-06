@@ -11,6 +11,7 @@ use Pingpp\Error\Base;
 use Pingpp\Util\Util;
 use Yii;
 use Pingpp\Pingpp;
+use yii\base\Exception;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 class OrdereController extends ActiveController
@@ -42,24 +43,30 @@ class OrdereController extends ActiveController
     public function actionCreate(){
         $model = new Order();
         $model->load(Yii::$app->getRequest()->getBodyParams(),'');
-        $jiecaoModel = PredefinedJiecaoCoin::findOne(['money'=>$model->total_fee]);
-        $activityModel = ActivityRechargeRecord::findOne(['user_id'=>$model->user_id,'money_id'=>$jiecaoModel->id,'is_activity'=>1]);
-        if($jiecaoModel->is_activity==1){
-            if(!empty($activityModel)){
-                $str = array(
-                    'code'  => "2010",
-                    'msg'   =>  '您已经参与过本次活动',
-                    'data'  =>  array('message'=>'您已经参与过本次活动'),
-                );
-                return $str;
+        $jiecaoModel = PredefinedJiecaoCoin::find()->where(['money'=>$model->total_fee])->asArray()->one();
+        return $jiecaoModel;
+        SaveToLog::log2($model->total_fee,'ping_2.log');
+        try{
+            $activityModel = ActivityRechargeRecord::findOne(['user_id'=>$model->user_id,'money_id'=>$jiecaoModel['id'],'is_activity'=>1]);
+            if($jiecaoModel['is_activity']==1){
+                if(!empty($activityModel)){
+                    $str = array(
+                        'code'  => "2010",
+                        'msg'   =>  '您已经参与过本次活动',
+                        'data'  =>  array('message'=>'您已经参与过本次活动'),
+                    );
+                    return $str;
+                }
             }
-        }
-        $model->channel = strtolower($model->channel);
-        $model->order_number = date('YmdH',time()).time();
-
-        //监听支付状态
-        if($this->getSignature()){
-            $this->ListenWebhooks($jiecaoModel);exit();
+        }catch (Exception $e){
+            SaveToLog::log2($e->getMessage(),'ping.log');
+        }finally{
+            $model->channel = strtolower($model->channel);
+            $model->order_number = date('YmdH',time()).time();
+            //监听支付状态
+            if($this->getSignature()){
+                $this->ListenWebhooks($jiecaoModel);exit();
+            }
         }
         //创建支付凭证
         $charge = $this->createCharge($model);
@@ -174,18 +181,18 @@ class OrdereController extends ActiveController
             $model->type = $charge['metadata']['type'];
             if($model->type == 1 ){
                 if(empty($jiecaoModel)){
-                    SaveToLog::log2('没有这个充值价格','ping.log');
+                    SaveToLog::log2('no this price','ping.log');
                     http_response_code(400);
                     exit();
                 }
-                $total = $model->total_fee+$jiecaoModel->giveaway;
+                $total = $model->total_fee+$jiecaoModel['giveaway'];
                 if($model->save()){
                     $recharge = Yii::$app->db->createCommand("update pre_user_data set jiecao_coin = jiecao_coin+{$total} where user_id={$model->user_id}")->execute();
                     if($recharge){
                         $activity = new ActivityRechargeRecord();
                         $activity->user_id = $model->user_id;
-                        $activity->money_id = $jiecaoModel->id;
-                        $activity->is_activity = $jiecaoModel->is_activity;
+                        $activity->money_id = $jiecaoModel['id'];
+                        $activity->is_activity = $jiecaoModel['is_activity'];
                         if(!$activity->save()){
                             SaveToLog::log2($activity->errors,'record.log');
                             http_response_code(400);
