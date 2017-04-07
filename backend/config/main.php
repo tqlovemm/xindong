@@ -76,8 +76,6 @@ return [
         'good' => [
             'class' => 'backend\modules\good\good',
             'aliases'   =>  [
-                /*'thumb'   =>  '@web/uploads/good/thumb/',
-                'watermark' =>  '@web/uploads/good/watermark',*/
             ],
 
         ],
