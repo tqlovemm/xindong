@@ -345,7 +345,7 @@ class WordController extends Controller
             Response::show('201','操作失败','发帖失败');
         }
         //推送给关注了Ta的人
-        $follower = (new Query())->from('pre_user_follow')->where(['user_id'=>$model->user_id])->all();
+        $follower = (new Query())->from('pre_user_follow')->where(['people_id'=>$model->user_id])->all();
 
         if(count($follower)){
 
