@@ -252,7 +252,13 @@ $this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii
                         </ul>
                     </li>
                     <?php endif;?>
-                    <?php if(in_array(Yii::$app->user->id,[19179,18818])):?><!--张翠玲-->
+                    <?php if(in_array(Yii::$app->user->id,[19179,18818])):?><!--张翠玲19179-->
+
+                    <li>
+                        <a href="<?= Url::toRoute(['collecting-file/thirth-files']) ?>">
+                            <i class="glyphicon glyphicon-link"></i> <span>会员资料信息</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="<?= Url::toRoute(['/setting/default/send-collecting-url']) ?>">
                             <i class="glyphicon glyphicon-link"></i> <span>生成收集男生会员信息链接</span>
