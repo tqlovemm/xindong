@@ -9,7 +9,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="thirth-files-index">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php if(in_array(Yii::$app->user->id,[13921,10184])):?>
+    <?php if(in_array(Yii::$app->user->id,[13921,10184,19179])):?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
