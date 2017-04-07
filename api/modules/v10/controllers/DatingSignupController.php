@@ -88,7 +88,7 @@ class DatingSignupController extends Controller
 
         //是否名额已满
         $full = (new Query())->from('{{%dating_signup}}')->where(['like_id'=>$model->like_id])->count();
-        if($full>=10){
+        if($full>=5){
             Response::show('204','保存失败','名额已满');
         }
 
