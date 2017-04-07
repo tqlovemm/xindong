@@ -523,7 +523,7 @@ class SiteController extends BaseController
         $this->layout = 'basic';
         $girl_rand = $boy_rand = 0;
         $model = Website::find()->with('photo')->asArray();
-        $ips = $_SERVER["HTTP_X_REAL_IP"];
+        $ips = isset($_SERVER["HTTP_X_REAL_IP"])?$_SERVER["HTTP_X_REAL_IP"]:$_SERVER["REMOTE_ADDR"];
         $boy = $model->where(['website_id'=>2])->one();
         $girl = $model->where(['website_id'=>3])->one();
 
