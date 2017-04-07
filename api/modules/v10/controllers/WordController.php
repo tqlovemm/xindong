@@ -351,7 +351,7 @@ class WordController extends Controller
 
             $pushTo = array();
             foreach($follower as $item){
-                $pushTo[] = $item['people_id'];//10031,10054,10114,10149,10001
+                $pushTo[] = $item['user_id'];//10031,10054,10114,10149,10001
             }
 
             $pushTo = implode(',',$pushTo);
