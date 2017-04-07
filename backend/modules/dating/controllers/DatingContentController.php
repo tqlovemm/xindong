@@ -291,13 +291,13 @@ class DatingContentController extends BaseController
 
     }
 
-    public function actionSendApp($img,$username,$word='您的密约报名成功，请及时添加女生二维码，如果对方拒绝可以联系客服帮助协调'){
+    public function actionSendApp($img,$username,$word="您的密约报名成功，请及时添加女生二维码！"){
 
 
         $data = array(
             'username'=>$username,
             'imgPath'=>$img,
-            'word'=>$word
+            'word'=>$word."添加时请备注".Yii::$app->setting->get('remarks'),
         );
         $url = "https://13loveme.com/v9/send-msgs";
         return $this->postData($url,$data);
