@@ -222,7 +222,7 @@ class OrderController extends ActiveController
                 }elseif( $userInfo['groupid'] == 3 ){
                     $price1 = MemberSort::find()->where(['groupid'=>$userInfo['groupid'],'flag'=>[1,3]])->asArray()->one();
                     if( $price2['groupid'] <= 3 ){
-                        SaveToLog::log2('groupid = 3; 只能往上升级','ping.log');
+                        SaveToLog::log2('groupid = 3; you can up level','ping.log');
                         http_response_code(400);
                         exit();
                     }else{
