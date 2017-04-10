@@ -249,7 +249,7 @@ class UserController extends BaseController
                 $params = "p.number";
                 $user_info = Yii::$app->db->createCommand("select u.id,u.username,u.nickname,u.sex,u.cellphone,u.email,u.avatar,u.created_at,u.groupid,
                                                           d.jiecao_coin,d.frozen_jiecao_coin,
-                                                          p.number,p.file_1,p.address_1,p.address_2,p.address_3,p.birthdate,p.height,p.weight,p.mark,p.make_friend,p.hobby
+                                                          p.number,p.address_1,p.address_2,p.address_3,p.birthdate,p.height,p.weight,p.mark,p.make_friend,p.hobby
                                                   from {{%user_profile}} as p left join {{%user_data}} as d on d.user_id=p.user_id left join {{%user}} as u on u.id=p.user_id where $params='$model->content'")->queryOne();
 
 
@@ -257,7 +257,7 @@ class UserController extends BaseController
 
                 $user_info = Yii::$app->db->createCommand("select u.id,u.username,u.nickname,u.sex,u.cellphone,u.email,u.avatar,u.created_at,u.groupid,
                                                           d.jiecao_coin,d.frozen_jiecao_coin,
-                                                          p.number,p.file_1,p.address_1,p.address_2,p.address_3,p.birthdate,p.height,p.weight,p.mark,p.make_friend,p.hobby
+                                                          p.number,p.address_1,p.address_2,p.address_3,p.birthdate,p.height,p.weight,p.mark,p.make_friend,p.hobby
                                                   from {{%user}} as u left join {{%user_data}} as d on d.user_id=u.id left join {{%user_profile}} as p on p.user_id=u.id where $params='$model->content'")->queryOne();
 
 
