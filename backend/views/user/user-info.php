@@ -69,7 +69,7 @@ $this->registerCss("
                 </tr>
                 <tr>
                     <td width="200">会员头像</td><td><img class="img-responsive" style="width: 100px;" src="<?=$user_info['avatar']?>"></td>
-                    <td width="200">会员档案照</td><td><img class="img-responsive" style="width: 100px;" src="<?=$user_info['file_1']?>"></td>
+                    <td width="200">会员档案照</td><td><img class="img-responsive" style="width: 100px;" src=""></td>
                 </tr>
                 <tr><td width="200">会员标签</td><td><?=var_dump(json_decode($user_info['mark']))?></td>
                     <td width="200">会员交友要求</td><td><?=var_dump(json_decode($user_info['make_friend']))?></td>
