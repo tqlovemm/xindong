@@ -232,12 +232,12 @@ class OrderController extends ActiveController
                         $model->total_fee=$self_data['realPrice'];
                     }
                 }else{
-                    SaveToLog::log2('目前至尊已经是最高等级','ping.log');
+                    SaveToLog::log2('already highest groupid','ping.log');
                     http_response_code(400);
                     exit();
                 }
                 if (!$model->save()) {
-                    SaveToLog::log2('save到数据失败','ping.log');
+                    SaveToLog::log2('save fail','ping.log');
                     http_response_code(400);
                     exit();
                 }
@@ -254,7 +254,7 @@ class OrderController extends ActiveController
             header($_SERVER['SERVER_PROTOCOL'] . ' 200 OK');
             exit();
         }else{
-            SaveToLog::log2('支付失败1','ping.log');
+            SaveToLog::log2('pay fail 1','ping.log');
             header($_SERVER['SERVER_PROTOCOL'] . ' 500');
             exit();
         }
