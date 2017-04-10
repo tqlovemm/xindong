@@ -34,7 +34,7 @@ $qiniu = Yii::$app->params['qiniushiqi'];
                         <?php if(in_array($extend[count($extend)-1],['jpg','png','jpeg','bmp','JPG','PNG','JPEG','BMP'])){break;}
                     endforeach; ?>
                     <h5>区域：<?=$item['address_city']?></h5>
-                    <h5><?=floor((time()-$item['age'])/(86400*365))?> 岁 &nbsp;<?=$item['height']?>cm &nbsp;<?=$item['weight']?>kg</h5>
+                    <h5><?=$item['age']?> 岁 &nbsp;<?=$item['height']?>cm &nbsp;<?=$item['weight']?>kg</h5>
                     <div style="position: absolute;width: 100%;height: 100%;top:0;"></div>
                 </a>
             </li>

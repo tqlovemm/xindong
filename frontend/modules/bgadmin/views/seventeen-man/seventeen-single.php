@@ -119,7 +119,7 @@ $qiniu = Yii::$app->params['qiniushiqi'];
         </div>
 
         <div class="weui_cell">
-            <div class="col-xs-4">年龄:<?=floor((time()-$model->age)/(86400*365))?> 岁</div>
+            <div class="col-xs-4">年龄:<?=$model->age?> 岁</div>
             <div class="col-xs-4">身高:<?=$model->height?> cm</div>
             <div class="col-xs-4">体重:<?=$model->weight?> kg</div>
         </div>
