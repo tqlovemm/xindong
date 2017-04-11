@@ -380,7 +380,7 @@ class FirefightersController extends Controller
             $address = Yii::$app->db->createCommand("select address_1,address_2,address_3 from {{%user_profile}} where user_id=$user_id")->queryOne();
             $coin = Yii::$app->db->createCommand("select jiecao_coin from {{%user_data}} where user_id=$user_id")->queryOne();
 
-            $addresses = '';
+            $addresses = array();
             if(!empty($address['address_1'])){
 
                 $address_1 = array_values(json_decode($address['address_1'],true));
