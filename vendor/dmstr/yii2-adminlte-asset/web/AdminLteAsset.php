@@ -13,9 +13,6 @@ class AdminLteAsset extends BaseAdminLteAsset
     public $sourcePath = '@vendor/almasaeed/adminlte/dist';
     public $depends = [
         'rmrevin\yii\fontawesome\AssetBundle',
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
-        'yii\bootstrap\BootstrapPluginAsset',
     ];
 
     /**

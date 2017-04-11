@@ -24,6 +24,7 @@ class AppAsset extends AssetBundle
     public $js = [
 
         'adminlte/js/app.min.js',
+        'adminlte/js/demo.js',
         'js/highcharts.js',
         'js/common.js',
         'js/address/distpicker.data.js',
@@ -35,5 +36,4 @@ class AppAsset extends AssetBundle
         'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',
     ];
-    public $jsOptions = ['position' => \yii\web\View::POS_HEAD];
 }
