@@ -18,8 +18,8 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'adminlte/css/AdminLTE.min.css',
-        'adminlte/css/skins/skin-blue-light.min.css',
+        'css/site.css',
+        'css/AdminLTE.min.css',
     ];
     public $js = [
 
@@ -29,6 +29,7 @@ class AppAsset extends AssetBundle
         'js/address/distpicker.data.js',
         'js/address/distpicker.js',
     ];
+
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',

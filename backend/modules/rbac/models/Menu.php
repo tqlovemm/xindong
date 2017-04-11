@@ -6,7 +6,7 @@ use Yii;
 use backend\modules\rbac\components\Configs;
 
 /**
- * This is the model class for table "menu".
+ * This is the model class for table "pre_menu".
  *
  * @property integer $id Menu id(autoincrement)
  * @property string $name Menu name

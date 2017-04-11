@@ -3,6 +3,8 @@
 namespace backend\modules\setting\controllers;
 
 use backend\components\AddRecord;
+use common\Qiniu\QiniuUploader;
+use frontend\modules\member\models\MemberSortImage;
 use Yii;
 use backend\modules\setting\models\MemberSorts;
 use backend\modules\setting\models\MemberSortsSearch;
@@ -15,6 +17,7 @@ use yii\web\ForbiddenHttpException;
  */
 class MemberSortsController extends Controller
 {
+    public $enableCsrfValidation = false;
     public function behaviors()
     {
         return [
@@ -54,6 +57,32 @@ class MemberSortsController extends Controller
         ]);
     }
 
+    public function actionDeleteImg($id,$sort_id){
+
+        $model = $this->findImgModel($id);
+        if($model->delete()){
+            $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+            $qn->delete('threadimages',$model->img_path);
+            return $this->redirect(['view','id'=>$sort_id]);
+        }
+
+    }
+    public function actionSetImg($id){
+
+        $model = $this->findImgModel($id);
+        if ($model->load(Yii::$app->request->post())) {
+
+            if($model->update()){
+
+            }
+            return $this->redirect(['view', 'id' => $model->id]);
+
+        } else {
+            return $this->render('set-img', [
+                'model' => $model,
+            ]);
+        }
+    }
     /**
      * Creates a new MemberSorts model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -74,7 +103,22 @@ class MemberSortsController extends Controller
             ]);
         }
     }
+    /**
+     * @param $id
+     * @param string $type
+     * @return string
+     */
+    public function actionUpload($id)
+    {
+        $model = $this->findModel($id);
 
+        if (Yii::$app->request->isPost) {
+            $model->upload();
+        }
+        return $this->render('upload', [
+            'model' => $this->findModel($id),
+        ]);
+    }
     /**
      * Updates an existing MemberSorts model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -130,6 +174,16 @@ class MemberSortsController extends Controller
     protected function findModel($id)
     {
         if (($model = MemberSorts::findOne($id)) !== null) {
+
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function findImgModel($id)
+    {
+        if (($model = MemberSortImage::findOne($id)) !== null) {
 
             return $model;
         } else {

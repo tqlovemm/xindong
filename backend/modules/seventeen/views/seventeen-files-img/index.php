@@ -9,26 +9,26 @@ use yii\grid\GridView;
 
 $this->title = 'Seventeen Files Imgs';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="seventeen-files-img-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             //['class' => 'yii\grid\SerialColumn'],
-
             //'id',
             'text_id',
             [
                 'format' => 'raw',
                 'label' => '上传图片',
                 'value' => function ($data) {
-                    return "<img style='width: 100px;' src='$data->img'>";
+                    $pre_url = Yii::$app->params['qiniushiqi'];
+                    return "<img style='width: 100px;' src='$pre_url$data->img'>";
                 }
 
             ],

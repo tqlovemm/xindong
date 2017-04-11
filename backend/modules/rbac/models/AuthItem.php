@@ -7,7 +7,7 @@ use yii\rbac\Item;
 use yii\helpers\Json;
 
 /**
- * This is the model class for table "tbl_auth_item".
+ * This is the model class for table "pre_auth_item".
  *
  * @property string $name
  * @property integer $type

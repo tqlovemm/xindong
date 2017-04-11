@@ -14,7 +14,6 @@ return [
     'bootstrap' => ['log'],
     'modules' => [
         'bgadmin' => [
-
             'class' => 'backend\modules\bgadmin\BgAdmin',
         ],
         'sm' => [
@@ -69,20 +68,17 @@ return [
                 '@photo' => '@web/uploads/blog/photo/'
             ],
         ],
-        'rbac' => [
-            'class' => 'backend\modules\rbac\Module',
-            'layout' => 'left-menu',
+        'admin' => [
+            'class' => 'mdm\admin\Module',
         ],
+
         'good' => [
             'class' => 'backend\modules\good\good',
             'aliases'   =>  [
             ],
-
         ],
         'active' => [
-
             'class' => 'backend\modules\active\active',
-
         ],
 
     ],
@@ -95,11 +91,11 @@ return [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
-	'urlManager' => [  
-                'class' => 'yii\web\UrlManager',  
-                'enablePrettyUrl' => true,  
-                'showScriptName' => false,  
-        ],
+        'urlManager' => [
+                    'class' => 'yii\web\UrlManager',
+                    'enablePrettyUrl' => true,
+                    'showScriptName' => false,
+            ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
