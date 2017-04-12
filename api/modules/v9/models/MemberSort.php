@@ -148,6 +148,10 @@ class MemberSort extends ActiveRecord
             },
             'discount',
             'is_recommend',
+            'detail_link'=>function(){
+                $msort = MemberSort::findOne(['member_name'=>$this->member_name,'flag'=>0]);
+                return "http://13loveme.com/member/user-show/update-details?id=".$msort->id;
+            },
             'flag',
             'permissions'=> function($model){
 
