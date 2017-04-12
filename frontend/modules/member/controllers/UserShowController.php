@@ -29,7 +29,7 @@ class UserShowController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['update-member-info','index','single-member-details','upgrade-price','pay-type','member-upgrade-alipay','member-upgrade-wxpay'],
+                'only' => ['update-member-info','index','member-show','single-member-details','upgrade-price','pay-type','member-upgrade-alipay','member-upgrade-wxpay'],
 
                 'rules' => [
                     [
