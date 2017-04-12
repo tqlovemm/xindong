@@ -165,41 +165,42 @@ class UserShowController extends Controller
 
     }
 
-    public function actionUpdateDetails($id){
+    public function actionUpdateDetails($id,$uid=null){
 
         $model_member = MemberSorts::find()->where(['flag'=>0])->andWhere("id!=$id")->with('cover')->orderBy("is_recommend desc")->asArray()->all();
         $query = MemberSorts::findOne($id);
 
-        if(!Yii::$app->user->isGuest){
+        $model = $this->getPrice($id,$uid);
+        $need_price = $this->getUpgradePrice($id,$uid)-$this->getUpgradePrice(null,$uid);
 
-            $model = $this->getPrice($id);
-            $need_price = $this->getUpgradePrice($id)-$this->getUpgradePrice();
-
-            switch(Yii::$app->user->identity->groupid){
-                case 0:
-                case 1:$level = '网站会员';break;
-                case 2:$level = '普通会员';break;
-                case 3:$level = '高端会员';break;
-                case 4:$level = '至尊会员';break;
-                default :$level = '私人订制';
-            }
-
-            return $this->render('update-details',['model'=>$model,'model_member'=>$model_member,'need_price'=>$need_price,'level'=>$level,'query'=>$query]);
+        if(!empty($uid)){
+            $userModel = User::findOne($uid);
+            $group_id = $userModel->groupid;
         }else{
-
-            return $this->render('update-details',['model_member'=>$model_member,'query'=>$query]);
+            $group_id = !Yii::$app->user->isGuest?Yii::$app->user->identity->groupid:1;
         }
+
+        switch($group_id){
+            case 0:
+            case 1:$level = '网站会员';break;
+            case 2:$level = '普通会员';break;
+            case 3:$level = '高端会员';break;
+            case 4:$level = '至尊会员';break;
+            default :$level = '私人订制';
+        }
+
+        return $this->render('update-details',['model'=>$model,'model_member'=>$model_member,'group_id'=>$group_id,'need_price'=>$need_price,'level'=>$level,'query'=>$query]);
 
     }
 
-    protected function getPrice($id){
+    protected function getPrice($id,$uid=null){
 
         $model = MemberSorts::find()->where('id=:id',[':id'=>$id])->asArray()->one();
 
         $sort_1 = array('北京市','上海市','广州市','深圳市','浙江省','江苏省');
         $sort_2 = array('新疆维吾尔自治区','内蒙古自治区','青海省','甘肃省','西藏自治区','宁夏回族自治区','海南省');
 
-        $user_id = Yii::$app->user->id;$addresses = array();
+        $user_id = !Yii::$app->user->isGuest?Yii::$app->user->id:$uid;$addresses = array();
         $address = Yii::$app->db->createCommand("select address_1,address_2,address_3 from {{%user_profile}} where user_id=$user_id")->queryOne();
 
         if(!empty($address['address_1'])){
@@ -302,23 +303,25 @@ class UserShowController extends Controller
 
     }
 
-    public function getUpgradePrice($id=null){
+    public function getUpgradePrice($id=null,$uid=null){
 
         if($id==null){
-
-            $model = MemberSorts::find()->where('groupid=:groupid',[':groupid'=>Yii::$app->user->identity->groupid])->asArray()->one();
-
+            if(!empty($uid)){
+                $userModel = User::findOne($uid);
+                $group_id = $userModel->groupid;
+            }else{
+                $group_id = !Yii::$app->user->isGuest?Yii::$app->user->identity->groupid:1;
+            }
+            $model = MemberSorts::find()->where('groupid=:groupid',[':groupid'=>$group_id])->asArray()->one();
         }else{
-
             $next_groupid = MemberSorts::find()->select('groupid')->where('id=:id',[':id'=>$id])->asArray()->one();
-
             $model = MemberSorts::find()->where('groupid=:groupid',[':groupid'=>$next_groupid['groupid']])->asArray()->one();
         }
 
         $sort_1 = array('北京市','上海市','广州市','深圳市','浙江省','江苏省');
         $sort_2 = array('新疆维吾尔自治区','内蒙古自治区','青海省','甘肃省','西藏自治区','宁夏回族自治区','海南省');
 
-        $user_id = Yii::$app->user->id;$addresses = array();
+        $user_id = !Yii::$app->user->isGuest?Yii::$app->user->id:$uid;$addresses = array();
         $address = Yii::$app->db->createCommand("select address_1,address_2,address_3 from {{%user_profile}} where user_id=$user_id")->queryOne();
 
         if(!empty($address['address_1'])){
@@ -387,8 +390,6 @@ class UserShowController extends Controller
             array_push($addresses,$address_3[0]);
 
         }
-
-
 
         if(array_intersect($sort_1,$addresses)){
 

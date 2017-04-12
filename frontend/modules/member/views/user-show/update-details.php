@@ -60,7 +60,7 @@ $price = isset($model['price'])?$model['price']:$query['price_1'];
             <img class="img-responsive" src="<?=$pre_url.$query->top->img_path?>">
         </div>
     </div>
-    <div class="row member-details" style="margin-bottom: 10px;">
+    <div class="row member-details" style="margin-bottom: 10px;padding-bottom:10px;">
         <h4 class="col-xs-12">十三平台<?=$query['member_name']?></h4>
         <div class="clearfix"></div>
         <h5 class="col-xs-3" style="color:#EA5285;"><span class="glyphicon glyphicon-jpy"></span><?=$price?></h5>
@@ -69,13 +69,11 @@ $price = isset($model['price'])?$model['price']:$query['price_1'];
             <span class="glyphicon glyphicon-map-marker"></span> <?php if(isset($model['address'])){echo $model['address'];}?><span>&nbsp;&nbsp;&nbsp;19584会员</span>
         </h5>
         <div class="clearfix"></div>
-        <?php if(!Yii::$app->user->isGuest):?>
-        <?php if(Yii::$app->user->identity->groupid>=intval($model['groupid'])):?>
+        <?php if($group_id>=intval($model['groupid'])):?>
             <h5 class="text-center" style="color: #aaa;margin-top: 0;">您已是<?=$level?>，无需升级</h5>
         <?php else:?>
             <h5 class="text-center" style="color: #aaa;margin-top: 0;">您现在是<?=$level?>，还需支付</h5>
             <h3 class="text-center" style="margin-top: 0;margin-bottom: 0;color: #aaa;"><?=$need_price?>元</h3>
-        <?php endif;?>
         <?php endif;?>
     </div>
     <h5 style="color: #aaa;margin-top: 0;">升级赠送</h5>
