@@ -130,7 +130,7 @@ $pre_url = Yii::$app->params['threadimg'];
     <h5 style="color: #aaa;margin-top: 0;">十三平台其他会员</h5>
     <?php foreach($model_member as $key=>$item):?>
     <div class="row member-upgrade <?php if($item['is_recommend']==1):?>upgrade-color-black<?php else:?>upgrade-color-white<?php endif;?>">
-        <a class="upgrade-box clearfix" href="single-member-details?id=<?=$item['id']?>">
+        <a class="upgrade-box clearfix" href="update-details?id=<?=$item['id']?>">
             <div class="col-xs-6">
                 <div class="member-icon">
                     <img class="img-responsive" src="<?=$pre_url.$item['cover']['img_path']?>">
