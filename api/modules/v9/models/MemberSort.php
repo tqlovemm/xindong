@@ -152,7 +152,7 @@ class MemberSort extends ActiveRecord
             'is_recommend',
             'detail_link'=>function($model){
                 $msort = MemberSort::findOne(['member_name'=>$this->member_name,'flag'=>0]);
-                return "http://13loveme.com/member/user-show/update-details?id=".$msort->id;
+                return "http://13loveme.com/member/user-show/update-details?top=2&id=".$msort->id;
             },
             'flag',
             'permissions'=> function($model){
