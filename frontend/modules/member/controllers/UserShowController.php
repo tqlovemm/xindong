@@ -29,11 +29,11 @@ class UserShowController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['update-member-info','index','single-member-details','upgrade-price','pay-type','member-upgrade-alipay','member-upgrade-wxpay'],
+                'only' => ['update-member-info','index','single-member-details','update-details','upgrade-price','pay-type','member-upgrade-alipay','member-upgrade-wxpay'],
 
                 'rules' => [
                     [
-                        'actions' => ['update-member-info','index','single-member-details','upgrade-price','pay-type','member-upgrade-alipay','member-upgrade-wxpay'],
+                        'actions' => ['update-member-info','index','single-member-details','upgrade-price','update-details','pay-type','member-upgrade-alipay','member-upgrade-wxpay'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -126,11 +126,9 @@ class UserShowController extends Controller
     /*展示所有会员信息*/
     public function actionMemberShow(){
 
-        //select id,count(name) from user group by usertype;
         $query = (new Query)->select('groupid,count(groupid) as sum')->from('{{%user}}')->groupBy('groupid')->all();
-  
 
-        $model = MemberSorts::find()->where(['flag'=>0])->asArray()->all();
+        $model = MemberSorts::find()->where(['flag'=>0])->with('cover')->asArray()->all();
 
         return $this->render('member-show',['model'=>$model,'query'=>$query]);
 
@@ -165,6 +163,24 @@ class UserShowController extends Controller
 
         return $this->render('single-member-details',['model'=>$model,'need_price'=>$need_price,'img'=>$img,'level'=>$level,'num'=>$num,'permissions'=>$permissions]);
 
+    }
+
+    public function actionUpdateDetails($id){
+
+        $model = $this->getPrice($id);
+        $need_price = $this->getUpgradePrice($id)-$this->getUpgradePrice();
+        $model_member = MemberSorts::find()->where(['flag'=>0])->andWhere("id!=$id")->with('cover')->asArray()->all();
+        $query = MemberSorts::findOne($id);
+
+        switch(Yii::$app->user->identity->groupid){
+            case 0:
+            case 1:$level = '网站会员';break;
+            case 2:$level = '普通会员';break;
+            case 3:$level = '高端会员';break;
+            case 4:$level = '至尊会员';break;
+            default :$level = '私人订制';
+        }
+        return $this->render('update-details',['model'=>$model,'model_member'=>$model_member,'need_price'=>$need_price,'level'=>$level,'query'=>$query]);
     }
 
     protected function getPrice($id){
@@ -244,12 +260,9 @@ class UserShowController extends Controller
 
         }
 
-
-
         if(array_intersect($sort_1,$addresses)){
 
             $price = $model['price_1'];
-
         }else{
 
             $flag=true;
@@ -274,6 +287,7 @@ class UserShowController extends Controller
         }
 
         $model['price'] = $price;
+        $model['address'] = json_decode($address['address_1'])->province;
 
         return $model;
 

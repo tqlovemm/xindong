@@ -6,7 +6,8 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use frontend\widgets\Alert;
-
+$this->registerCssFile('@web/js/lightbox/css/lightbox.css');
+$this->registerJsFile('@web/js/lightbox/js/lightbox.js', ['depends' => ['yii\web\JqueryAsset'], 'position' => \yii\web\View::POS_END]);
 AppAsset::register($this);
 $this->registerCss('
         .col-md-9{background-color: #FFF;border: 1px solid gainsboro;border-radius: 3px;}

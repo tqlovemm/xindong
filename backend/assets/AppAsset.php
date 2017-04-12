@@ -18,21 +18,21 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'adminlte/css/AdminLTE.min.css',
-        'adminlte/css/skins/skin-blue-light.min.css',
+        'css/AdminLTE.min.css',
     ];
     public $js = [
 
         'adminlte/js/app.min.js',
+        'adminlte/js/demo.js',
         'js/highcharts.js',
         'js/common.js',
         'js/address/distpicker.data.js',
         'js/address/distpicker.js',
     ];
+
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',
     ];
-    public $jsOptions = ['position' => \yii\web\View::POS_HEAD];
 }
