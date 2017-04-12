@@ -15,7 +15,7 @@ $this->registerCss("
     .nav-tabs > li > a{border-radius:3px;}
     .member-details .col-xs-6{width:49%;}
     .join-member h5{font-weight:bold;}
-    .join-member ul{margin-bottom: 0;}
+    .join-member ul{margin-bottom: 0;list-style: none;}
     .join-member ul li{padding:5px;}
     @media (min-width:768px){
         .member-index{width:500px;margin:auto;}
