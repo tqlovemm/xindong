@@ -287,7 +287,7 @@ class UserShowController extends Controller
         }
 
         $model['price'] = $price;
-        $model['address'] = json_decode($address['address_1'])->province;
+        $model['address'] = isset(json_decode($address['address_1'])->province)?json_decode($address['address_1'])->province:'';
 
         return $model;
 
