@@ -73,7 +73,7 @@ class MemberSorts extends \yii\db\ActiveRecord
      */
     public function getImages()
     {
-        return $this->hasMany(MemberSortImage::className(), ['sort_id' => 'id'])->where(['type'=>0]);
+        return $this->hasMany(MemberSortImage::className(), ['sort_id' => 'id'])->where(['type'=>0])->orderBy("sort desc");
     }
     public function getImg()
     {
