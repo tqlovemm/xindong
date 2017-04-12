@@ -12,8 +12,9 @@ use Yii;
  * @property integer $sort_id
  * @property string $img_path
  * @property integer $type
+ * @property integer $sort
  *
- * @property MemberSorts $sort
+ * @property MemberSorts $sorts
  */
 class MemberSortImage extends \yii\db\ActiveRecord
 {
@@ -32,7 +33,7 @@ class MemberSortImage extends \yii\db\ActiveRecord
     {
         return [
             [['sort_id'], 'required'],
-            [['sort_id', 'type'], 'integer'],
+            [['sort_id', 'type','sort'], 'integer'],
             [['img_path'], 'string', 'max' => 128]
         ];
     }
@@ -47,13 +48,14 @@ class MemberSortImage extends \yii\db\ActiveRecord
             'sort_id' => 'Sort ID',
             'img_path' => 'Img Path',
             'type' => 'Type',
+            'sort' => 'Sort',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSort()
+    public function getSorts()
     {
         return $this->hasOne(MemberSorts::className(), ['id' => 'sort_id']);
     }
