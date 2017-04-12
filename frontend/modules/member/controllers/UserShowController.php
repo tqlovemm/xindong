@@ -128,7 +128,7 @@ class UserShowController extends Controller
 
         $query = (new Query)->select('groupid,count(groupid) as sum')->from('{{%user}}')->groupBy('groupid')->all();
 
-        $model = MemberSorts::find()->where(['flag'=>0])->with('cover')->asArray()->all();
+        $model = MemberSorts::find()->where(['flag'=>0])->with('cover')->orderBy("is_recommend desc")->asArray()->all();
 
         return $this->render('member-show',['model'=>$model,'query'=>$query]);
 
