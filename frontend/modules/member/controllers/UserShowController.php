@@ -169,7 +169,7 @@ class UserShowController extends Controller
 
         $model = $this->getPrice($id);
         $need_price = $this->getUpgradePrice($id)-$this->getUpgradePrice();
-        $model_member = MemberSorts::find()->where(['flag'=>0])->andWhere("id!=$id")->with('cover')->orderBy("is_recommend asc")->asArray()->all();
+        $model_member = MemberSorts::find()->where(['flag'=>0])->andWhere("id!=$id")->with('cover')->orderBy("is_recommend desc")->asArray()->all();
         $query = MemberSorts::findOne($id);
 
         switch(Yii::$app->user->identity->groupid){
