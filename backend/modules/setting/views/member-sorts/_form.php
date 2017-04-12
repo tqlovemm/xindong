@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'price_3')->textInput() ?>
 
     <?= $form->field($model, 'discount')->textInput()->label('打折的折扣，不打折为1，九五折为0.95') ?>
-    <?= $form->field($model, 'is_recommend')->dropDownList([1=>'是',2 =>'否'])->label("是否推荐") ?>
+    <?= $form->field($model, 'is_recommend')->dropDownList([1=>'是',0 =>'否'])->label("是否推荐") ?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? '创建' : '更新', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
