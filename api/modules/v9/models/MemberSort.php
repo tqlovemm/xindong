@@ -35,6 +35,7 @@ class MemberSort extends ActiveRecord
 
     public $realPrice;
     public $realGiveaway;
+    public $detail_link;
     public static function tableName()
     {
         return '{{%member_sorts}}';
