@@ -65,6 +65,7 @@ class MemberSort extends ActiveRecord
             'realGiveaway'  =>  '补差赠送的心动币',
             'is_recommend'  =>  '求推荐',
             'discount'  =>  '折扣',
+            'detail_link'  =>  '详情链接',
             'flag'  => 'app',
             'is_status'  => 'is_status',
         ];
@@ -149,7 +150,7 @@ class MemberSort extends ActiveRecord
             },
             'discount',
             'is_recommend',
-            'detail_link'=>function(){
+            'detail_link'=>function($model){
                 $msort = MemberSort::findOne(['member_name'=>$this->member_name,'flag'=>0]);
                 return "http://13loveme.com/member/user-show/update-details?id=".$msort->id;
             },
