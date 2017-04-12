@@ -45,7 +45,7 @@ class MemberSort extends ActiveRecord
     {
         return [
             [['id','groupid','giveaway','price_1','is_recommend','is_status'],'integer'],
-            [['member_name','member_introduce','permissions'],'string'],
+            [['member_name','member_introduce','permissions','detail_link'],'string'],
             [['discount'], 'number'],
 
         ];
