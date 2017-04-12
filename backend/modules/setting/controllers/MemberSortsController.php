@@ -71,12 +71,9 @@ class MemberSortsController extends Controller
 
         $model = $this->findImgModel($id);
         if ($model->load(Yii::$app->request->post())) {
-
             if($model->update()){
-
+                return $this->redirect(['view', 'id' => $model->sort_id]);
             }
-            return $this->redirect(['view', 'id' => $model->id]);
-
         } else {
             return $this->render('set-img', [
                 'model' => $model,
