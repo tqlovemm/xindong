@@ -37,8 +37,10 @@ $join_member_process = explode('@',$query['member_introduce']);
 $join_member_permissions = explode('@',$query['permissions']);
 $pre_url = Yii::$app->params['threadimg'];
 $price = isset($model['price'])?$model['price']:$query['price_1'];
+
 ?>
 <div class="member-index" style="padding-bottom: 50px;">
+    <?php if(empty(Yii::$app->request->get('top'))):?>
     <div class="row member-center">
         <header>
             <div class="header">
@@ -52,6 +54,7 @@ $price = isset($model['price'])?$model['price']:$query['price_1'];
             </div>
         </header>
     </div>
+    <?php endif;?>
     <div class="row member-details" style="margin-bottom: 10px;">
         <div class="center-block">
             <img class="img-responsive" src="<?=$pre_url.$query->top->img_path?>">
@@ -75,13 +78,6 @@ $price = isset($model['price'])?$model['price']:$query['price_1'];
         <?php endif;?>
         <?php endif;?>
     </div>
-    <?php if(!Yii::$app->user->isGuest):?>
-    <?php if(Yii::$app->user->identity->groupid<intval($model['groupid'])):?>
-        <div class="row member-details text-center">
-            <a class="btn" href="<?=\yii\helpers\Url::to(['pay-type','id'=>$model['id']])?>">升级</a>
-        </div>
-    <?php endif;?>
-    <?php endif;?>
     <h5 style="color: #aaa;margin-top: 0;">升级赠送</h5>
     <div style="background-color: #fff;margin: 0 -15px 10px -15px;">
         <div class="row" style="margin: 0;border-top: 1px solid #eee;">
@@ -153,13 +149,11 @@ $price = isset($model['price'])?$model['price']:$query['price_1'];
     </div>
     <?php endforeach;?>
 </div>
-<?php if(!Yii::$app->user->isGuest):?>
 <div style="position: fixed;bottom:0;left:0;width: 100%;padding: 0;">
     <a data-title="客服微信" data-lightbox="fads" href="/images/weixin/thirteenpingtai.jpg" style="float: left;width: 30%;background-color: #fff;padding:10px;font-size: 16px;border-top: 1px solid #ddd;">
         <img style="width: 30px;" src="/images/member/chat.png"> 咨询
     </a>
-    <a <?php if(Yii::$app->user->identity->groupid<intval($model['groupid'])):?>href="<?=\yii\helpers\Url::to(['pay-type','id'=>$model['id']])?>"<?php else:?>data-confirm="您无需升级"<?php endif;?> style="float: left;width: 70%;background-color: #000;padding:10px;font-size: 24px;color:#FFA72A;text-align: center;line-height: 30px;display: block;border-top: 1px solid #000;">
+    <a <?php if(!Yii::$app->user->isGuest): if(Yii::$app->user->identity->groupid<intval($model['groupid'])):?>href="<?=\yii\helpers\Url::to(['pay-type','id'=>$model['id']])?>"<?php else:?>data-confirm="您无需升级"<?php endif; endif;?> style="float: left;width: 70%;background-color: #000;padding:10px;font-size: 24px;color:#FFA72A;text-align: center;line-height: 30px;display: block;border-top: 1px solid #000;">
         升级会员 >>>
     </a>
 </div>
-<?php endif;?>
