@@ -29,11 +29,11 @@ class UserShowController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['update-member-info','index','single-member-details','update-details','upgrade-price','pay-type','member-upgrade-alipay','member-upgrade-wxpay'],
+                'only' => ['update-member-info','index','single-member-details','upgrade-price','pay-type','member-upgrade-alipay','member-upgrade-wxpay'],
 
                 'rules' => [
                     [
-                        'actions' => ['update-member-info','index','single-member-details','upgrade-price','update-details','pay-type','member-upgrade-alipay','member-upgrade-wxpay'],
+                        'actions' => ['update-member-info','index','member-show','single-member-details','upgrade-price','pay-type','member-upgrade-alipay','member-upgrade-wxpay'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -167,20 +167,29 @@ class UserShowController extends Controller
 
     public function actionUpdateDetails($id){
 
-        $model = $this->getPrice($id);
-        $need_price = $this->getUpgradePrice($id)-$this->getUpgradePrice();
         $model_member = MemberSorts::find()->where(['flag'=>0])->andWhere("id!=$id")->with('cover')->orderBy("is_recommend desc")->asArray()->all();
         $query = MemberSorts::findOne($id);
 
-        switch(Yii::$app->user->identity->groupid){
-            case 0:
-            case 1:$level = '网站会员';break;
-            case 2:$level = '普通会员';break;
-            case 3:$level = '高端会员';break;
-            case 4:$level = '至尊会员';break;
-            default :$level = '私人订制';
+        if(!Yii::$app->user->isGuest){
+
+            $model = $this->getPrice($id);
+            $need_price = $this->getUpgradePrice($id)-$this->getUpgradePrice();
+
+            switch(Yii::$app->user->identity->groupid){
+                case 0:
+                case 1:$level = '网站会员';break;
+                case 2:$level = '普通会员';break;
+                case 3:$level = '高端会员';break;
+                case 4:$level = '至尊会员';break;
+                default :$level = '私人订制';
+            }
+
+            return $this->render('update-details',['model'=>$model,'model_member'=>$model_member,'need_price'=>$need_price,'level'=>$level,'query'=>$query]);
+        }else{
+
+            return $this->render('update-details',['model_member'=>$model_member,'query'=>$query]);
         }
-        return $this->render('update-details',['model'=>$model,'model_member'=>$model_member,'need_price'=>$need_price,'level'=>$level,'query'=>$query]);
+
     }
 
     protected function getPrice($id){

@@ -1,6 +1,6 @@
 <?php
-$this->title = $model['member_name'];
-$discount = $model['discount']*100;
+$this->title = $query['member_name'];
+$discount = $query['discount']*100;
 $discount = $discount==100?"无":$discount.'折';
 $this->registerCss("
 
@@ -33,9 +33,10 @@ $this->registerCss("
     .link-icon{width: 20%;float: left;display: block;padding:6px;}
     .link-icon h6{text-align:center;}
 ");
-$join_member_process = explode('@',$model['member_introduce']);
-$join_member_permissions = explode('@',$model['permissions']);
+$join_member_process = explode('@',$query['member_introduce']);
+$join_member_permissions = explode('@',$query['permissions']);
 $pre_url = Yii::$app->params['threadimg'];
+$price = isset($model['price'])?$model['price']:$query['price_1'];
 ?>
 <div class="member-index" style="padding-bottom: 50px;">
     <div class="row member-center">
@@ -43,8 +44,10 @@ $pre_url = Yii::$app->params['threadimg'];
             <div class="header">
                 <a href="javascript:history.back();"><span><img src="<?=Yii::getAlias('@web')?>/images/iconfont-fanhui.png"></span></a>
                 <h2 style="margin:0;"><?=$this->title?></h2>
+                <?php if(!Yii::$app->user->isGuest):?>
                 <?php if(Yii::$app->user->identity->groupid<intval($model['groupid'])):?>
                     <a style="right:3%;top:2px;font-size:14px;line-height: 44px;position: absolute;" href="pay-type?id=<?=$model['id']?>">升级</a>
+                <?php endif;?>
                 <?php endif;?>
             </div>
         </header>
@@ -55,35 +58,39 @@ $pre_url = Yii::$app->params['threadimg'];
         </div>
     </div>
     <div class="row member-details" style="margin-bottom: 10px;">
-        <h4 class="col-xs-12">十三平台<?=$model['member_name']?></h4>
+        <h4 class="col-xs-12">十三平台<?=$query['member_name']?></h4>
         <div class="clearfix"></div>
-        <h5 class="col-xs-3" style="color:#EA5285;"><span class="glyphicon glyphicon-jpy"></span><?=$model['price']?></h5>
+        <h5 class="col-xs-3" style="color:#EA5285;"><span class="glyphicon glyphicon-jpy"></span><?=$price?></h5>
         <h5 class="col-xs-3" style="color:#EA5285;padding:0;">折扣：<?=$discount?></h5>
         <h5 class="col-xs-6" style="padding:0;color: #aaa;">
-            <span class="glyphicon glyphicon-map-marker"></span> <?php if(isset($model['address'])){echo $model['address'];}?><span>&nbsp;&nbsp;&nbsp;&nbsp;19584会员</span>
+            <span class="glyphicon glyphicon-map-marker"></span> <?php if(isset($model['address'])){echo $model['address'];}?><span>&nbsp;&nbsp;&nbsp;19584会员</span>
         </h5>
         <div class="clearfix"></div>
+        <?php if(!Yii::$app->user->isGuest):?>
         <?php if(Yii::$app->user->identity->groupid>=intval($model['groupid'])):?>
             <h5 class="text-center" style="color: #aaa;margin-top: 0;">您已是<?=$level?>，无需升级</h5>
         <?php else:?>
             <h5 class="text-center" style="color: #aaa;margin-top: 0;">您现在是<?=$level?>，还需支付</h5>
             <h3 class="text-center" style="margin-top: 0;margin-bottom: 0;color: #aaa;"><?=$need_price?>元</h3>
         <?php endif;?>
+        <?php endif;?>
     </div>
+    <?php if(!Yii::$app->user->isGuest):?>
     <?php if(Yii::$app->user->identity->groupid<intval($model['groupid'])):?>
         <div class="row member-details text-center">
             <a class="btn" href="<?=\yii\helpers\Url::to(['pay-type','id'=>$model['id']])?>">升级</a>
         </div>
     <?php endif;?>
+    <?php endif;?>
     <h5 style="color: #aaa;margin-top: 0;">升级赠送</h5>
     <div style="background-color: #fff;margin: 0 -15px 10px -15px;">
         <div class="row" style="margin: 0;border-top: 1px solid #eee;">
             <div style="padding-right: 10px;float: left;padding-left: 10px;"><img style="width: 40px;" class="img-responsive" src="/images/member/zeng.png"></div>
-            <div style="float: left;line-height: 40px;"><?=$model['giveaway']?>节操币</div>
+            <div style="float: left;line-height: 40px;"><?=$query['giveaway']?>节操币</div>
         </div>
         <div class="row" style="margin: 0;border-top: 1px solid #eee;">
             <div style="padding-right: 10px;float: left;padding-left: 10px;"><img style="width: 40px;" class="img-responsive" src="/images/member/zeng.png"></div>
-            <div style="float: left;line-height: 40px;"><?=$model['giveaway_qun']?></div>
+            <div style="float: left;line-height: 40px;"><?=$query['giveaway_qun']?></div>
         </div>
     </div>
     <div class="row">
@@ -146,6 +153,7 @@ $pre_url = Yii::$app->params['threadimg'];
     </div>
     <?php endforeach;?>
 </div>
+<?php if(!Yii::$app->user->isGuest):?>
 <div style="position: fixed;bottom:0;left:0;width: 100%;padding: 0;">
     <a data-title="客服微信" data-lightbox="fads" href="/images/weixin/thirteenpingtai.jpg" style="float: left;width: 30%;background-color: #fff;padding:10px;font-size: 16px;border-top: 1px solid #ddd;">
         <img style="width: 30px;" src="/images/member/chat.png"> 咨询
@@ -154,3 +162,4 @@ $pre_url = Yii::$app->params['threadimg'];
         升级会员 >>>
     </a>
 </div>
+<?php endif;?>
