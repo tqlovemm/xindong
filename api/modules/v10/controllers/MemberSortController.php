@@ -44,7 +44,7 @@ class MemberSortController extends Controller
         $data['jiecao_coin'] = $res2['jiecao_coin'];
         array_fill_keys($data,$res2['jiecao_coin']);
         $data['member'] = $res;
-        $data['is_status'] = 1; //1审核环境；0生产环境
+        $data['is_status'] = 0; //1审核环境；0生产环境
         return $data;
 
     }
@@ -60,7 +60,7 @@ class MemberSortController extends Controller
         $lunbo = (new Query())->from('{{%app_lunbo}}')->where('')->all();
 
         //审核状态 1 ，生产状态 0
-        $status = 1;
+        $status = 0;
 
         if($status == 1){
 
