@@ -148,14 +148,14 @@ $uid = !empty(Yii::$app->request->get('uid'))?"&top=1&uid=".Yii::$app->request->
     <?php endforeach;?>
 </div>
 <div style="position: fixed;bottom:0;left:0;width: 100%;padding: 0;">
-    <a <?php if(!Yii::$app->user->isGuest):?> data-title="客服微信" data-lightbox="fads" href="/images/weixin/thirteenpingtai.jpg" <?php else:?> onclick="consultation()" <?php endif;?> style="float: left;width: 30%;background-color: #fff;padding:10px;font-size: 16px;border-top: 1px solid #ddd;">
+    <a <?php if(!Yii::$app->user->isGuest):?> data-title="客服微信" data-lightbox="fads" href="/images/weixin/thirteenpingtai.jpg" <?php else:?> onclick="callOC('alert',{'message':'你好么'})" <?php endif;?> style="float: left;width: 30%;background-color: #fff;padding:10px;font-size: 16px;border-top: 1px solid #ddd;">
         <img style="width: 30px;" src="/images/member/chat.png"> 咨询
     </a>
     <a <?php if(!Yii::$app->user->isGuest): if(Yii::$app->user->identity->groupid<intval($model['groupid'])):?>href="<?=\yii\helpers\Url::to(['pay-type','id'=>$model['id']])?>"<?php else:?>data-confirm="您无需升级"<?php endif; else:?> onclick="upgrade()" <?php endif;?> style="float: left;width: 70%;background-color: #000;padding:10px;font-size: 24px;color:#FFA72A;text-align: center;line-height: 30px;display: block;border-top: 1px solid #000;">
         升级会员 >>>
     </a>
 </div>
-<script>
+<script type="text/javascript">
 
     function consultation() {
         window.webkit.messageHandlers.consultation.postMessage();
@@ -164,5 +164,14 @@ $uid = !empty(Yii::$app->request->get('uid'))?"&top=1&uid=".Yii::$app->request->
     function upgrade() {
         window.webkit.messageHandlers.upgrade.postMessage();
     }
-
+    function callOC(func,param){
+        var url= "func=" + func;
+        for(var i in param)
+        {
+            url = url + "&" + i + "=" + param[i];
+            //alert(i);
+            //alert(param[i]);
+        }
+        window.webkit.messageHandlers.Native.postMessage(url);
+    }
 </script>
