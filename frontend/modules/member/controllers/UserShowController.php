@@ -191,7 +191,7 @@ class UserShowController extends Controller
             default :$level = '私人订制';
         }
 
-        return $this->render('update-details',['model'=>$model,'update_id'=>$query_app,'model_member'=>$model_member,'group_id'=>$group_id,'need_price'=>$need_price,'level'=>$level,'query'=>$query]);
+        return $this->render('update-details',['model'=>$model,'update_id'=>$query_app->id,'model_member'=>$model_member,'group_id'=>$group_id,'need_price'=>$need_price,'level'=>$level,'query'=>$query]);
 
     }
 
