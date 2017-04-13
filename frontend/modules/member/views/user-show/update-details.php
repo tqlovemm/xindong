@@ -37,7 +37,7 @@ $join_member_process = explode('@',$query['member_introduce']);
 $join_member_permissions = explode('@',$query['permissions']);
 $pre_url = Yii::$app->params['threadimg'];
 $price = isset($model['price'])?$model['price']:$query['price_1'];
-$uid = !empty(Yii::$app->request->get('uid'))?"&uid=".Yii::$app->request->get('uid'):"";
+$uid = !empty(Yii::$app->request->get('uid'))?"&top=1&uid=".Yii::$app->request->get('uid'):"";
 ?>
 <div class="member-index" style="padding-bottom: 50px;">
     <?php if(empty(Yii::$app->request->get('top'))):?>
