@@ -86,7 +86,7 @@ $this->registerCss("
             </a>
         </div>
         <div class="col-sm-6 col-xs-6 info-box box3">
-            <a href="user-show">
+            <a href="user-show/member-show">
                 <div class="icon-bar">
                     <img style="width: 40px;" class="img-responsive center-block"
                          src="<?= Yii::getAlias("@web") ?>/images/member/gaoduan.png">
