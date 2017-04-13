@@ -158,11 +158,11 @@ $uid = !empty(Yii::$app->request->get('uid'))?"&top=1&uid=".Yii::$app->request->
 <script>
 
     function consultation() {
-        window.webkit.messageHandlers.Native.postMessage();
+        window.webkit.messageHandlers.consultation.postMessage();
     }
 
     function upgrade() {
-        window.webkit.messageHandlers.Native.postMessage();
+        window.webkit.messageHandlers.upgrade.postMessage();
     }
 
 </script>
