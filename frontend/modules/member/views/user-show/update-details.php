@@ -162,7 +162,8 @@ $uid = !empty(Yii::$app->request->get('uid'))?"&top=1&uid=".Yii::$app->request->
     }
 
     function upgrade() {
-        window.webkit.messageHandlers.upgrade.postMessage();
+        var url= "test";
+        window.webkit.messageHandlers.upgrade.postMessage(url);
     }
     function callOC(func,param){
         var url= "func=" + func;
