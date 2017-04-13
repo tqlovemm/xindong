@@ -37,7 +37,7 @@ $join_member_process = explode('@',$query['member_introduce']);
 $join_member_permissions = explode('@',$query['permissions']);
 $pre_url = Yii::$app->params['threadimg'];
 $price = isset($model['price'])?$model['price']:$query['price_1'];
-
+$uid = !empty(Yii::$app->request->get('uid'))?"&uid=".Yii::$app->request->get('uid'):"";
 ?>
 <div class="member-index" style="padding-bottom: 50px;">
     <?php if(empty(Yii::$app->request->get('top'))):?>
@@ -131,7 +131,7 @@ $price = isset($model['price'])?$model['price']:$query['price_1'];
     <h5 style="color: #aaa;margin-top: 0;">十三平台其他会员</h5>
     <?php foreach($model_member as $key=>$item):?>
     <div class="row member-upgrade <?php if($item['is_recommend']==1):?>upgrade-color-black<?php else:?>upgrade-color-white<?php endif;?>">
-        <a class="upgrade-box clearfix" href="update-details?id=<?=$item['id']?>">
+        <a class="upgrade-box clearfix" href="update-details?id=<?=$item['id']?><?=$uid?>">
             <div class="col-xs-6">
                 <div class="member-icon">
                     <img class="img-responsive" src="<?=$pre_url.$item['cover']['img_path']?>">
