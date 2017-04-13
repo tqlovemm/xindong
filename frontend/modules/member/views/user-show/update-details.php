@@ -172,6 +172,6 @@ $uid = !empty(Yii::$app->request->get('uid'))?"&top=1&uid=".Yii::$app->request->
             //alert(i);
             //alert(param[i]);
         }
-        window.webkit.messageHandlers.Native.postMessage(url);
+        window.webkit.messageHandlers.consultation.postMessage(url);
     }
 </script>
