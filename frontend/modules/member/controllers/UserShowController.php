@@ -11,6 +11,7 @@ namespace frontend\modules\member\controllers;
 use app\components\WxpayComponents;
 use backend\modules\setting\models\MemberSorts;
 use frontend\models\UserProfile;
+use frontend\modules\member\Member;
 use frontend\modules\member\models\UserVipTempAdjust;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -170,6 +171,7 @@ class UserShowController extends Controller
         $model_member = MemberSorts::find()->where(['flag'=>0])->andWhere("id!=$id")->with('cover')->orderBy("is_recommend desc")->asArray()->all();
         $query = MemberSorts::findOne($id);
 
+        $query_app = MemberSorts::findOne(['member_name'=>$query->member_name,'flag'=>1]);
         $model = $this->getPrice($id,$uid);
         $need_price = $this->getUpgradePrice($id,$uid)-$this->getUpgradePrice(null,$uid);
 
@@ -189,7 +191,7 @@ class UserShowController extends Controller
             default :$level = '私人订制';
         }
 
-        return $this->render('update-details',['model'=>$model,'model_member'=>$model_member,'group_id'=>$group_id,'need_price'=>$need_price,'level'=>$level,'query'=>$query]);
+        return $this->render('update-details',['model'=>$model,'update_id'=>$query_app,'model_member'=>$model_member,'group_id'=>$group_id,'need_price'=>$need_price,'level'=>$level,'query'=>$query]);
 
     }
 
