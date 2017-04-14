@@ -54,7 +54,13 @@ class FormThread extends ActiveRecord
         $this->_thumbs_up = FormThreadThumbsUp::findAll(['thread_id'=>$this->id]);
         $this->_comment = FormThreadComments::findAll(['thread_id'=>$this->id]);
         return [
-            'wid'=>"id",'user_id', 'content', 'created_at','updated_at','sex','tag','is_top','type',
+            'wid'=>"id",'user_id', 'content','sex','tag','is_top','type',
+            'created_at'=>function(){
+                return date('Y-m-d H:i:s',$this->created_at);
+            },
+            'updated_at'=>function(){
+                return date('Y-m-d H:i:s',$this->updated_at);
+            },
             'nickname'=>function(){return $this->_user->username;},
             'avatar'=>function(){return $this->_user->avatar;},
             'address'=>function(){

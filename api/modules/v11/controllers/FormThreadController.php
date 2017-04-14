@@ -107,8 +107,6 @@ class FormThreadController extends ActiveController {
         $qn->delete('appimages',$avatar_path);
     }
 
-
-
     protected function findModel($id)
     {
         $modelClass = $this->modelClass;
