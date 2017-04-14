@@ -27,8 +27,9 @@ class FormThreadController extends ActiveController {
 
     public function actionIndex() {
 
+        $where = Yii::$app->request->get("where");
     	$model = $this->modelClass;
-        $query =  $model::find()->where(['type'=>0])->orderBy('is_top desc')->addOrderBy('created_at desc');
+        $query =  $model::find()->where(['type'=>0])->andWhere($where)->orderBy('is_top desc')->addOrderBy('created_at desc');
 
         return new CsvDataProvider([
             'query' =>  $query,
