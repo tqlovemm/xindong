@@ -43,10 +43,10 @@ class DatingSignupController extends Controller
 
         $model = new $this->modelClass();
         $model->load(Yii::$app->getRequest()->getBodyParams(),'');
-        $decode = new Decode();
+        /*$decode = new Decode();
         if(!$decode->decodeDigit($model->user_id)){
             Response::show(210,'参数不正确');
-        }
+        }*/
         $area_china = array(
             '美国','英国','荷兰','加拿大','比利时','澳洲','德国','法国','新西兰','马来西亚','西班牙','意大利','泰国','韩国','新加坡'
         );
@@ -57,10 +57,10 @@ class DatingSignupController extends Controller
         //用户信息
         $userInfo = Yii::$app->db->createCommand("select u.groupid,p.address,p.address_1,p.address_2,p.address_3 from {{%user}} as u left join {{%user_profile}} as p on p.user_id=u.id where u.id=$model->user_id")->queryOne();
 
-    /*    if(!empty($userInfo['address'])){
+        if(!empty($userInfo['address'])){
             $address_0 = $userInfo['address'];
             $address[] = $address_0;
-        }*/
+        }
 
         $girl_area = array($need_coin['title'],$need_coin['title2'],$need_coin['title3']);
         //是否报名成功
