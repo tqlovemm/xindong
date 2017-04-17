@@ -51,8 +51,8 @@ class FormThread extends ActiveRecord
 
         $this->_user_id = Yii::$app->request->get('user_id');
         $this->_user = User::findOne(['id'=>$this->user_id]);
-        $this->_thumbs_up = FormThreadThumbsUp::findAll(['thread_id'=>$this->id]);
-        $this->_comment = FormThreadComments::findAll(['thread_id'=>$this->id]);
+        $this->_thumbs_up = FormThreadThumbsUp::findAll(['thread_id'=>$this->wid]);
+        $this->_comment = FormThreadComments::findAll(['thread_id'=>$this->wid]);
         return [
             "wid",'user_id', 'content','sex','tag','is_top','type',
             'created_at'=>function(){
@@ -69,10 +69,10 @@ class FormThread extends ActiveRecord
                 return UserProfile::findOne(['user_id'=>$this->user_id])->address;
             },
             'imgItemsArray'=>function(){
-                return FormThreadImages::findAll(['thread_id'=>$this->id,'status'=>10]);
+                return FormThreadImages::findAll(['thread_id'=>$this->wid,'status'=>10]);
             },
             'liked'=>function(){
-                return empty(FormThreadThumbsUp::findOne(['thread_id'=>$this->id,'user_id'=>$this->_user_id]))?0:1;
+                return empty(FormThreadThumbsUp::findOne(['thread_id'=>$this->wid,'user_id'=>$this->_user_id]))?0:1;
             },
             'likeCount'=>function(){
                 return count($this->_thumbs_up);
