@@ -57,10 +57,10 @@ class DatingSignupController extends Controller
         //用户信息
         $userInfo = Yii::$app->db->createCommand("select u.groupid,p.address,p.address_1,p.address_2,p.address_3 from {{%user}} as u left join {{%user_profile}} as p on p.user_id=u.id where u.id=$model->user_id")->queryOne();
 
-        if(!empty($userInfo['address'])){
+        /*if(!empty($userInfo['address'])){
             $address_0 = $userInfo['address'];
             $address[] = $address_0;
-        }
+        }*/
 
         $girl_area = array($need_coin['title'],$need_coin['title2'],$need_coin['title3']);
         //是否报名成功
@@ -93,8 +93,7 @@ class DatingSignupController extends Controller
         }
 
         //觅约对象是否存在
-        $true = (new Query())->from('{{%weekly}}')->where(['number'=>$like_id])->one();
-        if(empty($true)){
+        if(empty($need_coin)){
             Response::show('205','保存失败','觅约对象不存在');
         }
 
@@ -109,8 +108,21 @@ class DatingSignupController extends Controller
         $need_coin['title2'] = $need_coin['title2'] ?$need_coin['title2'] :$need_coin['title'];
         $need_coin['title3'] = $need_coin['title3'] ?$need_coin['title3'] :$need_coin['title'];
         //判断地址
+        $addresses = array();
+        if(!empty($user_info['address_1'])){
 
-        if(!$this->check($address,$need_coin['title'])&&!$this->check($address,$need_coin['title2'])&&!$this->check($address,$need_coin['title3'])&&$userInfo['groupid'] == 3){
+            $address_1 = array_values(json_decode($user_info['address_1'],true));
+            $addresses = $address_1;
+        }
+        if(!empty($user_info['address_2'])){
+            $address_2 = array_values(json_decode($user_info['address_2'],true));
+            $addresses = array_merge($addresses,$address_2);
+        }
+        if(!empty($user_info['address_3'])){
+            $address_3 = array_values(json_decode($user_info['address_3'],true));
+            $addresses = array_merge($addresses,$address_3);
+        }
+        if(!$this->check($addresses,$need_coin['title'])&&!$this->check($addresses,$need_coin['title2'])&&!$this->check($addresses,$need_coin['title3'])&&$userInfo['groupid'] == 3){
 
             Response::show('207','保存失败',"等级不足，您当前等级只能觅约报名本地区$need_coin[expire]小时内的妹子");
         }
