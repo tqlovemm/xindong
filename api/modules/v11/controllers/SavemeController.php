@@ -1,6 +1,7 @@
 <?php
 namespace api\modules\v11\controllers;
 
+use common\Qiniu\QiniuUploader;
 use yii;
 use yii\db\Query;
 use yii\helpers\Response;
@@ -56,7 +57,6 @@ class SavemeController extends ActiveController {
     	$model->updated_at = time();
     	$model->status = 1;
 		if(!$model->save()){
-			// return $model->getFirstErrors();
 			Response::show('201','操作失败',"发布失败");
         }
         $insertid = Yii::$app->db->getLastInsertId();
@@ -86,14 +86,16 @@ class SavemeController extends ActiveController {
     }
 
     protected function UploadImg($img,$user_id){
+        $pre_url = Yii::$app->params['test'];
+        $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
         $img = base64_decode($img);
         $path = '/uploads/saveme/';
         $savepath = Yii::getAlias('@apiweb').$path;
         $t = $user_id.'-'.uniqid().'.png';
         $savename = $savepath.$t;
         if(file_put_contents($savename,$img,FILE_USE_INCLUDE_PATH)){
-            $url = Yii::$app->params['hostname'].$path.$t;
-            return $url;
+            $qiniu = $qn->upload_app('test',$path.$t,$savename);
+            return $pre_url.$qiniu['key'];
         }else{
             return "";
         }
