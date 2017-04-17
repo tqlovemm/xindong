@@ -2,6 +2,7 @@
 namespace api\modules\v11\controllers;
 
 use api\modules\v11\models\FormThreadImages;
+use api\modules\v2\models\Ufollow;
 use common\Qiniu\QiniuUploader;
 use yii;
 use yii\rest\ActiveController;
@@ -45,13 +46,20 @@ class FormThreadController extends ActiveController {
     public function actionIndex() {
 
     	$model = $this->modelClass;
-        $getData = Yii::$app->request->get('sex');
-        if(!isset($getData)){
-            $getData = [0,1,2];
+        $getData = Yii::$app->request->get();
+        $query =  $model::find()->where(['type'=>[0,1]]);
+
+        if(!isset($getData['sex'])){
+            $sex_filter = [0,1,2];
         }else{
-            $getData = [(integer)$getData,2];
+            $sex_filter = [(integer)$getData,2];
         }
-        $query =  $model::find()->where(['type'=>[0,1]])->andWhere(['sex'=>$getData])->orderBy('is_top desc')->addOrderBy('created_at desc');
+        $query =  $query->andWhere(['sex'=>$sex_filter]);
+
+        if(isset($getData['follow'])){
+            $follow = yii\helpers\ArrayHelper::map(Ufollow::findAll(['user_id'=>$getData['user_id']]),'people_id','people_id');
+            $query =  $query->andWhere(['user_id'=>$follow]);
+        }
 
         return new CsvDataProvider([
             'query' =>  $query,
@@ -65,6 +73,7 @@ class FormThreadController extends ActiveController {
             'sort' => [
                 'defaultOrder' => [
                     'created_at' => SORT_DESC,
+                    'is_top' => SORT_DESC,
                 ]
             ],
         ]);
@@ -144,5 +153,6 @@ class FormThreadController extends ActiveController {
             throw new yii\web\NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }
 
