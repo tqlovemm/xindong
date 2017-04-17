@@ -7,7 +7,7 @@ use yii\helpers\Response;
 use yii\rest\ActiveController;
 use yii\data\ActiveDataProvider;
 use yii\myhelper\Decode;
-use api\modules\v11\models\saveme;
+use api\modules\v11\models\Saveme;
 
 class SavemeInfoController extends ActiveController {
     public $modelClass = 'api\modules\v11\models\SavemeInfo';
@@ -35,7 +35,7 @@ class SavemeInfoController extends ActiveController {
     }
     public function actionCreate() {
         $model = new $this->modelClass();
-        $model2 = new saveme;
+        $model2 = new Saveme;
         $model->load(Yii::$app->request->getBodyParams(), '');
         $sid = $model->saveme_id;
         $aid = $model->apply_uid;
