@@ -6,6 +6,13 @@ use common\Qiniu\QiniuUploader;
 use yii;
 use yii\rest\ActiveController;
 use api\components\CsvDataProvider;
+use yii\filters\RateLimiter;
+use yii\data\ActiveDataProvider;
+use yii\web\NotFoundHttpException;
+use yii\filters\auth\CompositeAuth;
+use yii\filters\auth\HttpBasicAuth;
+use yii\filters\auth\HttpBearerAuth;
+use yii\filters\auth\QueryParamAuth;
 
 class FormThreadController extends ActiveController {
 
@@ -16,7 +23,16 @@ class FormThreadController extends ActiveController {
     ];
     public function behaviors() {
         $behaviors = parent::behaviors();
-        $behaviors['contentNegotiator']['formats']['text/html'] = yii\web\Response::FORMAT_HTML;
+        $behaviors['authenticator'] = [
+            'class' => CompositeAuth::className(),
+            'authMethods' => [
+                QueryParamAuth::className(),
+            ],
+        ];
+        $behaviors['rateLimiter'] = [
+            'class' => RateLimiter::className(),
+            'enableRateLimitHeaders' => true,
+        ];
         return $behaviors;
     }
 
@@ -26,11 +42,12 @@ class FormThreadController extends ActiveController {
         return $action;
     }
 
-
     public function actionIndex() {
 
     	$model = $this->modelClass;
-        $query =  $model::find()->where(['type'=>0])->orderBy('is_top desc')->addOrderBy('created_at desc');
+        $filter = Yii::$app->request->get();
+
+        $query =  $model::find()->where(['type'=>0,'sex'=>2])->orWhere([$filter['filter']=>$filter['parameter']])->orderBy('is_top desc')->addOrderBy('created_at desc');
 
         return new CsvDataProvider([
             'query' =>  $query,

@@ -40,7 +40,7 @@ class Saveme extends ActiveRecord
     public function fields(){
 
         return [
-            'id','created_id', 'address', 'content', 'created_at','end_time', 'status', 'photos',
+            'saveme_id'=>'id','created_id', 'address', 'content', 'created_at','end_time', 'status', 'photos','users',
         ];
     }
 
@@ -65,5 +65,12 @@ class Saveme extends ActiveRecord
         $photo = Yii::$app->db->createCommand("select path from {{%saveme_img}} where saveme_id=$this->id")->queryAll();
 
         return $photo;
+    }
+
+
+    public function getusers(){
+        $user = Yii::$app->db->createCommand("select nickname from {{%user}} where id=$this->created_id")->queryAll();
+
+        return $user;
     }
 }

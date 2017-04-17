@@ -3,6 +3,7 @@
 namespace api\modules\v11\models;
 
 use app\components\db\ActiveRecord;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "pre_user".
@@ -12,8 +13,9 @@ use app\components\db\ActiveRecord;
  * @property string $username
  * @property string $nickname
  * @property string $avatar
+ * @property string $auth_key
  */
-class User extends ActiveRecord
+class User extends ActiveRecord implements IdentityInterface
 {
     /**
      * @inheritdoc
@@ -23,6 +25,30 @@ class User extends ActiveRecord
         return '{{%user}}';
     }
 
+    public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        return static::findOne(['cid' => $token]);
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getAuthKey()
+    {
+        return $this->auth_key;
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        return $this->auth_key === $authKey;
+    }
     /**
      * @inheritdoc
      */

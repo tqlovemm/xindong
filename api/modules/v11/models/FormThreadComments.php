@@ -34,7 +34,7 @@ class FormThreadComments extends ActiveRecord
     public function rules()
     {
         return [
-            [['thread_id', 'comment'], 'required'],
+            [['thread_id', 'comment','first_id'], 'required'],
             [['thread_id', 'created_at', 'flag','updated_at','first_id','second_id'], 'integer'],
             [['comment'], 'string']
         ];

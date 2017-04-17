@@ -41,7 +41,7 @@ class FormThreadImages extends ActiveRecord
     public function fields(){
 
         return [
-            'id','thread_id', 'img_path','img_width','img_height'
+            'img_id'=>'id','thread_id', 'img_path','img_width','img_height'
         ];
     }
 

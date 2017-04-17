@@ -56,9 +56,10 @@ return [
     'components' => [
         'db' => $db,
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'api\modules\v11\models\User',
             'enableAutoLogin' => true,
             'enableSession' => false,
+            'loginUrl'=>null,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -179,7 +180,7 @@ return [
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => [
-                        'v11/saveme','v11/saveme-comment','v11/saveme-info','v11/form-thread',
+                        'v11/saveme','v11/saveme-comment','v11/saveme-info','v11/form-thread','v11/form','v11/form-thread-comments',
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\w+>',
