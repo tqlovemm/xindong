@@ -1,6 +1,7 @@
 <?php
 namespace api\modules\v11\controllers;
 
+use api\modules\v11\models\FormThread;
 use yii;
 use yii\rest\ActiveController;
 use yii\filters\RateLimiter;
@@ -42,8 +43,14 @@ class FormThreadThumbsUpController extends ActiveController {
     	$model->load(Yii::$app->request->getBodyParams(), '');
         if (!$model->save()) {
             return array_values($model->getFirstErrors())[0];
+        }else{
+            $thread = FormThread::findOne($model->thread_id);
+            $thread->thumbs_count+=1;
+            if($thread->update()){
+                return $model;
+            }
+            return $thread->errors;
         }
-        return $model;
     }
 
     public function actionDelete($id)

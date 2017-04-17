@@ -18,6 +18,8 @@ use api\modules\v9\models\UserProfile;
  * @property integer $type
  * @property integer $status
  * @property integer $sex
+ * @property integer $read_count
+ * @property integer $thumbs_count
  */
 class FormThread extends ActiveRecord
 {
@@ -41,7 +43,7 @@ class FormThread extends ActiveRecord
     {
         return [
             [['user_id', 'sex'], 'required'],
-            [['user_id', 'type', 'is_top', 'sex', 'created_at', 'status','updated_at'], 'integer'],
+            [['user_id', 'type', 'is_top', 'sex','read_count','thumbs_count','created_at', 'status','updated_at'], 'integer'],
             [['content','base64Images'], 'string'],
             [['lat_long','tag'], 'string','max'=>128]
         ];
@@ -54,38 +56,25 @@ class FormThread extends ActiveRecord
         $this->_thumbs_up = FormThreadThumbsUp::findAll(['thread_id'=>$this->wid]);
         $this->_comment = FormThreadComments::findAll(['thread_id'=>$this->wid]);
         return [
-            "wid",'user_id', 'content','sex','tag','is_top','type',
-            'created_at'=>function(){
-                return date('Y-m-d H:i:s',$this->created_at);
-            },
-            'updated_at'=>function(){
-                return date('Y-m-d H:i:s',$this->updated_at);
-            },
+            "wid",'user_id', 'content','sex','tag','is_top','type','read_count','thumbs_count','created_at',
+
             'nickname'=>function(){return $this->_user->username;},
 
             'avatar'=>function(){return $this->_user->avatar;},
 
-            'address'=>function(){
-                return UserProfile::findOne(['user_id'=>$this->user_id])->address;
-            },
-            'imgItemsArray'=>function(){
-                return FormThreadImages::findAll(['thread_id'=>$this->wid,'status'=>10]);
-            },
-            'liked'=>function(){
-                return empty(FormThreadThumbsUp::findOne(['thread_id'=>$this->wid,'user_id'=>$this->_user_id]))?0:1;
-            },
-            'likeCount'=>function(){
-                return count($this->_thumbs_up);
-            },
-            'likeItemsArray'=>function(){
-                return $this->_thumbs_up;
-            },
-            'commentCount'=>function(){
-                return count($this->_comment);
-            },
-            'commentItemsArray'=>function(){
-                return $this->_comment;
-            },
+            'address'=>function(){return UserProfile::findOne(['user_id'=>$this->user_id])->address;},
+
+            'imgItemsArray'=>function(){return FormThreadImages::findAll(['thread_id'=>$this->wid,'status'=>10]);},
+
+            'liked'=>function(){return empty(FormThreadThumbsUp::findOne(['thread_id'=>$this->wid,'user_id'=>$this->_user_id]))?0:1;},
+
+            'likeCount'=>function(){return count($this->_thumbs_up);},
+
+            'likeItemsArray'=>function(){return $this->_thumbs_up;},
+
+            'commentCount'=>function(){return count($this->_comment);},
+
+            'commentItemsArray'=>function(){return $this->_comment;},
         ];
     }
 
@@ -106,6 +95,8 @@ class FormThread extends ActiveRecord
             'tag' => 'Tag',
             'type' => 'Type',
             'lat_long' => 'Lat Long',
+            'read_count' => 'Read Count',
+            'thumbs_count' => 'Thumbs Count',
             'base64Images' => 'Base64 Images',
         ];
     }

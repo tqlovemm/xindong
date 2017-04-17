@@ -46,10 +46,10 @@ class FormThreadController extends ActiveController {
 
     	$model = $this->modelClass;
         $getData = Yii::$app->request->get('sex');
-        if(empty($getData)){
+        if(!isset($getData)){
             $getData = [0,1,2];
         }else{
-            $getData = [$getData,2];
+            $getData = [(integer)$getData,2];
         }
         $query =  $model::find()->where(['type'=>[0,1]])->andWhere(['sex'=>$getData])->orderBy('is_top desc')->addOrderBy('created_at desc');
 
@@ -70,6 +70,10 @@ class FormThreadController extends ActiveController {
         ]);
     }
 
+    /**
+     * @return mixed
+     * post 提交，必填字段，user_id,content,sex
+     */
     public function actionCreate() {
 
         $pre_url = Yii::$app->params['test'];
@@ -80,28 +84,30 @@ class FormThreadController extends ActiveController {
             return array_values($model->getFirstErrors())[0];
         }else{
 
-            $query = new FormThreadImages();
-            $images = explode('@',$model->base64Images);
-            $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+            $images = array_filter(explode('@',$model->base64Images));
+            if(!empty($images)){
+                $query = new FormThreadImages();
+                $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
 
-            foreach ($images as $image){
+                foreach ($images as $image){
 
-                $path = '/uploads/user/form_thread/'.$model->user_id.'_'.uniqid('',true).'.png';
-                $savePath = Yii::getAlias('@apiweb').$path;
+                    $path = '/uploads/user/form_thread/'.$model->user_id.'_'.uniqid('',true).'.png';
+                    $savePath = Yii::getAlias('@apiweb').$path;
 
-                if(file_put_contents($savePath,base64_decode($image),FILE_USE_INCLUDE_PATH)){
+                    if(file_put_contents($savePath,base64_decode($image),FILE_USE_INCLUDE_PATH)){
 
-                    $imgInfo = getimagesize($savePath);
-                    $qiniu = $qn->upload_app('test',$path,$savePath);
-                    $_query = clone $query;
-                    $_query->thread_id = $model->id;
-                    $_query->img_path = $pre_url.$qiniu['key'];
-                    $_query->img_width = $imgInfo[0];
-                    $_query->img_height = $imgInfo[1];
-                    if($_query->save()){
-                        @unlink($savePath);
-                    }else{
-                        $_query->errors;
+                        $imgInfo = getimagesize($savePath);
+                        $qiniu = $qn->upload_app('test',$path,$savePath);
+                        $_query = clone $query;
+                        $_query->thread_id = $model->wid;
+                        $_query->img_path = $pre_url.$qiniu['key'];
+                        $_query->img_width = $imgInfo[0];
+                        $_query->img_height = $imgInfo[1];
+                        if($_query->save()){
+                            @unlink($savePath);
+                        }else{
+                            $_query->errors;
+                        }
                     }
                 }
             }
