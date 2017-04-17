@@ -52,15 +52,24 @@ class DatingSignupController extends Controller
         );
         $user_id = $model->user_id;
         $like_id = $model->like_id;
-        $address = array();
         $need_coin = (new Query())->from('{{%weekly}}')->where(['number'=>$like_id])->one();
         //用户信息
-        $userInfo = Yii::$app->db->createCommand("select u.groupid,p.address,p.address_1,p.address_2,p.address_3 from {{%user}} as u left join {{%user_profile}} as p on p.user_id=u.id where u.id=$model->user_id")->queryOne();
+        $user_info = Yii::$app->db->createCommand("select u.groupid,p.address_1,p.address_2,p.address_3 from {{%user}} as u left join {{%user_profile}} as p on p.user_id=u.id where u.id=$model->user_id")->queryOne();
 
-        /*if(!empty($userInfo['address'])){
-            $address_0 = $userInfo['address'];
-            $address[] = $address_0;
-        }*/
+        //判断地址
+        $addresses = array();
+        if(!empty($user_info['address_1'])){
+            $address_1 = array_values(json_decode($user_info['address_1'],true));
+            $addresses = $address_1;
+        }
+        if(!empty($user_info['address_2'])){
+            $address_2 = array_values(json_decode($user_info['address_2'],true));
+            $addresses = array_merge($addresses,$address_2);
+        }
+        if(!empty($user_info['address_3'])){
+            $address_3 = array_values(json_decode($user_info['address_3'],true));
+            $addresses = array_merge($addresses,$address_3);
+        }
 
         $girl_area = array($need_coin['title'],$need_coin['title2'],$need_coin['title3']);
         //是否报名成功
@@ -100,33 +109,18 @@ class DatingSignupController extends Controller
         //判断觅约时间是否过期
         $expire = ($need_coin['updated_at']+$need_coin['expire']*3600)<time();
         //return $area_china;
-        $gong = array_intersect($area_china,$girl_area,$address);
-        if($expire && $userInfo['groupid'] == 3 && empty($gong)){
+        $gong = array_intersect($area_china,$girl_area,$addresses);
+        if($expire && $user_info['groupid'] == 3 && empty($gong)){
             Response::show('206','保存失败',"等级不足，您只能觅约本地区$need_coin[expire]小时内的妹子");
         }
 
         $need_coin['title2'] = $need_coin['title2'] ?$need_coin['title2'] :$need_coin['title'];
         $need_coin['title3'] = $need_coin['title3'] ?$need_coin['title3'] :$need_coin['title'];
-        //判断地址
-        $addresses = array();
-        if(!empty($user_info['address_1'])){
 
-            $address_1 = array_values(json_decode($user_info['address_1'],true));
-            $addresses = $address_1;
-        }
-        if(!empty($user_info['address_2'])){
-            $address_2 = array_values(json_decode($user_info['address_2'],true));
-            $addresses = array_merge($addresses,$address_2);
-        }
-        if(!empty($user_info['address_3'])){
-            $address_3 = array_values(json_decode($user_info['address_3'],true));
-            $addresses = array_merge($addresses,$address_3);
-        }
-        if(!$this->check($addresses,$need_coin['title'])&&!$this->check($addresses,$need_coin['title2'])&&!$this->check($addresses,$need_coin['title3'])&&$userInfo['groupid'] == 3){
 
+        if(!$this->check($addresses,$need_coin['title'])&&!$this->check($addresses,$need_coin['title2'])&&!$this->check($addresses,$need_coin['title3'])&&$user_info['groupid'] == 3){
             Response::show('207','保存失败',"等级不足，您当前等级只能觅约报名本地区$need_coin[expire]小时内的妹子");
         }
-
         //保存数据
 
         if(!$model->save()){
@@ -156,7 +150,6 @@ class DatingSignupController extends Controller
     function check($add,$area){
         foreach($add as $list){
             if(strpos($list,$area)!==false){
-
                 return true;
             }
         }
