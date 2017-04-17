@@ -47,14 +47,19 @@ return [
             'basePath' => '@app/modules/v10',
             'class' => 'api\modules\v10\Module'
         ],
+        'v11' => [
+            'basePath' => '@app/modules/v11',
+            'class' => 'api\modules\v11\Module'
+        ],
 
     ],
     'components' => [
         'db' => $db,
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'api\modules\v11\models\User',
             'enableAutoLogin' => true,
             'enableSession' => false,
+            'loginUrl'=>null,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -166,6 +171,16 @@ return [
                         'v10/change-user-info','v10/match','v10/judge','v10/message','v10/message2','v10/judge','v10/member2',
                         'v10/user-info','v10/accusation','v10/order','v10/reply','v10/user-info','v10/user5','v10/get-info','v10/user-login',
                         'v10/register','v10/third-party','v10/member-sort-second',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\w+>',
+
+                    ]
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => [
+                        'v11/saveme','v11/saveme-comment','v11/saveme-info','v11/form-thread','v11/form','v11/form-thread-comments',
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\w+>',

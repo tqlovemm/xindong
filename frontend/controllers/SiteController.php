@@ -403,6 +403,10 @@ class SiteController extends BaseController
 
         $user_id = Yii::$app->user->id;
         $user = new \backend\models\User();
+        $user_number = $user->getNumber($user_id);
+        if(empty($user_number)){
+            return "您的网站编号未绑定请联系客服修改";
+        }
         $user_wx = UserWeichat::findOne(['number'=>$user->getNumber($user_id)]);
         if(empty($user_wx)){
             return $this->redirect('/weixin/firefighters/index-test');

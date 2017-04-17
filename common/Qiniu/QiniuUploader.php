@@ -58,6 +58,7 @@ class QiniuUploader
         }
 
     }
+
     public function upload_app($bucket,$key,$filePath){
 
         $upToken = $this->Auth()->uploadToken($bucket);
@@ -68,14 +69,12 @@ class QiniuUploader
         } else {
             return $ret;
         }
-
     }
+
     public function delete($bucket,$key){
 
         $deleteImg = new BucketManager($this->Auth());
         $deleteImg->delete($bucket,$key);
-
-
     }
 
 
