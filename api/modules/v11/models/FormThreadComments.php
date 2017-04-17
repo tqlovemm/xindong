@@ -7,7 +7,7 @@ use app\components\db\ActiveRecord;
 /**
  * This is the model class for table "pre_app_form_thread_comments".
  *
- * @property integer $id
+ * @property integer $comment_id
  * @property integer $thread_id
  * @property string $comment
  * @property integer $updated_at
@@ -46,7 +46,7 @@ class FormThreadComments extends ActiveRecord
         $this->_second = User::findOne(['id'=>$this->second_id]);
 
         $data = array(
-            'comment_id'=>'id','words_id'=>'thread_id', 'comment', 'created_at','updated_at', 'flag','first_id','second_id',
+            'comment_id','words_id'=>'thread_id', 'comment', 'created_at','updated_at', 'flag','first_id','second_id',
             'firstUrl'=>function(){
                 return $this->_first->avatar;
             },
@@ -70,7 +70,7 @@ class FormThreadComments extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'comment_id' => 'Comment ID',
             'thread_id' => 'Thread ID',
             'comment' => 'Comment',
             'first_id'=>'First ID',

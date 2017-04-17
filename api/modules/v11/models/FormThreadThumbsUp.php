@@ -6,7 +6,7 @@ use app\components\db\ActiveRecord;
 /**
  * This is the model class for table "pre_app_form_thread_thumbs_up".
  *
- * @property integer $id
+ * @property integer $thumbs_id
  * @property integer $thread_id
  * @property integer $user_id
  * @property integer $created_at
@@ -30,13 +30,20 @@ class FormThreadThumbsUp extends ActiveRecord
         return [
             [['thread_id', 'user_id'], 'required'],
             [['thread_id', 'user_id', 'created_at','updated_at'], 'integer'],
+            ['thread_id','unique'],
         ];
+    }
+    public function unique(){
+        $query = $this->findOne(['thread_id'=>$this->thread_id,'user_id'=>$this->user_id]);
+        if(!empty($query)){
+            $this->addError('user_id', '已经点赞');
+        }
     }
 
     public function fields(){
 
         return [
-            'user_id',
+            'user_id','created_at','updated_at',
             'avatar'=>function(){
                 return User::findOne(['id'=>$this->user_id])->avatar;
             },
@@ -49,7 +56,7 @@ class FormThreadThumbsUp extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'thumbs_id' => 'Thumbs ID',
             'thread_id' => 'Thread ID',
             'user_id' => 'User ID',
             'updated_at' => 'Updated At',

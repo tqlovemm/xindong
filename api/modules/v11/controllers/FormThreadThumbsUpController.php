@@ -8,9 +8,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\QueryParamAuth;
 
-class FormThreadCommentsController extends ActiveController {
+class FormThreadThumbsUpController extends ActiveController {
 
-    public $modelClass = 'api\modules\v11\models\FormThreadComments';
+    public $modelClass = 'api\modules\v11\models\FormThreadThumbsUp';
     public $serializer = [
         'class' => 'yii\rest\Serializer',
         'collectionEnvelope' => 'items',
@@ -50,8 +50,10 @@ class FormThreadCommentsController extends ActiveController {
     {
         $model = $this->findModel($id);
         $get = Yii::$app->request->getBodyParams();
-        if($get['user_id']==$model->first_id){
+        if($get['user_id']==$model->user_id){
             return $model->delete();
+        }else{
+            return 0;
         }
     }
 

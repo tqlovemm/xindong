@@ -7,7 +7,7 @@ use app\components\db\ActiveRecord;
 /**
  * This is the model class for table "pre_app_form_thread_images".
  *
- * @property integer $id
+ * @property integer $img_id
  * @property integer $thread_id
  * @property string $img_path
  * @property integer $img_width
@@ -41,7 +41,7 @@ class FormThreadImages extends ActiveRecord
     public function fields(){
 
         return [
-            'img_id'=>'id','thread_id', 'img_path','img_width','img_height'
+            'img_id','thread_id', 'img_path','img_width','img_height'
         ];
     }
 
@@ -51,7 +51,7 @@ class FormThreadImages extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'img_id' => 'Img ID',
             'thread_id' => 'Thread ID',
             'img_path' => 'Img Path',
             'img_width' => 'Img Width',

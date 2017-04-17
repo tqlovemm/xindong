@@ -7,7 +7,7 @@ use api\modules\v9\models\UserProfile;
 /**
  * This is the model class for table "pre_app_form_thread".
  *
- * @property integer $id
+ * @property integer $wid
  * @property integer $user_id
  * @property string $content
  * @property string $lat_long
@@ -95,7 +95,7 @@ class FormThread extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'wid' => 'WID',
             'user_id' => 'User ID',
             'sex' => 'Sex',
             'content' => 'Content',
