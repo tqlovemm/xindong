@@ -13,6 +13,7 @@ class Signup extends Model
     public $username;
     public $email;
     public $password;
+    public $nickname;
 
     /**
      * @inheritdoc
@@ -30,6 +31,7 @@ class Signup extends Model
             ['email', 'email'],
             ['email', 'unique', 'targetClass' => 'mdm\admin\models\User', 'message' => 'This email address has already been taken.'],
 
+            ['nickname', 'required'],
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
         ];
@@ -45,6 +47,7 @@ class Signup extends Model
         if ($this->validate()) {
             $user = new User();
             $user->username = $this->username;
+            $user->nickname = $this->nickname;
             $user->email = $this->email;
             $user->setPassword($this->password);
             $user->generateAuthKey();

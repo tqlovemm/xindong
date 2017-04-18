@@ -36,12 +36,7 @@ class UserController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['signup', 'reset-password', 'login', 'request-password-reset'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout', 'change-password', 'index', 'view', 'delete', 'activate'],
+                        'actions' => ['signup','logout', 'change-password', 'index', 'view', 'delete', 'activate'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -118,12 +113,12 @@ class UserController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+/*    public function actionDelete($id)
     {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
-    }
+    }*/
 
     /**
      * Signup new user
