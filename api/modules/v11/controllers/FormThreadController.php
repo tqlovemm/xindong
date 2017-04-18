@@ -7,6 +7,7 @@ use api\modules\v3\models\AppPush;
 use api\modules\v3\models\Push;
 use common\Qiniu\QiniuUploader;
 use yii;
+use yii\helpers\Response;
 use yii\rest\ActiveController;
 use api\components\CsvDataProvider;
 use yii\filters\RateLimiter;
@@ -21,8 +22,8 @@ class FormThreadController extends ActiveController {
 
     public $modelClass = 'api\modules\v11\models\FormThread';
     public $serializer = [
-        'class' => 'yii\rest\Serializer',
-        'collectionEnvelope' => 'items',
+        'class' => 'app\components\Serializer',
+        'collectionEnvelope' => 'data',
     ];
     public function behaviors() {
         $behaviors = parent::behaviors();
@@ -126,7 +127,7 @@ class FormThreadController extends ActiveController {
     	$model = new $this->modelClass();
     	$model->load(Yii::$app->request->getBodyParams(), '');
         if (!$model->save()) {
-            return $model->getFirstErrors();
+            Response::show('201',array_values($model->getFirstErrors())[0], $model->getFirstErrors());
         }else{
 
             $images = array_filter(explode('@',$model->base64Images));
@@ -166,10 +167,10 @@ class FormThreadController extends ActiveController {
                 //$extras = json_encode(array('push_title'=>urlencode($title),'push_post_id'=>urlencode($model->id),'push_content'=>urlencode($msg),'push_type'=>'SSCOMM_FANS_THREAD_DETAIL'));
                 //Yii::$app->db->createCommand("insert into {{%app_push}} (type,status,cid,title,msg,extras,platform,response,icon,created_at,updated_at) values('SSCOMM_FANS_THREAD_DETAIL',2,'$theCid','$title','$msg','$extras','all','NULL','$icon',$date,$date)")->execute();
             }*/
-
+            Response::show('200','ok');
         }
 
-        return $model;
+
     }
 
     /**
@@ -210,7 +211,9 @@ class FormThreadController extends ActiveController {
 
     public function actionDelete($id)
     {
-       return $this->findModel($id)->delete();
+       if($this->findModel($id)->delete()){
+           Response::show('200','ok');
+        }
     }
 
     protected function DeleteImg($imgs){
