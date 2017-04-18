@@ -30,7 +30,7 @@ class FormThreadController extends ActiveController {
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::className(),
             'authMethods' => [
-                QueryParamAuth::className(),
+                HttpBearerAuth::className(),
             ],
         ];
         $behaviors['rateLimiter'] = [
@@ -189,6 +189,13 @@ class FormThreadController extends ActiveController {
      */
     public function actionView($id) {
 
+       /* $request = Yii::$app->request->getHeaders();
+        $authHeader = $request->get('Authorization');
+        if ($authHeader !== null && preg_match("/^Bearer\\s+(.*?)$/", $authHeader, $matches)) {
+
+            return $authHeader;
+        }*/
+        //return $authHeader;
         $model = $this->findModel($id);
         return $model;
     }

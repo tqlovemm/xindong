@@ -8,6 +8,7 @@ use yii\filters\RateLimiter;
 use yii\web\NotFoundHttpException;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\QueryParamAuth;
+use yii\filters\auth\HttpBearerAuth;
 
 class FormThreadThumbsUpController extends ActiveController {
 
@@ -21,7 +22,7 @@ class FormThreadThumbsUpController extends ActiveController {
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::className(),
             'authMethods' => [
-                QueryParamAuth::className(),
+                HttpBearerAuth::className(),
             ],
         ];
         $behaviors['rateLimiter'] = [
