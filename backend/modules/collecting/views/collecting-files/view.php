@@ -39,7 +39,7 @@ $pre_url = Yii::$app->params['qiniushiqi'];
                 'address_city3',
                 'address_detail',
                 'education',
-                'age:date',
+                'age',
                 'sex',
                 'height',
                 'weight',
