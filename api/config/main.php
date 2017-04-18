@@ -180,7 +180,7 @@ return [
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => [
-                        'v11/saveme','v11/saveme-comment','v11/saveme-info','v11/form-thread','v11/form','v11/form-thread-comments',
+                        'v11/saveme','v11/saveme-comment','v11/saveme-info','v11/form-thread','v11/form','v11/form-thread-comments','v11/form-thread-thumbs-up',
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\w+>',

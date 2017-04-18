@@ -42,11 +42,19 @@ class FormThread extends ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'sex'], 'required'],
+            [['user_id', 'sex'], 'required','message'=>"{attribute}不可为空"],
             [['user_id', 'type', 'is_top', 'sex','read_count','thumbs_count','created_at', 'status','updated_at'], 'integer'],
             [['content','base64Images'], 'string'],
-            [['lat_long','tag'], 'string','max'=>128]
+            [['lat_long','tag'], 'string','max'=>128],
+            [['content'], 'requiredWithout', 'skipOnEmpty' => false, 'skipOnError' => false],
         ];
+    }
+
+    public function requiredWithout(){
+
+        if(!$this->content&&!$this->base64Images){
+            $this->addError('content', '内容和图片不可同时为空');
+        }
     }
 
     public function fields(){

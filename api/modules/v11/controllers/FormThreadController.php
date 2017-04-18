@@ -45,23 +45,52 @@ class FormThreadController extends ActiveController {
         return $action;
     }
 
+    /**
+     * @return CsvDataProvider
+     * 查看所有帖子接口get
+     * /v11/form-threads?access-token={cid}
+     * 可添加参数筛选/v11/form-threads?access-token={cid}
+     * url可选拼接参数：&sex=0 男生发帖 ，&sex=1 女生发帖 不拼接则为全部帖子，
+     * &follow=1&user_id={user_id} 关注人的帖子，
+     * &tag={tag} 所有该标签的帖子，
+     * &people={user_id} 该会员发布的所有帖子，
+     * &sort=1 最热帖子排序
+     *
+     * 若access-token不存在或错误则返回如下
+     * {
+        "name": "Unauthorized",
+        "message": "You are requesting with an invalid credential.",
+        "code": 0,
+        "status": 401,
+        "type": "yii\\web\\UnauthorizedHttpException"
+        }
+     */
     public function actionIndex() {
 
     	$model = $this->modelClass;
         $getData = Yii::$app->request->get();
         $query =  $model::find()->where(['type'=>[0,1]]);
 
-        if(!isset($getData['sex'])){
-            $sex_filter = [0,1,2];
-        }else{
-            $sex_filter = [(integer)$getData,2];
+        if(isset($getData['sex'])){
+            $sex_filter = [(integer)$getData['sex'],2];
+            $query =  $query->andWhere(['sex'=>$sex_filter]);
         }
 
-        $query =  $query->andWhere(['sex'=>$sex_filter]);
+        if(isset($getData['people_id'])){
+            $query =  $query->andWhere(['user_id'=>$getData['people_id']]);
+        }
 
         if(isset($getData['follow'])){
             $follow = yii\helpers\ArrayHelper::map(Ufollow::findAll(['user_id'=>$getData['user_id']]),'people_id','people_id');
             $query =  $query->andWhere(['user_id'=>$follow]);
+        }
+
+        if(isset($getData['tag'])){
+            $query =  $query->andWhere(['tag'=>$getData['tag']]);
+        }
+
+        if(isset($getData['sort'])){
+            $query =  $query->orderBy('thumbs_count desc');
         }
 
         return new CsvDataProvider([
@@ -71,12 +100,12 @@ class FormThreadController extends ActiveController {
             ],
             'insert'=> [
                 'modelName'=>$model::find()->where('type=2'),
-                'rank'=>1
+                'rank'=>5
             ],
             'sort' => [
                 'defaultOrder' => [
-                    'created_at' => SORT_DESC,
                     'is_top' => SORT_DESC,
+                    'created_at' => SORT_DESC,
                 ]
             ],
         ]);
@@ -84,16 +113,20 @@ class FormThreadController extends ActiveController {
 
     /**
      * @return mixed
-     * post 提交，必填字段，user_id,content,sex
+     * 发帖接口post
+     * /v11/form-threads?access-token={cid}
+     *
+     * post 提交，必填字段：user_id,sex；
+     * 必填一个字段： content文字内容,base64Images(base64字符串图片，多图片以@分开)；
+     * 可选字段：tag（标签）,lat_long(当前地理位置经纬度)
      */
     public function actionCreate() {
 
         $pre_url = Yii::$app->params['test'];
     	$model = new $this->modelClass();
     	$model->load(Yii::$app->request->getBodyParams(), '');
-
         if (!$model->save()) {
-            return array_values($model->getFirstErrors())[0];
+            return $model->getFirstErrors();
         }else{
 
             $images = array_filter(explode('@',$model->base64Images));
@@ -123,8 +156,8 @@ class FormThreadController extends ActiveController {
                     }
                 }
             }
-        /*    $follower = yii\helpers\ArrayHelper::map(Ufollow::findAll(['people_id'=>$model->user_id]),'user_id','user_id');//关注发帖人的粉丝
 
+        /*  $follower = yii\helpers\ArrayHelper::map(Ufollow::findAll(['people_id'=>$model->user_id]),'user_id','user_id');//关注发帖人的粉丝
             $push = new AppPush();
             foreach ($follower as $item){
                 $_push = clone $push;
@@ -139,11 +172,41 @@ class FormThreadController extends ActiveController {
         return $model;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     * 查看单条帖子接口get
+     * /v11/form-threads/{wid}?access-token={cid}
+     * 若帖子不存在则返回如下
+     * {
+        "name": "Not Found",
+        "message": "The requested page does not exist.",
+        "code": 0,
+        "status": 404,
+        "type": "yii\\web\\NotFoundHttpException"
+        }
+     */
     public function actionView($id) {
 
         $model = $this->findModel($id);
         return $model;
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     * 删除帖子接口delete
+     * /v11/form-threads/{wid}?access-token={cid}
+     *
+     * 若帖子不存在则返回如下
+     * {
+        "name": "Not Found",
+        "message": "The requested page does not exist.",
+        "code": 0,
+        "status": 404,
+        "type": "yii\\web\\NotFoundHttpException"
+        }
+     */
 
     public function actionDelete($id)
     {
