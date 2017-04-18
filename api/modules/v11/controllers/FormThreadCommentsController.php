@@ -22,7 +22,7 @@ class FormThreadCommentsController extends ActiveController {
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::className(),
             'authMethods' => [
-                HttpBearerAuth::className(),
+                QueryParamAuth::className(),
             ],
         ];
         $behaviors['rateLimiter'] = [
