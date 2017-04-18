@@ -3,6 +3,8 @@ namespace api\modules\v11\controllers;
 
 use api\modules\v11\models\FormThreadImages;
 use api\modules\v2\models\Ufollow;
+use api\modules\v3\models\AppPush;
+use api\modules\v3\models\Push;
 use common\Qiniu\QiniuUploader;
 use yii;
 use yii\rest\ActiveController;
@@ -54,6 +56,7 @@ class FormThreadController extends ActiveController {
         }else{
             $sex_filter = [(integer)$getData,2];
         }
+
         $query =  $query->andWhere(['sex'=>$sex_filter]);
 
         if(isset($getData['follow'])){
@@ -120,6 +123,17 @@ class FormThreadController extends ActiveController {
                     }
                 }
             }
+        /*    $follower = yii\helpers\ArrayHelper::map(Ufollow::findAll(['people_id'=>$model->user_id]),'user_id','user_id');//关注发帖人的粉丝
+
+            $push = new AppPush();
+            foreach ($follower as $item){
+                $_push = clone $push;
+                $_push->cid =
+                $icon = 'http://admin.13loveme.com/images/app_push/u=3453872033,2552982116&fm=21&gp=0.png';
+                //$extras = json_encode(array('push_title'=>urlencode($title),'push_post_id'=>urlencode($model->id),'push_content'=>urlencode($msg),'push_type'=>'SSCOMM_FANS_THREAD_DETAIL'));
+                //Yii::$app->db->createCommand("insert into {{%app_push}} (type,status,cid,title,msg,extras,platform,response,icon,created_at,updated_at) values('SSCOMM_FANS_THREAD_DETAIL',2,'$theCid','$title','$msg','$extras','all','NULL','$icon',$date,$date)")->execute();
+            }*/
+
         }
 
         return $model;
