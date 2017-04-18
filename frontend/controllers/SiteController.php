@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 use common\components\SaveToLog;
+use frontend\models\CollectingSeventeenFilesText;
 use frontend\models\ContactIpLimits;
 use frontend\modules\weixin\models\FirefightersSignUp;
 use frontend\modules\weixin\models\UserWeichat;
@@ -67,7 +68,16 @@ class SiteController extends BaseController
 
     public function actionRemarks(){
 
-        return var_dump(Yii::$app->setting->get('remarks'));
+        $model =  CollectingSeventeenFilesText::find()->all();
+/*        echo "<pre>";
+        return var_dump($model);*/
+        foreach ($model as $item){
+            if($item->age>200){
+                $item->age = (integer)ceil((time()-$item->age)/86400/365);
+                $item->update();
+            }
+        }
+
     }
     /**
      * @inheritdoc
