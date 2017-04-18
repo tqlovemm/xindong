@@ -58,7 +58,7 @@ class FormThread extends ActiveRecord
         return [
             "wid",'user_id', 'content','sex','tag','is_top','type','read_count','thumbs_count','created_at',
 
-            'nickname'=>function(){return $this->_user->username;},
+            'nickname'=>function(){return empty($this->_user->nickname)?$this->_user->username:$this->_user->nickname;},
 
             'avatar'=>function(){return $this->_user->avatar;},
 
