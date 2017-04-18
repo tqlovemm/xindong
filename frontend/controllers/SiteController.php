@@ -65,20 +65,7 @@ class SiteController extends BaseController
             ],
         ];
     }
-
-    public function actionRemarks(){
-
-        $model =  CollectingSeventeenFilesText::find()->all();
-/*        echo "<pre>";
-        return var_dump($model);*/
-        foreach ($model as $item){
-            if($item->age>200){
-                $item->age = (integer)ceil((time()-$item->age)/86400/365);
-                $item->update();
-            }
-        }
-
-    }
+    
     /**
      * @inheritdoc
      */
