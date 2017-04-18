@@ -297,17 +297,11 @@ class UserController extends BaseController
     public function actionDeletePayment($id){
 
         $model = UserPayment::findOne($id);
-        if(in_array($model->created_by,[10000,10075])){
-
-            $file = $model->payment_img;
-            $delete = @unlink($file);
-            if($delete&&$model->delete()){
-                return $this->redirect(["show-payment",'id'=>$model->user_id]);
-            }
-        }else{
-            throw new ForbiddenHttpException('无删除权限');
+        $file = $model->payment_img;
+        $delete = @unlink($file);
+        if($delete&&$model->delete()){
+            return $this->redirect(["show-payment",'id'=>$model->user_id]);
         }
-
     }
     public function actionUpload($id)
     {
@@ -349,7 +343,6 @@ class UserController extends BaseController
     public function actionUserDatingTotal($type=1,$ids){
         
         $this->layout = 'other';
-        //$model = RechargeRecord::find()->select('user_id,updated_at,number,extra,status,handler,reason,status')->where(['user_id'=>$id,'subject'=>3])->asArray()->all();
 
         if($type==1){
 
