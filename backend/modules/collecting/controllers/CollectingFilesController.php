@@ -267,14 +267,8 @@ class CollectingFilesController extends Controller
 
     }
 
-    public function actionDeleteWechat(){
-        if(Yii::$app->user->id==10006){
-            CollectingFilesText::updateAll(['weichat'=>'*****'],['status'=>[1,2]]);
-        }else{
-
-            throw new ForbiddenHttpException("禁止操作");
-        }
-
-    }
+/*    public function actionDeleteWechat(){
+        CollectingFilesText::updateAll(['weichat'=>'*****'],['status'=>[1,2]]);
+    }*/
 
 }
