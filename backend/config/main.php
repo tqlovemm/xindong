@@ -34,6 +34,9 @@ return [
         'collecting-file' => [
             'class' => 'backend\modules\collecting\Collecting',
         ],
+        'financial' => [
+            'class' => 'backend\modules\financial\financial',
+        ],
         'seek' => [
             'class' => 'backend\modules\seek\SeekModule',
         ],
@@ -52,22 +55,7 @@ return [
         'flop' => [
             'class' => 'backend\modules\flop\FlopModule',
         ],
-        'forum' => [
-            'class' => 'backend\modules\forum\ForumModule',
-            'aliases' => [
-                '@forum_icon' => '@web/uploads/forum/icon/', //图标上传路径
-                '@avatar' => '@web/uploads/user/avatar/',
-                '@photo' => '@web/uploads/blog/photo/'
-            ],
-        ],
-        'note' => [
-            'class' => 'backend\modules\note\NoteModule',
-            'aliases' => [
-                '@forum_icon' => '@web/uploads/forum/icon/', //图标上传路径
-                '@avatar' => '@web/uploads/user/avatar/',
-                '@photo' => '@web/uploads/blog/photo/'
-            ],
-        ],
+
         'admin' => [
             'class' => 'mdm\admin\Module',
         ],

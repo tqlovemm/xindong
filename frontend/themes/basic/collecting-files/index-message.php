@@ -10,7 +10,7 @@ $this->registerCss('
     .weui_cells_radio p{margin:0;}
     #main label{margin-bottom:0}
 ');
-
+$pre_url = Yii::$app->params['imagetqlmm'];
 ?>
 <link rel="stylesheet" href="/weui/dist/style/weui.min.css"/>
 <?php $this->registerJsFile('js/jquery.wallform.js', ['depends' => ['frontend\assets\AppAsset'], 'position' => $this::POS_HEAD]); ?>
@@ -37,8 +37,8 @@ $this->registerCss('
                         <div class="weui_uploader_bd">
                             <div class="weui_uploader_files" id="preview">
                                 <?php if(!empty($img)):  foreach ($img as $item):?>
-                                <a data-lightbox="0" data-title="0" href="<?=$item['img']?>">
-                                    <img src="<?=$item['img']?>" data-id="<?=$item['id']?>" class="preview collecting-files-img">
+                                <a data-lightbox="0" data-title="0" href="<?=$pre_url.$item['img']?>">
+                                    <img src="<?=$pre_url.$item['img']?>" data-id="<?=$item['id']?>" class="preview collecting-files-img">
                                 </a>
                                 <?php endforeach; endif; ?>
                             </div>
