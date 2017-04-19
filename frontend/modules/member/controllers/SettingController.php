@@ -5,6 +5,7 @@ namespace frontend\modules\member\controllers;
 use backend\modules\dating\models\RechargeRecord;
 use common\Qiniu\QiniuUploader;
 use frontend\models\UserAvatarCheck;
+use frontend\models\UserProfile;
 use Yii;
 use yii\base\Model;
 use yii\web\HttpException;
@@ -55,9 +56,12 @@ class SettingController extends BaseController
         $model = $this->findModel();
         $profile = Profile::find()->where(['user_id' => $model->id])->one();
 
+        if(empty($profile)){
+            $profileModel = new UserProfile();
+            $profileModel->user_id = $model->id;
+            $profileModel->save();
+        }
         $pre_url = Yii::$app->params['appimages'];
-        //上传头像
-       // Yii::setAlias('@upload', '@webroot/uploads/user/avatar/');
 
         if (Yii::$app->request->isPost && !empty($_FILES)) {
 
@@ -72,20 +76,6 @@ class SettingController extends BaseController
                 }
             }
 
-      /*     $extension = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
-
-            if($extension=='jpeg'||$extension=='JPEG'){
-                $extension='jpg';
-            }
-            $fileName = $model->id.'_'.time().rand(1,10000).'.'.$extension;
-
-            Image::thumbnail($_FILES['file']['tmp_name'], 160, 160)->save(Yii::getAlias('@upload') . $fileName, ['quality' => 80]);
-
-
-            //删除旧头像
-            if (file_exists(Yii::getAlias('@upload').$model->avatar) && (strpos($model->avatar, 'default') === false))
-                @unlink(Yii::getAlias('@upload').$model->avatar);*/
-
             $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$model->id;
             $qiniu = $qn->upload('appimages',"uploads/user/avatar/$mkdir");
 
@@ -97,7 +87,6 @@ class SettingController extends BaseController
         if ($profile->load(Yii::$app->request->post())) {
 
             if($profile->save()){
-
 
                 return $this->redirect('/member/user');
             }
