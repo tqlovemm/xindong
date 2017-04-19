@@ -390,6 +390,10 @@ class WeiXinController extends Controller
                     $content = "http://17.tecclub.cn/bgadmin/verification";
                     $this->text($content);
                     break;
+                case "合集":
+                    $content = "链接: https://pan.baidu.com/s/1c2nEXfq 密码: iaks";
+                    $this->text($content);
+                    break;
             }
         }//if end
 
