@@ -115,7 +115,7 @@ class CsvDataProvider extends BaseDataProvider
         $model = $query->all($this->db);
 
         if($this->insert!=null){
-            $temp = $this->insert['modelName']->asArray()->all();
+            $temp = $this->insert['modelName']->all();
             $this->array_insert($model,$this->insert['rank'],$temp);
         }
 
