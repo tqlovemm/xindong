@@ -31,15 +31,15 @@ class SavemeInfo extends ActiveRecord
     public function rules()
     {
         return [
-            [['saveme_id', 'apply_uid', 'created_at', 'updated_at', 'status'], 'required'],
-            [['saveme_id', 'apply_uid', 'created_at', 'updated_at', 'status'], 'integer']
+            [['saveme_id', 'apply_uid', 'status'], 'required'],
+            [['saveme_id', 'apply_uid', 'created_at', 'updated_at', 'status', 'type'], 'integer']
         ];
     }
 
     public function fields(){
 
         return [
-            'id','saveme_id', 'apply_uid', 'created_at','updated_at', 'status',
+            'apply_id'=>'id','saveme_id', 'apply_uid', 'created_at','updated_at', 'status',
         ];
     }
 
@@ -54,6 +54,7 @@ class SavemeInfo extends ActiveRecord
             'apply_uid' => '申请人id',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'type' => 'Type',
             'status' => 'Status',
         ];
     }

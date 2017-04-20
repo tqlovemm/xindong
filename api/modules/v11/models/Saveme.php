@@ -31,8 +31,8 @@ class Saveme extends ActiveRecord
     public function rules()
     {
         return [
-            [['created_id', 'address', 'content', 'end_time', 'status'], 'required'],
-            [['created_id', 'created_at', 'end_time', 'status','updated_at'], 'integer'],
+            [['created_id', 'address', 'content', 'end_time', 'price', 'status'], 'required'],
+            [['created_id', 'created_at', 'end_time', 'status', 'price','updated_at'], 'integer'],
             [['content', 'address'], 'string', 'max' => 255]
         ];
     }
@@ -40,7 +40,7 @@ class Saveme extends ActiveRecord
     public function fields(){
 
         return [
-            'saveme_id'=>'id','created_id', 'address', 'content', 'created_at','end_time', 'status', 'photos','users',
+            'saveme_id'=>'id','created_id', 'address', 'content', 'price', 'created_at','end_time','nickname', 'status', 'photos',
         ];
     }
 
@@ -54,6 +54,7 @@ class Saveme extends ActiveRecord
             'created_id' => '发布人',
             'address' => '地点',
             'content' => '要求',
+            'price' => '需要节操币',
             'end_time' => '截止时间',
             'updated_at' => 'updated_at',
             'status' => '状态',
@@ -67,10 +68,9 @@ class Saveme extends ActiveRecord
         return $photo;
     }
 
-
-    public function getusers(){
+    public function getnickname(){
         $user = Yii::$app->db->createCommand("select nickname from {{%user}} where id=$this->created_id")->queryAll();
 
-        return $user;
+        return $user[0]['nickname'];
     }
 }
