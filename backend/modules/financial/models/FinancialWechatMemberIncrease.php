@@ -51,7 +51,7 @@ class FinancialWechatMemberIncrease extends \yii\db\ActiveRecord
 
     public function unique(){
 
-        if(!empty(self::findOne(['wechat_id'=>$this->wechat_id,'day_time'=>strtotime('today')]))){
+        if(!empty(self::findOne(['wechat_id'=>$this->wechat_id,'day_time'=>strtotime('yesterday')]))){
             $this->addError("increase_boy_count","今日已经记录人数");
         }
     }
@@ -90,7 +90,7 @@ class FinancialWechatMemberIncrease extends \yii\db\ActiveRecord
             if($this->isNewRecord){
                 $this->created_at = time();
                 $this->updated_at = time();
-                $this->day_time = strtotime('-1 today');
+                $this->day_time = strtotime('yesterday');
                 $this->weekly_time = strtotime('next sunday');
                 $this->mouth_time = mktime(23,59,59,date('m'),date('t')-1,date('Y'))+1;
                 $this->created_by = Yii::$app->user->id;

@@ -287,7 +287,6 @@ class DefaultController extends Controller
 
         $model = BgadminMemberFiles::findOne($id);
         $str = substr($model->path,1,strlen($model->path));
-        if(Yii::$app->user->id==10000){
             if($model->delete()){
 
                 $data_arr = array('description'=>"删除十三平台会员跟踪信息一张图片",'data'=>json_encode($model->attributes),'old_data'=>'','new_data'=>'','type'=>2);
@@ -297,17 +296,12 @@ class DefaultController extends Controller
                 $back_url = Yii::$app->request->referrer;
                 return $this->redirect($back_url);
             }
-        }else{
-            throw new ForbiddenHttpException('禁止操作');
-        }
     }
     public function actionDeleteText($id){
 
         $model = BgadminMemberText::findOne($id);
 
         $imgs = $model->memberFiles;
-
-        if(Yii::$app->user->id==10000){
 
             if($model->delete()){
 
@@ -321,9 +315,7 @@ class DefaultController extends Controller
                 $back_url = Yii::$app->request->referrer;
                 return $this->redirect($back_url);
             }
-        }else{
-            throw new ForbiddenHttpException('禁止操作');
-        }
+
     }
 
     public function actionUpload($id){
@@ -480,15 +472,13 @@ class DefaultController extends Controller
      */
     public function actionDelete($id)
     {
-        if(Yii::$app->user->id==10000){
+
             $model = $this->findModel($id);
             if($model->delete()){
                 $data_arr = array('description'=>"删除一个十三平台后台跟踪会员信息,会员编号：{$model->number}",'data'=>json_encode($model->attributes),'old_data'=>'','new_data'=>'','type'=>2);
                 AddRecord::record($data_arr);
             }
-        }else{
-            throw new ForbiddenHttpException('禁止操作');
-        }
+
         return $this->redirect(['index']);
     }
 

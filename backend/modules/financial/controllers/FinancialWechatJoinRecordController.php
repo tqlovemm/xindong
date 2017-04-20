@@ -3,6 +3,7 @@
 namespace backend\modules\financial\controllers;
 
 use backend\models\CollectingFilesText;
+use backend\modules\financial\models\FinancialWechatMemberIncrease;
 use backend\modules\sm\models\Province;
 use Yii;
 use backend\modules\financial\models\FinancialWechatJoinRecord;
@@ -69,6 +70,9 @@ class FinancialWechatJoinRecordController extends Controller
     }
 
     /**
+     * @param $wechat_id
+     * @param string $type
+     * @return string|void|\yii\web\Response
      * $query = Yii::$app->db->createCommand("select auto_increment from information_schema.`TABLES` where table_name='pre_collecting_files_text'")->queryScalar();
      * Creates a new FinancialWechatJoinRecord model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -79,18 +83,25 @@ class FinancialWechatJoinRecordController extends Controller
         $model = new FinancialWechatJoinRecord();
         $province = ArrayHelper::map(Province::find()->where(['prov_state'=>1])->orderBy('prov_py asc')->all(),'prov_name','prov_name');
 
+        $model->wechat_id = $wechat_id;
+
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
-            $model->wechat_id = $wechat_id;
             $model->payment_screenshot = $model->upload();
             $model->type = $type;
+
             if($model->save()){
-                return $this->redirect(['index']);
+
+                Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Saved successfully'));
+                return $this->refresh();
             }else{
+
+                Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Error'));
                 return var_dump($model->errors);
             }
 
         } else {
+
             return $this->render('create', [
                 'model' => $model,'province'=>$province,'wechat_id'=>$wechat_id,'type'=>$type
             ]);

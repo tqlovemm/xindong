@@ -27,9 +27,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'wechat_id',
-            'join_source',
-            'created_at',
-            'updated_at',
+            //'join_source',
+            //'created_at',
+            //'updated_at',
             // 'day_time:datetime',
             // 'weekly_time:datetime',
             // 'mouth_time:datetime',

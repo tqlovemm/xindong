@@ -3,6 +3,7 @@
 namespace backend\modules\financial\controllers;
 
 use backend\modules\financial\models\FinancialWechat;
+use backend\modules\financial\models\FinancialWechatJoinRecord;
 use Yii;
 use backend\modules\financial\models\FinancialWechatMemberIncrease;
 use backend\modules\financial\models\FinancialWechatMemberIncreaseSearch;
@@ -34,6 +35,7 @@ class FinancialWechatMemberIncreaseController extends Controller
      */
     public function actionIndex()
     {
+
         $searchModel = new FinancialWechatMemberIncreaseSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -66,6 +68,9 @@ class FinancialWechatMemberIncreaseController extends Controller
         $model = new FinancialWechatMemberIncrease();
         $model->wechat_id = $wechat_id;
         $query = FinancialWechatMemberIncrease::find()->select('total_count')->where(['wechat_id'=>$wechat_id])->orderBy('created_at desc')->asArray()->one();
+        $feeRecord = FinancialWechatJoinRecord::find()->where(['wechat_id'=>$wechat_id,'day_time'=>strtotime('yesterday')])->count();
+
+        $model->join_count = $feeRecord;
         if ($model->load(Yii::$app->request->post())&& $model->validate()) {
             $model->wechat_loose_change_screenshot = $model->upload();
             if($model->save()){

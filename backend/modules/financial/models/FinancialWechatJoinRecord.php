@@ -20,7 +20,7 @@ use Yii;
  * @property string $channel
  * @property integer $payment_amount
  * @property integer $payment_to
- * @property integer $vip
+ * @property string $vip
  * @property string $join_address
  * @property string $remarks
  * @property string $payment_screenshot
@@ -45,8 +45,8 @@ class FinancialWechatJoinRecord extends \yii\db\ActiveRecord
     {
         return [
             [['payment_amount','wechat_id','payment_to'], 'required','message'=>"{attribute}不可为空"],
-            [['wechat_id', 'created_at', 'updated_at', 'created_by', 'payment_amount', 'vip', 'type','day_time','weekly_time','mouth_time','payment_to'], 'integer'],
-            [['join_source', 'channel', 'join_address','platform','number'], 'string', 'max' => 128],
+            [['wechat_id', 'created_at', 'updated_at', 'created_by', 'payment_amount',  'type','day_time','weekly_time','mouth_time','payment_to'], 'integer'],
+            [['join_source', 'channel', 'join_address','platform','vip','number'], 'string', 'max' => 128],
             [['remarks','payment_screenshot'], 'string', 'max' => 256]
         ];
     }

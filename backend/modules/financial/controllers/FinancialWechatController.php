@@ -2,6 +2,7 @@
 
 namespace backend\modules\financial\controllers;
 
+use backend\modules\financial\models\FinancialWechatJoinRecord;
 use backend\modules\financial\models\FinancialWechatMemberIncrease;
 use Yii;
 use backend\modules\financial\models\FinancialWechat;
@@ -55,12 +56,34 @@ class FinancialWechatController extends Controller
     }
 
 
-    public function actionTodayRecord(){
+    public function actionTodayJoinRecord(){
 
-        $model = FinancialWechatMemberIncrease::find()->joinWith('wechat')->where(['day_time' => strtotime('today')])->asArray()->all();
+        $model = FinancialWechatMemberIncrease::find()->joinWith('wechat')->where(['day_time' => strtotime('yesterday')])->asArray()->all();
+        return $this->render('today-join-record',['model'=>$model]);
+    }
+
+    public function actionPastJoinRecord($wechat_id){
+
+        $model = FinancialWechatMemberIncrease::find()->where(['wechat_id' => $wechat_id])->orderBy('day_time desc')->asArray()->all();
+        return $this->render('past-join-record',['model'=>$model]);
+    }
+
+    public function actionDayFeeRecord($time = null,$wechat_id){
+
+        if($time==null){
+            $model = FinancialWechatJoinRecord::find()->joinWith('wechat')->where(['day_time' => strtotime('today')])->asArray()->all();
+        }else{
+            $model = FinancialWechatJoinRecord::find()->joinWith('wechat')->where(['day_time' => $time,'wechat_id'=>$wechat_id])->orderBy('created_at desc')->asArray()->all();
+        }
+
+        return $this->render('day-fee-record',['model'=>$model]);
+    }
+    public function actionPastFeeRecord(){
+
+        $model = FinancialWechatJoinRecord::find()->joinWith('wechat')->where(['day_time' => strtotime('today')])->asArray()->all();
         //echo "<pre>";
         //return var_dump($model);
-        return $this->render('today-record',['model'=>$model]);
+        return $this->render('today-fee-record',['model'=>$model]);
     }
 
     /**
