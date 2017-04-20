@@ -1,14 +1,6 @@
 <?php
-
 use yii\helpers\Html;
-
-/* @var $this yii\web\View */
-/* @var $model backend\modules\financial\models\FinancialWechat */
-
 $this->title = 'Update Financial Wechat: ' . ' ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Financial Wechats', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="financial-wechat-update">
 

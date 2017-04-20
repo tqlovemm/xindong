@@ -2,6 +2,7 @@
 
 namespace backend\modules\financial\models;
 
+use common\Qiniu\QiniuUploader;
 use Yii;
 
 /**
@@ -18,9 +19,13 @@ use Yii;
  * @property integer $mouth_time
  * @property string $channel
  * @property integer $payment_amount
+ * @property integer $payment_to
  * @property integer $vip
  * @property string $join_address
  * @property string $remarks
+ * @property string $payment_screenshot
+ * @property string $platform
+ * @property string $number
  * @property integer $type
  */
 class FinancialWechatJoinRecord extends \yii\db\ActiveRecord
@@ -39,10 +44,10 @@ class FinancialWechatJoinRecord extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['payment_amount','wechat_id'], 'required','message'=>"{attribute}不可为空"],
-            [['wechat_id', 'created_at', 'updated_at', 'created_by', 'payment_amount', 'vip', 'type','day_time','weekly_time','mouth_time'], 'integer'],
-            [['join_source', 'channel', 'join_address'], 'string', 'max' => 128],
-            [['remarks'], 'string', 'max' => 256]
+            [['payment_amount','wechat_id','payment_to'], 'required','message'=>"{attribute}不可为空"],
+            [['wechat_id', 'created_at', 'updated_at', 'created_by', 'payment_amount', 'vip', 'type','day_time','weekly_time','mouth_time','payment_to'], 'integer'],
+            [['join_source', 'channel', 'join_address','platform','number'], 'string', 'max' => 128],
+            [['remarks','payment_screenshot'], 'string', 'max' => 256]
         ];
     }
 
@@ -67,6 +72,10 @@ class FinancialWechatJoinRecord extends \yii\db\ActiveRecord
             'join_address' => '入会地址',
             'remarks' => '备注',
             'type' => '付款类型',
+            'payment_screenshot' => '付款截图',
+            'platform' => '入会平台',
+            'number' => '会员编号',
+            'payment_to' => '付款到哪',
         ];
     }
 
@@ -95,6 +104,19 @@ class FinancialWechatJoinRecord extends \yii\db\ActiveRecord
     public function getWechat()
     {
         return $this->hasOne(FinancialWechat::className(), ['id' => 'wechat_id']);
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $filepath = $_FILES['FinancialWechatJoinRecord']['tmp_name']['payment_screenshot'];
+            $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+            $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->wechat_id.'_'.uniqid();
+            $qiniu = $qn->upload_app('test',"uploads/payment_change/$mkdir",$filepath);
+            return $qiniu['key'];
+        } else {
+            return false;
+        }
     }
 
 }

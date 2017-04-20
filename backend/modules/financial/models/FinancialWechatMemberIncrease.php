@@ -2,6 +2,7 @@
 
 namespace backend\modules\financial\models;
 
+use common\Qiniu\QiniuUploader;
 use Yii;
 
 /**
@@ -22,6 +23,7 @@ use Yii;
  * @property integer $weekly_time
  * @property integer $mouth_time
  * @property string $remarks
+ * @property string $wechat_loose_change_screenshot
  */
 class FinancialWechatMemberIncrease extends \yii\db\ActiveRecord
 {
@@ -43,7 +45,7 @@ class FinancialWechatMemberIncrease extends \yii\db\ActiveRecord
             [['wechat_id'], 'unique'],
             [['wechat_id', 'increase_boy_count','increase_girl_count','total_count', 'reduce_count', 'created_at', 'updated_at', 'created_by', 'join_count','day_time','weekly_time','mouth_time'], 'integer'],
             [['loose_change'], 'number'],
-            [['remarks'], 'string']
+            [['remarks','wechat_loose_change_screenshot'], 'string'],
         ];
     }
 
@@ -74,6 +76,7 @@ class FinancialWechatMemberIncrease extends \yii\db\ActiveRecord
             'loose_change' => '今日微信零钱数',
             'join_count' => '今日入会人数',
             'remarks' => '备注',
+            'wechat_loose_change_screenshot' => '今日微信零钱数截图',
         ];
     }
 
@@ -87,7 +90,7 @@ class FinancialWechatMemberIncrease extends \yii\db\ActiveRecord
             if($this->isNewRecord){
                 $this->created_at = time();
                 $this->updated_at = time();
-                $this->day_time = strtotime('today');
+                $this->day_time = strtotime('-1 today');
                 $this->weekly_time = strtotime('next sunday');
                 $this->mouth_time = mktime(23,59,59,date('m'),date('t')-1,date('Y'))+1;
                 $this->created_by = Yii::$app->user->id;
@@ -102,6 +105,19 @@ class FinancialWechatMemberIncrease extends \yii\db\ActiveRecord
     public function getWechat()
     {
         return $this->hasOne(FinancialWechat::className(), ['id' => 'wechat_id']);
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $filepath = $_FILES['FinancialWechatMemberIncrease']['tmp_name']['wechat_loose_change_screenshot'];
+            $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+            $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->wechat_id.'_'.uniqid();
+            $qiniu = $qn->upload_app('test',"uploads/wechat_loose_change/$mkdir",$filepath);
+            return $qiniu['key'];
+        } else {
+            return false;
+        }
     }
 
 }

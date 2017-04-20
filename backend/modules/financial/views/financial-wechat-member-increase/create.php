@@ -1,19 +1,8 @@
 <?php
-use yii\helpers\Html;
 $this->title = '创建每日微信人数记录';
 ?>
 <div class="financial-wechat-member-increase-create">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-            &times;
-        </button>
-        <h2 class="modal-title" id="myModalLabel">
-            <?= Html::encode($this->title) ?>
-        </h2>
-    </div>
-    <div class="modal-body">
     <?= $this->render('_form', [
-        'model' => $model,
+        'model' => $model,'total_count'=>$total_count
     ]) ?>
-    </div>
 </div>

@@ -1,19 +1,19 @@
 <?php
-use yii\helpers\Html;
 $this->title = '创建入会付款记录';
 ?>
-<div class="financial-wechat-join-record-create">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-            &times;
-        </button>
-        <h2 class="modal-title" id="myModalLabel">
-            <?= Html::encode($this->title) ?>
-        </h2>
+<div class="row">
+  <div class="col-md-6">
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title"><?=$this->title?></h3>
+      </div>
+      <div class="box-body">
+        <?= $this->render('_form', [
+            'model' => $model,'province'=>$province
+        ]) ?>
+      </div>
+      <div class="box-footer">
+      </div>
     </div>
-    <div class="modal-body">
-    <?= $this->render('_form', [
-        'model' => $model,'province'=>$province
-    ]) ?>
-    </div>
+  </div>
 </div>

@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
     </div>
     <?php ActiveForm::end(); ?>
 </div>
-<script>
+<!--<script>
     $('#submit').click = function () {
         submitData();
     };
@@ -27,4 +27,4 @@ use yii\widgets\ActiveForm;
          }
      });
  }
-</script>
+</script>-->

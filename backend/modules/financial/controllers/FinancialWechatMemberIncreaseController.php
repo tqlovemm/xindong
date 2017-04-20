@@ -63,14 +63,17 @@ class FinancialWechatMemberIncreaseController extends Controller
      */
     public function actionCreate($wechat_id)
     {
-        $this->layout = false;
         $model = new FinancialWechatMemberIncrease();
         $model->wechat_id = $wechat_id;
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id, 'wechat_id' => $model->wechat_id]);
+        $query = FinancialWechatMemberIncrease::find()->select('total_count')->where(['wechat_id'=>$wechat_id])->orderBy('created_at desc')->asArray()->one();
+        if ($model->load(Yii::$app->request->post())&& $model->validate()) {
+            $model->wechat_loose_change_screenshot = $model->upload();
+            if($model->save()){
+                return $this->redirect(['index']);
+            }
         } else {
             return $this->render('create', [
-                'model' => $model,
+                'model' => $model,'total_count'=>$query['total_count'],
             ]);
         }
     }

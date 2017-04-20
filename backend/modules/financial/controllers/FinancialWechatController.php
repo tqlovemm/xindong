@@ -78,7 +78,6 @@ class FinancialWechatController extends Controller
 
     public function actionCreate()
     {
-        $this->layout = false;
         $model = new FinancialWechat();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {

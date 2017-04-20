@@ -13,8 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="financial-wechat-member-increase-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
         <?= Html::a('Create Financial Wechat Member Increase', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
@@ -25,17 +23,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'wechat_id',
             'increase_boy_count',
             'increase_girl_count',
             'total_count',
             'reduce_count',
-            'created_at',
-            // 'updated_at',
-            // 'created_by',
-            // 'loose_change',
-            // 'join_count',
+            'created_at:date',
+            'created_by',
+            'loose_change',
+            'join_count',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

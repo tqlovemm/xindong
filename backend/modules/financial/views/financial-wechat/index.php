@@ -16,7 +16,7 @@ $this->registerCss("
 ?>
 <div class="financial-wechat-index">
     <p>
-        <?= Html::a('创建微信号统计', ['create'], ['class' => 'btn btn-success','data-toggle'=>'modal','data-target'=>'#myModal1']) ?>
+        <?= Html::a('创建微信号统计', ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a('今日记录', ['today-record'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
@@ -59,7 +59,7 @@ $this->registerCss("
                 'format' => 'raw',
                 'label' => '新增操作',
                 'value'=>function($model){
-                    return "<a data-toggle='modal' data-target='#myModal2' href='".Url::to(['/financial/financial-wechat-member-increase/create','wechat_id'=>$model->id])."' class='btn-sm btn-success'>今日统计</a> <a data-toggle='modal' data-target='#myModal3' href='".Url::to(['/financial/financial-wechat-join-record/create','wechat_id'=>$model->id])."' class='btn-sm btn-warning'>入会记录</a>";
+                    return "<a href='".Url::to(['/financial/financial-wechat-member-increase/create','wechat_id'=>$model->id])."' class='btn-sm btn-success'>今日统计</a> <a href='".Url::to(['/financial/financial-wechat-join-record/create','wechat_id'=>$model->id])."' class='btn-sm btn-warning'>入会记录</a>";
                 }
             ],
 
