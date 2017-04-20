@@ -59,38 +59,40 @@ class FinancialWechatJoinRecordController extends Controller
 
     public function actionChoicePlatform(){
 
-
         return $this->render('choice-platform');
 
     }
-    public function actionChoiceType(){
 
+    public function actionChoiceType($wechat_id){
 
-        return $this->render('choice-type');
-
+        return $this->render('choice-type',['wechat_id'=>$wechat_id]);
     }
 
     /**
+     * $query = Yii::$app->db->createCommand("select auto_increment from information_schema.`TABLES` where table_name='pre_collecting_files_text'")->queryScalar();
      * Creates a new FinancialWechatJoinRecord model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($wechat_id)
+    public function actionCreate($wechat_id,$type='')
     {
         $model = new FinancialWechatJoinRecord();
-        //$query = Yii::$app->db->createCommand("select auto_increment from information_schema.`TABLES` where table_name='pre_collecting_files_text'")->queryScalar();
-        $model->wechat_id = $wechat_id;
         $province = ArrayHelper::map(Province::find()->where(['prov_state'=>1])->orderBy('prov_py asc')->all(),'prov_name','prov_name');
+
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+            $model->wechat_id = $wechat_id;
             $model->payment_screenshot = $model->upload();
+            $model->type = $type;
             if($model->save()){
                 return $this->redirect(['index']);
             }else{
                 return var_dump($model->errors);
             }
+
         } else {
             return $this->render('create', [
-                'model' => $model,'province'=>$province
+                'model' => $model,'province'=>$province,'wechat_id'=>$wechat_id,'type'=>$type
             ]);
         }
     }
