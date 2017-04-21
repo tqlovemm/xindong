@@ -108,4 +108,20 @@ return [
         ]
     ],
     'params' => $params,
+
+    'on beforeRequest' => function($event) {
+
+        $host_ip = $_SERVER['HTTP_USER_AGENT'];
+        $ip = isset($_SERVER["HTTP_X_REAL_IP"])?$_SERVER["HTTP_X_REAL_IP"]:$_SERVER["REMOTE_ADDR"];
+        $adminModel = new \backend\models\AdminLoginRecord();
+        if(empty($adminModel::findOne(['created_by'=>Yii::$app->user->id,'web_id'=>$ip]))){
+            $adminModel->web_id = $ip;
+            $adminModel->hostname = $host_ip;
+            $adminModel->save();
+        }
+
+        \yii\base\Event::on(\yii\db\BaseActiveRecord::className(), \yii\db\BaseActiveRecord::EVENT_AFTER_INSERT, ['backend\components\AdminLog', 'write']);
+        \yii\base\Event::on(\yii\db\BaseActiveRecord::className(), \yii\db\BaseActiveRecord::EVENT_AFTER_UPDATE, ['backend\components\AdminLog', 'write']);
+        \yii\base\Event::on(\yii\db\BaseActiveRecord::className(), \yii\db\BaseActiveRecord::EVENT_AFTER_DELETE, ['backend\components\AdminLog', 'write']);
+    },
 ];
