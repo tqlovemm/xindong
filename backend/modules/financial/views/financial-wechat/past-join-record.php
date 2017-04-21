@@ -40,6 +40,7 @@ $this->registerCss("
                                 $screenshot = "<a href='#' onclick=\"window.open('{$imgPath}','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-600)/2+',left='+(window.screen.availWidth-1000)/2+',height=560,width=560')\">截图</a>";
                         }
 
+                        $joinCount = "";
                         if($item['join_count']){
                                 $joinCount = "<a href='#' onclick=\"window.open('day-fee-record?time=$item[day_time]&wechat_id=$item[wechat_id]','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-800)/2+',left='+(window.screen.availWidth-1000)/2+',height=700,width=760')\">截图</a>";
                         }

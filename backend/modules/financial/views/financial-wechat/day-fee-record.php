@@ -6,19 +6,18 @@
         </li>
         <!-- /.timeline-label -->
         <!-- timeline item -->
-        <?php foreach ($model as $item):?>
+        <?php foreach ($model as $item):
+            $user = \backend\models\User::findOne($item['created_by'])->username .' '.\backend\models\User::findOne($item['created_by'])->nickname;
+            ?>
         <li>
-            <i class="fa fa-envelope bg-blue"></i>
+            <i class="fa fa-user bg-aqua bg-blue"></i>
             <div class="timeline-item">
                 <span class="time"><i class="fa fa-clock-o"></i> <?=date('H:i',$item['created_at'])?></span>
 
-                <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+                <h3 class="timeline-header"><a href="#"><?=$user?></a> 记录一条入会付款数据</h3>
 
                 <div class="timeline-body">
-                    Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                    weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                    jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                    quora plaxo ideeli hulu weebly balihoo...
+                    <img src="<?=Yii::$app->params['test'].$item['payment_screenshot']?>" alt="..." class="margin">
                 </div>
                 <div class="timeline-footer">
                     <a class="btn btn-primary btn-xs">Read more</a>

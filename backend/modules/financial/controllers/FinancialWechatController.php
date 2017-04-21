@@ -34,6 +34,7 @@ class FinancialWechatController extends Controller
      */
     public function actionIndex()
     {
+
         $searchModel = new FinancialWechatSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
