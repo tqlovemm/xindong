@@ -12,6 +12,7 @@ use Yii;
  * @property string $description
  * @property integer $created_at
  * @property integer $user_id
+ * @property string $ip
  */
 class AdminLog extends \yii\db\ActiveRecord
 {
@@ -32,6 +33,7 @@ class AdminLog extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['created_at'], 'required'],
             [['created_at', 'user_id'], 'integer'],
+            [['ip'], 'string', 'max' => 32],
             [['route'], 'string', 'max' => 255],
         ];
     }
@@ -47,6 +49,7 @@ class AdminLog extends \yii\db\ActiveRecord
             'description' => 'Description',
             'created_at' => 'Created At',
             'user_id' => 'User ID',
+            'ip' => 'IP',
         ];
     }
 }

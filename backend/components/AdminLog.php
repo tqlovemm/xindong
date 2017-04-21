@@ -16,7 +16,7 @@ class AdminLog
             $description = "%s新增了表%s %s:%s的%s";
         } elseif($event->name == ActiveRecord::EVENT_AFTER_UPDATE) {
             $description = "%s修改了表%s %s:%s的%s";
-        } else {
+        }else{
             $description = "%s删除了表%s %s:%s%s";
         }
         if (!empty($event->changedAttributes)) {
@@ -39,7 +39,7 @@ class AdminLog
             'description' => $description,
             'user_id' => $userId,
             'created_at'=>time(),
-            'ip' => $ip
+            'ip' => isset($_SERVER["HTTP_X_REAL_IP"])?$_SERVER["HTTP_X_REAL_IP"]:$_SERVER["REMOTE_ADDR"],
         ];
         $model = new \common\models\AdminLog();
         $model->setAttributes($data);
