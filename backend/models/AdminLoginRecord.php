@@ -30,7 +30,8 @@ class AdminLoginRecord extends \yii\db\ActiveRecord
     {
         return [
             [['created_at', 'created_by'], 'integer'],
-            [['web_id', 'hostname'], 'string', 'max' => 32]
+            [['web_id'], 'string', 'max' => 32],
+            [[ 'hostname'], 'string', 'max' => 256],
         ];
     }
 
