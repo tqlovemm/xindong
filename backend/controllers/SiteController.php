@@ -37,7 +37,7 @@ class SiteController extends BaseController
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'phpinfo', 'cache',
+                        'actions' => ['logout', 'index', 'phpinfo', 'cache','info-computer',
                             'pcheck','pass','npass','feedback',
                             'feeddelete','feedview','claims',
                             'claimsview','claimsdelete','visit','cvisit','pclaims',
