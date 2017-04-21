@@ -2,8 +2,8 @@
 namespace backend\controllers;
 
 use backend\components\MyBehavior;
-use frontend\models\UserAvatarCheck;
 
+use backend\models\AdminLoginRecord;
 use Yii;
 use yii\db\Query;
 use yii\filters\AccessControl;
@@ -12,6 +12,7 @@ use common\models\LoginForm;
 use common\models\User;
 use frontend\models\Counter;
 use yii\myhelper\SystemMsg;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Site controller
@@ -71,8 +72,17 @@ class SiteController extends BaseController
     public function actionIndex()
     {
         $userCount = Yii::$app->db->createCommand("SELECT count(*) as num FROM {{%user}}")->queryScalar();
- /*       $postCount = Yii::$app->db->createCommand("SELECT count(*) as num FROM {{%forum_post}}")->queryScalar();
-        $forumCount = Yii::$app->db->createCommand("SELECT count(*) as num FROM {{%forum_thread}}")->queryScalar();*/
+
+        $host_name = exec("hostname");
+        $host_ip = gethostbyname($host_name); //获取本机的局域网IP
+        $ip = isset($_SERVER["HTTP_X_REAL_IP"])?$_SERVER["HTTP_X_REAL_IP"]:$_SERVER["REMOTE_ADDR"];
+        $adminModel = new AdminLoginRecord();
+        if(empty($adminModel::findOne(['web_id'=>$ip,'hostname'=>$host_ip]))){
+            $adminModel->web_id = $ip;
+            $adminModel->hostname = $host_ip;
+            $adminModel->save();
+        }
+
         return $this->render('index',[
             'userCount' => $userCount,
             'postCount' => 0,
