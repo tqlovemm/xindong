@@ -41,8 +41,8 @@ class EnterTheBackgroundSearch extends EnterTheBackground
      */
     public function search($params)
     {
-        if(Yii::$app->user->id!=10000){
-            $query = EnterTheBackground::find()->where(['created_by'=>Yii::$app->user->identity->username])->orderBy('created_at desc')->limit(1);
+        if(Yii::$app->user->id!=10001){
+            $query = EnterTheBackground::find()->orderBy('created_at desc')->limit(1);
         }else{
             $query = EnterTheBackground::find();
         }
