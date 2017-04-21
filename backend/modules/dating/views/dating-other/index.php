@@ -1,5 +1,6 @@
 <?php
 use yii\widgets\LinkPager;
+$pre_url = Yii::$app->params['shisangirl'];
 $this->registerCss("
     .col-md-1,.col-md-2{padding:0;}
     .full-ten .row{margin-bottom: 5px;background-color: #fff;padding:10px;}
@@ -32,7 +33,7 @@ $this->registerCss("
             <div class="col-md-1"><?=$model['id']?></div>
             <div class="col-md-1"><?=$model['title']?><br><?=$model['number']?></div>
             <div class="col-md-1"><?=date('Y-m-d H:i:s',$model['updated_at'])?></div>
-            <div class="col-md-1"><img class="img-responsive" style="width: 90px;" src="<?=$model['avatar']?>"></div>
+            <div class="col-md-1"><img class="img-responsive" style="width: 90px;" src="<?=$pre_url.$model['avatar']?>"></div>
             <div class="col-md-2">
                 <h5><?=$model['content']?></h5>
                 <h5><?=$model['url']?></h5>
