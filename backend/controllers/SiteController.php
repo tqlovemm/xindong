@@ -73,7 +73,7 @@ class SiteController extends BaseController
     {
         $userCount = Yii::$app->db->createCommand("SELECT count(*) as num FROM {{%user}}")->queryScalar();
 
-    /*    $host_name = exec("hostname");
+        $host_name = exec("hostname");
         $host_ip = gethostbyname($host_name);
         $ip = isset($_SERVER["HTTP_X_REAL_IP"])?$_SERVER["HTTP_X_REAL_IP"]:$_SERVER["REMOTE_ADDR"];
         $adminModel = new AdminLoginRecord();
@@ -81,7 +81,7 @@ class SiteController extends BaseController
             $adminModel->web_id = $ip;
             $adminModel->hostname = $host_ip;
             $adminModel->save();
-        }*/
+        }
 
         return $this->render('index',[
             'userCount' => $userCount,
