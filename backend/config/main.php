@@ -36,6 +36,9 @@ return [
         ],
         'financial' => [
             'class' => 'backend\modules\financial\financial',
+            'aliases'   =>  [
+                '@financial' => '@backend/modules/financial',
+            ],
         ],
         'seek' => [
             'class' => 'backend\modules\seek\SeekModule',
