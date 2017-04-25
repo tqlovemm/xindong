@@ -25,9 +25,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'wechat_id',
-            //'join_source',
+            //'id',
+            //'wechat_id',
+            'join_source',
             //'created_at',
             //'updated_at',
             // 'day_time:datetime',
@@ -35,8 +35,8 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'mouth_time:datetime',
             // 'created_by',
             // 'channel',
-            // 'payment_amount',
-            // 'vip',
+             'payment_amount',
+             'vip',
             // 'join_address',
             // 'remarks',
             // 'type',

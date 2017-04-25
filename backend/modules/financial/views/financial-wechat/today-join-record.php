@@ -1,8 +1,9 @@
 <?php
 $this->title = date('Y-m-d',strtotime('yesterday'))." 客服微信号人数统计";
+$this->registerCssFile('@web/js/lightbox/css/lightbox.css');
+$this->registerJsFile('@web/js/lightbox/js/lightbox.min.js', ['depends' => ['yii\web\JqueryAsset'], 'position' => \yii\web\View::POS_END]);
 $this->registerCss("
-    .table{width:90%;}
-    .table thead tr{background-color: #ddd;}
+    .table thead tr{background-color: #eee;}
     .table thead tr th{border:1px solid #eee;text-align:center;}
     .table tr td{border:1px solid #eee;text-align:center;}
     .follow{margin-bottom:0;}
@@ -10,7 +11,13 @@ $this->registerCss("
 ");
 ?>
 <div class="today-record-index">
-        <table class="table table-bordered">
+        <div class="box box-success">
+                <div class="box-header with-border">
+                        <h3 class="box-title"><?=$this->title ?></h3>
+                        <div class="box-tools pull-right"><button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button></div>
+                </div>
+                <div class="box-body">
+                        <table class="table table-bordered">
                 <caption><?=$this->title?></caption>
                 <thead>
                         <tr>
@@ -37,7 +44,7 @@ $this->registerCss("
                         $user = \backend\models\User::findOne($item['created_by'])->username .'：'.\backend\models\User::findOne($item['created_by'])->nickname;
                         if(!empty($item['wechat_loose_change_screenshot'])){
                                 $imgPath = Yii::$app->params['test'].$item['wechat_loose_change_screenshot'];
-                                $screenshot = "<a href='#' onclick=\"window.open('{$imgPath}','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-600)/2+',left='+(window.screen.availWidth-1000)/2+',height=560,width=560')\">零钱截图</a>";
+                                $screenshot = "<a href='$imgPath' data-lightbox='s' data-title='s'>零钱截图</a>";
                         }
                         ?>
                         <tr>
@@ -51,11 +58,13 @@ $this->registerCss("
                                 <td><?=$percent?>%</td>
                                 <td><?=$user?></td>
                                 <td>
-                                        <a href="#" onclick="window.open('past-join-record?wechat_id=<?=$item['wechat_id']?>&wechat=<?=$item['wechat']['wechat']?>','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-600)/2+',left='+(window.screen.availWidth-1000)/2+',height=600,width=1000')">查看</a>
+                                        <a target='_blank' href="past-join-record?wechat_id=<?=$item['wechat_id']?>&wechat=<?=$item['wechat']['wechat']?>">查看</a>
                                 </td>
                                 <td>删除</td>
                         </tr>
                 <?php endforeach;?>
                 </tbody>
         </table>
+                </div>
+        </div>
 </div>

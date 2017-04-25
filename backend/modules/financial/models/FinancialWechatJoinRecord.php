@@ -17,6 +17,7 @@ use Yii;
  * @property integer $day_time
  * @property integer $weekly_time
  * @property integer $mouth_time
+ * @property integer $year_time
  * @property string $channel
  * @property integer $payment_amount
  * @property integer $payment_to
@@ -45,7 +46,7 @@ class FinancialWechatJoinRecord extends \yii\db\ActiveRecord
     {
         return [
             [['payment_amount','wechat_id','payment_to'], 'required','message'=>"{attribute}不可为空"],
-            [['wechat_id', 'created_at', 'updated_at', 'created_by', 'payment_amount',  'type','day_time','weekly_time','mouth_time','payment_to'], 'integer'],
+            [['wechat_id', 'created_at', 'updated_at', 'created_by', 'payment_amount',  'type','day_time','weekly_time','mouth_time','payment_to','year_time'], 'integer'],
             [['join_source', 'channel', 'join_address','platform','vip','number'], 'string', 'max' => 128],
             [['remarks','payment_screenshot'], 'string', 'max' => 256]
         ];
@@ -65,6 +66,7 @@ class FinancialWechatJoinRecord extends \yii\db\ActiveRecord
             'weekly_time' => '每周时间',
             'mouth_time' => '每月时间',
             'day_time' => '每日时间',
+            'year_time' => '每年时间',
             'created_by' => '创建人',
             'channel' => '付款渠道',
             'payment_amount' => '付款金额',
@@ -91,7 +93,8 @@ class FinancialWechatJoinRecord extends \yii\db\ActiveRecord
                 $this->updated_at = time();
                 $this->day_time = strtotime('today');
                 $this->weekly_time = strtotime('next sunday');
-                $this->mouth_time = mktime(23,59,59,date('m'),date('t')-1,date('Y'))+1;
+                $this->mouth_time = mktime(0,0,0,date('m',time()),date('t'),date('Y',time()));
+                $this->year_time = mktime(0,0,0,12,31,date('Y',time()));
                 $this->created_by = Yii::$app->user->id;
             }else{
                 $this->updated_at = time();
@@ -112,7 +115,7 @@ class FinancialWechatJoinRecord extends \yii\db\ActiveRecord
             $filepath = $_FILES['FinancialWechatJoinRecord']['tmp_name']['payment_screenshot'];
             $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
             $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->wechat_id.'_'.uniqid();
-            $qiniu = $qn->upload_app('test',"uploads/payment_change/$mkdir",$filepath);
+            $qiniu = $qn->upload_app('test02',"uploads/payment_change/$mkdir",$filepath);
             return $qiniu['key'];
         } else {
             return false;

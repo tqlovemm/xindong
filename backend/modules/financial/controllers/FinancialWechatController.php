@@ -7,6 +7,7 @@ use backend\modules\financial\models\FinancialWechatMemberIncrease;
 use Yii;
 use backend\modules\financial\models\FinancialWechat;
 use backend\modules\financial\models\FinancialWechatSearch;
+use yii\data\Pagination;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -56,29 +57,88 @@ class FinancialWechatController extends Controller
         ]);
     }
 
-
+    /**
+     * @return string
+     */
     public function actionTodayJoinRecord(){
 
         $model = FinancialWechatMemberIncrease::find()->joinWith('wechat')->where(['day_time' => strtotime('yesterday')])->asArray()->all();
         return $this->render('today-join-record',['model'=>$model]);
     }
 
+    /**
+     * @param $wechat_id
+     * @return string
+     */
     public function actionPastJoinRecord($wechat_id){
 
         $model = FinancialWechatMemberIncrease::find()->where(['wechat_id' => $wechat_id])->orderBy('day_time desc')->asArray()->all();
-        return $this->render('past-join-record',['model'=>$model]);
+        $total = FinancialWechatMemberIncrease::find()->addSelect('sum(increase_boy_count) as tc,max(total_count) as mc,sum(join_count) as jc,min(day_time) as dt_min,max(day_time) as dt_max')->where(['wechat_id' => $wechat_id])->asArray()->one();
+        return $this->render('past-join-record',['model'=>$model,'total'=>$total]);
     }
 
-    public function actionDayFeeRecord($time = null,$wechat_id){
+    /**
+     * @param null $time
+     * @param null $wechat_id
+     * @return string
+     */
+
+    public function actionDayFeeRecord($time = null,$wechat_id = null){
 
         if($time==null){
             $model = FinancialWechatJoinRecord::find()->joinWith('wechat')->where(['day_time' => strtotime('today')])->asArray()->all();
+            return $this->render('today-fee-record',['model'=>$model]);
         }else{
-            $model = FinancialWechatJoinRecord::find()->joinWith('wechat')->where(['day_time' => $time,'wechat_id'=>$wechat_id])->orderBy('created_at desc')->asArray()->all();
+            $model = FinancialWechatJoinRecord::find()->joinWith('wechat')->where(['day_time' => $time,'wechat_id'=>$wechat_id,'type'=>1])->orderBy('created_at desc')->asArray()->all();
+            return $this->render('day-fee-record',['model'=>$model]);
+        }
+    }
+
+    /**
+     * @param null $week
+     * @param null $mouth
+     * @return string
+     */
+    public function actionEverydayFeeRecord($week=null,$mouth = null){
+
+        $model = FinancialWechatJoinRecord::find()->select('group_concat(id) as id,day_time')->groupBy('day_time')->orderBy('day_time desc')->where(['day_time'=>strtotime('today')])->asArray()->all();
+
+        if($week!=null){
+            $model = FinancialWechatJoinRecord::find()->select('group_concat(id) as id,day_time')->groupBy('day_time')->orderBy('day_time desc')->where(['weekly_time'=>$week])->asArray()->all();
         }
 
-        return $this->render('day-fee-record',['model'=>$model]);
+        if($mouth!=null){
+            $model = FinancialWechatJoinRecord::find()->select('group_concat(id) as id,day_time')->groupBy('day_time')->orderBy('day_time desc')->where(['mouth_time'=>$mouth])->asArray()->all();
+        }
+
+        return $this->render('today-fee-record',['model'=>$model]);
     }
+
+
+    /**
+     * @param null $type
+     * @return string
+     */
+    public function actionChoiceMouth($type=null){
+
+        $model = FinancialWechatJoinRecord::find()->select('mouth_time')->groupBy('mouth_time')->orderBy('mouth_time desc')->asArray()->all();
+        return $this->render('choice-mouth',['model'=>$model,'type'=>$type]);
+    }
+
+    /**
+     * @param null $mouth
+     * @return string
+     */
+    public function actionChoiceWeek($mouth=null){
+
+        $model = FinancialWechatJoinRecord::find()->select('weekly_time')->groupBy('weekly_time')->orderBy('weekly_time desc')->where(['mouth_time'=>$mouth])->asArray()->all();
+        return $this->render('choice-week',['model'=>$model]);
+
+    }
+
+    /**
+     * @return string
+     */
     public function actionPastFeeRecord(){
 
         $model = FinancialWechatJoinRecord::find()->joinWith('wechat')->where(['day_time' => strtotime('today')])->asArray()->all();
@@ -92,7 +152,6 @@ class FinancialWechatController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-
     public function actionWechatExist($wechat){
 
         if(!empty(FinancialWechat::findOne(['wechat'=>$wechat]))){
@@ -100,6 +159,9 @@ class FinancialWechatController extends Controller
         }
     }
 
+    /**
+     * @return string|\yii\web\Response
+     */
     public function actionCreate()
     {
         $model = new FinancialWechat();
@@ -145,6 +207,15 @@ class FinancialWechatController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionMom(){
+
+
+    }
+
+    public function actionAn(){
+
+
+    }
     /**
      * Finds the FinancialWechat model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

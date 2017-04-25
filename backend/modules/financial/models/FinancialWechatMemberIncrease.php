@@ -22,6 +22,7 @@ use Yii;
  * @property integer $day_time
  * @property integer $weekly_time
  * @property integer $mouth_time
+ * @property integer $year_time
  * @property string $remarks
  * @property string $wechat_loose_change_screenshot
  */
@@ -43,7 +44,7 @@ class FinancialWechatMemberIncrease extends \yii\db\ActiveRecord
         return [
             [['wechat_id','total_count'], 'required','message'=>"{attribute}不可为空"],
             [['wechat_id'], 'unique'],
-            [['wechat_id', 'increase_boy_count','increase_girl_count','total_count', 'reduce_count', 'created_at', 'updated_at', 'created_by', 'join_count','day_time','weekly_time','mouth_time'], 'integer'],
+            [['wechat_id', 'increase_boy_count','increase_girl_count','year_time','total_count', 'reduce_count', 'created_at', 'updated_at', 'created_by', 'join_count','day_time','weekly_time','mouth_time'], 'integer'],
             [['loose_change'], 'number'],
             [['remarks','wechat_loose_change_screenshot'], 'string'],
         ];
@@ -71,6 +72,7 @@ class FinancialWechatMemberIncrease extends \yii\db\ActiveRecord
             'updated_at' => '更新时间',
             'weekly_time' => '每周时间',
             'mouth_time' => '每月时间',
+            'year_time' => '每年时间',
             'day_time' => '每日时间',
             'created_by' => '创建人',
             'loose_change' => '今日微信零钱数',
@@ -92,7 +94,8 @@ class FinancialWechatMemberIncrease extends \yii\db\ActiveRecord
                 $this->updated_at = time();
                 $this->day_time = strtotime('yesterday');
                 $this->weekly_time = strtotime('next sunday');
-                $this->mouth_time = mktime(23,59,59,date('m'),date('t')-1,date('Y'))+1;
+                $this->mouth_time =mktime(0,0,0,date('m',time()),date('t'),date('Y',time()));
+                $this->year_time = mktime(0,0,0,12,31,date('Y',time()));
                 $this->created_by = Yii::$app->user->id;
             }else{
                 $this->updated_at = time();
@@ -113,7 +116,7 @@ class FinancialWechatMemberIncrease extends \yii\db\ActiveRecord
             $filepath = $_FILES['FinancialWechatMemberIncrease']['tmp_name']['wechat_loose_change_screenshot'];
             $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
             $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->wechat_id.'_'.uniqid();
-            $qiniu = $qn->upload_app('test',"uploads/wechat_loose_change/$mkdir",$filepath);
+            $qiniu = $qn->upload_app('test02',"uploads/wechat_loose_change/$mkdir",$filepath);
             return $qiniu['key'];
         } else {
             return false;
