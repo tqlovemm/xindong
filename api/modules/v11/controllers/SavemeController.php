@@ -157,7 +157,7 @@ class SavemeController extends ActiveController {
     }
 
     protected function UploadImg($img,$user_id){
-        $pre_url = Yii::$app->params['test'];
+        $pre_url = Yii::$app->params['appimages'];
         $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
         $img = base64_decode($img);
         $path = '/uploads/saveme/';

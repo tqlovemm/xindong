@@ -123,7 +123,7 @@ class FormThreadController extends ActiveController {
      */
     public function actionCreate() {
 
-        $pre_url = Yii::$app->params['test'];
+        $pre_url = Yii::$app->params['appimages'];
     	$model = new $this->modelClass();
     	$model->load(Yii::$app->request->getBodyParams(), '');
         if (!$model->save()) {
