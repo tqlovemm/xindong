@@ -32,7 +32,7 @@ class FinancialWechatJoinRecordController extends Controller
 
     /**
      * Lists all FinancialWechatJoinRecord models.
-     * @return mixed
+     * @return mixed d
      */
     public function actionIndex()
     {
