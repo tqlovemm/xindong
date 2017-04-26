@@ -26,7 +26,7 @@ $this->registerCss("
             'wechat',
             //'remarks',
             'member_count',
-            'loose_change',
+            //'loose_change',
             [
                 'attribute' => 'created_by',
                 'format' => 'text',
