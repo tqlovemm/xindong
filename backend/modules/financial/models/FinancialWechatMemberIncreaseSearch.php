@@ -18,7 +18,7 @@ class FinancialWechatMemberIncreaseSearch extends FinancialWechatMemberIncrease
     public function rules()
     {
         return [
-            [['id', 'wechat_id', 'total_count', 'increase_girl_count', 'increase_boy_count', 'reduce_count', 'created_at', 'updated_at', 'created_by', 'join_count'], 'integer'],
+            [['id', 'wechat_id', 'total_count', 'morning_increase_count', 'increase_count', 'reduce_count', 'created_at', 'updated_at', 'created_by', 'join_count'], 'integer'],
             [['loose_change'], 'number'],
         ];
     }
@@ -58,9 +58,9 @@ class FinancialWechatMemberIncreaseSearch extends FinancialWechatMemberIncrease
         $query->andFilterWhere([
             'id' => $this->id,
             'wechat_id' => $this->wechat_id,
-            'increase_girl_count' => $this->increase_girl_count,
+            'morning_increase_count' => $this->morning_increase_count,
             'total_count' => $this->total_count,
-            'increase_boy_count' => $this->increase_boy_count,
+            'increase_count' => $this->increase_count,
             'reduce_count' => $this->reduce_count,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

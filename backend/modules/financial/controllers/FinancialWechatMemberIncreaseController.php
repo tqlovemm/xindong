@@ -70,7 +70,6 @@ class FinancialWechatMemberIncreaseController extends Controller
         $query = FinancialWechatMemberIncrease::find()->select('total_count')->where(['wechat_id'=>$wechat_id])->orderBy('created_at desc')->asArray()->one();
 
         if(empty($query)){
-
             $q = FinancialWechat::find()->select('member_count')->where(['id'=>$wechat_id])->asArray()->one();
             $total_count = $q['member_count'];
         }else{
@@ -81,7 +80,11 @@ class FinancialWechatMemberIncreaseController extends Controller
 
         $model->join_count = $feeRecord;
         if ($model->load(Yii::$app->request->post())&& $model->validate()) {
-            $model->wechat_loose_change_screenshot = $model->upload();
+
+            $model->increase_count = $model->total_count - $total_count;
+            if(!empty($_FILES['FinancialWechatMemberIncrease']['name']['wechat_loose_change_screenshot'])){
+                $model->wechat_loose_change_screenshot = $model->upload();
+            }
             if($model->save()){
                 return $this->redirect(['financial-wechat/index']);
             }

@@ -23,8 +23,8 @@ $percent = ($total['tc']==0)?0:round(($total['jc']/$total['tc']),4)*100;
                 <thead>
                 <tr style="background-color: #fff7ee;">
                         <th>总计</th>
-                        <th>加入总数</th>
-                        <th>全部总数</th>
+                        <th>总加入数</th>
+                        <th>总数</th>
                         <th>入会总数</th>
                         <th>总入会率</th>
                 </tr>
@@ -52,8 +52,9 @@ $percent = ($total['tc']==0)?0:round(($total['jc']/$total['tc']),4)*100;
                 <thead>
                         <tr>
                                 <th rowspan="2">时间</th>
-                                <th colspan="2">加入人数</th>
-                                <th rowspan="2">总人数</th>
+                                <th rowspan="2">今日总人数</th>
+                                <th rowspan="2">今日早晨未通过人数</th>
+                                <th rowspan="2">昨日增加人数</th>
                                 <th rowspan="2">删除人数</th>
                                 <th rowspan="2">微信零钱</th>
                                 <th rowspan="2">入会数</th>
@@ -61,14 +62,11 @@ $percent = ($total['tc']==0)?0:round(($total['jc']/$total['tc']),4)*100;
                                 <th rowspan="2">创建人</th>
                                 <th rowspan="2">创建时间</th>
                         </tr>
-                        <tr>
-                                <th>男生</th>
-                                <th>女生</th>
-                        </tr>
+
                 </thead>
                 <tbody>
                 <?php foreach ($model as $item):
-                        $percent = ($item['increase_boy_count']==0)?0:round(($item['join_count']/$item['increase_boy_count']),4)*100;
+                        $percent = ($item['increase_count']==0)?0:round(($item['join_count']/$item['increase_count']),4)*100;
                         $screenshot = "";
                         $user = \backend\models\User::findOne($item['created_by'])->username .' '.\backend\models\User::findOne($item['created_by'])->nickname;
                         if(!empty($item['wechat_loose_change_screenshot'])){
@@ -83,9 +81,9 @@ $percent = ($total['tc']==0)?0:round(($total['jc']/$total['tc']),4)*100;
                         ?>
                         <tr>
                                 <td><?=date('Y/m/d',$item['day_time'])?></td>
-                                <td><?=$item['increase_boy_count']?></td>
-                                <td><?=$item['increase_girl_count']?></td>
                                 <td><?=$item['total_count']?></td>
+                                <td><?=$item['morning_increase_count']?></td>
+                                <td><?=$item['increase_count']?></td>
                                 <td><?=$item['reduce_count']?></td>
                                 <td><?=$item['loose_change']?> <?=$screenshot?></td>
                                 <td><?=$item['join_count']?> <?=$joinCount?></td>

@@ -10,8 +10,8 @@ use Yii;
  *
  * @property integer $id
  * @property integer $wechat_id
- * @property integer $increase_boy_count
- * @property integer $increase_girl_count
+ * @property integer $increase_count
+ * @property integer $morning_increase_count
  * @property integer $total_count
  * @property integer $reduce_count
  * @property integer $created_at
@@ -44,7 +44,7 @@ class FinancialWechatMemberIncrease extends \yii\db\ActiveRecord
         return [
             [['wechat_id','total_count'], 'required','message'=>"{attribute}不可为空"],
             [['wechat_id'], 'unique'],
-            [['wechat_id', 'increase_boy_count','increase_girl_count','year_time','total_count', 'reduce_count', 'created_at', 'updated_at', 'created_by', 'join_count','day_time','weekly_time','mouth_time'], 'integer'],
+            [['wechat_id', 'increase_count','morning_increase_count','year_time','total_count', 'reduce_count', 'created_at', 'updated_at', 'created_by', 'join_count','day_time','weekly_time','mouth_time'], 'integer'],
             [['loose_change'], 'number'],
             [['remarks','wechat_loose_change_screenshot'], 'string'],
         ];
@@ -53,7 +53,7 @@ class FinancialWechatMemberIncrease extends \yii\db\ActiveRecord
     public function unique(){
 
         if(!empty(self::findOne(['wechat_id'=>$this->wechat_id,'day_time'=>strtotime('yesterday')]))){
-            $this->addError("increase_boy_count","今日已经记录人数");
+            $this->addError("morning_increase_count","今日已经记录人数");
         }
     }
     /**
@@ -64,9 +64,9 @@ class FinancialWechatMemberIncrease extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'wechat_id' => '客服微信号',
-            'increase_boy_count' => '今日增加男生人数',
-            'increase_girl_count' => '今日增加女生人数',
-            'total_count' => '截至今日总人数',
+            'increase_count' => '今日增加人数',
+            'morning_increase_count' => '早晨增加人数',
+            'total_count' => '今日总人数',
             'reduce_count' => '今日删除人数',
             'created_at' => '创建时间',
             'updated_at' => '更新时间',

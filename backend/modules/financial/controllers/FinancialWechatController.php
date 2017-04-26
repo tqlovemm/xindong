@@ -75,7 +75,7 @@ class FinancialWechatController extends Controller
     public function actionPastJoinRecord($wechat_id){
 
         $model = FinancialWechatMemberIncrease::find()->where(['wechat_id' => $wechat_id])->orderBy('day_time desc')->asArray()->all();
-        $total = FinancialWechatMemberIncrease::find()->addSelect('sum(increase_boy_count) as tc,max(total_count) as mc,sum(join_count) as jc,min(day_time) as dt_min,max(day_time) as dt_max')->where(['wechat_id' => $wechat_id])->asArray()->one();
+        $total = FinancialWechatMemberIncrease::find()->addSelect('sum(increase_count) as tc,max(total_count) as mc,sum(join_count) as jc,min(day_time) as dt_min,max(day_time) as dt_max')->where(['wechat_id' => $wechat_id])->asArray()->one();
         return $this->render('past-join-record',['model'=>$model,'total'=>$total]);
     }
 

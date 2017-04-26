@@ -21,8 +21,9 @@ $this->registerCss("
                         <thead>
                                 <tr>
                                         <th rowspan="2">微信号名称</th>
-                                        <th colspan="2">今日加入人数</th>
-                                        <th rowspan="2">总人数</th>
+                                        <th rowspan="2">今日总人数</th>
+                                        <th rowspan="2">今日早晨未通过人数</th>
+                                        <th rowspan="2">昨日增加人数</th>
                                         <th rowspan="2">今日删除人数</th>
                                         <th rowspan="2">今日微信号零钱数</th>
                                         <th rowspan="2">今日入会人数</th>
@@ -31,16 +32,13 @@ $this->registerCss("
                                         <th rowspan="2">往日统计</th>
                                         <th rowspan="2">操作</th>
                                 </tr>
-                                <tr>
-                                        <th>男生</th>
-                                        <th>女生</th>
-                                </tr>
+
                         </thead>
                         <tbody>
                         <?php foreach ($model as $item):
-                                $percent = ($item['increase_boy_count']==0)?0:round(($item['join_count']/$item['increase_boy_count']),4)*100;
+                                $percent = ($item['increase_count']==0)?0:round(($item['join_count']/$item['increase_count']),4)*100;
                                 $screenshot = "";
-                                $user = \backend\models\User::findOne($item['created_by'])->username .'：'.\backend\models\User::findOne($item['created_by'])->nickname;
+                                $user = \backend\models\User::findOne($item['created_by'])->username .' - '.\backend\models\User::findOne($item['created_by'])->nickname;
                                 if(!empty($item['wechat_loose_change_screenshot'])){
                                         $imgPath = Yii::$app->params['test'].$item['wechat_loose_change_screenshot'];
                                         $screenshot = "<a href='$imgPath' data-lightbox='s' data-title='s'>零钱截图</a>";
@@ -48,9 +46,9 @@ $this->registerCss("
                                 ?>
                                 <tr>
                                         <td><?=$item['wechat']['wechat']?></td>
-                                        <td><?=$item['increase_boy_count']?></td>
-                                        <td><?=$item['increase_girl_count']?></td>
                                         <td><?=$item['total_count']?></td>
+                                        <td><?=$item['morning_increase_count']?></td>
+                                        <td><?=$item['increase_count']?></td>
                                         <td><?=$item['reduce_count']?></td>
                                         <td><?=$item['loose_change']?> — <?=$screenshot?></td>
                                         <td><?=$item['join_count']?></td>
