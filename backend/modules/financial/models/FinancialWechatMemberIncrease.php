@@ -65,7 +65,7 @@ class FinancialWechatMemberIncrease extends \yii\db\ActiveRecord
             'id' => 'ID',
             'wechat_id' => '客服微信号',
             'increase_count' => '今日增加人数',
-            'morning_increase_count' => '早晨增加人数',
+            'morning_increase_count' => '早晨增加未通过人数',
             'total_count' => '今日总人数',
             'reduce_count' => '今日删除人数',
             'created_at' => '创建时间',
