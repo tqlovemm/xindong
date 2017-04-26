@@ -2,6 +2,7 @@
 
 namespace backend\modules\financial\controllers;
 
+use backend\models\User;
 use backend\modules\financial\models\FinancialWechatJoinRecord;
 use backend\modules\financial\models\FinancialWechatMemberIncrease;
 use Yii;
@@ -212,14 +213,37 @@ class FinancialWechatController extends Controller
         if(!empty(Yii::$app->request->get('start_time'))){
             $start_time = strtotime(Yii::$app->request->get('start_time'));
             $end_time = strtotime(Yii::$app->request->get('end_time'));
-        }else{
-            $start_time = strtotime(date('Y-m-01'));
-            $end_time = strtotime(date('Y-m-d'));
-        }
-        $model = FinancialWechatJoinRecord::find()->select("platform,sum(payment_amount) as pa,count(platform) as platform_c")->where(['between','created_at',$start_time,$end_time])->groupBy('platform')->asArray()->all();
-        return $this->render('choice-time',['model'=>$model,'start_time'=>$start_time,'end_time'=>$end_time]);
-    }
 
+            $model = FinancialWechatJoinRecord::find()->select("platform,sum(payment_amount) as pa,count(platform) as platform_c")->where(['between','created_at',$start_time,$end_time])->groupBy('platform')->asArray()->all();
+
+            echo "<table class='table table-bordered' style='background-color: #fff;text-align: center;border: none;'>
+                    <tr><td colspan='3'><h3>".date('Y-m-d',$start_time)." - ".date('Y-m-d',$end_time)."销售收入明细表</h3></td></tr>";
+            $sum = 0;
+            foreach ($model as $key=>$item){
+                $sum += $item['pa'];
+                $query = FinancialWechatJoinRecord::find()->select("created_by,sum(payment_amount) as pas,count(created_by) as u_count")->where(['between','created_at',$start_time,$end_time])->andWhere(['platform'=>$item['platform']])->groupBy('created_by')->asArray()->all();
+                echo "<tr>
+                    <td style='vertical-align:middle;border-right: none;'>$item[platform]</td>
+                    <td style='padding: 0;border:none !important;'>
+                        <table class='table table-bordered' style='margin-bottom: 0;border:none !important;'>";
+                            foreach ($query as $list):
+                                $user = User::findOne($list['created_by'])->username .' '.User::findOne($list['created_by'])->nickname;
+                                echo "<tr>
+                                    <td width='50%'>$user</td>
+                                    <td>$list[pas]</td>
+                                    </tr>";
+                             endforeach;
+                       echo "</table>
+                    </td>
+                    <td style='vertical-align:middle;border-left: none;'>{$item['pa']}</td>
+                </tr>";
+            }
+            echo "<tr><td colspan='2'>总计</td><td style='background-color: yellow;'>$sum</td></tr></table>";
+        }else{
+            return $this->render('choice-time');
+        }
+
+    }
     /**
      * @param $date
      * @return string
