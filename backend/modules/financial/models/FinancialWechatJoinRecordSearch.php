@@ -19,7 +19,7 @@ class FinancialWechatJoinRecordSearch extends FinancialWechatJoinRecord
     {
         return [
             [['id', 'wechat_id', 'created_at', 'updated_at', 'day_time', 'weekly_time', 'mouth_time', 'created_by', 'payment_amount', 'vip', 'type'], 'integer'],
-            [['join_source', 'channel', 'join_address', 'remarks'], 'safe'],
+            [['join_source', 'channel', 'remarks'], 'safe'],
         ];
     }
 
@@ -71,7 +71,6 @@ class FinancialWechatJoinRecordSearch extends FinancialWechatJoinRecord
 
         $query->andFilterWhere(['like', 'join_source', $this->join_source])
             ->andFilterWhere(['like', 'channel', $this->channel])
-            ->andFilterWhere(['like', 'join_address', $this->join_address])
             ->andFilterWhere(['like', 'remarks', $this->remarks]);
 
         return $dataProvider;

@@ -18,7 +18,6 @@ $this->title = '会员入会收款记录';
     <?= $form->field($model, 'payment_to')->dropDownList([1=>'收款专用号',2=>'微信客服号'])->label('付款到')  ?>
     <?= $form->field($model, 'payment_amount')->textInput()->label('付款金额')  ?>
     <?= $form->field($model, 'payment_screenshot')->fileInput() ?>
-    <?= $form->field($model, 'join_address')->dropDownList($province)->label('入会地址')  ?>
     <?= $form->field($model, 'remarks')->textarea(['maxlength' => true,'placeholder'=>'可填写打折情况，入会编号以及其他详情情况'])->label('备注')  ?>
   </div>
 </div>
