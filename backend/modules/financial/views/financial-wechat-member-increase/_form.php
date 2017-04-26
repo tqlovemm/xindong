@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
     <?= $form->field($model, 'increase_boy_count')->textInput(['value'=>0]) ?>
     <?= $form->field($model, 'increase_girl_count')->textInput(['value'=>0]) ?>
-    <?= $form->field($model, 'total_count')->textInput() ?>
+    <?= $form->field($model, 'total_count')->textInput(['value'=>$total_count]) ?>
     <?= $form->field($model, 'reduce_count')->textInput(['value'=>0]) ?>
     <?= $form->field($model, 'loose_change')->textInput() ?>
     <?= $form->field($model, 'remarks')->textInput() ?>
