@@ -69,7 +69,7 @@ class CollectingFilesController extends Controller
         if(!empty($query)){
 
             if($query['status']==1||$query['status']==2){
-                return $this->render('index-message',['queries'=>$query,'img'=>$img]);
+                throw new ForbiddenHttpException('已经填写完成');
             }
             return $this->render('index',['queries'=>$query,'img'=>$img]);
         }
