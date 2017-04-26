@@ -12,7 +12,7 @@ $this->registerCss("
 ");
 $percent = ($total['tc']==0)?0:round(($total['jc']/$total['tc']),4)*100;
 ?>
-<div class="today-record-index" style="width: 70%">
+<div class="today-record-index">
         <div class="box box-success">
                 <div class="box-header with-border">
                         <h3 class="box-title">总计</h3>
