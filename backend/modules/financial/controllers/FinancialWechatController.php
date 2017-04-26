@@ -219,14 +219,14 @@ class FinancialWechatController extends Controller
             $start_time = strtotime(Yii::$app->request->get('start_time'));
             $end_time = strtotime(Yii::$app->request->get('end_time'));
 
-            $model = FinancialWechatJoinRecord::find()->select("platform,sum(payment_amount) as pa,count(platform) as platform_c")->where(['between','created_at',$start_time,$end_time])->groupBy('platform')->asArray()->all();
+            $model = FinancialWechatJoinRecord::find()->select("platform,sum(payment_amount) as pa,count(platform) as platform_c")->where(['between','created_at',$start_time,$end_time+86400])->groupBy('platform')->asArray()->all();
 
             echo "<table class='table table-bordered' style='background-color: #fff;text-align: center;border: none;'>
                     <tr><td colspan='3'><h3>".date('Y-m-d',$start_time)." - ".date('Y-m-d',$end_time)."销售收入明细表</h3></td></tr>";
             $sum = 0;
             foreach ($model as $key=>$item){
                 $sum += $item['pa'];
-                $query = FinancialWechatJoinRecord::find()->select("created_by,sum(payment_amount) as pas,count(created_by) as u_count")->where(['between','created_at',$start_time,$end_time])->andWhere(['platform'=>$item['platform']])->groupBy('created_by')->asArray()->all();
+                $query = FinancialWechatJoinRecord::find()->select("created_by,sum(payment_amount) as pas,count(created_by) as u_count")->where(['between','created_at',$start_time,$end_time+86400])->andWhere(['platform'=>$item['platform']])->groupBy('created_by')->asArray()->all();
                 echo "<tr>
                     <td style='vertical-align:middle;border-right: none;'>$item[platform]</td>
                     <td style='padding: 0;border:none !important;'>
@@ -305,9 +305,9 @@ class FinancialWechatController extends Controller
         $percent01 = ($model_this['sum']==0)?0:round(($model_this['sum']-$model_last['sum'])/$model_this['sum'],4)*100;
         $percent02 = ($model_past['sum']==0)?0:round(($model_past['sum']-$model_past['sum'])/$model_past['sum'],4)*100;
 
-        $time_1 = date('Y年m月d',$last_start_time).'-'.date('d日',$last_end_time);
-        $time_2 = date('Y年m月d',$this_start_time).'-'.date('d日',$this_end_time);
-        $time_3 = date('Y年m月d',$past_start_time).'-'.date('d日',$past_end_time);
+        $time_1 = date('Y年m月d',$last_start_time).'-'.date('d日',$last_end_time-86400);
+        $time_2 = date('Y年m月d',$this_start_time).'-'.date('d日',$this_end_time-86400);
+        $time_3 = date('Y年m月d',$past_start_time).'-'.date('d日',$past_end_time-86400);
 
         $html = <<<eof
             <table class="table table-bordered">
@@ -350,7 +350,7 @@ eof;
         $date_2 = strtotime((date('Y',$date) - 1) . '/' . date('m',$date) . '/' . date('d',$date));
         $date_1 = strtotime((date('Y',$date) - 1) . '/' . date('m',$date) . '/' . 1);
 
-        $dateArr = array($date_1,$date_2,$date_4,$date_3,$date_5,$date_6);
+        $dateArr = array($date_1,$date_2+86400,$date_4,$date_3+86400,$date_5,$date_6+86400);
 
         return $dateArr;
     }
