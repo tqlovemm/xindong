@@ -211,6 +211,7 @@ class FinancialWechatController extends Controller
     public function actionChoiceTime(){
 
         if(!empty(Yii::$app->request->get('start_time'))){
+
             $start_time = strtotime(Yii::$app->request->get('start_time'));
             $end_time = strtotime(Yii::$app->request->get('end_time'));
 
@@ -240,7 +241,7 @@ class FinancialWechatController extends Controller
             }
             echo "<tr><td colspan='2'>总计</td><td style='background-color: yellow;'>$sum</td></tr></table>";
         }else{
-            return $this->render('choice-time');
+            return $this->render('choice-time',['start_time'=>date('Y-m-01',time()),'end_time'=>date('Y-m-d',time()),]);
         }
 
     }

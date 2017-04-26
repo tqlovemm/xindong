@@ -28,6 +28,15 @@
 <div class="contents box box-danger" style="width: 60%;"></div>
 <?php
 $this->registerJs("
+    var x = document.getElementById('start_time');
+    var y = document.getElementById('end_time');
+    x.setAttribute('value', '{$start_time}');
+    y.setAttribute('value', '{$end_time}');
+
+    $.get('choice-time?start_time='+$('#start_time').val()+'&end_time='+$('#end_time').val(),function(data){
+            $('.contents').html(data);
+    });
+
     $('#submit_id').click(function(){
         $.get('choice-time?start_time='+$('#start_time').val()+'&end_time='+$('#end_time').val(),function(data){
             $('.contents').html(data);
