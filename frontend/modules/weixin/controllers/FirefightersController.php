@@ -397,8 +397,10 @@ class FirefightersController extends Controller
             $addresses = array_filter($addresses);
             if(empty(User::getNumber(Yii::$app->user->id))){
                 $result = '报名失败，平台未记录您的编号';
-            }elseif(!$this->checkArea($model->name,$addresses)){
-                $result = '报名失败，您所在地址不在妹子的需求范围之内';
+            }elseif($model->all==0){
+                if(!$this->checkArea($model->name,$addresses)){
+                    $result = '报名失败，您所在地址不在妹子的需求范围之内';
+                }
             }elseif($model->coin>$coin['jiecao_coin']){
                 $result = '报名失败，您的节操币不足';
             }else{

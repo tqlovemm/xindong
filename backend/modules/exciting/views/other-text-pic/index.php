@@ -11,9 +11,7 @@ $this->title = '心动故事内容';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="weekly-content-index">
-
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('Create Weekly Content', ['create'], ['class' => 'btn btn-success']) ?>
@@ -25,13 +23,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            //'pid',
-           // 'tid',
             'name',
             'content',
             'pic_path',
             'created_at',
             'type',
+            'all',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

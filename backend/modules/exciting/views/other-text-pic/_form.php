@@ -18,6 +18,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'status')->dropDownList([1 => '不发布',2=>'发布'])->label('是否发布') ?>
     <?= $form->field($model, 'coin')->label('需要节操币') ?>
+    <?= $form->field($model, 'all')->dropDownList([0=>'否',1=>'是'])?>
     <?php if($model->type==4):?>
         <?= $form->field($model, 'expire')->dropDownList([34000=>'Forever',12=>'12 hours',24=>'24 hours',36=>'36 hours',48=>'2 days',72=>'3 days',120=>'5 days',168=>'A week',336=>'2 weeks',720=>'One month',1464=>'2 months',2208=>'3 months',4320=>'Half a year',8760=>'A year'])->label('过期时间') ?>
     <?php elseif($model->type==3):?>

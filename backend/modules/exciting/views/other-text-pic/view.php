@@ -45,10 +45,11 @@ $pre_url = Yii::$app->params['threadimg'];
             'content',
             [
                 'format'=>'raw',
-            'label' => 'pic_path',
-            'value' => "<img src=$pre_url$model->pic_path />",
+                'label' => 'pic_path',
+                'value' => "<img src=$pre_url$model->pic_path />",
             ],
             'created_at:datetime',
+            'all',
         ],
     ]) ?>
 

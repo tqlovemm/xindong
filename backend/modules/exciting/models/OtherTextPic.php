@@ -16,6 +16,7 @@ namespace backend\modules\exciting\models;
  * @property integer $coin
  * @property integer $expire
  * @property integer $status
+ * @property integer $all
  */
 class OtherTextPic extends \yii\db\ActiveRecord
 {
@@ -34,7 +35,7 @@ class OtherTextPic extends \yii\db\ActiveRecord
     {
         return [
             [['tid', 'name', 'content', 'pic_path'], 'required'],
-            [['tid', 'created_at', 'type', 'status','coin','expire'], 'integer'],
+            [['tid', 'created_at', 'type', 'status','coin','expire','all'], 'integer'],
             [['name','city'], 'string', 'max' => 32],
             [['number'], 'string', 'max' => 16],
             [['content', 'pic_path'], 'string', 'max' => 128]
@@ -59,6 +60,7 @@ class OtherTextPic extends \yii\db\ActiveRecord
             'expire' => 'Expire',
             'status' => 'Status',
             'city' => '所在城市',
+            'all' => '是否不限地区',
         ];
     }
 
