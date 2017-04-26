@@ -33,7 +33,7 @@ $this->registerCss("
                 'label' => '创建管理员',
                 'value'=>function($model){
                     if(!empty($model->created_by)){
-                        return \backend\models\User::findOne($model->created_by)->username .'：'.\backend\models\User::findOne($model->created_by)->nickname;
+                        return \backend\models\User::findOne($model->created_by)->username .' - '.\backend\models\User::findOne($model->created_by)->nickname;
                     }
 
                 }
