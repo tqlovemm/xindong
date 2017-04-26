@@ -212,6 +212,9 @@ class FinancialWechatController extends Controller
         return $this->redirect(['index']);
     }
 
+    /**
+     * @return string
+     */
     public function actionChoiceTime(){
 
         if(!empty(Yii::$app->request->get('start_time'))){
@@ -221,8 +224,9 @@ class FinancialWechatController extends Controller
 
             $model = FinancialWechatJoinRecord::find()->select("platform,sum(payment_amount) as pa,count(platform) as platform_c")->where(['between','created_at',$start_time,$end_time+86400])->groupBy('platform')->asArray()->all();
 
-            echo "<table class='table table-bordered' style='background-color: #fff;text-align: center;border: none;'>
-                    <tr><td colspan='3'><h3>".date('Y-m-d',$start_time)." - ".date('Y-m-d',$end_time)."销售收入明细表</h3></td></tr>";
+            echo "<table class='table table-bordered' style='background-color: #fff;text-align: center;border: none;margin-bottom: 0px;'>
+                    <tr><td colspan='3'><h3>".date('Y-m-d',$start_time)." - ".date('Y-m-d',$end_time)."销售收入明细表</h3></td></tr>
+                    <tr><th style='text-align: center;'>平台</th><th style='text-align: center;'>入会客服及金额</th><th style='text-align: center;'>总金额</th></tr>";
             $sum = 0;
             foreach ($model as $key=>$item){
                 $sum += $item['pa'];
@@ -230,7 +234,7 @@ class FinancialWechatController extends Controller
                 echo "<tr>
                     <td style='vertical-align:middle;border-right: none;'>$item[platform]</td>
                     <td style='padding: 0;border:none !important;'>
-                        <table class='table table-bordered' style='margin-bottom: 0;border:none !important;'>";
+                        <table class='table table-bordered' style='margin-bottom: 0;border:none;'>";
                             foreach ($query as $list):
                                 $user = User::findOne($list['created_by'])->username .' '.User::findOne($list['created_by'])->nickname;
                                 echo "<tr>
@@ -284,7 +288,9 @@ class FinancialWechatController extends Controller
         ]);
     }
 
-
+    /**
+     * @param $date
+     */
     public function actionD($date){
 
         $getDate = $this->getData($date);
@@ -326,6 +332,11 @@ eof;
         echo $html;
 
     }
+
+    /**
+     * @param $date
+     * @return array
+     */
     function getData($date)
     {
         //上月环比时间

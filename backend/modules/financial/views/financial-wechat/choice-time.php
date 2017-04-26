@@ -25,7 +25,7 @@
         </div>
     </div>
 </div>
-<div class="contents box box-danger" style="width: 60%;"></div>
+<div class="contents box box-danger" style="width: 60%;padding:10px;"></div>
 <?php
 $this->registerJs("
     var x = document.getElementById('start_time');
