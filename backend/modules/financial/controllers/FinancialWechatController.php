@@ -226,7 +226,7 @@ class FinancialWechatController extends Controller
 
             echo "<table class='table table-bordered' style='background-color: #fff;text-align: center;border: none;margin-bottom: 0px;'>
                     <tr><td colspan='3'><h3>".date('Y-m-d',$start_time)." - ".date('Y-m-d',$end_time)."销售收入明细表</h3></td></tr>
-                    <tr><th style='text-align: center;'>平台</th><th style='text-align: center;'>入会客服及金额</th><th style='text-align: center;'>总金额</th></tr>";
+                    <tr><th style='text-align: center;'>平台</th><th style='text-align: center;'>入会客服名称及金额</th><th style='text-align: center;'>总金额</th></tr>";
             $sum = 0;
             foreach ($model as $key=>$item){
                 $sum += $item['pa'];
