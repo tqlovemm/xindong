@@ -20,7 +20,7 @@ $this->registerCss("
         <?= Html::a('今日入会人数统计', ['today-join-record'], ['class' => 'btn btn-success']) ?>
         <?= Html::a('今日财务统计', ['everyday-fee-record'], ['class' => 'btn btn-success']) ?>
         <?= Html::a('总计', ['choice-time'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('同比和环比', ['mom'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('同比和环比', ['mom-an'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -36,7 +36,10 @@ $this->registerCss("
                 'format' => 'text',
                 'label' => '创建管理员',
                 'value'=>function($model){
-                    return \backend\models\User::findOne($model->created_by)->username .'：'.\backend\models\User::findOne($model->created_by)->nickname;
+                    if(!empty($model->created_by)){
+                        return \backend\models\User::findOne($model->created_by)->username .'：'.\backend\models\User::findOne($model->created_by)->nickname;
+                    }
+
                 }
             ],
             [
