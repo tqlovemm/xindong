@@ -24,9 +24,9 @@ $this->registerCss("
         <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
             <div class="info-box-content">
-                <h4>数量：5</h4>
+                <h4>数量：<?=$q_1['count']?></h4>
                 <span class="info-box-text">今日收款金额</span>
-                <span class="info-box-number">1,410</span>
+                <span class="info-box-number"><?=$q_1['sum']?></span>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -38,9 +38,9 @@ $this->registerCss("
             <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
 
             <div class="info-box-content">
-                <h4>数量：5</h4>
+                <h4>数量：<?=$q_3['count']?></h4>
                 <span class="info-box-text">本周总收款</span>
-                <span class="info-box-number">410</span>
+                <span class="info-box-number"><?=$q_3['sum']?></span>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -52,9 +52,9 @@ $this->registerCss("
             <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
 
             <div class="info-box-content">
-                <h4>数量：5</h4>
+                <h4>数量：<?=$q_2['count']?></h4>
                 <span class="info-box-text">本月收款</span>
-                <span class="info-box-number">13,648</span>
+                <span class="info-box-number"><?=$q_2['sum']?></span>
             </div>
             <!-- /.info-box-content -->
         </div>

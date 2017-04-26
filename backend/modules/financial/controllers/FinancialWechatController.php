@@ -105,6 +105,10 @@ class FinancialWechatController extends Controller
 
         $model = FinancialWechatJoinRecord::find()->select('group_concat(id) as id,day_time')->groupBy('day_time')->orderBy('day_time desc')->where(['day_time'=>strtotime('today')])->asArray()->all();
 
+        $query_model1 = FinancialWechatJoinRecord::find()->select('sum(payment_amount) as sum,count(*) as count')->where(['day_time'=>strtotime('today')])->asArray()->one();
+        $query_model2 = FinancialWechatJoinRecord::find()->select('sum(payment_amount) as sum,count(*) as count')->where(['mouth_time'=>mktime(0,0,0,date('m',time()),date('t'),date('Y',time()))])->asArray()->one();
+        $query_model3 = FinancialWechatJoinRecord::find()->select('sum(payment_amount) as sum,count(*) as count')->where(['weekly_time'=>strtotime('next sunday')])->asArray()->one();
+
         if($week!=null){
             $model = FinancialWechatJoinRecord::find()->select('group_concat(id) as id,day_time')->groupBy('day_time')->orderBy('day_time desc')->where(['weekly_time'=>$week])->asArray()->all();
         }
@@ -113,7 +117,7 @@ class FinancialWechatController extends Controller
             $model = FinancialWechatJoinRecord::find()->select('group_concat(id) as id,day_time')->groupBy('day_time')->orderBy('day_time desc')->where(['mouth_time'=>$mouth])->asArray()->all();
         }
 
-        return $this->render('today-fee-record',['model'=>$model]);
+        return $this->render('today-fee-record',['model'=>$model,'q_1'=>$query_model1,'q_2'=>$query_model2,'q_3'=>$query_model3]);
     }
 
 
