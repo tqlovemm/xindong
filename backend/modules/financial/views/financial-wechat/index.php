@@ -61,7 +61,7 @@ $this->registerCss("
                 'format' => 'raw',
                 'label' => '新增操作',
                 'value'=>function($model){
-                    return "<a href='".Url::to(['/financial/financial-wechat-member-increase/create','wechat_id'=>$model->id])."' class='btn-sm btn-success'>人数录入</a> <a href='".Url::to(['/financial/financial-wechat-join-record/create','wechat_id'=>$model->id])."' class='btn-sm btn-warning'>入会录入</a>";
+                    return "<a href='".Url::to(['/financial/financial-wechat-member-increase/create','wechat_id'=>$model->id])."' class='btn-sm btn-success'>人数录入</a> <a href='".Url::to(['/financial/financial-wechat-join-record/create','wechat_id'=>$model->id])."' class='btn-sm btn-warning'>付款录入</a>";
                 }
             ],
 
