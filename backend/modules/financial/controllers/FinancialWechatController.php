@@ -282,6 +282,7 @@ class FinancialWechatController extends Controller
 
         $html = <<<eof
             <table class="table table-bordered">
+            <caption>其他日期统计</caption>
                 <tr>
                     <td rowspan="2" style="vertical-align: middle">总收入</td>
                     <td>$time_1</td>
