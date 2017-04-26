@@ -21,7 +21,7 @@ $percent = ($total['tc']==0)?0:round(($total['jc']/$total['tc']),4)*100;
                 <div class="box-body">
                         <table class="table table-bordered" style="margin-bottom: 10px;">
                 <thead>
-                <tr style="background-color: #fff7ee;">
+                <tr>
                         <th>总计</th>
                         <th>总加入数</th>
                         <th>总数</th>
