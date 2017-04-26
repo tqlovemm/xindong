@@ -47,16 +47,6 @@ $this->registerCss("
                 }
             ],
             [
-                'attribute' => 'status',
-                'value' => function($model) {
-                    return $model->status == 0 ? '不可见' : '可见';
-                },
-                'filter' => [
-                    0 => '不可见',
-                    10 => '可见'
-                ]
-            ],
-            [
                 'attribute' => '新增操作',
                 'format' => 'raw',
                 'label' => '新增操作',
