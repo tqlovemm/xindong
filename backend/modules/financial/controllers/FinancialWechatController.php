@@ -8,6 +8,7 @@ use Yii;
 use backend\modules\financial\models\FinancialWechat;
 use backend\modules\financial\models\FinancialWechatSearch;
 use yii\data\Pagination;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -203,18 +204,125 @@ class FinancialWechatController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
         return $this->redirect(['index']);
     }
 
-    public function actionMom(){
+    public function actionChoiceTime(){
 
-
+        if(!empty(Yii::$app->request->get('start_time'))){
+            $start_time = strtotime(Yii::$app->request->get('start_time'));
+            $end_time = strtotime(Yii::$app->request->get('end_time'));
+        }else{
+            $start_time = strtotime(date('Y-m-01'));
+            $end_time = strtotime(date('Y-m-d'));
+        }
+        $model = FinancialWechatJoinRecord::find()->select("platform,sum(payment_amount) as pa,count(platform) as platform_c")->where(['between','created_at',$start_time,$end_time])->groupBy('platform')->asArray()->all();
+        return $this->render('choice-time',['model'=>$model,'start_time'=>$start_time,'end_time'=>$end_time]);
     }
 
-    public function actionAn(){
+    /**
+     * @param $date
+     * @return string
+     * 环比
+     */
+    public function actionMomAn($date=null){
+
+        if($date==null){
+            $date = time();
+        }
+        $getDate = $this->getData($date);
+
+        $last_start_time = $getDate[2];
+        $last_end_time = $getDate[3];
+
+        $this_start_time = $getDate[4];
+        $this_end_time = $getDate[5];
+
+        $past_start_time = $getDate[0];
+        $past_end_time = $getDate[1];
+
+        $model_this = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['between','created_at',$this_start_time,$this_end_time])->asArray()->one();
+        $model_last = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['between','created_at',$last_start_time,$last_end_time])->asArray()->one();
+        $model_past = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['between','created_at',$past_start_time,$past_end_time])->asArray()->one();
+
+        $model_1 = ArrayHelper::map(FinancialWechatJoinRecord::find()->orderBy('day_time desc')->asArray()->all(),'day_time','day_time');
+        $model_2 = ArrayHelper::map(FinancialWechatJoinRecord::find()->orderBy('mouth_time desc')->asArray()->all(),'mouth_time','mouth_time');
+
+        return $this->render('mom-an',[
+            'model_this'=>$model_this,'model_last'=>$model_last,'model_past'=>$model_past,'this_start_time'=>$this_start_time,
+            'this_end_time'=>$this_end_time,'last_start_time'=>$last_start_time,'last_end_time'=>$last_end_time,
+            'past_start_time'=>$past_start_time,'past_end_time'=>$past_end_time,'model_1'=>$model_1,'model_2'=>$model_2
+        ]);
+    }
 
 
+    public function actionD($date){
+
+        $getDate = $this->getData($date);
+
+        $last_start_time = $getDate[2];
+        $last_end_time = $getDate[3];
+
+        $this_start_time = $getDate[4];
+        $this_end_time = $getDate[5];
+
+        $past_start_time = $getDate[0];
+        $past_end_time = $getDate[1];
+
+        $model_this = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['between','created_at',$this_start_time,$this_end_time])->asArray()->one();
+        $model_last = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['between','created_at',$last_start_time,$last_end_time])->asArray()->one();
+        $model_past = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['between','created_at',$past_start_time,$past_end_time])->asArray()->one();
+
+        $percent01 = ($model_this['sum']==0)?0:round(($model_this['sum']-$model_last['sum'])/$model_this['sum'],4)*100;
+        $percent02 = ($model_past['sum']==0)?0:round(($model_past['sum']-$model_past['sum'])/$model_past['sum'],4)*100;
+
+        $time_1 = date('Y年m月d',$last_start_time).'-'.date('d日',$last_end_time);
+        $time_2 = date('Y年m月d',$this_start_time).'-'.date('d日',$this_end_time);
+        $time_3 = date('Y年m月d',$past_start_time).'-'.date('d日',$past_end_time);
+
+        $html = <<<eof
+            <table class="table table-bordered">
+                <tr>
+                    <td rowspan="2" style="vertical-align: middle">总收入</td>
+                    <td>$time_1</td>
+                    <td>$time_2</td>
+                    <td>$time_3</td>
+                    <td>环比增长</td>
+                    <td>同比增长</td>
+                </tr>
+                <tr><td style="background-color: yellow;">$model_last[sum]</td><td style="background-color: yellow;">$model_this[sum]</td><td style="background-color: yellow;">$model_past[sum]</td><td>$percent01%</td><td>$percent02%</td></tr>
+            </table>
+eof;
+        echo $html;
+
+    }
+    function getData($date)
+    {
+        //上月环比时间
+        $last_month_time = mktime(date("G", $date), date("i", $date),
+            date("s", $date), date("n", $date), 0, date("Y", $date));
+        $last_month_t =  date("t", $last_month_time);  //二月份的天数
+
+        if ($last_month_t < date("j", $date)) {
+            $date_3 = strtotime(date("Y/m/t", $last_month_time));
+        }else{
+            $date_3 = strtotime(date(date("Y/m", $last_month_time) . "/d", $date));
+        }
+
+        $date_4 = strtotime(date('Y/m/01',$last_month_time));
+
+        //本月
+        $date_5 = strtotime(date('Y/m/01',$date));
+        $date_6 = strtotime(date('Y/m/d',$date));
+
+        //去年同比时间
+        //不需要判断2月和是否31号
+        $date_2 = strtotime((date('Y',$date) - 1) . '/' . date('m',$date) . '/' . date('d',$date));
+        $date_1 = strtotime((date('Y',$date) - 1) . '/' . date('m',$date) . '/' . 1);
+
+        $dateArr = array($date_1,$date_2,$date_4,$date_3,$date_5,$date_6);
+
+        return $dateArr;
     }
     /**
      * Finds the FinancialWechat model based on its primary key value.

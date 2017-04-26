@@ -10,11 +10,14 @@ $this->title = '其他收款记录';
 </div>
 <div class="box-body">
   <div class="financial-wechat-join-record-form" style="padding: 10px;">
+    <?= $form->field($model, 'platform')->dropDownList($platform)->label('平台')  ?>
+    <?= $form->field($model, 'vip')->textInput(['maxlength' => true])->label('付款事由简述')  ?>
+    <?= $form->field($model, 'number')->textInput(['maxlength' => true])->label('会员编号')  ?>
     <?= $form->field($model, 'channel')->textInput(['maxlength' => true])->label('付款渠道')  ?>
     <?= $form->field($model, 'payment_to')->dropDownList([2=>'微信客服号',1=>'收款专用号'])->label('付款到')  ?>
     <?= $form->field($model, 'payment_amount')->textInput()->label('付款金额')  ?>
     <?= $form->field($model, 'payment_screenshot')->fileInput() ?>
-    <?= $form->field($model, 'remarks')->textarea(['maxlength' => true,'placeholder'=>'可填写付款事由等'])->label('备注')  ?>
+    <?= $form->field($model, 'remarks')->textarea(['maxlength' => true,'placeholder'=>'可填写付款事由详情等'])->label('备注')  ?>
   </div>
 </div>
 <div class="box-footer">

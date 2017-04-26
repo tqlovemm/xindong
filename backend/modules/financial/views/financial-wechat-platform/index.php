@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Financial Wechat Platform', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('新建平台名称', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([

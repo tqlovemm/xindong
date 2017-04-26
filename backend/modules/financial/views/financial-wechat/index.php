@@ -19,6 +19,8 @@ $this->registerCss("
         <?= Html::a('创建微信号', ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a('今日入会人数统计', ['today-join-record'], ['class' => 'btn btn-success']) ?>
         <?= Html::a('今日财务统计', ['everyday-fee-record'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('总计', ['choice-time'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('同比和环比', ['mom'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

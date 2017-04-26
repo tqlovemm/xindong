@@ -71,15 +71,15 @@
     <div class="col-md-6">
         <?php if($type==1){
             echo $this->render('create_1', [
-                'model' => $model,'province'=>$province,'wechat_id'=>$wechat_id,'type'=>$type
+                'model' => $model,'province'=>$province,'wechat_id'=>$wechat_id,'type'=>$type,'platform'=>$platform,
             ]);
         }elseif($type==2){
             echo $this->render('create_2', [
-                'model' => $model,'province'=>$province,'wechat_id'=>$wechat_id,'type'=>$type
+                'model' => $model,'province'=>$province,'wechat_id'=>$wechat_id,'type'=>$type,'platform'=>$platform,
             ]);
         }elseif($type==3){
             echo $this->render('create_3', [
-                'model' => $model,'province'=>$province,'wechat_id'=>$wechat_id,'type'=>$type
+                'model' => $model,'province'=>$province,'wechat_id'=>$wechat_id,'type'=>$type,'platform'=>$platform,
             ]);
         }?>
     </div>

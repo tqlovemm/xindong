@@ -10,12 +10,14 @@ $this->title = '会员升级收款记录';
 </div>
 <div class="box-body">
   <div class="financial-wechat-join-record-form" style="padding: 10px;">
+    <?= $form->field($model, 'platform')->dropDownList($platform)->label('平台')  ?>
     <?= $form->field($model, 'vip')->textInput(['maxlength' => true])->label('会员升级等级')  ?>
+    <?= $form->field($model, 'number')->textInput(['maxlength' => true])->label('会员编号')  ?>
     <?= $form->field($model, 'channel')->textInput(['maxlength' => true])->label('付款渠道')  ?>
     <?= $form->field($model, 'payment_to')->dropDownList([1=>'收款专用号',2=>'微信客服号'])->label('付款到')  ?>
     <?= $form->field($model, 'payment_amount')->textInput()->label('付款金额')  ?>
     <?= $form->field($model, 'payment_screenshot')->fileInput() ?>
-    <?= $form->field($model, 'remarks')->textarea(['maxlength' => true,'placeholder'=>'可填写会员由什么等级升级到什么等级，会员编号地区等情况'])->label('备注')  ?>
+    <?= $form->field($model, 'remarks')->textarea(['maxlength' => true,'placeholder'=>'可填写会员由什么等级升级到什么等级，会员编号地区等详情情况'])->label('备注')  ?>
   </div>
 </div>
 <div class="box-footer">

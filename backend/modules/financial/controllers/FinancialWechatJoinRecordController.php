@@ -4,6 +4,7 @@ namespace backend\modules\financial\controllers;
 
 use backend\models\CollectingFilesText;
 use backend\modules\financial\models\FinancialWechatMemberIncrease;
+use backend\modules\financial\models\FinancialWechatPlatform;
 use backend\modules\sm\models\Province;
 use Yii;
 use backend\modules\financial\models\FinancialWechatJoinRecord;
@@ -82,6 +83,7 @@ class FinancialWechatJoinRecordController extends Controller
     {
         $model = new FinancialWechatJoinRecord();
         $province = ArrayHelper::map(Province::find()->where(['prov_state'=>1])->orderBy('prov_py asc')->all(),'prov_name','prov_name');
+        $platform = ArrayHelper::map(FinancialWechatPlatform::find()->all(),'platform_name','platform_name');
 
         $model->wechat_id = $wechat_id;
 
@@ -103,7 +105,7 @@ class FinancialWechatJoinRecordController extends Controller
         } else {
 
             return $this->render('create', [
-                'model' => $model,'province'=>$province,'wechat_id'=>$wechat_id,'type'=>$type
+                'model' => $model,'province'=>$province,'wechat_id'=>$wechat_id,'type'=>$type,'platform'=>$platform,
             ]);
         }
     }
