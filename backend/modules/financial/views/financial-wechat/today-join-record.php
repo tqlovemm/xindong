@@ -36,12 +36,17 @@ $this->registerCss("
                         </thead>
                         <tbody>
                         <?php foreach ($model as $item):
+                                $wechat = $item['wechat']['wechat'];
                                 $percent = ($item['increase_count']==0)?0:round(($item['join_count']/$item['increase_count']),4)*100;
                                 $screenshot = "";
                                 $user = \backend\models\User::findOne($item['created_by'])->username .' - '.\backend\models\User::findOne($item['created_by'])->nickname;
                                 if(!empty($item['wechat_loose_change_screenshot'])){
                                         $imgPath = Yii::$app->params['test'].$item['wechat_loose_change_screenshot'];
                                         $screenshot = "<a href='$imgPath' data-lightbox='s' data-title='s'>零钱截图</a>";
+                                }
+                                $joinCount = "";
+                                if($item['join_count']){
+                                        $joinCount = "<a href='#' onclick=\"window.open('day-fee-record?time=$item[day_time]&wechat_id=$item[wechat_id]&wechat=$wechat','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-800)/2+',left='+(window.screen.availWidth-1000)/2+',height=700,width=900')\">截图</a>";
                                 }
                                 ?>
                                 <tr>
@@ -51,7 +56,7 @@ $this->registerCss("
                                         <td><?=$item['increase_count']?></td>
                                         <td><?=$item['reduce_count']?></td>
                                         <td><?=$item['loose_change']?> — <?=$screenshot?></td>
-                                        <td><?=$item['join_count']?></td>
+                                        <td><?=$item['join_count']?> <?=$joinCount?></td>
                                         <td><?=$percent?>%</td>
                                         <td><?=$user?></td>
                                         <td>

@@ -23,9 +23,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'wechat_id',
-            'increase_boy_count',
-            'increase_girl_count',
+            //'wechat_id',
+            'increase_count',
+            'morning_increase_count',
             'total_count',
             'reduce_count',
             'created_at:date',
