@@ -607,9 +607,9 @@ class SiteController extends BaseController
                 return $this->redirect('/sm/default/send-collection-url');
             }
 
-            if(in_array(Yii::$app->user->id,AuthAssignment::find()->select('user_id')->column())){
+         /*   if(in_array(Yii::$app->user->id,AuthAssignment::find()->select('user_id')->column())){
                 return $this->redirect('/member/enter-background');
-            }
+            }*/
             return $this->goBack();
 
         } else {

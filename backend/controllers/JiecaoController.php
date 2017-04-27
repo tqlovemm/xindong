@@ -10,9 +10,11 @@ namespace backend\controllers;
 
 
 use backend\components\AddRecord;
+use backend\models\AdminCheck;
 use backend\models\Jiecao;
 use backend\models\JiecaoCoinOperation;
 use backend\models\User;
+use backend\models\Vip;
 use backend\models\WeipayRecord;
 use common\components\SaveToLog;
 use frontend\models\RechargeRecord;
@@ -25,8 +27,8 @@ use yii\web\Controller;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
 use Yii;
-use yii\myhelper\SystemMsg;
-use yii\data\ActiveDataProvider;
+use yii\myhelper\AccessToken;
+
 class JiecaoController extends Controller
 {
     public $enableCsrfValidation = false;
@@ -38,7 +40,7 @@ class JiecaoController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index','weipay-rank','rank-detail','xun-search','add','list','search','reduce','jiecao-alipay','jiecao-wxpay','ranking-list','statistics','notice'],
+                        'actions' => ['index','weipay-rank','vip-add','rank-detail','xun-search','add','list','search','reduce','jiecao-alipay','jiecao-wxpay','ranking-list','statistics','notice'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -201,23 +203,28 @@ class JiecaoController extends Controller
 
             if ($model->validate()) {
 
-                $user_id = UserData::getIdForNumber($model->number);
+                $user_id = User::getId($model->number);
+                $vip = User::getVip($user_id);
                 $admin = Yii::$app->user->identity->username;
                 if(!empty($user_id)){
-
-                    $jcModel = UserData::findOne(['user_id'=>$user_id]);
-                    $jcModel->jiecao_coin += $model->jiecao;
-                    if($jcModel->save()){
+                    $amodel = new AdminCheck();
+                    $amodel->user_id = $user_id;
+                    $amodel->pre_coin = isset(UserData::findOne($user_id)->jiecao_coin)?UserData::findOne($user_id)->jiecao_coin:0;
+                    $amodel->pre_vip = isset($vip)?$vip:0;
+                    $amodel->coin = $model->jiecao;
+                    $amodel->type = 1;
+                    $amodel->status = 1;
+                    if($amodel->save()){
                         try{
                             SaveToLog::userBgRecord("管理员{$admin}为其添加{$model->jiecao}节操币",$user_id);
                         }catch (Exception $e){
                             throw new ErrorException($e->getMessage());
                         }
-                        Yii::$app->session->setFlash('result','添加成功！！');
+                        Yii::$app->session->setFlash('result','操作成功！！等待管理员审核！！');
+                        $this->temp($amodel->id,"olQJss1mkh6-2xNlHwPKKh1IEFLQ",1);
                         return $this->refresh();
-                    }else{
-                        return var_dump($jcModel->errors);
                     }
+
                 }else{
                     Yii::$app->session->setFlash('result','对不起添加失败！！查询该会员不存在！！');
                 }
@@ -230,6 +237,132 @@ class JiecaoController extends Controller
 
     }
 
+
+    public function actionVipAdd(){
+
+        $model = new Vip();
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            if ($model->validate()) {
+
+                $user_id = User::getId($model->number);
+                $vip = User::getVip($user_id);
+                $admin = Yii::$app->user->identity->username;
+                if(!empty($user_id)){
+                    $amodel = new AdminCheck();
+                    $amodel->user_id = $user_id;
+                    $amodel->pre_coin = isset(UserData::findOne($user_id)->jiecao_coin)?UserData::findOne($user_id)->jiecao_coin:0;
+                    $amodel->pre_vip = isset($vip)?$vip:0;
+                    $amodel->vip = $model->groupid;
+                    $amodel->type = 2;
+                    $amodel->status = 1;
+                    if($amodel->save()){
+
+                        $vip = $amodel->pre_vip;
+                        if($vip==2){$vip="普通会员";}elseif($vip==3){$vip="高端会员";}elseif($vip==4){$vip="至尊会员";}elseif($vip==5){$vip="私人定制";}else{$vip="不知会员等级";}
+
+                        $vip_to = $amodel->vip;
+                        if($vip_to==2){$vip_to="普通会员";}elseif($vip_to==3){$vip_to="高端会员";}elseif($vip_to==4){$vip_to="至尊会员";}elseif($vip_to==5){$vip_to="私人定制";}else{$vip_to="不知会员等级";}
+
+                        try{
+                            SaveToLog::userBgRecord("管理员{$admin}为其升级，由{$vip}升级到{$vip_to}",$user_id);
+                        }catch (Exception $e){
+                            throw new ErrorException($e->getMessage());
+                        }
+                        Yii::$app->session->setFlash('result','操作成功！！等待管理员审核！！');
+                        $this->temp($amodel->id,"olQJss1mkh6-2xNlHwPKKh1IEFLQ",1);
+                        return $this->refresh();
+                    }
+
+                }else{
+                    Yii::$app->session->setFlash('result','对不起升级失败！！查询该会员不存在！！');
+                }
+            }
+        }
+
+        return $this->render('vip-add', [
+            'model' => $model,
+        ]);
+
+    }
+
+    protected function temp($id,$openid,$type=1){
+
+        $url = "http://13loveme.com";
+        if($type==1){
+            $notice = "管理员添加节操币通知";
+        }elseif($type==2){
+            $notice = "管理员升级会员通知";
+        }else{
+            $notice = "系统错误";
+        }
+        $data = array(
+            "touser"=>$openid,
+            "template_id"=>"sj6-k6LNiMH1n86EuDcy0BA5QJGfqaNThVtVN-i8W_w",
+            "url"=>$url,
+            "topcolor"=>"#FF0000",
+            "data"=>array(
+                "first"=> array(
+                    "value"=>"{$notice}",
+                    "color"=>"#000"
+                ),
+                "keyword1"=>array(
+                    "value"=>"管理员：",
+                    "color"=>"#000"
+                ),
+                "keyword2"=> array(
+                    "value"=>"管理员操作请尽快审核。",
+                    "color"=>"#000"
+                ),
+                "keyword3"=> array(
+                    "value"=>date('Y-m-d',time()),
+                    "color"=>"#000"
+                ),
+                "remark"=>array(
+                    "value"=>"感谢您的参与！",
+                    "color"=>"#000"
+                )
+            )
+        );
+        $msg = json_decode($this->sendTemp($data), true);
+
+    }
+
+    /**
+     * @param $data
+     * @return mixed|string
+     * 发送模板消息
+     */
+    public function sendTemp($data){
+
+        $access = new AccessToken();
+        $access_token = $access->getAccessToken();
+
+        $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=".$access_token;
+
+        return $this->postData($url,json_encode($data));
+
+    }
+
+    public function postData($url,$data){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01; Windows NT 5.0)');
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_AUTOREFERER, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $tmpInfo = curl_exec($ch);
+        if (curl_errno($ch)) {
+            return curl_error($ch);
+        }
+        curl_close($ch);
+        return $tmpInfo;
+    }
 
     public function actionReduce(){
 
