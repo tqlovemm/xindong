@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+$this->title = "添加节操币";
 /* @var $this yii\web\View */
 /* @var $model backend\models\Jiecao */
 /* @var $form ActiveForm */

@@ -1,5 +1,5 @@
 <?php
-
+$this->title = "升级会员";
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -11,9 +11,7 @@ use yii\widgets\ActiveForm;
     <div class="alert alert-warning"><?=Yii::$app->session->getFlash('result')?></div>
 <?php endif;?>
 <div class="add">
-
     <?php $form = ActiveForm::begin(); ?>
-
         <?= $form->field($model, 'number')->label("会员编号") ?>
         <?= $form->field($model, 'groupid')->dropDownList([1=>"没有等级",2=>"普通会员",3=>"高端会员",4=>"至尊会员",5=>"私人定制",])->label("会员等级") ?>
     
