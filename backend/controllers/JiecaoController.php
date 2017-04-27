@@ -205,24 +205,27 @@ class JiecaoController extends Controller
                 $admin = Yii::$app->user->identity->username;
                 if(!empty($user_id)){
 
-                    Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin=jiecao_coin+$model->jiecao where user_id=$user_id")->execute();
-                    Yii::$app->session->setFlash('result','添加成功！！');
-                    try{
-                        SaveToLog::userBgRecord("管理员{$admin}为其添加{$model->jiecao}节操币",$user_id);
-                    }catch (Exception $e){
-                        throw new ErrorException($e->getMessage());
+                    $jcModel = UserData::findOne(['user_id'=>$user_id]);
+                    $jcModel->jiecao_coin += $model->jiecao;
+                    if($jcModel->save()){
+                        try{
+                            SaveToLog::userBgRecord("管理员{$admin}为其添加{$model->jiecao}节操币",$user_id);
+                        }catch (Exception $e){
+                            throw new ErrorException($e->getMessage());
+                        }
+                        Yii::$app->session->setFlash('result','添加成功！！');
+                        return $this->refresh();
+                    }else{
+                        return var_dump($jcModel->errors);
                     }
                 }else{
-
                     Yii::$app->session->setFlash('result','对不起添加失败！！查询该会员不存在！！');
                 }
             }
         }
 
         return $this->render('add', [
-
             'model' => $model,
-
         ]);
 
     }

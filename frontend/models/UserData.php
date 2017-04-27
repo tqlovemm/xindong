@@ -1,9 +1,7 @@
 <?php
 
 namespace frontend\models;
-
 use backend\models\User;
-use Yii;
 
 /**
  * This is the model class for table "pre_user_data".
@@ -17,8 +15,8 @@ use Yii;
  * @property integer $unread_message_count
  * @property integer $thread_count
  * @property integer $empirical_value
- * @property integer $credit_value
  * @property integer $jiecao_coin
+ * @property integer $frozen_jiecao_coin
  *
  * @property User $user
  */
@@ -39,7 +37,7 @@ class UserData extends \yii\db\ActiveRecord
     {
         return [
             [['jiecao_coin'], 'required'],
-            [['credit_value', 'jiecao_coin'], 'integer']
+            [['jiecao_coin'], 'integer']
         ];
     }
 
@@ -58,8 +56,8 @@ class UserData extends \yii\db\ActiveRecord
             'unread_message_count' => 'Unread Message Count',
             'thread_count' => 'Thread Count',
             'empirical_value' => 'Empirical Value',
-            'credit_value' => 'Credit Value',
             'jiecao_coin' => 'Jiecao Coin',
+            'frozen_jiecao_coin' => 'Frozen Jiecao Coin',
         ];
     }
 
@@ -87,14 +85,11 @@ class UserData extends \yii\db\ActiveRecord
 
         $profile = self::findModel();
         $user_id = $profile->find()->select('user_id')->where(['number'=>$number])->all();
-
         $user_all = array();
         foreach($user_id as $item){
-
             $user = User::find()->where(['id'=>$item['user_id']])->asArray()->one();
             array_push($user_all,$user);
         }
-
         return $user_all;
     }
 
@@ -102,9 +97,7 @@ class UserData extends \yii\db\ActiveRecord
 
         $profile = self::findModel();
         $user_id = $profile->find()->select('number')->where(['user_id'=>$id])->one();
-
         return $user_id['number'];
-
     }
 
     public static function getIdForNumber($number){
