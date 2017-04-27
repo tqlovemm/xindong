@@ -40,7 +40,6 @@ $this->registerCss("
                             <th>收款金额</th>
                             <th>收款账号</th>
                             <th>会员等级</th>
-                            <th>入会地区</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -49,7 +48,6 @@ $this->registerCss("
                             <td><?=$item['payment_amount']?></td>
                             <td><?=$payment_to?></td>
                             <td><?=$item['vip']?></td>
-                            <td><?=$item['join_address']?></td>
                         </tr>
                         </tbody>
                     </table>
