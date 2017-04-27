@@ -63,21 +63,41 @@ class FinancialWechatController extends Controller
      * @param null $day_time
      * @return string
      */
-    public function actionTodayJoinRecord($day_time=null){
+    public function actionTodayJoinRecord(){
 
-        if($day_time==null){
-            $day_time = strtotime('yesterday');
-        }
-        $model = FinancialWechatMemberIncrease::find()->joinWith('wechat')->where(['day_time' => $day_time])->asArray()->all();
-        $times = ArrayHelper::map(FinancialWechatMemberIncrease::find()->asArray()->all(),'day_time','day_time');
+        $times = ArrayHelper::map(FinancialWechatMemberIncrease::find()->orderBy('day_time desc')->asArray()->all(),'day_time','day_time');
 
-        return $this->render('today-join-record',['model'=>$model,'day_times'=>$times]);
+        return $this->render('today-join-record',['day_times'=>$times]);
     }
 
     public function actionTd($day_time){
 
+        $date = date('Y-m-d',$day_time).' 客服微信号人数统计';
         $model = FinancialWechatMemberIncrease::find()->joinWith('wechat')->where(['day_time' => $day_time])->asArray()->all();
-        $html = '';
+        $html = ' <div class="box box-success">
+                <div class="box-header with-border">
+                        <h3 class="box-title">'.$date.'</h3>
+                        <div class="box-tools pull-right"><button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button></div>
+                </div>
+                <div class="box-body">
+                        <table class="table table-bordered">
+                        <thead>
+                                <tr>
+                                        <th rowspan="2">微信号名称</th>
+                                        <th rowspan="2">今日总人数</th>
+                                        <th rowspan="2">今日早晨未通过人数</th>
+                                        <th rowspan="2">昨日增加人数</th>
+                                        <th rowspan="2">今日删除人数</th>
+                                        <th rowspan="2">今日微信号零钱数</th>
+                                        <th rowspan="2">今日入会人数</th>
+                                        <th rowspan="2">今日入会率</th>
+                                        <th rowspan="2">创建人</th>
+                                        <th rowspan="2">往日统计</th>
+                                        <th rowspan="2">操作</th>
+                                </tr>
+
+                        </thead>
+                        <tbody>';
         foreach ($model as $item):
                             $wechat = $item['wechat']['wechat'];
                             $percent = ($item['increase_count']==0)?0:round(($item['join_count']/$item['increase_count']),4)*100;
@@ -109,6 +129,10 @@ class FinancialWechatController extends Controller
                                     </tr>";
         endforeach;
 
+        $html .= "           </tbody>
+                        </table>
+                </div>
+        </div>";
         echo $html;
 
     }
