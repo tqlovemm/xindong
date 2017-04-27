@@ -221,7 +221,7 @@ class JiecaoController extends Controller
                             throw new ErrorException($e->getMessage());
                         }
                         Yii::$app->session->setFlash('result','操作成功！！等待管理员审核！！');
-                        $this->temp($amodel->id,"olQJss-4VDufNDF5LuCG538pkS4k",1);
+                        $this->temp($amodel->id,"olQJss-4VDufNDF5LuCG538pkS4k",1,$model->number);
                         return $this->refresh();
                     }
 
@@ -271,7 +271,7 @@ class JiecaoController extends Controller
                             throw new ErrorException($e->getMessage());
                         }
                         Yii::$app->session->setFlash('result','操作成功！！等待管理员审核！！');
-                        $this->temp($amodel->id,"olQJss-4VDufNDF5LuCG538pkS4k",2);
+                        $this->temp($amodel->id,"olQJss-4VDufNDF5LuCG538pkS4k",2,$model->number);
                         return $this->refresh();
                     }
 
@@ -287,7 +287,7 @@ class JiecaoController extends Controller
 
     }
 
-    protected function temp($id,$openid,$type=1){
+    protected function temp($id,$openid,$type=1,$number){
 
         $url = "http://13loveme.com/forum/admin-check?id=$id";
         if($type==1){
@@ -308,7 +308,7 @@ class JiecaoController extends Controller
                     "color"=>"#000"
                 ),
                 "keyword1"=>array(
-                    "value"=>"唯一ID：{$id}",
+                    "value"=>"唯一ID：{$id}，会员编号：{$number}",
                     "color"=>"#000"
                 ),
                 "keyword2"=> array(
