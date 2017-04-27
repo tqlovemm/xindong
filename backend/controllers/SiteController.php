@@ -73,11 +73,12 @@ class SiteController extends BaseController
     public function actionIndex()
     {
         $userCount = Yii::$app->db->createCommand("SELECT count(*) as num FROM {{%user}}")->queryScalar();
-
+        $adminChangePassword = new \mdm\admin\models\AdminChangePassword();
+        $res = $adminChangePassword::find()->select('max(created_at) as expire')->where(['created_by'=>Yii::$app->user->id])->asArray()->one();
         return $this->render('index',[
             'userCount' => $userCount,
-            'postCount' => 0,
             'forumCount' => 0,
+            'res'=>$res,
         ]);
     }
 

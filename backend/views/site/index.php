@@ -1,85 +1,37 @@
 <?php
-/* @var $this yii\web\View */
-
-$this->title = Yii::$app->setting->get('siteName');
+    $this->title = Yii::$app->setting->get('siteName');
 ?>
-<!-- Small boxes (Stat box) -->
+<?php
+$pass = floor((time()-$res['expire'])/86400);
+if($pass>30):?>
 <div class="row">
-    <div class="col-lg-3 col-xs-6">
-        <div class="info-box">
-            <span class="info-box-icon bg-aqua">
-                <i class="glyphicon glyphicon-user"></i>
-            </span>
-            <div class="info-box-content">
-              <span class="info-box-text"><?= Yii::t('app', 'Registered users') ?></span>
-              <span class="info-box-number"><?= $userCount ?></span>
-            </div>
-        </div>
-    </div><!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-        <div class="info-box">
-            <span class="info-box-icon bg-red">
-                <i class="glyphicon glyphicon-education"></i>
-            </span>
-            <div class="info-box-content">
-              <span class="info-box-text">论坛发帖数</span>
-              <span class="info-box-number"><?= $forumCount ?></span>
-            </div>
-        </div>
-    </div><!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-        <div class="info-box">
-            <span class="info-box-icon bg-green">
-                <i class="glyphicon glyphicon-apple"></i>
-            </span>
-            <div class="info-box-content">
-              <span class="info-box-text">帖子回复数</span>
-              <span class="info-box-number"><?= $postCount ?></span>
-            </div>
-        </div>
-    </div><!-- ./col -->
-    <div class="col-lg-3 col-xs-6">
-        <a href="/index.php/site/visit">
-            <div class="info-box">
-                <span class="info-box-icon bg-yellow">
-                    <i class="glyphicon glyphicon-knight"></i>
-                </span>
-                <div class="info-box-content">
-                  <span class="info-box-text">今日浏览量</span>
-                  <span class="info-box-number">0<small>人</small></span>
+    <div class="col-md-4">
+        <!-- Box Comment -->
+        <div class="box box-widget">
+            <div class="box-header with-border">
+                <div class="user-block">
+                    <img class="img-circle" src="<?=Yii::$app->user->identity->avatar?>" alt="User Image">
+                    <span class="username"><a href="#"><?=Yii::$app->user->identity->nickname?></a></span>
+                    <span class="description">上次修改密码时间：<?=date('Y-m-d H:i:s',$res['expire'])?></span>
                 </div>
+                <!-- /.user-block -->
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read">
+                        <i class="fa fa-circle-o"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+                <!-- /.box-tools -->
             </div>
-        </a>
-    </div><!-- ./col -->
-</div><!-- /.row -->
-<div class="row">
-    <div class="col-xs-12">
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title"><?= Yii::t('app', 'Service Data Table') ?></h3>
-            </div>
-            <div class="box-body table-responsive">
-                <table class="table table-bordered table-hover">
-                    <thead>
-                        <th></th>
-                        <th></th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>SSYT version</td>
-                            <td><?= Yii::$app->setting->get('version') ?></td>
-                        </tr>
-                        <tr>
-                            <td>The operating system</td>
-                            <td><?= php_uname() ?></td>
-                        </tr>
-                       <!-- <tr>
-                            <td>PHP version</td>
-                            <td><?/*= phpversion() */?></td>
-                        </tr>-->
-                    </tbody>
-                </table>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <p style="color: red;font-size: 20px;">亲您已经<?=$pass?>天没有修改密码了，再不改老板就要生气了,赶快点我修改密码吧！</p>
+                <a href="<?=\yii\helpers\Url::to(['/admin/user/change-password'])?>"><img class="img-responsive pad" src="/images/photo2.png" alt="Photo"></a>
             </div>
         </div>
+        <!-- /.box -->
     </div>
 </div>
+<?php endif;?>
+
