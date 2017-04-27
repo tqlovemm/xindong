@@ -41,7 +41,7 @@ class ThirthFilesSearch extends ThirthFiles
      */
     public function search($params)
     {
-        $query = ThirthFiles::find();
+        $query = ThirthFiles::find()->orderBy('created_at desc');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

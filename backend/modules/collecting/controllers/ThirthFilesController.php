@@ -256,7 +256,7 @@ class ThirthFilesController extends Controller
             $bgadmin->time = date('Y-m-d',time());
             $bgadmin->sex = 0;
             $bgadmin->vip = $bg->vip;
-            $bgadmin->coin = 60;
+            $bgadmin->coin = $bg->jiecao_coin;
             $bgadmin->save();
         }
         return $bgadmin;
