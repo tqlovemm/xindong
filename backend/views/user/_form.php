@@ -14,7 +14,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id')->textInput(['maxlength' => 32,'disabled'=>true]) ?>
     <?= $form->field($model, 'username')->textInput(['maxlength' => 32,'disabled'=>true]) ?>
-    <?= $form->field($model, 'groupid')->dropDownList([2 =>'普通会员',3=>'高端会员',4=>'至尊会员',5=>'私人定制']) ?>
     <?= $form->field($model, 'email')->textInput(['maxlength' => 64]) ?>
     <?= $form->field($model, 'cellphone')->textInput() ?>
     <?= $form->field($model, 'status')->dropDownList([0=>'封号',10=>'开通'])->label('是否封号，如果封号网站和APP将同时无法登陆') ?>
