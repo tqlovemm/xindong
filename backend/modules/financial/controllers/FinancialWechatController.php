@@ -60,14 +60,58 @@ class FinancialWechatController extends Controller
     }
 
     /**
+     * @param null $day_time
      * @return string
      */
-    public function actionTodayJoinRecord(){
+    public function actionTodayJoinRecord($day_time=null){
 
-        $model = FinancialWechatMemberIncrease::find()->joinWith('wechat')->where(['day_time' => strtotime('yesterday')])->asArray()->all();
-        return $this->render('today-join-record',['model'=>$model]);
+        if($day_time==null){
+            $day_time = strtotime('yesterday');
+        }
+        $model = FinancialWechatMemberIncrease::find()->joinWith('wechat')->where(['day_time' => $day_time])->asArray()->all();
+        $times = ArrayHelper::map(FinancialWechatMemberIncrease::find()->asArray()->all(),'day_time','day_time');
+
+        return $this->render('today-join-record',['model'=>$model,'day_times'=>$times]);
     }
 
+    public function actionTd($day_time){
+
+        $model = FinancialWechatMemberIncrease::find()->joinWith('wechat')->where(['day_time' => $day_time])->asArray()->all();
+        $html = '';
+        foreach ($model as $item):
+                            $wechat = $item['wechat']['wechat'];
+                            $percent = ($item['increase_count']==0)?0:round(($item['join_count']/$item['increase_count']),4)*100;
+                            $screenshot = '';
+                            $user = User::findOne($item['created_by'])->username .' - '.User::findOne($item['created_by'])->nickname;
+                            if(!empty($item['wechat_loose_change_screenshot'])){
+                                    $imgPath = Yii::$app->params['test'].$item['wechat_loose_change_screenshot'];
+                                    $screenshot = "<a href='$imgPath' data-lightbox='s' data-title='s'>零钱截图</a>";
+                            }
+                            $joinCount = '';
+                            if($item['join_count']){
+                                    $joinCount = "<a href='day-fee-record?time=$item[day_time]&wechat_id=$item[wechat_id]&wechat=$wechat' target='_blank'>截图</a>";
+                            }
+
+                            $html .= "<tr>
+                                    <td>$wechat</td>
+                                    <td>$item[total_count]</td>
+                                    <td>$item[morning_increase_count]</td>
+                                    <td>$item[increase_count]</td>
+                                    <td>$item[reduce_count]</td>
+                                    <td>$item[loose_change] — $screenshot</td>
+                                    <td>$item[join_count] $joinCount</td>
+                                    <td>$percent%</td>
+                                    <td>$user</td>
+                                    <td>
+                                        <a target='_blank' href='past-join-record?wechat_id=$item[wechat_id]&wechat=$wechat'>查看</a>
+                                    </td>
+                                    <td>删除</td>
+                                    </tr>";
+        endforeach;
+
+        echo $html;
+
+    }
     /**
      * @param $wechat_id
      * @return string

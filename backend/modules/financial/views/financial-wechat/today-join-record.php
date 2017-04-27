@@ -10,6 +10,13 @@ $this->registerCss("
     .follow li{list-style: none;}
 ");
 ?>
+<div class="" style="width: 20%;margin-bottom: 10px;">
+<select class="form-control" id="past_join">
+        <?php foreach ($day_times as $day_time):?>
+        <option value="<?=$day_time?>"><?=date('Y-m-d',$day_time)?></option>
+        <?php endforeach;?>
+</select>
+</div>
 <div class="today-record-index">
         <div class="box box-success">
                 <div class="box-header with-border">
@@ -66,7 +73,23 @@ $this->registerCss("
                                 </tr>
                         <?php endforeach;?>
                         </tbody>
-        </table>
+                        </table>
                 </div>
         </div>
 </div>
+<?php
+
+$this->registerJs("
+
+        $('#past_join').change(function(){
+        
+                $.get('td?day_time='+$('#past_join').val(),function(data){
+                
+                        $('tbody').html(data);
+                });
+        
+        });
+
+");
+
+?>
