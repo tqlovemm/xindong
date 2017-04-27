@@ -221,7 +221,7 @@ class JiecaoController extends Controller
                             throw new ErrorException($e->getMessage());
                         }
                         Yii::$app->session->setFlash('result','操作成功！！等待管理员审核！！');
-                        $this->temp($amodel->id,"olQJss1mkh6-2xNlHwPKKh1IEFLQ",1);
+                        $this->temp($amodel->id,"olQJss-4VDufNDF5LuCG538pkS4k",1);
                         return $this->refresh();
                     }
 
@@ -271,7 +271,7 @@ class JiecaoController extends Controller
                             throw new ErrorException($e->getMessage());
                         }
                         Yii::$app->session->setFlash('result','操作成功！！等待管理员审核！！');
-                        $this->temp($amodel->id,"olQJss1mkh6-2xNlHwPKKh1IEFLQ",2);
+                        $this->temp($amodel->id,"olQJss-4VDufNDF5LuCG538pkS4k",2);
                         return $this->refresh();
                     }
 
