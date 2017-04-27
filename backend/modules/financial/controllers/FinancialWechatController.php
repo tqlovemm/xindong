@@ -60,7 +60,6 @@ class FinancialWechatController extends Controller
     }
 
     /**
-     * @param null $day_time
      * @return string
      */
     public function actionTodayJoinRecord(){
