@@ -308,7 +308,7 @@ class JiecaoController extends Controller
                     "color"=>"#000"
                 ),
                 "keyword1"=>array(
-                    "value"=>"管理员：",
+                    "value"=>"暂时只有会员升级和添加节操币",
                     "color"=>"#000"
                 ),
                 "keyword2"=> array(
