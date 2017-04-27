@@ -11,7 +11,7 @@ $mouth = mktime(0,0,0,date('m',time()),date('t'),date('Y',time()));
 
 $this->registerCss("
     .table thead tr{background-color: #eee;}
-    .table thead tr th{border:1px solid #eee;text-align:center;}
+    .table thead tr th{border:1px solid #fff;text-align:center;}
     .table tr td{border:1px solid #eee;text-align:center;}
     .follow{margin-bottom:0;}
     .follow li{list-style: none;}
@@ -99,8 +99,9 @@ $this->registerCss("
                     <thead>
                     <tr>
                         <th>收费类型</th>
-                        <th>收费渠道</th>
                         <th>收费金额</th>
+                        <th>收费渠道</th>
+
                         <th>收费截图</th>
                         <th>会员编号</th>
                         <th>收款账号</th>
@@ -109,11 +110,16 @@ $this->registerCss("
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($query as $list):?>
+                    <?php
+                    $sum = 0;
+                    foreach ($query as $list):
+                        $sum += $list['payment_amount'];
+                        ?>
                         <tr>
                             <td><?=$list['vip']?></td>
-                            <td><?=$list['channel']?></td>
                             <td><?=$list['payment_amount']?></td>
+                            <td><?=$list['channel']?></td>
+
                             <td><a href="<?=Yii::$app->params['test'].$list['payment_screenshot']?>" data-lightbox="s" data-title="<?=$list['vip'].'__'.$list['number']?>">查看</a></td>
                             <td><?=$list['number']?></td>
                             <td><?=$list['payment_to']==1?'收款专用号':'客服号'?></td>
@@ -121,6 +127,7 @@ $this->registerCss("
                             <td><?=date('H:i',$list['created_at'])?></td>
                         </tr>
                     <?php endforeach;?>
+                    <tr><td>当日总计</td><td style="background-color: yellow;"><?=$sum?></td></tr>
                     </tbody>
                 </table>
             </div>
