@@ -2,6 +2,7 @@
 
 namespace mdm\admin\controllers;
 
+use mdm\admin\models\AdminChangePassword;
 use Yii;
 use mdm\admin\models\form\Login;
 use mdm\admin\models\form\PasswordResetRequest;
@@ -191,6 +192,9 @@ class UserController extends Controller
     {
         $model = new ChangePassword();
         if ($model->load(Yii::$app->getRequest()->post()) && $model->change()) {
+
+            $change = new AdminChangePassword();
+            $change->save();
             return $this->goHome();
         }
 
