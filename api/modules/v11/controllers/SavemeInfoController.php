@@ -13,6 +13,7 @@ use yii\filters\auth\HttpBearerAuth;
 use yii\filters\RateLimiter;
 use yii\data\Pagination;
 use common\components\SaveToLog;
+use api\components\CsvDataProvider;
 class SavemeInfoController extends ActiveController {
     public $wcity = array('上海','北京','重庆','天津');
     public $modelClass = 'api\modules\v11\models\SavemeInfo';
