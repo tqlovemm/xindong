@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+$model->jiecao_coin = 0;
 ?>
 
 <div class="setting-form">
