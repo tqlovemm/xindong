@@ -41,7 +41,7 @@ class SiteController extends BaseController
     public  $enableCsrfValidation = false;
 
     /**
-     * @return array
+     * @return array  dddd
      * 登陆验证kkkjjj 测试
      */
     public function behaviors()
