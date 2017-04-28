@@ -1,20 +1,18 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+$this->title = '管理员登陆';
+$this->registerCss("
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\LoginForm */
-
-$this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
+");
 ?>
+<link rel="stylesheet" href="/weui/dist/style/weui.min.css"/>
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><b>十三平台</b>后台管理系统</a>
+        <a href="#" style="color: #fff;"><b>十三平台</b>后台管理系统</a>
     </div><!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg" style="font-size: 14px;padding: 0 0 15px 0;">为保障账号安全，每次退出或关闭浏览器都需要重新登录，请各位管理员务必记住自己的密码，如果经常使用请不要随便关闭浏览器</p>
+        <p class="login-box-msg" style="font-size: 14px;padding: 0 0 15px 0;">为保障账号安全，请管理员每月修改一次密码</p>
         <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
             <?= $form->field($model, 'username', [
                 'inputOptions' => [
@@ -27,11 +25,153 @@ $this->params['breadcrumbs'][] = $this->title;
                     'placeholder' => $model->getAttributeLabel('password'),
                 ]
             ])->passwordInput()->label(false); ?>
-            <div class="row">
-                <div class="col-xs-12">
-                    <?= Html::submitButton('登录', ['class' => 'btn btn-primary pull-right', 'name' => 'login-button']) ?>
-                </div><!-- /.col -->
+        <?= $form->field($model, 'verification', [
+            'template' => '<div class="input-group">
+                          {input}<input id="verification_button" class="btn btn-default pull-left" type="button" value="获取验证码"></div>{error}',
+            'inputOptions' => [
+                'placeholder' => $model->getAttributeLabel('verification'),
+            ],
+        ])->passwordInput()->label(false);
+        ?>
+        <div class="row">
+            <div class="weui_msg">
+                <div class="weui_opr_area">
+                    <p class="weui_btn_area">
+                        <?= Html::submitButton('登录', ['class' => 'weui_btn weui_btn_primary', 'name' => 'login-button']) ?>
+                    </p>
+                </div>
             </div>
+        </div>
         <?php ActiveForm::end(); ?>
-    </div><!-- /.login-box-body -->
+    </div>
 </div>
+<script>
+    function addCookie(name,value,expiresHours){
+        var cookieString=name+"="+escape(value); //判断是否设置过期时间,0代表关闭浏览器时失效
+        if(expiresHours>0){
+            var date=new Date();
+            date.setTime(date.getTime()+expiresHours*1000);
+            cookieString=cookieString+";expires=" + date.toUTCString();
+        }
+        document.cookie=cookieString;
+    }
+    //修改cookie的值
+    function editCookie(name,value,expiresHours){
+        var cookieString=name+"="+escape(value);
+        if(expiresHours>0){
+            var date=new Date();
+            date.setTime(date.getTime()+expiresHours*1000); //单位是毫秒
+            cookieString=cookieString+";expires=" + date.toGMTString();
+        }
+        document.cookie=cookieString;
+    }//根据名字获取cookie的值
+    function getCookieValue(name){
+        var strCookie=document.cookie;
+        var arrCookie=strCookie.split("; ");
+        for(var i=0;i<arrCookie.length;i++){
+            var arr=arrCookie[i].split("=");
+            if(arr[0]==name){
+                return unescape(arr[1]);
+                break;
+            }
+        }
+    }
+    window.onload=function(){
+
+        $("#verification_button").click(function (){
+            sendCode($("#verification_button"));
+        });
+        v = getCookieValue("verification_button_login") ? getCookieValue("verification_button_login") : 0;//获取cookie值
+        if(v>0){
+            settime($("#verification_button"));//开始倒计时
+        }
+    };
+
+    function next_step() {
+        var mobile = $("#cellphone").val();
+        var code = $("#code").val();
+        var url = '/verification/judge-true';
+        if(noEmpty()){
+            var judge = doPostBack(url,{'mobile':mobile,'code':code});
+            if(judge){
+                window.location.href = "/verification/url";
+            }
+        }else {
+            alert('手机号和验证码不可为空');
+        }
+    }
+
+    function sendCode(obj){
+        var site = '/verification/';
+        var mobile = $("#cellphone").val(); //检查手机是否合法
+        if(isPhoneNum(mobile)){
+            var send = doPostBack(site + 'save-session', {'mobile': mobile});
+            if(send){
+                addCookie('verification_button_login', 60, 60);//添加cookie记录,有效时间60s
+                settime(obj);//开始倒计时
+            }
+        }
+    }
+
+    function doPostBack(url,queryParam) {
+        var exist_01 = false;
+        $.ajax({
+            cache : false,
+            type : 'POST',
+            async : false,
+            url : url,
+            dataType:'text',
+            data:queryParam,
+            error : function(){
+            },
+            success:function(result){
+                var parsedJson = $.parseJSON(result);
+                if(parsedJson.statusCode=="000000"){
+                    exist_01 = true;
+                }else {
+                    alert(parsedJson.statusMsg)
+                }
+            }
+        });
+        return exist_01;
+    }
+
+    var countdown;
+    function settime(obj) {
+        countdown = getCookieValue('verification_button_login') ? getCookieValue('verification_button_login') : 0;
+        if (countdown == 0) {
+            obj.removeAttr('disabled');
+            obj.val("获取验证码");
+            return;
+        } else {
+            obj.attr('disabled', true);
+            obj.val(countdown + "秒后重发");
+            countdown--;
+            editCookie("verification_button_login", countdown, countdown + 1);
+        }
+        setTimeout(function () {
+            settime(obj)
+        }, 1000); //每1000毫秒执行一次
+    }
+
+    function noEmpty() {
+        var mobile = $("#cellphone").val();
+        var code = $("#code").val();
+
+        if(mobile==""||code==""){
+            return false;
+        }
+        return true;
+    }
+
+    function isPhoneNum(obj){
+        var myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(16[0-9]{1})|(17[0-9]{1})|(18[0-9]{1})|(19[0-9]{1}))+\d{8})$/;
+        if(!myreg.test(obj)){
+            alert('请输入有效的手机号码！');
+            $("#cellphone").focus();
+            return false;
+        }else{
+            return true;
+        }
+    }
+</script>
