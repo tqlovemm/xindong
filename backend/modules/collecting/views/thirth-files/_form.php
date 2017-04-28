@@ -50,6 +50,7 @@ $age = date('Y-m-d',$model->age);
     <?= $form->field($model, 'often_go')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'annual_salary')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'jiecao_coin')->textInput(['maxlength' => true]) ?>
 
 
 
