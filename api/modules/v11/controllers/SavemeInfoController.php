@@ -34,7 +34,7 @@ class SavemeInfoController extends ActiveController {
             'class' => RateLimiter::className(),
             'enableRateLimitHeaders' => true,
         ];
-        return parent::behaviors();
+        return $behaviors;
     }
     public function actions() {
         $actions = parent::actions();
