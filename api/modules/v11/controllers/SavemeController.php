@@ -23,7 +23,6 @@ class SavemeController extends ActiveController {
     ];
 
     public function behaviors() {
-        //a
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::className(),
