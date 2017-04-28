@@ -112,7 +112,7 @@ class SavemeController extends ActiveController {
     	}
         Response::show('200','操作成功','发布成功');
     }
-
+    //女生列表
     public function actionView($id) {
     	$model = new $this->modelClass();
         $query = $model::find()->where(['created_id'=>$id])->orderBy('created_at desc')->one();
