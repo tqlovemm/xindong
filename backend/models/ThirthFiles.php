@@ -29,6 +29,7 @@ use yii\db\Query;
  * @property integer $updated_at
  * @property string $flag
  * @property integer $status
+ * @property integer $jiecao_coin
  * @property string $often_go
  * @property string $annual_salary
  * @property string $qq
@@ -54,7 +55,7 @@ class ThirthFiles extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['age', 'sex', 'height', 'weight', 'marry', 'created_at', 'updated_at', 'status','flop_id','flop_id2','flop_id3','vip'], 'integer'],
+            [['age', 'sex', 'height', 'weight', 'marry', 'created_at', 'updated_at', 'status','flop_id','flop_id2','flop_id3','vip','jiecao_coin'], 'integer'],
             [['cellphone','weichat', 'weibo', 'car_type', 'often_go'], 'string', 'max' => 30],
             [['address', 'job', 'annual_salary'], 'string', 'max' => 128],
             [['hobby', 'like_type'], 'string', 'max' => 256],
@@ -96,6 +97,7 @@ class ThirthFiles extends \yii\db\ActiveRecord
             'often_go' => '常去地',
             'annual_salary' => '年薪',
             'qq' => 'QQ号码',
+            'jiecao_coin' => '节操币',
         ];
     }
 
