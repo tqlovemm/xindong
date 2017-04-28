@@ -17,6 +17,7 @@ use app\components\db\ActiveRecord;
  */
 class SavemeInfo extends ActiveRecord
 {
+    public $_user;
     /**
      * @inheritdoc
      */
@@ -37,9 +38,9 @@ class SavemeInfo extends ActiveRecord
     }
 
     public function fields(){
-
+        $this->_user = Yii::$app->db->createCommand("select nickname,avatar,sex from {{%user}} where id=$this->apply_uid")->queryOne();
         return [
-            'apply_id'=>'id','saveme_id', 'apply_uid', 'created_at','updated_at', 'status',
+            'apply_id'=>'id','saveme_id', 'apply_uid', 'created_at','updated_at', 'status','nickname'=>function(){return $this->_user['nickname'];},'avatar'=>function(){return $this->_user['avatar'];},'sex'=>function(){return $this->_user['sex'];},'address',
         ];
     }
 
@@ -57,5 +58,10 @@ class SavemeInfo extends ActiveRecord
             'type' => 'Type',
             'status' => 'Status',
         ];
+    }
+    public function getAddress(){
+        $user = Yii::$app->db->createCommand("select address from {{%user_profile}} where user_id=$this->apply_uid")->queryOne();
+
+        return $user['address'];
     }
 }
