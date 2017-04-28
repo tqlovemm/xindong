@@ -34,7 +34,7 @@ class SavemeInfoController extends ActiveController {
             'class' => RateLimiter::className(),
             'enableRateLimitHeaders' => true,
         ];
-        return $behaviors;
+        return parent::behaviors();
     }
     public function actions() {
         $actions = parent::actions();
@@ -54,10 +54,16 @@ class SavemeInfoController extends ActiveController {
             'defaultPageSize' => 10,
             'totalCount' => $save_query->count(),
         ]);
+        $saveme_comment = (new Query())->select('to_userid')->from('{{%saveme_comment}}')->where(['saveme_id'=>$sids,"created_id"=>$id])->orderBy('created_at desc')->all();
         $maxpage = ceil($pagination->totalCount/$pagination->defaultPageSize);
         $res = $save_query->orderBy('created_at desc')->offset($pagination->offset)->limit($pagination->limit)->all();
         for ($k=0; $k < count($res); $k++) { 
             $res[$k]['status'] = $statuss[$res[$k]['id']];
+            for($q=0;$q<count($saveme_comment);$q++){
+                if($res[$k]['created_id'] == $saveme_comment[$q]['to_userid']){
+                    $res[$k]['status'] = 3;
+                }
+            }
         }
         if (!$res) {
             return $this->datares(201,0,$res,'not data!');

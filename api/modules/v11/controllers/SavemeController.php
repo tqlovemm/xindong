@@ -34,7 +34,7 @@ class SavemeController extends ActiveController {
             'class' => RateLimiter::className(),
             'enableRateLimitHeaders' => true,
         ];
-        return $behaviors;
+        return parent::behaviors();
     }
 
     public function actions() {
@@ -107,7 +107,7 @@ class SavemeController extends ActiveController {
         		$photoname[] = "(".$insertid.",'".$this->UploadImg($img[$i],$model->created_id)."',"."1)";
         	}
             $sql = "INSERT INTO `pre_saveme_img` (`saveme_id`,`path`,`status`)  VALUES ".implode(",", $photoname);
-	    	$pid = Yii::$app->db->createCommand($sql)->execute();
+	    	Yii::$app->db->createCommand($sql)->execute();
     	}
         Response::show('200','操作成功','发布成功');
     }
@@ -119,13 +119,18 @@ class SavemeController extends ActiveController {
         	Response::show('201','操作失败','没有发布救火');
         }
         $saveme_id = $query['id'];
+        $saveme_comment = (new Query())->select('to_userid')->from('{{%saveme_comment}}')->where(['saveme_id'=>$saveme_id,"created_id"=>$id])->orderBy('created_at desc')->one();
         $model2 = new SavemeInfo;
-        $saveme_apply = $model2::find()->where(['and',['=','saveme_id',$saveme_id],['<>','type',2]])->orderBy('created_at desc');
-        return new CsvDataProvider(
-            [
-                'query' =>  $saveme_apply,
-            ]
-        );
+        $saveme_apply = $model2::find()->where(['and',['=','saveme_id',$saveme_id],['<>','type',2]])->orderBy('created_at desc')->all();
+        for($i=0;$i<count($saveme_apply);$i++){
+            if($saveme_apply[$i]['apply_uid'] == $saveme_comment['to_userid']){
+                $saveme_apply[$i]['status'] = 3;
+            }
+        }
+        if(!$saveme_apply){
+            return $this->datares(201,0,$saveme_apply,'not data!');
+        }
+        return $this->datares(200,1,$saveme_apply);
     }
     //女生删除
     public function actionDelete($id) {
