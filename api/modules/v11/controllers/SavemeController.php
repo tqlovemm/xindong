@@ -6,7 +6,6 @@ use yii;
 use yii\db\Query;
 use yii\helpers\Response;
 use yii\rest\ActiveController;
-use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\myhelper\Decode;
 use api\modules\v11\models\SavemeInfo;
