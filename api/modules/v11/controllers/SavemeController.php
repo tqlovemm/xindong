@@ -17,7 +17,6 @@ use yii\filters\RateLimiter;
 use api\components\CsvDataProvider;
 
 class SavemeController extends ActiveController {
-    //ceshi
     public $modelClass = 'api\modules\v11\models\Saveme';
     public $serializer = [
         'class' => 'app\components\Serializer',
