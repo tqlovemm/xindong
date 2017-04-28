@@ -63,6 +63,7 @@ $pre_url = Yii::$app->params['imagetqlmm'];
             'often_go',
             'annual_salary',
             'qq',
+            'jiecao_coin',
         ],
     ]) ?>
 
