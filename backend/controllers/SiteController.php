@@ -2,6 +2,7 @@
 namespace backend\controllers;
 
 use app\components\SendTemplateSMS;
+use mdm\admin\models\AdminChangePassword;
 use Yii;
 use yii\filters\AccessControl;
 use common\components\BaseController;
@@ -50,12 +51,10 @@ class SiteController extends BaseController
 
     public function actionIndex()
     {
-        $userCount = Yii::$app->db->createCommand("SELECT count(*) as num FROM {{%user}}")->queryScalar();
-        $adminChangePassword = new \mdm\admin\models\AdminChangePassword();
+
+        $adminChangePassword = new AdminChangePassword();
         $res = $adminChangePassword::find()->select('max(created_at) as expire')->where(['created_by'=>Yii::$app->user->id])->asArray()->one();
         return $this->render('index',[
-            'userCount' => $userCount,
-            'forumCount' => 0,
             'res'=>$res,
         ]);
     }
