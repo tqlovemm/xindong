@@ -54,7 +54,7 @@ class LoginForm extends Model
         $save_code = $codeModel->code;
         $save_mobile = $codeModel->mobile;
         if((time()-$codeModel->created_at)>60*10){
-            return $this->addError('verification','验证码过期');
+            return $this->addError('verification','验证码过期，请重新发送');
         }else{
             if($this->verification!=$save_code){
                 return $this->addError('verification','验证码错误');
