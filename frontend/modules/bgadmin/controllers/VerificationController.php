@@ -36,10 +36,6 @@ class VerificationController extends Controller
     }
     public function actionSaveSe(){
 
-        /*$session = \Yii::$app->session;
-        if(!$session->isActive)
-            $session->open();*/
-
         $codeModel = new UserLoginCode();
         $code = mt_rand(1000,9999);
 
@@ -54,8 +50,6 @@ class VerificationController extends Controller
         }
         $model = User::findOne([$param => $mobile, 'status' => 10]);
 
-        //$session->set('code',$code);
-        //$session->set('mobile',$mobile);
         $send = SendTemplateSMS::send($model->cellphone,array($code,'10'),"133718");
         if($send){
             $codeModel->mobile = $mobile;
@@ -90,15 +84,6 @@ class VerificationController extends Controller
     public function actionUrl(){
 
         return $this->redirect('/17-files');
-    }
-    public function actionT(){
-
-        $session = \Yii::$app->session;
-        if(!$session->isActive)
-            $session->open();
-
-        var_dump($session->get('code'));
-        var_dump($session->get('mobile'));
     }
 
 }
