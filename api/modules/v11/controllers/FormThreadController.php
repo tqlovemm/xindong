@@ -99,9 +99,9 @@ class FormThreadController extends ActiveController {
             'pagination' => [
                 'pageSize' => 16,
             ],
-            'insert'=> [
+            'insert' => [
                 'modelName'=>$model::find()->where('type=2'),
-                'rank'=>6
+                'rank'=>8
             ],
             'sort' => [
                 'defaultOrder' => [
