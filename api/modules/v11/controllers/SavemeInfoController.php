@@ -80,6 +80,11 @@ class SavemeInfoController extends ActiveController {
            Response::show('202','1',"参数不全");
         }
         $saveme = $model2::find()->where(['id'=>$sid])->one();
+        $time = time();
+        if ($saveme && $time > $saveme['end_time']) {
+            Response::show('201','1',"该救火已过期1");
+        }
+        $girlid = $saveme['created_id'];
         $jiecaocoin = (new Query())->select('jiecao_coin')->from('{{%user_data}}')->where(['user_id'=>$aid])->one();
         if($jiecaocoin['jiecao_coin'] < $saveme['price'] ){
             Response::show('201','3',"报名需{$saveme['price']}节操币，您的余额不足");
@@ -106,10 +111,6 @@ class SavemeInfoController extends ActiveController {
                Response::show('202','2',"用户城市与目标城市不符合2");
             }
         }
-        $time = time();
-        if ($saveme && $time > $saveme['end_time']) {
-            Response::show('201','1',"该救火已过期1");
-        }
         $applyres = (new Query())->select('saveme_id,apply_uid,status')->from('{{%saveme_apply}}')->where(['saveme_id'=>$sid,'apply_uid'=>$aid])->orderBy('created_at desc')->one();
         if ($applyres) {
             Response::show('201','1',"您已经申请过该救火");
@@ -120,6 +121,20 @@ class SavemeInfoController extends ActiveController {
             // return $model->getFirstErrors();
             Response::show('201','1',"申请失败");
         }
+        //推送
+        $cid = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$aid)->queryOne();
+        $self = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$girlid)->queryOne();
+        if(!empty($cid['cid'])){
+            if(empty($cid['nickname'])){
+                $cid['nickname'] = $cid['username'];
+            }
+            $title = $cid['nickname'].'申请了您发布的救我';
+            $msg = $cid['nickname'].'申请了您发布的救我';
+            $date = time();
+            $icon = Yii::$app->params['icon'].'/images/app_push/u=3453872033,2552982116&fm=21&gp=0.png';
+            $extras = json_encode(array('push_title'=>urlencode($title),'push_content'=>urlencode($msg),'push_type'=>'SSCOMM_SAVEME'));
+            Yii::$app->db->createCommand("insert into {{%app_push}} (type,status,cid,title,msg,extras,platform,response,icon,created_at,updated_at) values('SSCOMM_SAVEME',2,'$self[cid]','$title','$msg','$extras','all','NULL','$icon',$date,$date)")->execute();
+        }
         Response::show('200','操作成功',"申请成功");
     }
     public function actionUpdate($id) {
@@ -128,6 +143,7 @@ class SavemeInfoController extends ActiveController {
             Response::show(210,'参数不正确');
         }
         $model = new $this->modelClass();
+        $cid = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$id)->queryOne();
         $apply_uid = Yii::$app->request->getBodyParam('apply_uid');
         $savemeres = (new Query())->select('id,created_id,price,end_time')->from('{{%saveme}}')->where(['created_id'=>$id,'status'=>1])->orderBy('created_at desc')->one();
         if (!$savemeres) {
@@ -154,13 +170,25 @@ class SavemeInfoController extends ActiveController {
         }
         if ($uids) {
             $uids = "(".substr($uids, 0,-1).")";
-            $jc = Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin=jiecao_coin+{$savemeres['price']} where user_id in $uids")->execute();
+            Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin=jiecao_coin+{$savemeres['price']} where user_id in $uids")->execute();
             $uids = explode(",",substr($uids,1,-1));
             foreach ($uids as $v) {
                 try{
                     SaveToLog::userBgRecord("救我被拒绝退回{$savemeres['price']}节操币",$v);
                 }catch (Exception $e){
                     throw new ErrorException($e->getMessage());
+                }
+                $self = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$v)->queryOne();
+                if(!empty($cid['cid'])){
+                    if(empty($cid['nickname'])){
+                        $cid['nickname'] = $cid['username'];
+                    }
+                    $title = $cid['nickname'].'拒绝了您的救我申请';
+                    $msg = $cid['nickname'].'拒绝了您的救我申请';
+                    $date = time();
+                    $icon = Yii::$app->params['icon'].'/images/app_push/u=3453872033,2552982116&fm=21&gp=0.png';
+                    $extras = json_encode(array('push_title'=>urlencode($title),'push_content'=>urlencode($msg),'push_type'=>'SSCOMM_SAVEME'));
+                    Yii::$app->db->createCommand("insert into {{%app_push}} (type,status,cid,title,msg,extras,platform,response,icon,created_at,updated_at) values('SSCOMM_SAVEME',2,'$self[cid]','$title','$msg','$extras','all','NULL','$icon',$date,$date)")->execute();
                 }
             }
         }
@@ -170,6 +198,18 @@ class SavemeInfoController extends ActiveController {
         $res2 = Yii::$app->db->createCommand("update pre_saveme_apply set status = 1 where saveme_id = {$saveme_id} and apply_uid = {$apply_uid}")->execute();
         if (!$res2) {
             Response::show('201','操作成功',"审核失败2");
+        }
+        $self = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$apply_uid)->queryOne();
+        if(!empty($cid['cid'])){
+            if(empty($cid['nickname'])){
+                $cid['nickname'] = $cid['username'];
+            }
+            $title = $cid['nickname'].'通过了您的救我申请';
+            $msg = $cid['nickname'].'通过了您的救我申请';
+            $date = time();
+            $icon = Yii::$app->params['icon'].'/images/app_push/u=3453872033,2552982116&fm=21&gp=0.png';
+            $extras = json_encode(array('push_title'=>urlencode($title),'push_content'=>urlencode($msg),'push_type'=>'SSCOMM_SAVEME'));
+            Yii::$app->db->createCommand("insert into {{%app_push}} (type,status,cid,title,msg,extras,platform,response,icon,created_at,updated_at) values('SSCOMM_SAVEME',2,'$self[cid]','$title','$msg','$extras','all','NULL','$icon',$date,$date)")->execute();
         }
         $res3 = Yii::$app->db->createCommand("update pre_saveme set status = 2 where id = {$saveme_id}")->execute();
         if ($res3) {
