@@ -204,12 +204,12 @@ class SiteController extends BaseController
         }
 
         if($type==1001){
-            $query = Dating::find()->select('id,number,title,title2,title3,content,url,created_at,avatar,worth,cover_id')->where(['status' => 2])->andWhere(['in','cover_id',[0,-1]])->orderBy('updated_at DESC');
+            $query = Dating::find()->select('id,number,title,title2,title3,content,url,created_at,avatar,worth,cover_id,expire')->where(['status' => 2])->andWhere(['in','cover_id',[0,-1]])->orderBy('updated_at DESC');
             $pages = new Pagination(['totalCount' => 25,'pageSize' => '8']);
 
         }else{
 
-            $query = Dating::find()->select('id,number,title,title2,title3,content,url,created_at,avatar,worth,cover_id')->where(['like','number',$number])->andWhere(['in','cover_id',[0,-1]])->orderBy('updated_at DESC');
+            $query = Dating::find()->select('id,number,title,title2,title3,content,url,created_at,avatar,worth,cover_id,expire')->where(['like','number',$number])->andWhere(['in','cover_id',[0,-1]])->orderBy('updated_at DESC');
             $countQuery = clone $query;
             $pages = new Pagination(['totalCount' => count($countQuery),'pageSize' => '8']);
         }
@@ -252,7 +252,7 @@ class SiteController extends BaseController
         }*/
 
 
-        $query = Dating::find()->select('id,number,title,content,url,created_at,avatar,worth,cover_id')->where(['status' => 2,'title'=>$title])->andWhere(['in','cover_id',[0,-1]])->orderBy('updated_at desc');
+        $query = Dating::find()->select('id,number,title,content,url,created_at,avatar,worth,cover_id,expire')->where(['status' => 2,'title'=>$title])->andWhere(['in','cover_id',[0,-1]])->orderBy('updated_at desc');
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count()]);
         $models = $query->offset($pages->offset)

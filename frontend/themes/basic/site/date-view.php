@@ -95,7 +95,7 @@ if($groupid==3){
 }else{
 
     $modal = "#different";
-    $content = "对不起，您的等级不足!";
+    $content = "对不起，您的等级不足,该功能暂只支持高端及以上会员!!";
 }
 
 
