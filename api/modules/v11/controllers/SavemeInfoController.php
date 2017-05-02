@@ -178,6 +178,7 @@ class SavemeInfoController extends ActiveController {
                 }catch (Exception $e){
                     throw new ErrorException($e->getMessage());
                 }
+                //拒绝推送
                 $self = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$v)->queryOne();
                 if(!empty($cid['cid'])){
                     if(empty($cid['nickname'])){
@@ -199,6 +200,7 @@ class SavemeInfoController extends ActiveController {
         if (!$res2) {
             Response::show('201','操作成功',"审核失败2");
         }
+        //接收推送
         $self = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$apply_uid)->queryOne();
         if(!empty($cid['cid'])){
             if(empty($cid['nickname'])){
