@@ -39,9 +39,9 @@ class Saveme extends ActiveRecord
     }
 
     public function fields(){
-        $this->_user = Yii::$app->db->createCommand("select nickname,avatar,sex from {{%user}} where id=$this->created_id")->queryOne();
+        $this->_user = Yii::$app->db->createCommand("select nickname,avatar,sex,groupid from {{%user}} where id=$this->created_id")->queryOne();
         return [
-            'saveme_id'=>'id','created_id', 'address', 'content', 'price', 'created_at','end_time','nickname'=>function(){return $this->_user['nickname'];},'avatar'=>function(){return $this->_user['avatar'];},'sex'=>function(){return $this->_user['sex'];}, 'status', 'photos',
+            'saveme_id'=>'id','created_id', 'address', 'content', 'price', 'created_at','end_time','level'=>function(){return $this->_user['groupid'];},'nickname'=>function(){return $this->_user['nickname'];},'avatar'=>function(){return $this->_user['avatar'];},'sex'=>function(){return $this->_user['sex'];}, 'status', 'photos',
         ];
     }
 
