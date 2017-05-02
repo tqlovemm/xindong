@@ -31,7 +31,7 @@ $this->registerCss("
             'inputOptions' => [
                 'placeholder' => $model->getAttributeLabel('verification'),
             ],
-        ])->passwordInput()->label(false);
+        ])->label(false);
         ?>
         <div class="row">
             <div class="weui_msg">
@@ -79,7 +79,8 @@ $this->registerCss("
     window.onload=function(){
 
         $("#verification_button").click(function (){
-            sendCode($("#verification_button"));
+
+            sendCode();
         });
         v = getCookieValue("verification_button_login") ? getCookieValue("verification_button_login") : 0;//获取cookie值
         if(v>0){
@@ -87,53 +88,38 @@ $this->registerCss("
         }
     };
 
-    function next_step() {
-        var mobile = $("#cellphone").val();
-        var code = $("#code").val();
-        var url = '/verification/judge-true';
-        if(noEmpty()){
-            var judge = doPostBack(url,{'mobile':mobile,'code':code});
-            if(judge){
-                window.location.href = "/verification/url";
-            }
-        }else {
-            alert('手机号和验证码不可为空');
-        }
-    }
+    function sendCode(){
 
-    function sendCode(obj){
-        var site = '/verification/';
-        var mobile = $("#cellphone").val(); //检查手机是否合法
-        if(isPhoneNum(mobile)){
-            var send = doPostBack(site + 'save-session', {'mobile': mobile});
-            if(send){
-                addCookie('verification_button_login', 60, 60);//添加cookie记录,有效时间60s
-                settime(obj);//开始倒计时
-            }
-        }
+        var site = 'http://localhost/bgadmin/verification/';
+        var mobile = $("#loginform-username").val(); //检查手机是否合法
+        doPostBack(site + 'save-se', {'mobile': mobile});
     }
 
     function doPostBack(url,queryParam) {
-        var exist_01 = false;
+
         $.ajax({
-            cache : false,
-            type : 'POST',
-            async : false,
-            url : url,
-            dataType:'text',
-            data:queryParam,
-            error : function(){
-            },
+            type:'get',
+            async: false,
+            url:url+'?mobile='+queryParam.mobile,
+            dataType:'jsonp',
+            processData: true,
+            jsonp: "callbackparams",
             success:function(result){
-                var parsedJson = $.parseJSON(result);
-                if(parsedJson.statusCode=="000000"){
-                    exist_01 = true;
+                console.log(result);
+                if(result.statusCode==0){
+                        addCookie('verification_button_login', 5, 5);//添加cookie记录,有效时间60s
+                        settime($("#verification_button"));//开始倒计时
                 }else {
-                    alert(parsedJson.statusMsg)
+                    alert(result.statusMsg)
                 }
+            },
+            error:function(XMLHttpRequest, textStatus) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
             }
         });
-        return exist_01;
+
     }
 
     var countdown;
@@ -152,26 +138,5 @@ $this->registerCss("
         setTimeout(function () {
             settime(obj)
         }, 1000); //每1000毫秒执行一次
-    }
-
-    function noEmpty() {
-        var mobile = $("#cellphone").val();
-        var code = $("#code").val();
-
-        if(mobile==""||code==""){
-            return false;
-        }
-        return true;
-    }
-
-    function isPhoneNum(obj){
-        var myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(16[0-9]{1})|(17[0-9]{1})|(18[0-9]{1})|(19[0-9]{1}))+\d{8})$/;
-        if(!myreg.test(obj)){
-            alert('请输入有效的手机号码！');
-            $("#cellphone").focus();
-            return false;
-        }else{
-            return true;
-        }
     }
 </script>

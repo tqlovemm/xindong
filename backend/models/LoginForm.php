@@ -1,6 +1,7 @@
 <?php
 namespace backend\models;
 
+use common\models\User;
 use Yii;
 use yii\base\Model;
 
@@ -11,6 +12,7 @@ class LoginForm extends Model
 {
     public $username;
     public $password;
+    public $verification;
     public $rememberMe = true;
 
     private $_user = false;
@@ -25,11 +27,43 @@ class LoginForm extends Model
             [['username', 'password'], 'required'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
+            ['verification','integer'],
+            ['verification','verification'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
+            ['verification', 'required', 'when' => function($model) {return $model->username == 'USA';}]
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'username' => '用户名、邮箱或手机号',
+            'password' => '密码',
+            'rememberMe' => '记住密码',
+            'verification' => '验证码',
+        ];
+    }
+
+    public function verification(){
+
+        $session = \Yii::$app->session;
+        if(!$session->isActive)
+            $session->open();
+        $save_code = $session->get('code');
+        $save_mobile = $session->get('mobile');
+
+        if($this->verification!=$save_code){
+            return $this->addError('verification','验证码错误');
+        }
+        if($this->username!=$save_mobile){
+            return $this->addError('username','手机号与验证码不匹配');
+        }
+
+    }
     /**
      * Validates the password.
      * This method serves as the inline validation for password.
@@ -40,9 +74,11 @@ class LoginForm extends Model
     public function validatePassword($attribute, $params)
     {
         if (!$this->hasErrors()) {
-            $password_hash = Yii::$app->setting->get('admin_password');
-            if (!Yii::$app->security->validatePassword($this->password, $password_hash)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+            $user = $this->getUser();
+            if (!$user) {
+                $this->addError('username', Yii::t('app', 'Username does not exist.'));
+            } elseif (!$user->validatePassword($this->password)) {
+                $this->addError('password', Yii::t('app', 'Incorrect password.'));
             }
         }
     }
@@ -54,11 +90,23 @@ class LoginForm extends Model
      */
     public function login()
     {
-        $administrator = Yii::$app->setting->get('administrator');
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 : 0);
         } else {
             return false;
         }
+    }
+
+    /**
+     * Finds user by [[username]]
+     *
+     * @return User|null
+     */
+    public function getUser()
+    {
+        if ($this->_user === false) {
+            $this->_user = User::findByUsername($this->username);
+        }
+        return $this->_user;
     }
 }

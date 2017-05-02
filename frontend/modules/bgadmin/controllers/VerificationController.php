@@ -1,6 +1,7 @@
 <?php
 namespace frontend\modules\bgadmin\controllers;
 use app\components\SendTemplateSMS;
+use common\models\User;
 use common\Qiniu\QiniuUploader;
 use frontend\models\CollectingSeventeenFilesText;
 use yii\myhelper\WaterMark;
@@ -30,6 +31,31 @@ class VerificationController extends Controller
         $send = SendTemplateSMS::send($mobile,array($code,'10'),"155776");
 
         echo json_encode($send);
+
+    }
+    public function actionSaveSe(){
+
+        $session = \Yii::$app->session;
+        if(!$session->isActive)
+            $session->open();
+
+        $code = mt_rand(1000,9999);
+
+        $mobile = \Yii::$app->request->get('mobile');
+
+        if (strpos($mobile, '@')) {
+            $param = 'email';
+        } elseif(is_numeric($mobile)) {
+            $param = 'cellphone';
+        }else{
+            $param = 'username';
+        }
+        $model = User::findOne([$param => $mobile, 'status' => 10]);
+
+        $session->set('code',$code);
+        $session->set('mobile',$model->cellphone);
+        $send = SendTemplateSMS::send($model->cellphone,array($code,'10'),"155776");
+        echo $_GET['callbackparams']."(".json_encode($send).")";
 
     }
 
