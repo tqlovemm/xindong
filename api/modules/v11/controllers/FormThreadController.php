@@ -101,7 +101,7 @@ class FormThreadController extends ActiveController {
             ],
             'insert'=> [
                 'modelName'=>$model::find()->where('type=2'),
-                'rank'=>0
+                'rank'=>6
             ],
             'sort' => [
                 'defaultOrder' => [
