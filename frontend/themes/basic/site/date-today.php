@@ -165,10 +165,10 @@ $pre_url = Yii::$app->params['shisangirl'];
                             $modal = "#different";
                             $content = "您的等级不足，当前等级报名仅限本地区";
 
-                        }elseif($expire>172800&&empty($gong)){
+                        }elseif($expire>$item['expire']*3600&&empty($gong)){
 
                             $modal = "#different";
-                            $content = "您的等级不足，当前等级报名时间仅限妹子发布时间的48小时之内";
+                            $content = "您的等级不足，当前等级报名时间仅限妹子发布时间的$item[expire]小时之内";
 
                         }else{
 
