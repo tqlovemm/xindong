@@ -5,16 +5,16 @@ use yii;
 use yii\db\Query;
 use yii\helpers\Response;
 use yii\rest\ActiveController;
-use yii\data\ActiveDataProvider;
 use yii\myhelper\Decode;
 use api\modules\v11\models\Saveme;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\RateLimiter;
-use api\components\CsvDataProvider;
 use yii\data\Pagination;
 use common\components\SaveToLog;
+use api\components\CsvDataProvider;
+
 class SavemeInfoController extends ActiveController {
     public $wcity = array('上海','北京','重庆','天津');
     public $modelClass = 'api\modules\v11\models\SavemeInfo';
@@ -54,10 +54,16 @@ class SavemeInfoController extends ActiveController {
             'defaultPageSize' => 10,
             'totalCount' => $save_query->count(),
         ]);
+        $saveme_comment = (new Query())->select('saveme_id,to_userid')->from('{{%saveme_comment}}')->where(['saveme_id'=>$sids,"created_id"=>$id])->orderBy('created_at desc')->all();
         $maxpage = ceil($pagination->totalCount/$pagination->defaultPageSize);
         $res = $save_query->orderBy('created_at desc')->offset($pagination->offset)->limit($pagination->limit)->all();
         for ($k=0; $k < count($res); $k++) { 
             $res[$k]['status'] = $statuss[$res[$k]['id']];
+            for($q=0;$q<count($saveme_comment);$q++){
+                if($res[$k]['created_id'] == $saveme_comment[$q]['to_userid'] && $res[$k]['id'] == $saveme_comment[$q]['saveme_id']){
+                    $res[$k]['status'] = 3;
+                }
+            }
         }
         if (!$res) {
             return $this->datares(201,0,$res,'not data!');

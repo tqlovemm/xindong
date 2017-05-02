@@ -39,7 +39,7 @@ class SavemeCommentController extends ActiveController {
         $created_id = $model->created_id;
         $commentres = (new Query())->select('saveme_id,created_id,status')->from('{{%saveme_comment}}')->where(['saveme_id'=>$saveme_id,'created_id'=>$created_id])->orderBy('created_at desc')->one();
         if ($commentres) {
-            Response::show('201','操作失败',"您已经对本次救火有过评论");
+            Response::show('201','操作失败',"您已经对本次救我进行评论");
         }
         $model->status = 1;
         if(!$model->save()){
