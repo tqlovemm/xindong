@@ -75,7 +75,6 @@ class SavemeController extends ActiveController {
             return $this->datares(201,0,$savemeres,'not data!');
         }
         return $this->datares(200,$maxpage,$savemeres);
-        //return $model::find()->where($where)->orderBy('created_at desc')->createCommand()->getRawSql();
     }
 
     public function actionCreate() {
