@@ -152,7 +152,7 @@ class FormThreadController extends ActiveController {
                         if($_query->save()){
                             @unlink($savePath);
                         }else{
-                            $_query->errors;
+                            return $_query->errors;
                         }
                     }
                 }
