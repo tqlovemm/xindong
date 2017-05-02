@@ -1,6 +1,7 @@
 <?php
 namespace frontend\modules\bgadmin\controllers;
 use app\components\SendTemplateSMS;
+use backend\models\UserLoginCode;
 use common\models\User;
 use common\Qiniu\QiniuUploader;
 use frontend\models\CollectingSeventeenFilesText;
@@ -35,10 +36,11 @@ class VerificationController extends Controller
     }
     public function actionSaveSe(){
 
-        $session = \Yii::$app->session;
+        /*$session = \Yii::$app->session;
         if(!$session->isActive)
-            $session->open();
+            $session->open();*/
 
+        $codeModel = new UserLoginCode();
         $code = mt_rand(1000,9999);
 
         $mobile = \Yii::$app->request->get('mobile');
@@ -52,8 +54,11 @@ class VerificationController extends Controller
         }
         $model = User::findOne([$param => $mobile, 'status' => 10]);
 
-        $session->set('code',$code);
-        $session->set('mobile',$mobile);
+        $codeModel->mobile = $mobile;
+        $codeModel->code = $code;
+        $codeModel->save();
+        //$session->set('code',$code);
+        //$session->set('mobile',$mobile);
         $send = SendTemplateSMS::send($model->cellphone,array($code,'10'),"155776");
         echo $_GET['callbackparams']."(".json_encode($send).")";
 
