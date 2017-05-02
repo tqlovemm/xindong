@@ -50,19 +50,19 @@ class LoginForm extends Model
     public function verification(){
 
         $codeModel = UserLoginCode::find()->where(['mobile'=>$this->username])->orderBy('created_at desc')->one();
-        /*$session = \Yii::$app->session;
-        if(!$session->isActive)
-            $session->open();*/
+
         $save_code = $codeModel->code;
         $save_mobile = $codeModel->mobile;
-
-        if($this->verification!=$save_code){
-            return $this->addError('verification','验证码错误');
+        if((time()-$codeModel->created_at)>60*10){
+            return $this->addError('verification','验证码过期');
+        }else{
+            if($this->verification!=$save_code){
+                return $this->addError('verification','验证码错误');
+            }
+            if($this->username!=$save_mobile){
+                return $this->addError('username','手机号与验证码不匹配');
+            }
         }
-        if($this->username!=$save_mobile){
-            return $this->addError('username','手机号与验证码不匹配');
-        }
-
     }
     /**
      * Validates the password.
