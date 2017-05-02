@@ -91,6 +91,7 @@ class VerificationController extends Controller
             $session->open();
 
         var_dump($session->get('code'));
+        var_dump($session->get('mobile'));
     }
 
 }
