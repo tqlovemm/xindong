@@ -77,8 +77,8 @@ class FormThreadController extends ActiveController {
             $query =  $query->andWhere(['sex'=>$sex_filter]);
         }
 
-        if(isset($getData['people_id'])){
-            $query =  $query->andWhere(['user_id'=>$getData['people_id']]);
+        if(isset($getData['people'])){
+            $query =  $query->andWhere(['user_id'=>$getData['people']]);
         }
 
         if(isset($getData['follow'])){
@@ -99,9 +99,9 @@ class FormThreadController extends ActiveController {
             'pagination' => [
                 'pageSize' => 16,
             ],
-            'insert'=> [
+            'insert' => [
                 'modelName'=>$model::find()->where('type=2'),
-                'rank'=>6
+                'rank'=>8
             ],
             'sort' => [
                 'defaultOrder' => [
@@ -143,7 +143,7 @@ class FormThreadController extends ActiveController {
                     if(file_put_contents($savePath,base64_decode($image),FILE_USE_INCLUDE_PATH)){
 
                         $imgInfo = getimagesize($savePath);
-                        $qiniu = $qn->upload_app('test',$path,$savePath);
+                        $qiniu = $qn->upload_app('appimages',$path,$savePath);
                         $_query = clone $query;
                         $_query->thread_id = $model->wid;
                         $_query->img_path = $pre_url.$qiniu['key'];
@@ -152,7 +152,7 @@ class FormThreadController extends ActiveController {
                         if($_query->save()){
                             @unlink($savePath);
                         }else{
-                            $_query->errors;
+                            return $_query->errors;
                         }
                     }
                 }
