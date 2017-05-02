@@ -56,7 +56,7 @@ class VerificationController extends Controller
 
         //$session->set('code',$code);
         //$session->set('mobile',$mobile);
-        $send = SendTemplateSMS::send($model->cellphone,array($code,'10'),"155776");
+        $send = SendTemplateSMS::send($model->cellphone,array($code,'10'),"133718");
         if($send){
             $codeModel->mobile = $mobile;
             $codeModel->code = $code;
