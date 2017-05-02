@@ -207,18 +207,13 @@ class DatingController extends BaseController
         $model = new Dating();
 
         if ($model->load(Yii::$app->request->post())) {
-
             $model->title = trim($model->title);
             if(empty($model->number)){
                 $model->number = Random::get_random_code(6,5).'X';
             }
             if($model->save()){
-
-                $data_array = array('description'=>"创建妹子编号{$model->number}的最新觅约信息",'data'=>json_encode($model->attributes),'old_data'=>'','new_data'=>'','type'=>1);
-                AddRecord::record($data_array);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
-
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -230,17 +225,11 @@ class DatingController extends BaseController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
         if ($model->load(Yii::$app->request->post())) {
-
-            $old = json_encode($model->oldAttributes);
-            $new = json_encode($model->attributes);
-	    $model->cover_id=0;
+	        $model->cover_id=0;
             if($model->update()){
-                $data_array = array('description'=>"修改觅约信息妹子编号{$model->number}的资料",'data'=>'','old_data'=>$old,'new_data'=>$new,'type'=>3);
-                AddRecord::record($data_array);
+                return $this->redirect(['view', 'id' => $model->id]);
             }
-            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -252,17 +241,13 @@ class DatingController extends BaseController
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        if($model->delete()){
-            $data_array = array('description'=>"删除妹子编号{$model->number}的觅约信息",'data'=>json_encode($model->attributes),'old_data'=>'','new_data'=>'','type'=>2);
-            AddRecord::record($data_array);
-        }
+        $model->delete();
         return $this->redirect(['index']);
     }
 
     protected function findModel($id)
     {
         if (($model = Dating::findOne($id)) !== null) {
-
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

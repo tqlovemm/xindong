@@ -18,7 +18,6 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'title3')->textInput(['maxlength' => 128]) ?>
     <?= $form->field($model, 'content')->textInput(['maxlength' => 128]) ?>
     <?= $form->field($model, 'introduction')->textInput(['maxlength' => 512]) ?>
-    <?php $model->expire=48?>
     <?= $form->field($model, 'expire')->textInput(['maxlength' => 512]) ?>
     <?= $form->field($model, 'url')->textInput(['maxlength' => 128]) ?>
     <?= $form->field($model, 'worth')->textInput()->label('妹子的价值，会员索取她需要扣除相应的节操币（50-80）') ?>
