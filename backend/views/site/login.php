@@ -107,7 +107,7 @@ $this->registerCss("
             success:function(result){
                 console.log(result);
                 if(result.statusCode==0){
-                        addCookie('verification_button_login', 5, 5);//添加cookie记录,有效时间60s
+                        addCookie('verification_button_login', 60, 60);//添加cookie记录,有效时间60s
                         settime($("#verification_button"));//开始倒计时
                 }else {
                     alert(result.statusMsg)
