@@ -143,7 +143,7 @@ class FormThreadController extends ActiveController {
                     if(file_put_contents($savePath,base64_decode($image),FILE_USE_INCLUDE_PATH)){
 
                         $imgInfo = getimagesize($savePath);
-                        $qiniu = $qn->upload_app('test',$path,$savePath);
+                        $qiniu = $qn->upload_app('appimages',$path,$savePath);
                         $_query = clone $query;
                         $_query->thread_id = $model->wid;
                         $_query->img_path = $pre_url.$qiniu['key'];
