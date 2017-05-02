@@ -1,22 +1,11 @@
 <?php
 namespace backend\controllers;
 
-use backend\components\MyBehavior;
-
-use backend\models\AdminLoginRecord;
+use app\components\SendTemplateSMS;
 use Yii;
-use yii\db\Query;
 use yii\filters\AccessControl;
 use common\components\BaseController;
-use common\models\LoginForm;
-use common\models\User;
-use frontend\models\Counter;
-use yii\myhelper\SystemMsg;
-use yii\web\ForbiddenHttpException;
-
-/**
- * Site controller
- */
+use backend\models\LoginForm;
 
 class SiteController extends BaseController
 {
@@ -37,20 +26,9 @@ class SiteController extends BaseController
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'phpinfo', 'cache','info-computer',
-                            'pcheck','pass','npass','feedback',
-                            'feeddelete','feedview','claims',
-                            'claimsview','claimsdelete','visit','cvisit','pclaims',
-                            'pclaims-delete','send-mailer','file-check','file-check-op'
-                        ],
+                        'actions' => ['logout', 'index', 'cache'],
                         'allow' => true,
                         'roles' => ['@'],
-                 /*       'matchCallback' => function ($rule, $action) {
-                            $ip = Yii::$app->getRequest()->getUserIP();
-                            if(MyBehavior::enter($ip)){
-                                return true;
-                            }
-                        }*/
                     ],
                 ],
             ],
@@ -99,7 +77,6 @@ class SiteController extends BaseController
             ]);
         }
     }
-
 
     public function actionLogout()
     {

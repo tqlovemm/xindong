@@ -27,6 +27,7 @@ class LoginForm extends Model
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
+
         ];
     }
 
@@ -66,10 +67,10 @@ class LoginForm extends Model
      *
      * @return boolean whether the user is logged in successfully
      */
-    public function login($rememberMe=true)
+    public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $rememberMe ? 3600 * 24 : 0);
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 : 0);
         } else {
             return false;
         }
