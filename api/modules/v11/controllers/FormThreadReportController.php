@@ -42,6 +42,11 @@ class FormThreadReportController extends ActiveController {
     }
 
 
+    /**
+     * 投诉post
+     * /v11/form-thread-reports?access-token={cid}
+     * 必填参数：user_id投诉人id；report_id投诉选项id；wid帖子id
+    */
     public function actionCreate() {
 
         $model = new $this->modelClass();

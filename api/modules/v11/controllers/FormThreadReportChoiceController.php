@@ -43,8 +43,8 @@ class FormThreadReportChoiceController extends ActiveController {
 
     /**
      * @return CsvDataProvider
-     * 查看所有帖子接口get
-     * /v11/form-thread-tags?access-token={cid}
+     * 查看所有投诉选项get
+     * /v11/form-thread-report-choice?access-token={cid}
      * 若access-token不存在或错误则返回如下
      * {
         "name": "Unauthorized",
