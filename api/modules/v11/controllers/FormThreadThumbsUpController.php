@@ -59,7 +59,11 @@ class FormThreadThumbsUpController extends ActiveController {
         $model = $this->findModel($id);
         $get = Yii::$app->request->getBodyParams();
         if($get['user_id']==$model->user_id){
-            return $model->delete();
+            if($model->delete()){
+                $thread = FormThread::findOne($model->thread_id);
+                $thread->thumbs_count-=1;
+                $thread->update();
+            };
         }else{
             return 0;
         }

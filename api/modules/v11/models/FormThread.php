@@ -1,6 +1,7 @@
 <?php
 namespace api\modules\v11\models;
 
+use api\modules\v2\models\Ufollow;
 use Yii;
 use app\components\db\ActiveRecord;
 use api\modules\v9\models\UserProfile;
@@ -64,8 +65,13 @@ class FormThread extends ActiveRecord
         $this->_thumbs_up = FormThreadThumbsUp::findAll(['thread_id'=>$this->wid]);
         $this->_comment = FormThreadComments::findAll(['thread_id'=>$this->wid]);
         return [
-            "wid",'user_id', 'content','sex','tag','is_top','type','read_count','thumbs_count','created_at',
-
+            "wid",'user_id', 'content','sex','tag','is_top','type','read_count','thumbs_count','created_at','groupid'=>function(){
+                return $this->_user->groupid;
+            },
+            'follow'=>function(){
+                $follow = Ufollow::findOne(['user_id'=>$this->_user_id,'people_id'=>$this->user_id]);
+                return empty($follow)?0:1;
+            },
             'nickname'=>function(){return empty($this->_user->nickname)?$this->_user->username:$this->_user->nickname;},
 
             'avatar'=>function(){return $this->_user->avatar;},

@@ -72,12 +72,12 @@ if($groupid==3){
     if(!check($addresses,$contents['title'])&&!check($addresses,$contents['title2'])&&!check($addresses,$contents['title3'])){
 
         $modal = "#different";
-        $content = "您的等级不足，当前等级报名仅限本地区";
+        $content = "地区限制，当前等级报名仅限本地区";
 
-    }elseif($expire>172800&&empty($gong)){
+    }elseif($expire>$contents['expire']*3600&&empty($gong)){
 
         $modal = "#different";
-        $content = "您的等级不足，当前等级报名时间仅限妹子发布时间的48小时之内";
+        $content = "时间限制，当前等级报名时间仅限妹子发布时间的{$contents['expire']}小时之内";
 
     }else{
 
@@ -95,7 +95,7 @@ if($groupid==3){
 }else{
 
     $modal = "#different";
-    $content = "对不起，您的等级不足!";
+    $content = "对不起，您的等级不足,该功能暂只支持高端及以上会员!!";
 }
 
 
