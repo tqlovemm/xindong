@@ -49,11 +49,12 @@ class LoginForm extends Model
 
     public function verification(){
 
-        $session = \Yii::$app->session;
+        $codeModel = UserLoginCode::find()->where(['mobile'=>$this->username])->orderBy('created_at desc')->one();
+        /*$session = \Yii::$app->session;
         if(!$session->isActive)
-            $session->open();
-        $save_code = $session->get('code');
-        $save_mobile = $session->get('mobile');
+            $session->open();*/
+        $save_code = $codeModel->code;
+        $save_mobile = $codeModel->mobile;
 
         if($this->verification!=$save_code){
             return $this->addError('verification','验证码错误'.$this->verification.':'.$save_code);
