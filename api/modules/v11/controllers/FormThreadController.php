@@ -77,8 +77,8 @@ class FormThreadController extends ActiveController {
             $query =  $query->andWhere(['sex'=>$sex_filter]);
         }
 
-        if(isset($getData['people_id'])){
-            $query =  $query->andWhere(['user_id'=>$getData['people_id']]);
+        if(isset($getData['people'])){
+            $query =  $query->andWhere(['user_id'=>$getData['people']]);
         }
 
         if(isset($getData['follow'])){
