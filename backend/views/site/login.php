@@ -90,7 +90,7 @@ $this->registerCss("
 
     function sendCode(){
 
-        var site = 'http://localhost/bgadmin/verification/';
+        var site = 'http://api.13loveme.com:82/bgadmin/verification/';
         var mobile = $("#loginform-username").val(); //检查手机是否合法
         doPostBack(site + 'save-se', {'mobile': mobile});
     }
