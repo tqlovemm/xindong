@@ -84,7 +84,7 @@
                 <h3 id="data-content"></h3>
             </div>
             <div class="modal-footer">
-                <a href="/member/user-show" class="btn btn-warning" style="padding-left:30px;padding-right: 30px;">去升级</a>
+                <a href="/member/user-show/member-show" class="btn btn-warning" style="padding-left:30px;padding-right: 30px;">去升级</a>
                 <button type="button" class="btn btn-default" data-dismiss="modal" style="padding-left:30px;padding-right: 30px;">取消</button>
             </div>
         </div><!-- /.modal-content -->
