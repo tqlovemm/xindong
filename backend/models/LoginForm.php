@@ -24,14 +24,13 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            [['username', 'password'], 'required'],
+            [['verification','username', 'password'], 'required'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             ['verification','integer'],
             ['verification','verification'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
-            ['verification', 'required', 'when' => function($model) {return $model->username == 'USA';}]
         ];
     }
 
@@ -56,7 +55,7 @@ class LoginForm extends Model
         $save_code = $session->get('code');
         $save_mobile = $session->get('mobile');
 
-        if($this->verification!="$save_code"){
+        if($this->verification!=$save_code){
             return $this->addError('verification','验证码错误');
         }
         if($this->username!=$save_mobile){
