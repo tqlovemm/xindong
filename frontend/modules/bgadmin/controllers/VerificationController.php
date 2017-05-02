@@ -54,12 +54,14 @@ class VerificationController extends Controller
         }
         $model = User::findOne([$param => $mobile, 'status' => 10]);
 
-        $codeModel->mobile = $mobile;
-        $codeModel->code = $code;
-        $codeModel->save();
         //$session->set('code',$code);
         //$session->set('mobile',$mobile);
         $send = SendTemplateSMS::send($model->cellphone,array($code,'10'),"155776");
+        if($send){
+            $codeModel->mobile = $mobile;
+            $codeModel->code = $code;
+            $codeModel->save();
+        }
         echo $_GET['callbackparams']."(".json_encode($send).")";
 
     }
