@@ -57,7 +57,7 @@ class LoginForm extends Model
         $save_mobile = $codeModel->mobile;
 
         if($this->verification!=$save_code){
-            return $this->addError('verification','验证码错误'.$this->verification.':'.$save_code);
+            return $this->addError('verification','验证码错误');
         }
         if($this->username!=$save_mobile){
             return $this->addError('username','手机号与验证码不匹配');
