@@ -85,6 +85,23 @@ class SavemeInfoController extends ActiveController {
             Response::show('201','1',"该救火已过期1");
         }
         $girlid = $saveme['created_id'];
+
+        $address = (new Query())->select('address')->from('{{%user_profile}}')->where(['user_id'=>$aid])->one();
+        $user_address = explode(" ",$address['address']);
+        $saveme_address = explode(" ",$saveme['address']);
+        if (in_array($saveme_address[0],$this->wcity)) {
+            if ($saveme_address[0] != $user_address[0]) {
+                Response::show('202','2',"用户城市与目标城市不符合");
+            }
+        }else {
+            if ($saveme['address'] != $address['address']) {
+               Response::show('202','2',"用户城市与目标城市不符");
+            }
+        }
+        $applyres = (new Query())->select('saveme_id,apply_uid,status')->from('{{%saveme_apply}}')->where(['saveme_id'=>$sid,'apply_uid'=>$aid])->orderBy('created_at desc')->one();
+        if ($applyres) {
+            Response::show('201','1',"您已经申请过该救火");
+        }
         $jiecaocoin = (new Query())->select('jiecao_coin')->from('{{%user_data}}')->where(['user_id'=>$aid])->one();
         if($jiecaocoin['jiecao_coin'] < $saveme['price'] ){
             Response::show('201','3',"报名需{$saveme['price']}节操币，您的余额不足");
@@ -98,22 +115,6 @@ class SavemeInfoController extends ActiveController {
             if (!$jc) {
                 Response::show('201','3',"扣除节操币失败");
             }
-        }
-        $address = (new Query())->select('address')->from('{{%user_profile}}')->where(['user_id'=>$aid])->one();
-        $user_address = explode(" ",$address['address']);
-        $saveme_address = explode(" ",$saveme['address']);
-        if (in_array($saveme_address[0],$this->wcity)) {
-            if ($saveme_address[0] != $user_address[0]) {
-                Response::show('202','2',"用户城市与目标城市不符合1");
-            }
-        }else {
-            if ($saveme['address'] != $address['address']) {
-               Response::show('202','2',"用户城市与目标城市不符合2");
-            }
-        }
-        $applyres = (new Query())->select('saveme_id,apply_uid,status')->from('{{%saveme_apply}}')->where(['saveme_id'=>$sid,'apply_uid'=>$aid])->orderBy('created_at desc')->one();
-        if ($applyres) {
-            Response::show('201','1',"您已经申请过该救火");
         }
         $model->status = 0;
         $model->type = 0;
