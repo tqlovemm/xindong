@@ -133,10 +133,10 @@ class SavemeController extends ActiveController {
     }
     //女生删除
     public function actionDelete($id) {
-//        $decode = new Decode();
-//        if(!$decode->decodeDigit($id)){
-//            Response::show(210,'参数不正确','参数不正确');
-//        }
+        $decode = new Decode();
+        if(!$decode->decodeDigit($id)){
+            Response::show(210,'参数不正确','参数不正确');
+        }
         $did = isset($_GET['did'])?$_GET['did']:'';
         if ($did) {
             $applyres = (new Query())->select('id,apply_uid,status,type')->from('{{%saveme_apply}}')->where(['id'=>$did])->one();
