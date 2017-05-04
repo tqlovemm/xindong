@@ -41,6 +41,7 @@ class SavemeInfoController extends ActiveController {
         unset($actions['index'], $actions['view'], $actions['create'], $actions['update'], $actions['delete']);
         return $actions;
     }
+    //男生通知列表
     public function actionView($id) {
         $model = new $this->modelClass();
         $query = $model::find()->where(['and',['=','apply_uid',$id],['<>','type',1]])->orderBy('created_at desc')->all();
