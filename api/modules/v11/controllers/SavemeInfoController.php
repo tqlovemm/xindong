@@ -82,7 +82,7 @@ class SavemeInfoController extends ActiveController {
         $saveme = $model2::find()->where(['id'=>$sid])->one();
         $time = time();
         if ($saveme && $time > $saveme['end_time']) {
-            Response::show('201','1',"该救火已过期1");
+            Response::show('201','1',"该救火已过期");
         }
         $girlid = $saveme['created_id'];
 
@@ -104,16 +104,16 @@ class SavemeInfoController extends ActiveController {
         }
         $jiecaocoin = (new Query())->select('jiecao_coin')->from('{{%user_data}}')->where(['user_id'=>$aid])->one();
         if($jiecaocoin['jiecao_coin'] < $saveme['price'] ){
-            Response::show('201','3',"报名需{$saveme['price']}节操币，您的余额不足");
+            Response::show('201','3',"报名需{$saveme['price']}心动币，您的余额不足");
         }else {
             $jc = Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin=jiecao_coin-{$saveme['price']} where user_id=$aid")->execute();
             try{
-                SaveToLog::userBgRecord("报名救我花费{$saveme['price']}节操币",$aid);
+                SaveToLog::userBgRecord("报名救我花费{$saveme['price']}心动币",$aid);
             }catch (Exception $e){
                 throw new ErrorException($e->getMessage());
             }
             if (!$jc) {
-                Response::show('201','3',"扣除节操币失败");
+                Response::show('201','3',"扣除心动币失败");
             }
         }
         $model->status = 0;
