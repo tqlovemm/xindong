@@ -133,10 +133,10 @@ class SavemeController extends ActiveController {
     }
     //女生删除
     public function actionDelete($id) {
-        $decode = new Decode();
-        if(!$decode->decodeDigit($id)){
-            Response::show(210,'参数不正确','参数不正确');
-        }
+//        $decode = new Decode();
+//        if(!$decode->decodeDigit($id)){
+//            Response::show(210,'参数不正确','参数不正确');
+//        }
         $did = isset($_GET['did'])?$_GET['did']:'';
         if ($did) {
             $applyres = (new Query())->select('id,apply_uid,status,type')->from('{{%saveme_apply}}')->where(['id'=>$did])->one();
@@ -161,11 +161,11 @@ class SavemeController extends ActiveController {
                 }
                 $sids[] = $applyres[$i]['saveme_id'];
             }
-            if (isset($ids)) {
-                $res1 = $model::deleteAll(['in','id',$ids]);
-            }
             if (isset($sids)) {
                 $res = $model::updateAll(['type'=>2],['saveme_id'=>$sids]);
+            }
+            if (isset($ids)) {
+                $res1 = $model::deleteAll(['in','id',$ids]);
             }
         }
         if(!($res || $res1)){
