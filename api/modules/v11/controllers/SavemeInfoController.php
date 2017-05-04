@@ -148,7 +148,7 @@ class SavemeInfoController extends ActiveController {
         $apply_uid = Yii::$app->request->getBodyParam('apply_uid');
         $savemeres = (new Query())->select('id,created_id,price,end_time')->from('{{%saveme}}')->where(['created_id'=>$id,'status'=>1])->orderBy('created_at desc')->one();
         if (!$savemeres) {
-            Response::show('201','操作失败',"参数不正确2");
+            Response::show('201','操作失败',"参数不对");
         }
         if ($savemeres['end_time'] < time()) {
             Response::show('201','操作失败',"本次救火已经过期");
@@ -221,10 +221,10 @@ class SavemeInfoController extends ActiveController {
         Response::show('201','操作成功',"审核失败3");
     }
     public function actionDelete($id) {
-        $decode = new Decode();
-        if(!$decode->decodeDigit($id)){
-            Response::show(210,'参数不正确','参数不正确');
-        }
+//        $decode = new Decode();
+//        if(!$decode->decodeDigit($id)){
+//            Response::show(210,'参数不正确','参数不正确');
+//        }
         $did = isset($_GET['did'])?$_GET['did']:'';
         if ($did) {
             $applyres = (new Query())->select('id,apply_uid,status,type')->from('{{%saveme_apply}}')->where(['id'=>$did])->one();
