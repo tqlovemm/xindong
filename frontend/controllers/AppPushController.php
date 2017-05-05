@@ -25,9 +25,9 @@ class AppPushController extends Controller
         //define('HOST','https://api.getui.com/apiex.htm');
 
 
-        define('APPKEY','8grrIU5kcr8b4d7KHJTUN5');
-        define('APPID','o2fItBGkhp9vFjQIkI8Q55');
-        define('MASTERSECRET','AKptZQVIC48I933wBYGQh1');
+        define('APPKEY','dUWY8fyvSP68rN83GLfeZ');
+        define('APPID','fb2hJRUaTm7RyYIubIf5T6');
+        define('MASTERSECRET','5M4lZWwZt59Utw9rTPRgL7');
 
         // define('DEVICETOKEN','');
         // define('Alias','请输入别名');
