@@ -18,6 +18,7 @@ use app\components\db\ActiveRecord;
 class SavemeInfo extends ActiveRecord
 {
     public $_user;
+    public $is_overdue;
     /**
      * @inheritdoc
      */
@@ -39,8 +40,14 @@ class SavemeInfo extends ActiveRecord
 
     public function fields(){
         $this->_user = Yii::$app->db->createCommand("select nickname,avatar,sex from {{%user}} where id=$this->apply_uid")->queryOne();
+        $saveme = Yii::$app->db->createCommand("select end_time from {{%saveme}} where id=$this->saveme_id")->queryOne();
+        if($saveme['end_time'] < time()){
+            $this->is_overdue = 1;
+        }else{
+            $this->is_overdue = 2;
+        }
         return [
-            'apply_id'=>'id','saveme_id', 'apply_uid', 'created_at','updated_at', 'status','nickname'=>function(){return $this->_user['nickname'];},'avatar'=>function(){return $this->_user['avatar'];},'sex'=>function(){return $this->_user['sex'];},'address',
+            'apply_id'=>'id','saveme_id', 'apply_uid', 'created_at','updated_at', 'status','nickname'=>function(){return $this->_user['nickname'];},'avatar'=>function(){return $this->_user['avatar'];},'is_overdue'=>function(){return $this->is_overdue;},'sex'=>function(){return $this->_user['sex'];},'address',
         ];
     }
 

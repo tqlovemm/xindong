@@ -41,6 +41,7 @@ class SavemeInfoController extends ActiveController {
         unset($actions['index'], $actions['view'], $actions['create'], $actions['update'], $actions['delete']);
         return $actions;
     }
+    //男生通知列表
     public function actionView($id) {
         $model = new $this->modelClass();
         $query = $model::find()->where(['and',['=','apply_uid',$id],['<>','type',1]])->orderBy('created_at desc')->all();
@@ -82,38 +83,39 @@ class SavemeInfoController extends ActiveController {
         $saveme = $model2::find()->where(['id'=>$sid])->one();
         $time = time();
         if ($saveme && $time > $saveme['end_time']) {
-            Response::show('201','1',"该救火已过期1");
+            Response::show('201','1',"该救火已过期");
         }
         $girlid = $saveme['created_id'];
-        $jiecaocoin = (new Query())->select('jiecao_coin')->from('{{%user_data}}')->where(['user_id'=>$aid])->one();
-        if($jiecaocoin['jiecao_coin'] < $saveme['price'] ){
-            Response::show('201','3',"报名需{$saveme['price']}节操币，您的余额不足");
-        }else {
-            $jc = Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin=jiecao_coin-{$saveme['price']} where user_id=$aid")->execute();
-            try{
-                SaveToLog::userBgRecord("报名救我花费{$saveme['price']}节操币",$aid);
-            }catch (Exception $e){
-                throw new ErrorException($e->getMessage());
-            }
-            if (!$jc) {
-                Response::show('201','3',"扣除节操币失败");
-            }
-        }
+
         $address = (new Query())->select('address')->from('{{%user_profile}}')->where(['user_id'=>$aid])->one();
         $user_address = explode(" ",$address['address']);
         $saveme_address = explode(" ",$saveme['address']);
         if (in_array($saveme_address[0],$this->wcity)) {
             if ($saveme_address[0] != $user_address[0]) {
-                Response::show('202','2',"用户城市与目标城市不符合1");
+                Response::show('202','2',"用户城市与目标城市不符合");
             }
         }else {
             if ($saveme['address'] != $address['address']) {
-               Response::show('202','2',"用户城市与目标城市不符合2");
+               Response::show('202','2',"用户城市与目标城市不符");
             }
         }
         $applyres = (new Query())->select('saveme_id,apply_uid,status')->from('{{%saveme_apply}}')->where(['saveme_id'=>$sid,'apply_uid'=>$aid])->orderBy('created_at desc')->one();
         if ($applyres) {
             Response::show('201','1',"您已经申请过该救火");
+        }
+        $jiecaocoin = (new Query())->select('jiecao_coin')->from('{{%user_data}}')->where(['user_id'=>$aid])->one();
+        if($jiecaocoin['jiecao_coin'] < $saveme['price'] ){
+            Response::show('201','3',"报名需{$saveme['price']}心动币，您的余额不足");
+        }else {
+            $jc = Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin=jiecao_coin-{$saveme['price']} where user_id=$aid")->execute();
+            try{
+                SaveToLog::userBgRecord("报名救我花费{$saveme['price']}心动币",$aid);
+            }catch (Exception $e){
+                throw new ErrorException($e->getMessage());
+            }
+            if (!$jc) {
+                Response::show('201','3',"扣除心动币失败");
+            }
         }
         $model->status = 0;
         $model->type = 0;
@@ -147,7 +149,7 @@ class SavemeInfoController extends ActiveController {
         $apply_uid = Yii::$app->request->getBodyParam('apply_uid');
         $savemeres = (new Query())->select('id,created_id,price,end_time')->from('{{%saveme}}')->where(['created_id'=>$id,'status'=>1])->orderBy('created_at desc')->one();
         if (!$savemeres) {
-            Response::show('201','操作失败',"参数不正确2");
+            Response::show('201','操作失败',"参数不对");
         }
         if ($savemeres['end_time'] < time()) {
             Response::show('201','操作失败',"本次救火已经过期");

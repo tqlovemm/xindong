@@ -110,7 +110,7 @@ class SavemeController extends ActiveController {
     	}
         Response::show('200','操作成功','发布成功');
     }
-    //女生列表
+    //女生通知列表
     public function actionView($id) {
     	$model = new $this->modelClass();
         $query = $model::find()->where(['created_id'=>$id])->orderBy('created_at desc')->one();
@@ -154,18 +154,18 @@ class SavemeController extends ActiveController {
             for ($i=0; $i < count($savemeres); $i++) { 
                 $sids[] = $savemeres[$i]['id'];
             }
-            $applyres = (new Query())->select('id,apply_uid,status,type')->from('{{%saveme_apply}}')->where(['saveme_id'=>$sids])->all();
+            $applyres = (new Query())->select('id,saveme_id,apply_uid,status,type')->from('{{%saveme_apply}}')->where(['saveme_id'=>$sids])->all();
             for ($i=0; $i < count($applyres); $i++) { 
                 if ($applyres[$i]['type'] == 1) {
                     $ids[] = $applyres[$i]['id'];
                 }
                 $sids[] = $applyres[$i]['saveme_id'];
             }
-            if (isset($ids)) {
-                $res1 = $model::deleteAll(['in','id',$ids]);
-            }
             if (isset($sids)) {
                 $res = $model::updateAll(['type'=>2],['saveme_id'=>$sids]);
+            }
+            if (isset($ids)) {
+                $res1 = $model::deleteAll(['in','id',$ids]);
             }
         }
         if(!($res || $res1)){
