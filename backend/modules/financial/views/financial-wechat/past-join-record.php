@@ -68,7 +68,7 @@ $percent = ($total['tc']==0)?0:round(($total['jc']/$total['tc']),4)*100;
                 <?php foreach ($model as $item):
                         $percent = ($item['increase_count']==0)?0:round(($item['join_count']/$item['increase_count']),4)*100;
                         $screenshot = "";
-                        $user = \backend\models\User::findOne($item['created_by'])->username .' '.\backend\models\User::findOne($item['created_by'])->nickname;
+                        $user = \backend\models\User::findOne($item['created_by'])->nickname;
                         if(!empty($item['wechat_loose_change_screenshot'])){
                                 $imgPath = Yii::$app->params['test'].$item['wechat_loose_change_screenshot'];
                                 $screenshot = "<a href='$imgPath' data-title='s' data-lightbox='s'>截图</a>";

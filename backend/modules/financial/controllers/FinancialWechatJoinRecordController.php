@@ -88,7 +88,6 @@ class FinancialWechatJoinRecordController extends Controller
         $model->wechat_id = $wechat_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-
             $model->payment_screenshot = $model->upload();
             $model->type = $type;
 
@@ -140,8 +139,9 @@ class FinancialWechatJoinRecordController extends Controller
      */
     public function actionDelete($id, $wechat_id)
     {
-        $this->findModel($id, $wechat_id)->delete();
-
+        $model = $this->findModel($id, $wechat_id);
+        $model->status = 0;
+        $model->update();
         return $this->redirect(['index']);
     }
 

@@ -27,9 +27,11 @@ use Yii;
  * @property string $platform
  * @property string $number
  * @property integer $type
+ * @property integer $status
  */
 class FinancialWechatJoinRecord extends \yii\db\ActiveRecord
 {
+    public $yesterday;
     /**
      * @inheritdoc
      */
@@ -45,7 +47,7 @@ class FinancialWechatJoinRecord extends \yii\db\ActiveRecord
     {
         return [
             [['payment_amount','wechat_id','payment_to'], 'required','message'=>"{attribute}不可为空"],
-            [['wechat_id', 'created_at', 'updated_at', 'created_by', 'payment_amount',  'type','day_time','weekly_time','mouth_time','payment_to','year_time'], 'integer'],
+            [['wechat_id', 'created_at', 'updated_at','status',  'created_by', 'payment_amount', 'yesterday', 'type','day_time','weekly_time','mouth_time','payment_to','year_time'], 'integer'],
             [['join_source', 'channel','platform','vip','number'], 'string', 'max' => 128],
             [['remarks','payment_screenshot'], 'string', 'max' => 256]
         ];
@@ -76,6 +78,8 @@ class FinancialWechatJoinRecord extends \yii\db\ActiveRecord
             'platform' => '入会平台',
             'number' => '会员编号',
             'payment_to' => '付款到哪',
+            'yesterday' => '是否算入昨天',
+            'status' => '状态',
         ];
     }
 
@@ -89,7 +93,7 @@ class FinancialWechatJoinRecord extends \yii\db\ActiveRecord
             if($this->isNewRecord){
                 $this->created_at = time();
                 $this->updated_at = time();
-                $this->day_time = strtotime('today');
+                $this->day_time = $this->yesterday;
                 $this->weekly_time = strtotime('next sunday');
                 $this->mouth_time = mktime(0,0,0,date('m',time()),date('t'),date('Y',time()));
                 $this->year_time = mktime(0,0,0,12,31,date('Y',time()));

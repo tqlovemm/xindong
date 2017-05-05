@@ -26,6 +26,7 @@ class FinancialWechatController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                    'delete-record' => ['post'],
                 ],
             ],
         ];
@@ -155,12 +156,35 @@ class FinancialWechatController extends Controller
     public function actionDayFeeRecord($time = null,$wechat_id = null){
 
         if($time==null){
-            $model = FinancialWechatJoinRecord::find()->joinWith('wechat')->where(['day_time' => strtotime('today')])->asArray()->all();
+            $model = FinancialWechatJoinRecord::find()->joinWith('wechat')->where(['day_time' => strtotime('today')])->andWhere(['status'=>1])->asArray()->all();
             return $this->render('today-fee-record',['model'=>$model]);
         }else{
-            $model = FinancialWechatJoinRecord::find()->joinWith('wechat')->where(['day_time' => $time,'wechat_id'=>$wechat_id,'type'=>1])->orderBy('created_at desc')->asArray()->all();
+            $model = FinancialWechatJoinRecord::find()->joinWith('wechat')->where(['day_time' => $time,'wechat_id'=>$wechat_id,'type'=>1])->andWhere(['status'=>1])->orderBy('created_at desc')->asArray()->all();
             return $this->render('day-fee-record',['model'=>$model]);
         }
+    }
+
+
+    public function actionAlreadyDelete(){
+
+        $data = FinancialWechatJoinRecord::find()->joinWith('wechat')->andWhere(['pre_financial_wechat_join_record.status'=>0]);
+        $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '20']);
+        $model = $data->offset($pages->offset)->limit($pages->limit)->all();
+
+        return $this->render('already-delete',[
+            'model' => $model,
+            'pages' => $pages,
+        ]);
+    }
+
+    public function actionDeleteRecordBack($id){
+
+        $model = FinancialWechatJoinRecord::findOne($id);
+        $model->status = 1;
+        if($model->update()){
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+
     }
 
     /**
@@ -170,31 +194,41 @@ class FinancialWechatController extends Controller
      */
     public function actionEverydayFeeRecord($week=null,$mouth = null){
 
-        $model = FinancialWechatJoinRecord::find()->select('group_concat(id) as id,day_time')->groupBy('day_time')->orderBy('day_time desc')->where(['day_time'=>strtotime('today')])->asArray()->all();
+        $model = FinancialWechatJoinRecord::find()->select('group_concat(id) as id,day_time')->groupBy('day_time')->orderBy('day_time desc')->where(['day_time'=>strtotime('today')])->andWhere(['status'=>1])->asArray()->all();
 
-        $query_model1 = FinancialWechatJoinRecord::find()->select('sum(payment_amount) as sum,count(*) as count')->where(['day_time'=>strtotime('today')])->asArray()->one();
-        $query_model2 = FinancialWechatJoinRecord::find()->select('sum(payment_amount) as sum,count(*) as count')->where(['mouth_time'=>mktime(0,0,0,date('m',time()),date('t'),date('Y',time()))])->asArray()->one();
-        $query_model3 = FinancialWechatJoinRecord::find()->select('sum(payment_amount) as sum,count(*) as count')->where(['weekly_time'=>strtotime('next sunday')])->asArray()->one();
+        $query_model1 = FinancialWechatJoinRecord::find()->select('sum(payment_amount) as sum,count(*) as count')->where(['day_time'=>strtotime('today')])->andWhere(['status'=>1])->asArray()->one();
+        $query_model2 = FinancialWechatJoinRecord::find()->select('sum(payment_amount) as sum,count(*) as count')->where(['mouth_time'=>mktime(0,0,0,date('m',time()),date('t'),date('Y',time()))])->andWhere(['status'=>1])->asArray()->one();
+        $query_model3 = FinancialWechatJoinRecord::find()->select('sum(payment_amount) as sum,count(*) as count')->where(['weekly_time'=>strtotime('next sunday')])->andWhere(['status'=>1])->asArray()->one();
 
         if($week!=null){
-            $model = FinancialWechatJoinRecord::find()->select('group_concat(id) as id,day_time')->groupBy('day_time')->orderBy('day_time desc')->where(['weekly_time'=>$week])->asArray()->all();
+            $model = FinancialWechatJoinRecord::find()->select('group_concat(id) as id,day_time')->groupBy('day_time')->orderBy('day_time desc')->where(['weekly_time'=>$week])->andWhere(['status'=>1])->asArray()->all();
         }
 
         if($mouth!=null){
-            $model = FinancialWechatJoinRecord::find()->select('group_concat(id) as id,day_time')->groupBy('day_time')->orderBy('day_time desc')->where(['mouth_time'=>$mouth])->asArray()->all();
+            $model = FinancialWechatJoinRecord::find()->select('group_concat(id) as id,day_time')->groupBy('day_time')->orderBy('day_time desc')->where(['mouth_time'=>$mouth])->andWhere(['status'=>1])->asArray()->all();
         }
 
         return $this->render('today-fee-record',['model'=>$model,'q_1'=>$query_model1,'q_2'=>$query_model2,'q_3'=>$query_model3]);
     }
 
-
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionDeleteRecord($id){
+        $model = FinancialWechatJoinRecord::findOne($id);
+        $model->status = 0;
+        if($model->update()){
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+    }
     /**
      * @param null $type
      * @return string
      */
     public function actionChoiceMouth($type=null){
 
-        $model = FinancialWechatJoinRecord::find()->select('mouth_time')->groupBy('mouth_time')->orderBy('mouth_time desc')->asArray()->all();
+        $model = FinancialWechatJoinRecord::find()->select('mouth_time')->andWhere(['status'=>1])->groupBy('mouth_time')->orderBy('mouth_time desc')->asArray()->all();
         return $this->render('choice-mouth',['model'=>$model,'type'=>$type]);
     }
 
@@ -204,7 +238,7 @@ class FinancialWechatController extends Controller
      */
     public function actionChoiceWeek($mouth=null){
 
-        $model = FinancialWechatJoinRecord::find()->select('weekly_time')->groupBy('weekly_time')->orderBy('weekly_time desc')->where(['mouth_time'=>$mouth])->asArray()->all();
+        $model = FinancialWechatJoinRecord::find()->select('weekly_time')->andWhere(['status'=>1])->groupBy('weekly_time')->orderBy('weekly_time desc')->where(['mouth_time'=>$mouth])->asArray()->all();
         return $this->render('choice-week',['model'=>$model]);
 
     }
@@ -214,7 +248,7 @@ class FinancialWechatController extends Controller
      */
     public function actionPastFeeRecord(){
 
-        $model = FinancialWechatJoinRecord::find()->joinWith('wechat')->where(['day_time' => strtotime('today')])->asArray()->all();
+        $model = FinancialWechatJoinRecord::find()->joinWith('wechat')->andWhere(['status'=>1])->where(['day_time' => strtotime('today')])->asArray()->all();
         //echo "<pre>";
         //return var_dump($model);
         return $this->render('today-fee-record',['model'=>$model]);
@@ -289,7 +323,7 @@ class FinancialWechatController extends Controller
             $start_time = strtotime(Yii::$app->request->get('start_time'));
             $end_time = strtotime(Yii::$app->request->get('end_time'));
 
-            $model = FinancialWechatJoinRecord::find()->select("platform,sum(payment_amount) as pa,count(platform) as platform_c")->where(['between','created_at',$start_time,$end_time+86400])->groupBy('platform')->asArray()->all();
+            $model = FinancialWechatJoinRecord::find()->select("platform,sum(payment_amount) as pa,count(platform) as platform_c")->where(['between','created_at',$start_time,$end_time+86400])->andWhere(['status'=>1])->groupBy('platform')->asArray()->all();
 
             echo "<table class='table table-bordered' style='background-color: #fff;text-align: center;border: none;margin-bottom: 0px;'>
                     <tr><td colspan='3'><h3>".date('Y-m-d',$start_time)." - ".date('Y-m-d',$end_time)."销售收入明细表</h3></td></tr>
@@ -297,13 +331,13 @@ class FinancialWechatController extends Controller
             $sum = 0;
             foreach ($model as $key=>$item){
                 $sum += $item['pa'];
-                $query = FinancialWechatJoinRecord::find()->select("created_by,sum(payment_amount) as pas,count(created_by) as u_count")->where(['between','created_at',$start_time,$end_time+86400])->andWhere(['platform'=>$item['platform']])->groupBy('created_by')->asArray()->all();
+                $query = FinancialWechatJoinRecord::find()->select("created_by,sum(payment_amount) as pas,count(created_by) as u_count")->where(['between','created_at',$start_time,$end_time+86400])->andWhere(['platform'=>$item['platform']])->andWhere(['status'=>1])->groupBy('created_by')->asArray()->all();
                 echo "<tr>
                     <td style='vertical-align:middle;border-right: none;'>$item[platform]</td>
                     <td style='padding: 0;border:none !important;'>
                         <table class='table table-bordered' style='margin-bottom: 0;border:none;'>";
                             foreach ($query as $list):
-                                $user = User::findOne($list['created_by'])->username .' '.User::findOne($list['created_by'])->nickname;
+                                $user = User::findOne($list['created_by'])->nickname;
                                 echo "<tr>
                                     <td width='50%'>$user</td>
                                     <td>$list[pas]</td>
@@ -341,12 +375,12 @@ class FinancialWechatController extends Controller
         $past_start_time = $getDate[0];
         $past_end_time = $getDate[1];
 
-        $model_this = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['between','created_at',$this_start_time,$this_end_time])->asArray()->one();
-        $model_last = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['between','created_at',$last_start_time,$last_end_time])->asArray()->one();
-        $model_past = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['between','created_at',$past_start_time,$past_end_time])->asArray()->one();
+        $model_this = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['between','created_at',$this_start_time,$this_end_time])->andWhere(['status'=>1])->asArray()->one();
+        $model_last = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['between','created_at',$last_start_time,$last_end_time])->andWhere(['status'=>1])->asArray()->one();
+        $model_past = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['between','created_at',$past_start_time,$past_end_time])->andWhere(['status'=>1])->asArray()->one();
 
-        $model_1 = ArrayHelper::map(FinancialWechatJoinRecord::find()->orderBy('day_time desc')->asArray()->all(),'day_time','day_time');
-        $model_2 = ArrayHelper::map(FinancialWechatJoinRecord::find()->orderBy('mouth_time desc')->asArray()->all(),'mouth_time','mouth_time');
+        $model_1 = ArrayHelper::map(FinancialWechatJoinRecord::find()->orderBy('day_time desc')->andWhere(['status'=>1])->asArray()->all(),'day_time','day_time');
+        $model_2 = ArrayHelper::map(FinancialWechatJoinRecord::find()->orderBy('mouth_time desc')->andWhere(['status'=>1])->asArray()->all(),'mouth_time','mouth_time');
 
         return $this->render('mom-an',[
             'model_this'=>$model_this,'model_last'=>$model_last,'model_past'=>$model_past,'this_start_time'=>$this_start_time,
@@ -371,9 +405,9 @@ class FinancialWechatController extends Controller
         $past_start_time = $getDate[0];
         $past_end_time = $getDate[1];
 
-        $model_this = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['between','created_at',$this_start_time,$this_end_time])->asArray()->one();
-        $model_last = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['between','created_at',$last_start_time,$last_end_time])->asArray()->one();
-        $model_past = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['between','created_at',$past_start_time,$past_end_time])->asArray()->one();
+        $model_this = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['between','created_at',$this_start_time,$this_end_time])->andWhere(['status'=>1])->asArray()->one();
+        $model_last = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['between','created_at',$last_start_time,$last_end_time])->andWhere(['status'=>1])->asArray()->one();
+        $model_past = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['between','created_at',$past_start_time,$past_end_time])->andWhere(['status'=>1])->asArray()->one();
 
         $percent01 = ($model_this['sum']==0)?0:round(($model_this['sum']-$model_last['sum'])/$model_this['sum'],4)*100;
         $percent02 = ($model_past['sum']==0)?0:round(($model_past['sum']-$model_past['sum'])/$model_past['sum'],4)*100;

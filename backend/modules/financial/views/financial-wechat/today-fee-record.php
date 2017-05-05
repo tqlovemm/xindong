@@ -19,6 +19,9 @@ $this->registerCss("
     a {color: #000;}
 ");
 ?>
+<p>
+    <?=\yii\helpers\Html::a('查看所有已删除记录',['already-delete'],['class'=>'btn btn-success'])?>
+</p>
 <div class="row">
     <a class="col-md-3 col-sm-6 col-xs-12" href="<?=Url::to(['everyday-fee-record'])?>">
         <div class="info-box">
@@ -66,9 +69,9 @@ $this->registerCss("
             <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
 
             <div class="info-box-content">
-                <h4>数量：5</h4>
-                <span class="info-box-text">今年收款</span>
-                <span class="info-box-number">93,139</span>
+                <h4>选择月份进入</h4>
+                <span class="info-box-text">其他月份收款</span>
+                <span class="info-box-number">包含所有月份</span>
             </div>
             <!-- /.info-box-content -->
         </div>
@@ -80,7 +83,7 @@ $this->registerCss("
 <div class="today-fee-record-index row">
     <?php foreach ($model as $key=>$item):
             $ids = explode(',',$item['id']);
-            $query = \backend\modules\financial\models\FinancialWechatJoinRecord::find()->where(['id'=>$ids])->asArray()->all();
+            $query = \backend\modules\financial\models\FinancialWechatJoinRecord::find()->where(['id'=>$ids])->andWhere(['status'=>1])->asArray()->all();
         ?>
         <div class="col-md-6">
         <div class="box box-warning <?php if($key>6):?>collapsed-box<?php endif;?>">
@@ -107,6 +110,7 @@ $this->registerCss("
                         <th>收款账号</th>
                         <th>收款人</th>
                         <th>时间</th>
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -122,9 +126,15 @@ $this->registerCss("
 
                             <td><a href="<?=Yii::$app->params['test'].$list['payment_screenshot']?>" data-lightbox="s" data-title="<?=$list['vip'].'__'.$list['number']?>">查看</a></td>
                             <td><?=$list['number']?></td>
-                            <td><?=$list['payment_to']==1?'收款专用号':'客服号'?></td>
-                            <td><?=\backend\models\User::findOne($list['created_by'])->nickname .' _ '.\backend\models\User::findOne($list['created_by'])->username;?></td>
+                            <td><?=$list['payment_to']==1?'专用号':'客服号'?></td>
+                            <td><?=\backend\models\User::findOne($list['created_by'])->nickname?></td>
                             <td><?=date('H:i',$list['created_at'])?></td>
+                            <td><?=\yii\helpers\Html::a('无效',['delete-record','id'=>$list['id']],[
+                                'class'=>'btn-sm btn-danger',
+                                    'data'=>[
+                                        'confirm' => '确定删除吗？删除后将无法恢复',
+                                        'method' => 'post',
+                                ]])?></td>
                         </tr>
                     <?php endforeach;?>
                     <tr><td>当日总计</td><td style="background-color: yellow;"><?=$sum?></td></tr>
