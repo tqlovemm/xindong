@@ -51,15 +51,14 @@ class FormThreadComments extends ActiveRecord
                 return $this->_first->avatar;
             },
             'firstName'=>function(){
-                return $this->_first->username;
+                return empty($this->_first->nickname)?$this->_first->username:$this->_first->nickname;
             },
         );
 
         if(!empty($this->_second)){
             $data['secondUrl'] = function (){return $this->_second->avatar;};
-            $data['secondName'] = function (){return $this->_second->username;};
+            $data['secondName'] = function (){return empty($this->_second->nickname)?$this->_second->username:$this->_second->nickname;};
         }
-
 
         return $data;
     }
