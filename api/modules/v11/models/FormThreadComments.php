@@ -46,7 +46,15 @@ class FormThreadComments extends ActiveRecord
         $this->_second = User::findOne(['id'=>$this->second_id]);
 
         $data = array(
-            'comment_id','words_id'=>'thread_id', 'comment', 'created_at','updated_at', 'flag','first_id','second_id',
+            'comment_id','words_id'=>'thread_id', 'comment', 'created_at','updated_at', 'flag',
+            'first_id'=>function(){
+
+                return "$this->first_id";
+            },
+            'second_id'=>function(){
+
+                return "$this->second_id";
+            },
             'firstUrl'=>function(){
                 return $this->_first->avatar;
             },
