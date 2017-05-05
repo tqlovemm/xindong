@@ -16,12 +16,14 @@ return [
     'defaultRoute'=>'site/index',
     'modules' => [
         'member' => [
-
             'class' => 'frontend\modules\member\Member',
             'aliases' => [
                 '@themes' => 'root/themes/basic/layouts/'
             ],
 
+        ],
+        'male' => [
+            'class' => 'frontend\modules\male\male',
         ],
         'sm' => [
             'class' => 'frontend\modules\sm\Sm',

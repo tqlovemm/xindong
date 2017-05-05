@@ -23,10 +23,13 @@ class QiniuUploader
     protected function Auth(){
 
         $auth = new Auth($this->accessKey, $this->secretKey);
-
         return $auth;
     }
 
+    public function upToken($bucket){
+        $upToken = $this->Auth()->uploadToken($bucket);
+        return $upToken;
+    }
     public function upload($bucket,$key){
 
         $file_name = $_FILES[$this->form_name]['name'];

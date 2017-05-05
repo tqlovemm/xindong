@@ -3,6 +3,7 @@ namespace frontend\controllers;
 use common\components\SaveToLog;
 use frontend\models\CollectingSeventeenFilesText;
 use frontend\models\ContactIpLimits;
+use frontend\modules\male\models\MaleInfoText;
 use frontend\modules\weixin\models\FirefightersSignUp;
 use frontend\modules\weixin\models\UserWeichat;
 use Yii;
@@ -32,6 +33,7 @@ use yii\myhelper\AccessToken;
 use yii\myhelper\Helper;
 use yii\web\BadRequestHttpException;
 use common\components\BaseController;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 use yii\myhelper\Easemob;
@@ -704,6 +706,72 @@ class SiteController extends BaseController
             'model' => $model,
         ]);
     }
+    public function actionRegister($flag)
+    {
+
+        $this->layout = 'basic';
+        $male = MaleInfoText::findOne(['flag'=>$flag]);
+        if(empty($male)){
+            throw new ForbiddenHttpException('非法操作');
+        }
+        if($male->status==0){
+            return $this->redirect(['/male','flag'=>$flag]);
+        }elseif($male->status==1){
+            throw new ForbiddenHttpException('等待管理员审核中');
+        }
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->cellphone==''){
+                return '手机号码不可为空';
+            }
+            if($model->smsCode==''){
+                return '验证码不可为空';
+            }
+            if ($user = $model->signup()) {
+
+                $array = ['username'=>$user->username,'password'=>$user->none];
+                $this->setMes()->addUser($array);
+
+                Yii::$app->db->createCommand()->insert('{{%user_profile}}', [
+                    'user_id' => $user->id,
+                    'number' => $male->id,
+                    'address_1'=>'{"province":"'.$male->province.'","city":""}'
+                ])->execute();
+                Yii::$app->db->createCommand()->update('{{%user}}',['groupid'=>$male->vip],'id='.$user->id)->execute();
+                Yii::$app->db->createCommand()->insert('{{%user_data}}', [
+                    'user_id'=>$user->id,
+                    'jiecao_coin'=>$male->coin,
+                ])->execute();
+
+                try{
+                    if($male->vip==2){
+                        $vip_text = "普通会员";
+                    }elseif($male->vip==3){
+                        $vip_text = "高端会员";
+                    }elseif($male->vip==4){
+                        $vip_text = "至尊会员";
+                    }elseif($male->vip==5){
+                        $vip_text = "私人定制";
+                    }elseif($male->vip==1){
+                        $vip_text = "网站会员";
+                    }else{
+                        $vip_text = "未知会员";
+                    }
+                    SaveToLog::userBgRecord("手机注册成功，{$vip_text}，拥有{$male->coin}节操币,",$user->id);
+                }catch (Exception $e){
+                    throw new ErrorException($e->getMessage());
+                }
+
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->redirect('date-today?url='.AccessToken::antiBlocking());
+                }
+            }
+        }
+
+        return $this->render('register', [
+            'model' => $model,
+        ]);
+    }
 
     /**
      * @return string|\yii\web\Response
@@ -775,6 +843,71 @@ class SiteController extends BaseController
         }
 
         return $this->render('email-signup', [
+            'model' => $model,
+        ]);
+    }
+    public function actionRegisterEmail($flag){
+        $this->layout = 'basic';
+        $male = MaleInfoText::findOne(['flag'=>$flag]);
+        if(empty($male)){
+            throw new ForbiddenHttpException('非法操作');
+        }
+        if($male->status==0){
+            return $this->redirect(['/male','flag'=>$flag]);
+        }elseif($male->status==1){
+            throw new ForbiddenHttpException('等待管理员审核中');
+        }
+
+        $model = new SignupForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->email==''){
+                return '邮箱不可为空';
+            }
+            if ($user = $model->emailSignup()) {
+
+                try{
+                    if($male->vip==2){
+                        $vip_text = "普通会员";
+                    }elseif($male->vip==3){
+                        $vip_text = "高端会员";
+                    }elseif($male->vip==4){
+                        $vip_text = "至尊会员";
+                    }elseif($male->vip==5){
+                        $vip_text = "私人定制";
+                    }elseif($male->vip==1){
+                        $vip_text = "网站会员";
+                    }else{
+                        $vip_text = "未知会员";
+                    }
+                    SaveToLog::userBgRecord("邮箱注册成功，{$vip_text}，拥有{$male->coin}节操币,",$user->id);
+
+                }catch (Exception $e){
+                    throw new ErrorException($e->getMessage());
+                }
+                $array = ['username'=>$user->username,'password'=>$user->none];
+                $this->setMes()->addUser($array);
+
+                Yii::$app->db->createCommand()->insert('{{%user_profile}}', [
+                    'user_id' => $user->id,
+                    'number' => $male->id,
+                    'address_1'=>'{"province":"'.$male->province.'","city":""}'
+                ])->execute();
+
+                Yii::$app->db->createCommand()->update('{{%user}}',['groupid'=>$male->vip],'id='.$user->id)->execute();
+
+                Yii::$app->db->createCommand()->insert('{{%user_data}}', [
+                    'user_id'=>$user->id,
+                    'jiecao_coin'=>$male->coin,
+                ])->execute();
+
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->redirect('date-today');
+                }
+            }
+        }
+
+        return $this->render('register-email', [
             'model' => $model,
         ]);
     }

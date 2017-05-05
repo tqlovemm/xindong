@@ -38,6 +38,13 @@ class FormThreadCommentsController extends ActiveController {
         return $action;
     }
 
+    /**
+     * @return mixed
+     * 发帖评价接口post
+     * /v11/form-thread-comments?access-token={cid}
+     *
+     * post 提交，必填字段：'thread_id'帖子id, 'comment'评价内容,'first_id'评价人的user_id；如果又针对该评价的回复请务必添加second_id 回复人user_id，
+     */
     public function actionCreate() {
 
     	$model = new $this->modelClass();
@@ -52,7 +59,13 @@ class FormThreadCommentsController extends ActiveController {
             }
         }
     }
-
+    /**
+     * @return mixed
+     * 删除评价接口delete
+     * 必传?user_id={user_id}，使用者user_id,为了防止删除非自己评论
+     * /v11/form-thread-comments/{comment_id}?user_id={user_id}&access-token={cid}
+     *
+     */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
