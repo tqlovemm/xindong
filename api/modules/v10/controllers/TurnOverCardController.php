@@ -54,9 +54,9 @@ class TurnOverCardController extends Controller
         //http的域名
         define('HOST','http://sdk.open.api.igexin.com/apiex.htm');
 
-        define('APPKEY','8grrIU5kcr8b4d7KHJTUN5');
-        define('APPID','o2fItBGkhp9vFjQIkI8Q55');
-        define('MASTERSECRET','AKptZQVIC48I933wBYGQh1');
+        define('APPKEY',Yii::$app->params['geAPPKEY']);
+        define('APPID',Yii::$app->params['geAPPID']);
+        define('MASTERSECRET',Yii::$app->params['geMASTERSECRET']);
 
     }
 

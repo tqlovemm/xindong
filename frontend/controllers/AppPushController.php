@@ -24,10 +24,9 @@ class AppPushController extends Controller
         //https的域名
         //define('HOST','https://api.getui.com/apiex.htm');
 
-
-        define('APPKEY','dUWY8fyvSP68rN83GLfeZ');
-        define('APPID','fb2hJRUaTm7RyYIubIf5T6');
-        define('MASTERSECRET','5M4lZWwZt59Utw9rTPRgL7');
+        define('APPKEY',Yii::$app->params['geAPPKEY']);
+        define('APPID',Yii::$app->params['geAPPID']);
+        define('MASTERSECRET',Yii::$app->params['geMASTERSECRET']);
 
         // define('DEVICETOKEN','');
         // define('Alias','请输入别名');
