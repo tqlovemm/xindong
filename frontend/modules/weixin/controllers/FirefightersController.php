@@ -396,43 +396,77 @@ class FirefightersController extends Controller
             }
             $addresses = array_filter($addresses);
             if(empty(User::getNumber(Yii::$app->user->id))){
-                $result = '报名失败，平台未记录您的编号';
-            }elseif($model->all==0){
+                $result = '报名失败，平台未记录您的编号';echo json_encode($result);exit;
+            }
+            if($model->all==0){
                 if(!$this->checkArea($model->name,$addresses)){
-                    $result = '报名失败，您所在地址不在妹子的需求范围之内';
+                    $result = '报名失败，您所在地址不在妹子的需求范围之内';echo json_encode($result);exit;
                 }else{
-                    $result = '';
-                }
-            }elseif($model->coin>$coin['jiecao_coin']){
-                $result = '报名失败，您的节操币不足';
-            }else{
-                if(empty($signClass::findOne(['sign_id'=>$id,'user_id'=>$user_id]))){
-
-                    if($signClass::find()->where(['sign_id'=>$id])->count()>9){
-                        $result = '报名已满';echo json_encode($result);exit;
-                    }elseif($signClass::find()->where(['user_id'=>$user_id,'status'=>0])->count()>4){
-                        $result = '您等待审核中的报名已达上限，请等待审核结束再报名';echo json_encode($result);exit;
+                    if($model->coin>$coin['jiecao_coin']){
+                        $result = '报名失败，您的节操币不足';
                     }else{
+                        if(empty($signClass::findOne(['sign_id'=>$id,'user_id'=>$user_id]))){
 
-                        $signClass->sign_id = $id;
-                        $signClass->number = $model->number;
-                        if($signClass->save()){
-                            Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin = jiecao_coin-$model->coin where user_id=".$user_id)->execute();
-                            $result = '报名成功';
-                            try{
-                                SaveToLog::userBgRecord("救火福利报名{$model->number},扣除节操币{$model->coin}");
-                            }catch (Exception $e){
-                                throw new ErrorException($e->getMessage());
+                            if($signClass::find()->where(['sign_id'=>$id])->count()>9){
+                                $result = '报名已满';echo json_encode($result);exit;
+                            }elseif($signClass::find()->where(['user_id'=>$user_id,'status'=>0])->count()>4){
+                                $result = '您等待审核中的报名已达上限，请等待审核结束再报名';echo json_encode($result);exit;
+                            }else{
+
+                                $signClass->sign_id = $id;
+                                $signClass->number = $model->number;
+                                if($signClass->save()){
+                                    Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin = jiecao_coin-$model->coin where user_id=".$user_id)->execute();
+                                    $result = '报名成功';
+                                    try{
+                                        SaveToLog::userBgRecord("救火福利报名{$model->number},扣除节操币{$model->coin}");
+                                    }catch (Exception $e){
+                                        throw new ErrorException($e->getMessage());
+                                    }
+                                }else{
+                                    $result = '系统错误';
+                                }
                             }
+
                         }else{
-                            $result = '系统错误';
+                            $result = '不可重复报名';
                         }
                     }
-
-                }else{
-                    $result = '不可重复报名';
                 }
+            }else{
+                if($model->coin>$coin['jiecao_coin']){
+                    $result = '报名失败，您的节操币不足';
+                }else{
+                    if(empty($signClass::findOne(['sign_id'=>$id,'user_id'=>$user_id]))){
+
+                        if($signClass::find()->where(['sign_id'=>$id])->count()>9){
+                            $result = '报名已满';echo json_encode($result);exit;
+                        }elseif($signClass::find()->where(['user_id'=>$user_id,'status'=>0])->count()>4){
+                            $result = '您等待审核中的报名已达上限，请等待审核结束再报名';echo json_encode($result);exit;
+                        }else{
+
+                            $signClass->sign_id = $id;
+                            $signClass->number = $model->number;
+                            if($signClass->save()){
+                                Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin = jiecao_coin-$model->coin where user_id=".$user_id)->execute();
+                                $result = '报名成功';
+                                try{
+                                    SaveToLog::userBgRecord("救火福利报名{$model->number},扣除节操币{$model->coin}");
+                                }catch (Exception $e){
+                                    throw new ErrorException($e->getMessage());
+                                }
+                            }else{
+                                $result = '系统错误';
+                            }
+                        }
+
+                    }else{
+                        $result = '不可重复报名';
+                    }
+                }
+
             }
+
         }else{
             $result = '报名失败，您的会员等级不足';
 
