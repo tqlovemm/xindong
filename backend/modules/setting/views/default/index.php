@@ -38,8 +38,8 @@ $this->params['breadcrumbs'][] = $this->title;
 			    	</div>
 
 			    	<div class="form-group">
-			    		<?= Html::label(Yii::t('app', 'Third Party Statistical Code'), 'thirdPartyStatisticalCode') ?>
-			    		<?= Html::textarea('thirdPartyStatisticalCode', $settings['thirdPartyStatisticalCode'], ['class' => 'form-control']) ?>
+			    		<?= Html::label('APP充值后联系客服微信号', 'thirdPartyStatisticalCode') ?>
+			    		<?= Html::textInput('thirdPartyStatisticalCode', $settings['thirdPartyStatisticalCode'], ['class' => 'form-control']) ?>
 			    	</div>
 					<div class="form-group">
 			    		<?= Html::label('女生备注', 'remarks') ?>
