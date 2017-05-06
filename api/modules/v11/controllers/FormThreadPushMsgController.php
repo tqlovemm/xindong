@@ -63,7 +63,7 @@ class FormThreadPushMsgController extends ActiveController {
     public function actionView($id) {
         $_model = $this->modelClass;
         $count = $_model::find()->where(['user_id'=>$id,'read_user'=>0])->count();
-        yii\myhelper\Response::show('200','ok',(integer)$count);
+        yii\myhelper\Response::show('200',(integer)$count,(integer)$count);
     }
 
     protected function findModel($id)
