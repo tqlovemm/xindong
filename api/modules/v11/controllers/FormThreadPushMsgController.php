@@ -41,6 +41,12 @@ class FormThreadPushMsgController extends ActiveController {
         return $action;
     }
 
+    /**
+     * @return CsvDataProvider
+     * v11/form-thread-push-msgs?access_token={cid}?user_id={user_id}
+     * 获取所有和他有关的帖子id，
+     */
+
     public function actionIndex() {
 
     	$model = $this->modelClass;
@@ -59,6 +65,12 @@ class FormThreadPushMsgController extends ActiveController {
             ],
         ]);
     }
+
+    /**
+     * @param $id
+     * v11/form-thread-push-msgs/{user_id}?access_token={cid}
+     * 获取所有和他有关的未读消息数量integer类型，
+     */
 
     public function actionView($id) {
         $_model = $this->modelClass;
