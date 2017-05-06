@@ -400,6 +400,8 @@ class FirefightersController extends Controller
             }elseif($model->all==0){
                 if(!$this->checkArea($model->name,$addresses)){
                     $result = '报名失败，您所在地址不在妹子的需求范围之内';
+                }else{
+                    $result = 'ok';
                 }
             }elseif($model->coin>$coin['jiecao_coin']){
                 $result = '报名失败，您的节操币不足';
