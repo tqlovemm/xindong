@@ -55,7 +55,7 @@ $this->registerCss('
     }
 </script>
 <?php endif;?>
-<?php if ($this->beginCache($id=2016, ['duration' => 86400])) :?>
+<?php if ($this->beginCache($id=2017, ['duration' => 86400])) :?>
 <div class="home">
         <div id="focus" class="focus visible-md visible-lg">
             <div class="hd">
@@ -79,14 +79,14 @@ $this->registerCss('
             <div class="bd">
                 <ul>
                     <li>
-                        <a href="http://www.13loveme.com/heart-slide/19">
+                        <a href="http://www.13loveme.com/contact">
 
                             <img class="img-responsive" src="<?= Yii::getAlias('@web')?>/images/index/464021723025016472.jpg">
                         </a>
 
                     </li>
                     <li>
-                        <a href="http://www.13loveme.com/heart-slide/21">
+                        <a href="http://www.13loveme.com/contact">
                             <img class="img-responsive" src="<?= Yii::getAlias('@web')?>/images/index/790981646511215177.jpg">
                         </a>
                     </li>

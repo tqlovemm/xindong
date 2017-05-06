@@ -143,7 +143,7 @@ $rand_url = AccessToken::antiBlocking();
                 <ul class="nav navbar-nav cc">
                     <li><a href="<?=Url::toRoute(['/','url'=>$rand_url])?>">主页<h5>Home</h5></a></li>
                     <li><a href="<?=Url::toRoute(['/date-today','url_services'=>$rand_url])?>" <?php if(in_array(Yii::$app->request->getPathInfo(),['dating','datingt','date-today','date-past','hear-view','support-team','beautiful-people','firefighters'])||Yii::$app->request->getPathInfo()=='date-quality'||strpos(Yii::$app->request->getPathInfo(),'hear-view')!==false||strpos(Yii::$app->request->getPathInfo(),'date-view')!==false){echo 'class="bar-active"';}?>>最新觅约<h5>Dating</h5></a></li>
-                    <li class="hidden-md hidden-lg"><a href="http://mp.weixin.qq.com/mp/homepage?__biz=MzAxMDIwMDIxMw==&hid=1&sn=a00a64d7d9db13c2540a42fe460d223d#wechat_redirect" <?php if(strpos(Yii::$app->request->getPathInfo(),'heart')!==false){echo 'class="bar-active"';}?>>心动周刊<h5>weekly</h5></a></li>
+                  <!--  <li class="hidden-md hidden-lg"><a href="http://mp.weixin.qq.com/mp/homepage?__biz=MzAxMDIwMDIxMw==&hid=1&sn=a00a64d7d9db13c2540a42fe460d223d#wechat_redirect" <?php /*if(strpos(Yii::$app->request->getPathInfo(),'heart')!==false){echo 'class="bar-active"';}*/?>>心动周刊<h5>weekly</h5></a></li>-->
                     <li><a href="<?=Url::toRoute(['/services','url_services'=>$rand_url])?>" <?php if(Yii::$app->request->getPathInfo()=='services'){echo 'class="bar-active"';}?>>十三服务<h5>Service</h5></a></li>
                     <li><a href="<?=Url::toRoute(['/about','url_about'=>$rand_url])?>" <?php if(Yii::$app->request->getPathInfo()=='about'){echo 'class="bar-active"';}?>>关于我们<h5>About us</h5></a></li>
                     <li><a href="<?=Url::toRoute(['/contact','url_contact'=>$rand_url])?>" <?php if(Yii::$app->request->getPathInfo()=='contact'){echo 'class="bar-active"';}?>>联系我们<h5>Contact us</h5></a></li>
@@ -180,7 +180,7 @@ $rand_url = AccessToken::antiBlocking();
                 <div class="col-md-4 text-center">
                     <div class="visible-sm visible-xs">
                         <ul class="list-inline contact-phone">
-                            <li><a href="<?=Yii::getAlias('@web')?>/images/weixin/thirteenpingtai.jpg" data-lightbox="image" data-title="微信搜索公众号：心动三十一天" ><img alt="十三平台微信公众号" src="<?=Yii::getAlias('@web')?>/images/weichat-top.png"></a></li>
+  <!--                          <li><a href="<?/*=Yii::getAlias('@web')*/?>/images/weixin/thirteenpingtai.jpg" data-lightbox="image" data-title="微信搜索公众号：心动三十一天" ><img alt="十三平台微信公众号" src="<?/*=Yii::getAlias('@web')*/?>/images/weichat-top.png"></a></li>-->
                             <span></span>
                             <li><a href="<?=Yii::getAlias('@web')?>/images/weixin/ed9e98fbedd51d1e26ed6a7b397c4b27.png" data-lightbox="image" data-title="IOS APP 下载" ><img alt="APP  下载" src="<?=Yii::getAlias('@web')?>/images/weixin/210712181883005415.png"></a></li>
                             <span></span>
@@ -191,10 +191,10 @@ $rand_url = AccessToken::antiBlocking();
                         <img class="img-responsive center-block" alt="IOS APP下载" src="<?=Yii::getAlias('@web')?>/images/weixin/ed9e98fbedd51d1e26ed6a7b397c4b27.png" width="100%">
                         <div class="weixin">IOS - APP - 下载</div>
                     </div>
-                    <div class="visible-lg visible-md" style="width: 49%;float: left;">
-                        <img class="img-responsive center-block" alt="十三平台微信公众号" src="<?=Yii::getAlias('@web')?>/images/weixin/thirteenpingtai.jpg" width="100%">
+                  <!--  <div class="visible-lg visible-md" style="width: 49%;float: left;">
+                        <img class="img-responsive center-block" alt="十三平台微信公众号" src="<?/*=Yii::getAlias('@web')*/?>/images/weixin/thirteenpingtai.jpg" width="100%">
                         <div class="weixin-spacing">微信公众号</div>
-                    </div>
+                    </div>-->
                 </div>
         <!--        <div class="col-md-2 text-center">
                     <div class="visible-sm visible-xs">
