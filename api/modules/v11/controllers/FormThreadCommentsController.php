@@ -1,7 +1,9 @@
 <?php
 namespace api\modules\v11\controllers;
 
+use api\components\CsvDataProvider;
 use api\modules\v11\models\FormThread;
+use api\modules\v11\models\FormThreadComments;
 use yii;
 use yii\rest\ActiveController;
 use yii\filters\RateLimiter;
@@ -55,7 +57,7 @@ class FormThreadCommentsController extends ActiveController {
             $thread = FormThread::findOne($model->thread_id);
             $thread->thumbs_count+=1;
             if($thread->update()){
-                yii\myhelper\Response::show('200','评价成功');
+                yii\myhelper\Response::show('200','评价成功',$model->getAttributes());
             }
         }
     }
