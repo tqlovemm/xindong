@@ -2,6 +2,7 @@
 namespace api\modules\v11\controllers;
 
 use api\modules\v11\models\FormThreadImages;
+use api\modules\v11\models\FormThreadPushMsg;
 use api\modules\v2\models\Ufollow;
 use api\modules\v3\models\AppPush;
 use api\modules\v3\models\Push;
@@ -177,7 +178,7 @@ class FormThreadController extends ActiveController {
      * @param $id
      * @return mixed
      * 查看单条帖子接口get
-     * /v11/form-threads/{wid}?access-token={cid}
+     * /v11/form-threads/{wid}?access-token={cid}&user_id={user_id}
      * 若帖子不存在则返回如下
      * {
         "name": "Not Found",
@@ -189,14 +190,9 @@ class FormThreadController extends ActiveController {
      */
     public function actionView($id) {
 
-       /* $request = Yii::$app->request->getHeaders();
-        $authHeader = $request->get('Authorization');
-        if ($authHeader !== null && preg_match("/^Bearer\\s+(.*?)$/", $authHeader, $matches)) {
-
-            return $authHeader;
-        }*/
-        //return $authHeader;
+        $user_id = Yii::$app->request->get('user_id');
         $model = $this->findModel($id);
+        FormThreadPushMsg::updateAll(['read_user'=>1],['user_id'=>$user_id,'wid'=>$id]);
         return $model;
     }
 
