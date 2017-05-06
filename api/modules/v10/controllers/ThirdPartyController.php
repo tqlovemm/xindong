@@ -122,7 +122,7 @@ class ThirdPartyController extends Controller
         if($model != null){
             if($model->save()){
                 Yii::$app->db->createCommand("insert into {{%user_data}} (user_id) VALUES ({$model->id})")->execute();
-                Yii::$app->db->createCommand("insert into {{%user_profile}} (user_id,birthdate,address) VALUES ({$model->id},'{$birthdate}','{$address}')")->execute();
+                Yii::$app->db->createCommand("insert into {{%user_profile}} (birthdate,address) VALUES ({$model->id},'{$birthdate}','{$address}')")->execute();
                 $array = ['username'=>$model->username,'password'=>$model->none];
                 $this->setMse()->addUser($array);
 
