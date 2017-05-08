@@ -156,10 +156,10 @@ class FinancialWechatController extends Controller
     public function actionDayFeeRecord($time = null,$wechat_id = null){
 
         if($time==null){
-            $model = FinancialWechatJoinRecord::find()->joinWith('wechat')->where(['day_time' => strtotime('today')])->andWhere(['status'=>1])->asArray()->all();
+            $model = FinancialWechatJoinRecord::find()->joinWith('wechat')->where(['day_time' => strtotime('today')])->andWhere(['pre_financial_wechat_join_record.status'=>1])->asArray()->all();
             return $this->render('today-fee-record',['model'=>$model]);
         }else{
-            $model = FinancialWechatJoinRecord::find()->joinWith('wechat')->where(['day_time' => $time,'wechat_id'=>$wechat_id,'type'=>1])->andWhere(['status'=>1])->orderBy('created_at desc')->asArray()->all();
+            $model = FinancialWechatJoinRecord::find()->joinWith('wechat')->where(['day_time' => $time,'wechat_id'=>$wechat_id,'type'=>1])->andWhere(['pre_financial_wechat_join_record.status'=>1])->orderBy('created_at desc')->asArray()->all();
             return $this->render('day-fee-record',['model'=>$model]);
         }
     }
