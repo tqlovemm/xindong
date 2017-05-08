@@ -8,12 +8,17 @@ use app\components\db\ActiveRecord;
  * @property integer $pid
  * @property integer $wid
  * @property integer $user_id
+ * @property integer $writer_id
  * @property integer $updated_at
  * @property integer $created_at
  * @property integer $read_user
+ * @property integer $type
+ * @property string $content
  */
 class FormThreadPushMsg extends ActiveRecord
 {
+    private $_thread;
+    private $_user;
     /**
      * @inheritdoc
      */
@@ -28,16 +33,32 @@ class FormThreadPushMsg extends ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'wid'], 'required','message'=>"{attribute}不可为空"],
-            [['user_id', 'wid', 'created_at', 'read_user','updated_at'], 'integer'],
+            [['user_id', 'wid','writer_id'], 'required','message'=>"{attribute}不可为空"],
+            [['user_id', 'wid', 'writer_id','created_at', 'read_user','updated_at','type'], 'integer'],
+            ['content','string'],
         ];
     }
 
 
     public function fields(){
 
+        $this->_thread = FormThread::findOne($this->wid);
+        $this->_user = User::findOne([$this->writer_id]);
         return [
             "wid",'user_id', 'read_user','created_at',
+            'avatar'=>function(){return $this->_user->avatar;},
+            'username'=>function(){return !empty($this->_user->nickname)?$this->_user->nickname:$this->_user->username;},
+            'thread_content'=>function(){
+                return !empty($this->_thread->cover)?$this->_thread->cover:$this->_thread->content;
+            },
+            'comment_thread'=>function(){
+                if($this->type==2){
+                    return "thumbs";
+                }else{
+                    return $this->content;
+                }
+
+            },
         ];
     }
 
@@ -49,9 +70,12 @@ class FormThreadPushMsg extends ActiveRecord
         return [
             'wid' => 'WID',
             'user_id' => 'User ID',
+            'writer_id' => 'Writer ID',
             'read_user' => 'Read User',
             'updated_at' => 'Updated At',
             'created_at' => 'Created At',
+            'type' => 'Type',
+            'content' => 'Content',
         ];
     }
 

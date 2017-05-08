@@ -92,6 +92,10 @@ class FormThread extends ActiveRecord
         ];
     }
 
+    public function getCover(){
+
+        return $this->hasOne(FormThreadImages::className(), ['thread_id' => 'wid']);
+    }
     /**
      * @inheritdoc
      */

@@ -86,17 +86,17 @@ class FormThreadComments extends ActiveRecord
         pushMessageToList(1, $msg , $extras , $title , $userCid);
         $data = array();
         if($this->_first!=$thread_uid){
-            $data = [[$this->thread_id,$thread_uid,time(),time()]];
+            $data = [[$this->thread_id,$thread_uid,$this->first_id,$this->comment,time(),time()]];
         }
 
         foreach ($uids as $uid){
             if($uid!=$thread_uid){
-                $da = [$this->thread_id,$uid,time(),time()];
+                $da = [$this->thread_id,$uid,$this->first_id,$this->comment,time(),time()];
                 array_push($data,$da);
             }
         }
 
-        \Yii::$app->db->createCommand()->batchInsert('pre_app_form_thread_push_msg', ['wid','user_id','created_at','updated_at'],$data)->execute();
+        \Yii::$app->db->createCommand()->batchInsert('pre_app_form_thread_push_msg', ['wid','user_id','writer_id','content','created_at','updated_at'],$data)->execute();
     }
 
     /**
