@@ -68,12 +68,12 @@ class FormThreadThumbsUp extends ActiveRecord
         pushMessageToList(1, $msg , $extras , $title , $userCid);
         $data = array();
         if($this->user_id!=$thread_uid){
-            $data = [[$this->thread_id,$thread_uid,$this->user_id,'thumbs',time(),time()]];
+            $data = [[$this->thread_id,$thread_uid,$this->user_id,'',time(),time()]];
         }
 
         foreach ($uids as $uid){
             if($uid!=$thread_uid){
-                $da = [$this->thread_id,$uid,$this->user_id,'thumbs',time(),time()];
+                $da = [$this->thread_id,$uid,$this->user_id,'',time(),time()];
                 array_push($data,$da);
             }
         }
