@@ -133,7 +133,7 @@ class SmCollectionFilesText extends \yii\db\ActiveRecord
     {
         $qn = new QiniuUploader('weimaimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
         $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->member_id;
-        $qiniu = $qn->upload('localandsm',"uploads/local/$mkdir");
+        $qiniu = $qn->upload('localandsm',"uploads/sm/$mkdir");
 
         //存入数据库
         $this->weima = $qiniu['key'];
