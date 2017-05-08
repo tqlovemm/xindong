@@ -142,7 +142,7 @@ class SmCollectionFilesText extends \yii\db\ActiveRecord
             $data = array('id'=>$this->member_id,'path'=>Yii::$app->params['localandsm'].$qiniu['key']);
             return $data;
         }else{
-            return var_dump($this->errors);
+            return var_dump($model->errors);
         }
 
     }
