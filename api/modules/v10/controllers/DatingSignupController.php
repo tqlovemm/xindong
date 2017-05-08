@@ -142,7 +142,7 @@ class DatingSignupController extends Controller
 
             ])->execute();
             Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin = jiecao_coin-$need_coin[worth] where user_id=$model->user_id")->execute();
-            Response::show('200','保存成功','报名成功');
+            Response::show('200','您已支付成功，客服稍后将会与您联系，如客服较忙请耐心等待哟','您已支付成功，客服稍后将会与您联系，如客服较忙请耐心等待哟');
         }
 
     }

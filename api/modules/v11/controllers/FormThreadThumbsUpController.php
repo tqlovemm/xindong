@@ -50,18 +50,25 @@ class FormThreadThumbsUpController extends ActiveController {
     	$model = new $this->modelClass();
     	$model->load(Yii::$app->request->getBodyParams(), '');
         if (!$model->save()) {
-            return array_values($model->getFirstErrors())[0];
+            yii\myhelper\Response::show('202','点赞失败',$model->getFirstErrors()[0]);
         }else{
             $thread = FormThread::findOne($model->thread_id);
             $thread->thumbs_count+=1;
             if($thread->update()){
-                return $model;
+                yii\myhelper\Response::show('200','点赞成功',$model->getAttributes());
             }
-            return $thread->errors;
+            yii\myhelper\Response::show('202','点赞失败',$thread->errors);
         }
     }
 
-    public function actionDelete($id)
+   /**
+     * @param $id
+     * @return int
+     * delete
+     * v11/form-thread-thumbs-ups/{id}?access-token={cid}
+     *
+     */
+/*    public function actionDelete($id)
     {
         $model = $this->findModel($id);
         $get = Yii::$app->request->getBodyParams();
@@ -70,11 +77,12 @@ class FormThreadThumbsUpController extends ActiveController {
                 $thread = FormThread::findOne($model->thread_id);
                 $thread->thumbs_count-=1;
                 $thread->update();
+                yii\myhelper\Response::show('200','删除成功');
             };
         }else{
-            return 0;
+            yii\myhelper\Response::show('201','删除失败','您无权删除别人的点赞');
         }
-    }
+    }*/
 
 
     protected function findModel($id)
