@@ -19,9 +19,6 @@ return [
         'sm' => [
             'class' => 'backend\modules\sm\Sm',
         ],
-        'male' => [
-            'class' => 'backend\modules\male\male',
-        ],
         'local' => [
             'class' => 'backend\modules\local\Local',
         ],
@@ -73,6 +70,12 @@ return [
         ],
         'active' => [
             'class' => 'backend\modules\active\active',
+        ],
+        'article' => [
+            'class' => 'backend\modules\article\Article',
+        ],
+        'saveme' => [
+            'class' => 'backend\modules\saveme\Saveme',
         ],
 
     ],
