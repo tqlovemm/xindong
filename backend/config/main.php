@@ -74,6 +74,12 @@ return [
         'active' => [
             'class' => 'backend\modules\active\active',
         ],
+        'article' => [
+            'class' => 'backend\modules\article\Article',
+        ],
+        'saveme' => [
+            'class' => 'backend\modules\saveme\Saveme',
+        ],
 
     ],
     'components' => [
