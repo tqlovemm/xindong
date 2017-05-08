@@ -34,13 +34,11 @@ class DatingController extends ActiveController
 
         $where = ' status = 2 and cover_id = 0 ';
         if(!empty($time) && $time === 1){
-
             $t = time()-86400;
             $where['cover_id'] = 0;
             $where .= ' and created_at > '.$t;
         }
         if(!empty($title)){
-
             $where .= " and title = '".$title."'";
         }
 
