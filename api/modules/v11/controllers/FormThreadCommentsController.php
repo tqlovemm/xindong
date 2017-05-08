@@ -4,6 +4,7 @@ namespace api\modules\v11\controllers;
 use api\components\CsvDataProvider;
 use api\modules\v11\models\FormThread;
 use api\modules\v11\models\FormThreadComments;
+use api\modules\v11\models\User;
 use yii;
 use yii\rest\ActiveController;
 use yii\filters\RateLimiter;
@@ -46,20 +47,33 @@ class FormThreadCommentsController extends ActiveController {
      * /v11/form-thread-comments?access-token={cid}
      *
      * post 提交，必填字段：'thread_id'帖子id, 'comment'评价内容,'first_id'评价人的user_id；如果又针对该评价的回复请务必添加second_id 回复人user_id，
+     *
+     * {
+    "code": "203",
+    "message": "评价失败",
+    "data": "评价人不存在"
+    }
      */
     public function actionCreate() {
 
     	$model = new $this->modelClass();
     	$model->load(Yii::$app->request->getBodyParams(), '');
-        if (!$model->save()) {
-            return array_values($model->getFirstErrors())[0];
+        if(empty(FormThread::findOne($model->thread_id))){
+            yii\myhelper\Response::show('203','评价失败',"该帖子不存在");
+        }elseif(empty(User::findOne($model->first_id))){
+            yii\myhelper\Response::show('203','评价失败',"评价人不存在");
         }else{
-            $thread = FormThread::findOne($model->thread_id);
-            $thread->thumbs_count+=1;
-            if($thread->update()){
-                yii\myhelper\Response::show('200','评价成功',$model->getAttributes());
+            if (!$model->save()) {
+                yii\myhelper\Response::show('203','评价失败', array_values($model->getFirstErrors())[0]);
+            }else{
+                $thread = FormThread::findOne($model->thread_id);
+                $thread->thumbs_count+=1;
+                if($thread->update()){
+                    return $model;
+                }
             }
         }
+
     }
     /**
      * @return mixed
