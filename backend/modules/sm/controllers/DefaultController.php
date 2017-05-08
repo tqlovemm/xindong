@@ -5,7 +5,6 @@ namespace backend\modules\sm\controllers;
 use backend\modules\sm\models\Province;
 use backend\modules\sm\models\SmCollectionCount;
 use backend\modules\sm\models\SmCollectionFilesText;
-use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use Yii;
