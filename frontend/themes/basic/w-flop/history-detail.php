@@ -11,7 +11,7 @@ $this->registerCss("
     .comments_add_content{min-height: 50px;border: 1px dotted #ddd;text-align: center;font-size:16px;line-height:50px;}
     .comments_content_title{position: absolute;left: 10px;top:-10px;color:#E63F78;font-size: 12px;background-color: #fff;}
 ");
-
+$pre_url = Yii::$app->params['imagetqlmm'];
 ?>
 <?php foreach ($model as $item):
 
@@ -36,8 +36,8 @@ $this->registerCss("
 
     <div class="row history-box">
         <div class="col-xs-5" style="padding: 0;">
-            <a href="<?=$item['img']?>" data-lightbox="0" data-title="0">
-                <img class="img-responsive" src="<?=$item['img']?>">
+            <a href="<?=$pre_url.$item['img']?>" data-lightbox="0" data-title="0">
+                <img class="img-responsive" src="<?=$pre_url.$item['img']?>">
             </a>
 
             <div class="evaluate" style="margin: 15px 0;">
