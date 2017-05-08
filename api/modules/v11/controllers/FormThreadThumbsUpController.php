@@ -2,6 +2,7 @@
 namespace api\modules\v11\controllers;
 
 use api\modules\v11\models\FormThread;
+use api\modules\v11\models\User;
 use yii;
 use yii\rest\ActiveController;
 use yii\filters\RateLimiter;
@@ -49,15 +50,22 @@ class FormThreadThumbsUpController extends ActiveController {
 
     	$model = new $this->modelClass();
     	$model->load(Yii::$app->request->getBodyParams(), '');
-        if (!$model->save()) {
-            yii\myhelper\Response::show('202','点赞失败',$model->getFirstErrors()[0]);
+        if(empty(FormThread::findOne($model->thread_id))){
+            yii\myhelper\Response::show('203','评价失败',"该帖子不存在");
+        }elseif(empty(User::findOne($model->user_id))){
+            yii\myhelper\Response::show('203','评价失败',"评价人不存在");
         }else{
-            $thread = FormThread::findOne($model->thread_id);
-            $thread->thumbs_count+=1;
-            if($thread->update()){
-                yii\myhelper\Response::show('200','点赞成功',$model->getAttributes());
+            if (!$model->save()) {
+                yii\myhelper\Response::show('203','点赞失败',array_values($model->getFirstErrors())[0]);
+            }else{
+                $thread = FormThread::findOne($model->thread_id);
+                $thread->thumbs_count+=1;
+                if($thread->update()){
+                    return $thread;
+                }else{
+                    yii\myhelper\Response::show('203','点赞失败',array_values($thread->getFirstErrors())[0]);
+                }
             }
-            yii\myhelper\Response::show('202','点赞失败',$thread->errors);
         }
     }
 
