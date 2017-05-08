@@ -65,7 +65,7 @@ $pre_url = Yii::$app->params['localandsm'];
                             <div class="weui_uploader_bd">
                                 <div class="weui_uploader_files" id="preview_weima">
                                     <?php if(!empty($queries['weima'])):?>
-                                        <img src="<?=$pre_url.$queries['weima']?>" data-id="<?=$queries['member_id']?>" class="preview">
+                                        <img onclick="delete_img(<?=$queries['member_id']?>)" src="<?=$pre_url.$queries['weima']?>" data-id="<?=$queries['member_id']?>" class="preview">
                                     <?php endif;?>
                                 </div>
                                 <?php if(empty($queries['weima'])):?>

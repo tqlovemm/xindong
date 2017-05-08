@@ -113,10 +113,10 @@ defo;
         if($collecting_text->status==1||$collecting_text->status==2){
             throw new ForbiddenHttpException('无效链接');
         }
-        $data = $collecting_text->uploadw();
+        $data = $collecting_text->uploadw($id);
 
         $html = <<<defo
-        <img src=$data[path] data-id=$data[id] class="preview">
+        <img onclick="delete_img($data[id])" src=$data[path] data-id=$data[id] class="preview">
 defo;
         echo $html;
     }
