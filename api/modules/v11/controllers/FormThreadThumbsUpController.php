@@ -44,7 +44,11 @@ class FormThreadThumbsUpController extends ActiveController {
      * post
      * v11/form-thread-thumbs-ups?access-token={cid}
      * 必传参数，user_id,thread_id
-     *
+     *{
+    "code": "203",
+    "message": "点赞失败",
+    "data": "已经点赞"
+    }
      */
     public function actionCreate() {
 
