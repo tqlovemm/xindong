@@ -8,7 +8,7 @@ $this->registerCss("
     .navbar,footer,.weibo-share{display:none;}
     .history-box{background-color: #fff;padding:15px 10px;width: 100%;margin: 0;color:#afafaf;font-size: 14px;}
 ");
-
+$pre_url = Yii::$app->params['imagetqlmm'];
 ?>
 <script src="http://13loveme.com/js/jweixin-1.0.0.js"></script>
 
@@ -29,7 +29,7 @@ $this->registerCss("
                 <?php foreach ($priorities as $k=>$list):
                     if($k==3) break;
                     $query = (new \yii\db\Query())->select('path')->from('pre_flop_content')->where(['id'=>$list])->one(); ?>
-                    <img style="width: 32%;" src="<?=$query['path']?>">
+                    <img style="width: 32%;" src="<?=$pre_url.$query['path']?>">
                 <?php endforeach;?>
             </div>
             <div class="col-xs-3" style="text-align: right;font-size: 20px;color: #000;line-height: 70px;">

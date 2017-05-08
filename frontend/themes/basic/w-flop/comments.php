@@ -15,6 +15,7 @@ $this->registerCss("
    .dated-comments form .col-xs-10{padding:0;}
     label{margin-bottom:0;}
 ");
+$pre_url = Yii::$app->params['imagetqlmm'];
 ?>
 
 <div class="dated-comments" style="margin-bottom: 100px;">
@@ -25,7 +26,7 @@ $this->registerCss("
         </div>
     </div>
     <div class="row">
-        <img style="width: 90%;" class="center-block" src="<?=$model[0]['img']?>">
+        <img style="width: 90%;" class="center-block" src="<?=$pre_url.$model[0]['img']?>">
     </div>
     <div class="row">
         <form action="comments?openid=<?=$openid?>" method="post" name="image" enctype="multipart/form-data">
