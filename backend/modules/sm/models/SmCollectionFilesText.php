@@ -135,10 +135,15 @@ class SmCollectionFilesText extends \yii\db\ActiveRecord
         $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->member_id;
         $qiniu = $qn->upload('localandsm',"uploads/sm/$mkdir");
 
+        $model = self::findOne(['member_id'=>$this->member_id]);
         //存入数据库
-        $this->weima = $qiniu['key'];
-        $this->update();
-        $data = array('id'=>$this->member_id,'path'=>Yii::$app->params['localandsm'].$qiniu['key']);
-        return $data;
+        $model->weima = $qiniu['key'];
+        if($model->update()){
+            $data = array('id'=>$this->member_id,'path'=>Yii::$app->params['localandsm'].$qiniu['key']);
+            return $data;
+        }else{
+            return var_dump($this->errors);
+        }
+
     }
 }

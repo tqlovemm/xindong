@@ -5,6 +5,7 @@ namespace frontend\modules\sm\controllers;
 use backend\modules\setting\models\AuthAssignment;
 use backend\modules\sm\models\Province;
 use backend\modules\sm\models\SmCollectionCount;
+use common\Qiniu\QiniuUploader;
 use Yii;
 use yii\db\Query;
 use backend\modules\sm\models\SmCollectionFilesImg;
@@ -113,7 +114,7 @@ defo;
         if($collecting_text->status==1||$collecting_text->status==2){
             throw new ForbiddenHttpException('无效链接');
         }
-        $data = $collecting_text->uploadw($id);
+        $data = $collecting_text->uploadw();
 
         $html = <<<defo
         <img onclick="delete_img($data[id])" src=$data[path] data-id=$data[id] class="preview">
@@ -124,6 +125,8 @@ defo;
     public function actionDelete($id){
 
         $model = $this->findModelImg($id);
+        $qn = new QiniuUploader('weimaimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $qn->delete('localandsm',$model->img_path);
         $model->delete();
         echo $id;
     }
