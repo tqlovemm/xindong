@@ -36,10 +36,7 @@ $pre_url = Yii::$app->params['localandsm'];
             'cellphone',
             'weibo',
             'email:email',
-            [                      // the owner name of the model
-                'label' => 'vip',
-                'value' => \yii\helpers\ArrayHelper::map(\backend\modules\sm\models\SmCollectionCount::find()->asArray()->all(),'type','name')[$model['vip']],
-            ],
+            'vip',
             'address',
             'birthday',
             [                      // the owner name of the model
@@ -50,7 +47,7 @@ $pre_url = Yii::$app->params['localandsm'];
             'weight',
             [                      // the owner name of the model
                 'label' => 'marry',
-                'value' => ($model['marry']==0)?"单身":($model['marry']==1)?"有女朋友":"已婚",
+                'value' => ($model['marry']==0)?"未婚":"已婚",
             ],
             'job',
             'hobby',

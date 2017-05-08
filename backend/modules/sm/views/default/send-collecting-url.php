@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-5 col-md-offset-3">
-            <h1>会员编号：<?=$model->member_id?></h1>
+            <h1><?=$model->vip?>会员;会员编号：<?=$model->member_id?></h1>
             <h4>生成时间：<?=date('Y-m-d H:i:s',$model['created_at'])?>(二十四小时后失效)</h4>
         </div>
     </div>

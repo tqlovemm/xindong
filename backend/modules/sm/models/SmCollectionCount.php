@@ -42,10 +42,10 @@ class SmCollectionCount extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'count' => 'Count',
+            'count' => '下一个编号',
             'type' => 'Type',
-            'name' => 'Name',
-            'pre' => 'Pre',
+            'name' => '名字',
+            'pre' => '前缀',
         ];
     }
 }

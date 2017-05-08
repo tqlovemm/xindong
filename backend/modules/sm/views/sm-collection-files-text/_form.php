@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'vip')->dropDownList(\yii\helpers\ArrayHelper::map(\backend\modules\sm\models\SmCollectionCount::find()->all(),'type','name'))->label("会员等级") ?>
+    <?= $form->field($model, 'vip')->dropDownList(\yii\helpers\ArrayHelper::map(\backend\modules\sm\models\SmCollectionCount::find()->all(),'name','name'))->label("会员等级") ?>
 
     <?= $form->field($model, 'address')->dropDownList(\yii\helpers\ArrayHelper::map(\backend\modules\sm\models\Province::find()->all(),'prov_name','prov_name'))->label("地区") ?>
 
@@ -36,7 +36,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'weight')->textInput() ?>
 
-    <?= $form->field($model, 'marry')->dropDownList(['0'=>"单身",'1'=>'有女朋友','2'=>'已婚'])->label("婚姻状况") ?>
+    <?= $form->field($model, 'marry')->dropDownList(['0'=>"未婚",'1'=>'已婚'])->label("婚姻状况") ?>
 
     <?= $form->field($model, 'job')->textInput(['maxlength' => true]) ?>
 

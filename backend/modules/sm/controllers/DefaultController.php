@@ -11,11 +11,6 @@ use Yii;
 
 class DefaultController extends Controller
 {
-    public function actionIndex()
-    {
-        return $this->render('index');
-    }
-
     public function actionSendCollectionUrl(){
 
         $model = new SmCollectionFilesText();
@@ -24,7 +19,7 @@ class DefaultController extends Controller
         if($model->load(Yii::$app->request->post())){
 
             $countModel = new SmCollectionCount();
-            $countModel = $countModel::findOne(['type'=>$model->vip]);
+            $countModel = $countModel::findOne(['name'=>$model->vip]);
             $count = $countModel->count;
 
             if($count<100){

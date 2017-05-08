@@ -1,11 +1,8 @@
 <?php
 
 namespace backend\modules\sm\models;
-
-use backend\components\UploadThumb;
 use common\Qiniu\QiniuUploader;
 use Yii;
-
 /**
  * This is the model class for table "pre_sm_collection_files_text".
  *
@@ -15,7 +12,7 @@ use Yii;
  * @property string $cellphone
  * @property string $weibo
  * @property string $email
- * @property integer $vip
+ * @property string $vip
  * @property string $address
  * @property integer $birthday
  * @property integer $sex
@@ -51,8 +48,8 @@ class SmCollectionFilesText extends \yii\db\ActiveRecord
     {
         return [
             [['member_id', 'address', 'flag'], 'required'],
-            [['vip', 'birthday', 'sex', 'height', 'weight', 'marry', 'created_at', 'updated_at', 'status'], 'integer'],
-            [['member_id', 'email', 'car_type', 'flag', 'often_go'], 'string', 'max' => 32],
+            [[ 'birthday', 'sex', 'height', 'weight', 'marry', 'created_at', 'updated_at', 'status'], 'integer'],
+            [['vip','member_id', 'email', 'car_type', 'flag', 'often_go'], 'string', 'max' => 32],
             [['weichat', 'weibo'], 'string', 'max' => 30],
             [['qq'], 'string', 'max' => 11],
             [['cellphone'], 'string', 'max' => 20],
@@ -68,30 +65,30 @@ class SmCollectionFilesText extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'member_id' => 'Member ID',
-            'weichat' => 'Weichat',
+            'member_id' => '会员编号',
+            'weichat' => '会员微信',
             'qq' => 'Qq',
-            'cellphone' => 'Cellphone',
-            'weibo' => 'Weibo',
-            'email' => 'Email',
-            'vip' => 'Vip',
-            'address' => 'Address',
-            'birthday' => 'Birthday',
-            'sex' => 'Sex',
-            'height' => 'Height',
-            'weight' => 'Weight',
-            'marry' => 'Marry',
-            'job' => 'Job',
-            'hobby' => 'Hobby',
-            'car_type' => 'Car Type',
-            'extra' => 'Extra',
+            'cellphone' => '手机号',
+            'weibo' => '微博',
+            'email' => '邮箱',
+            'vip' => '会员等级',
+            'address' => '地区',
+            'birthday' => '年龄',
+            'sex' => '性别',
+            'height' => '身高',
+            'weight' => '体重',
+            'marry' => '婚姻情况',
+            'job' => '工作职业',
+            'hobby' => '兴趣爱好',
+            'car_type' => '私家车',
+            'extra' => '备注',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'flag' => 'Flag',
-            'status' => 'Status',
-            'often_go' => 'Often Go',
-            'annual_salary' => 'Annual Salary',
-            'weima' => 'Weima',
+            'status' => '填写情况',
+            'often_go' => '常去地',
+            'annual_salary' => '年薪',
+            'weima' => '微信二维码',
         ];
     }
 
@@ -122,19 +119,6 @@ class SmCollectionFilesText extends \yii\db\ActiveRecord
         $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->member_id;
         $qiniu = $qn->upload('localandsm',"uploads/sm/$mkdir");
 
-     /*   $config = [
-            'savePath' => Yii::getAlias('@webroot/uploads/sm/'), //存储文件夹
-            'maxSize' => 10240 ,//允许的文件最大尺寸，单位KB
-            'allowFiles' => ['.png' , '.jpg' , '.jpeg' , '.bmp'],  //允许的文件格式
-        ];
-
-        $up = new UploadThumb("photoimg", $config,$this->member_id,true);
-        //$up = new Uploader("photoimg", $config, $this->id);
-
-        $save_path =  Yii::getAlias('@web/uploads/sm/');
-
-        $info = $up->getFileInfo();*/
-
         //存入数据库
         $files_img = new SmCollectionFilesImg();
         $files_img->img_path = $qiniu['key'];
@@ -142,7 +126,7 @@ class SmCollectionFilesText extends \yii\db\ActiveRecord
         $files_img->member_id = $this->member_id;
         $files_img->save();
 
-        $data = array('id'=>$files_img->img_id,'path'=>Yii::$app->params['localansm'].$qiniu['key']);
+        $data = array('id'=>$files_img->img_id,'path'=>Yii::$app->params['localandsm'].$qiniu['key']);
         return $data;
     }
     public function uploadw()
@@ -150,23 +134,11 @@ class SmCollectionFilesText extends \yii\db\ActiveRecord
         $qn = new QiniuUploader('weimaimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
         $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->member_id;
         $qiniu = $qn->upload('localandsm',"uploads/local/$mkdir");
-    /*    $config = [
-            'savePath' => Yii::getAlias('@webroot/uploads/sm/weima/'), //存储文件夹
-            'maxSize' => 10240 ,//允许的文件最大尺寸，单位KB
-            'allowFiles' => ['.png' , '.jpg' , '.jpeg' , '.bmp'],  //允许的文件格式
-        ];
-
-        $up = new UploadThumb("weimaimg", $config,$this->member_id,false);
-        //$up = new Uploader("photoimg", $config, $this->id);
-
-        $save_path =  Yii::getAlias('@web/uploads/sm/weima/');
-
-        $info = $up->getFileInfo();*/
 
         //存入数据库
         $this->weima = $qiniu['key'];
         $this->save();
-        $data = array('id'=>$this->member_id,'path'=>Yii::$app->params['localansm'].$qiniu['key']);
+        $data = array('id'=>$this->member_id,'path'=>Yii::$app->params['localandsm'].$qiniu['key']);
         return $data;
     }
 }

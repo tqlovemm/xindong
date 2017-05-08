@@ -13,7 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="sm-collection-files-text-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -28,44 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $data->member_id;
                 }
             ],
-            //'weichat',
-            //'qq',
-            //'cellphone',
-            //'weibo',
-            //'email:email',1=>'季度会员',2=>'星会员',3=>'银会员',4=>'金会员',5=>'铂金会员'
-            [
-                'attribute' => 'vip',
-                'label' => '会员等级',
-                'value' => function ($data) {
-                    if($data->vip==1){
-                        $vip = "季度会员";
-                    }elseif($data->vip==2){
-                        $vip = "星会员";
-                    }elseif($data->vip==3){
-                        $vip = "银会员";
-                    }elseif($data->vip==4){
-                        $vip = "金会员";
-                    }else{
-                        $vip = "铂金会员";
-                    }
-                    return $data->vip.' — '.$vip;
-                }
-            ],
-             'address',
-            // 'birthday',
-            // 'sex',
-            // 'height',
-            // 'weight',
-            // 'marry',
-            // 'job',
-            // 'hobby',
-            // 'car_type',
-            // 'extra',
-            // 'created_at',
-            // 'updated_at',
+            'vip',
+            'address',
             [
                 'attribute' => '发送的链接',
-                'label' => '二维码',
+                'label' => '发送的链接',
                 'value' => function ($data) {
                     return "http://13loveme.com/sm?id=$data->flag";
                 }
@@ -79,12 +45,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $data->status.' — '.$result;
                 }
             ],
-             //'status',
-            // 'often_go',
-            // 'annual_salary',
-
-
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
