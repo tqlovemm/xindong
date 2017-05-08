@@ -28,27 +28,14 @@ class DefaultController extends Controller
             $countModel = $countModel::findOne(['type'=>$model->vip]);
             $count = $countModel->count;
 
-            if($model->vip==1){
-                $a = "j1";
-            }elseif($model->vip==2){
-                $a = "a3";
-            }elseif($model->vip==3){
-                $a = "a2";
-            }elseif($model->vip==4){
-                $a = "a1";
-            }elseif($model->vip==5){
-                $a = "a8";
-            }else{
-                $a = "error";
-            }
             if($count<100){
                 $b = "0"."$count";
             }else{
                 $b = $count;
             }
 
-            $model->member_id = $a.$b;
-            $model->flag = md5(time().md5(rand(10000,99999)));
+            $model->member_id = $countModel->pre.$b;
+            $model->flag = md5(time().rand(10000,99999));
 
             if($model->save()){
                 $countModel->count += 1;

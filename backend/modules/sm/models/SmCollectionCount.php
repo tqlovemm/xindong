@@ -11,6 +11,7 @@ use Yii;
  * @property integer $count
  * @property integer $type
  * @property string $name
+ * @property string $pre
  */
 class SmCollectionCount extends \yii\db\ActiveRecord
 {
@@ -29,7 +30,7 @@ class SmCollectionCount extends \yii\db\ActiveRecord
     {
         return [
             [['count', 'type'], 'required'],
-            [['name'], 'string'],
+            [['name','pre'], 'string'],
             [['count', 'type'], 'integer']
         ];
     }
@@ -44,6 +45,7 @@ class SmCollectionCount extends \yii\db\ActiveRecord
             'count' => 'Count',
             'type' => 'Type',
             'name' => 'Name',
+            'pre' => 'Pre',
         ];
     }
 }
