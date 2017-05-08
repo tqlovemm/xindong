@@ -19,6 +19,9 @@ return [
         'sm' => [
             'class' => 'backend\modules\sm\Sm',
         ],
+        'male' => [
+            'class' => 'backend\modules\male\male',
+        ],
         'local' => [
             'class' => 'backend\modules\local\Local',
         ],
