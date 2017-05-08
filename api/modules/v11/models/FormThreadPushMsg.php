@@ -47,11 +47,14 @@ class FormThreadPushMsg extends ActiveRecord
         return [
             "wid",'user_id', 'read_user','created_at',
             'avatar'=>function(){return $this->_user->avatar;},
-            'username'=>function(){return !empty($this->_user->nickname)?$this->_user->nickname:$this->_user->username;},
-            'thread_content'=>function(){
-                return !empty($this->_thread->cover)?$this->_thread->cover:$this->_thread->content;
+            'nickname'=>function(){return !empty($this->_user->nickname)?$this->_user->nickname:$this->_user->username;},
+            'imgItemsArray'=>function(){
+                return $this->_thread->cover;
             },
-            'comment_thread'=>function(){
+            'unreadContent'=>function(){
+                return $this->_thread->content;
+            },
+            'content'=>function(){
                 if($this->type==2){
                     return "thumbs";
                 }else{
