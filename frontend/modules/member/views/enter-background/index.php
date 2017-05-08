@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('创建可登录后台IP', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('前往后台', 'http://13loveme.com:82', ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('前往后台', 'http://admin.13loveme.com', ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= GridView::widget([

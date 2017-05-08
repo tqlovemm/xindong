@@ -7,6 +7,7 @@ use Yii;
 use frontend\modules\member\models\EnterTheBackground;
 use frontend\modules\member\models\EnterTheBackgroundSearch;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -55,13 +56,15 @@ class EnterBackgroundController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new EnterTheBackgroundSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $authAssignment= ArrayHelper::map(AuthAssignment::find()->asArray()->all(),'user_id','user_id');
+        if(in_array(Yii::$app->user->id,$authAssignment)){
+            $searchModel = new EnterTheBackgroundSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
     /**
@@ -71,16 +74,18 @@ class EnterBackgroundController extends Controller
      */
     public function actionView($id)
     {
-        $model = $this->findModel($id);
-        if($model->created_by==Yii::$app->user->identity->username){
-            return $this->render('view', [
-                'model' => $this->findModel($id),
-            ]);
-        }else{
+        $authAssignment= ArrayHelper::map(AuthAssignment::find()->asArray()->all(),'user_id','user_id');
+        if(in_array(Yii::$app->user->id,$authAssignment)) {
+            $model = $this->findModel($id);
+            if ($model->created_by == Yii::$app->user->identity->username) {
+                return $this->render('view', [
+                    'model' => $this->findModel($id),
+                ]);
+            } else {
 
-            throw new ForbiddenHttpException('非法访问');
+                throw new ForbiddenHttpException('非法访问');
+            }
         }
-
     }
 
     /**
@@ -90,14 +95,16 @@ class EnterBackgroundController extends Controller
      */
     public function actionCreate()
     {
-        $model = new EnterTheBackground();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        $authAssignment= ArrayHelper::map(AuthAssignment::find()->asArray()->all(),'user_id','user_id');
+        if(in_array(Yii::$app->user->id,$authAssignment)) {
+            $model = new EnterTheBackground();
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         }
     }
 
@@ -109,17 +116,20 @@ class EnterBackgroundController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-        if(Yii::$app->user->id==10000){
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+        $authAssignment= ArrayHelper::map(AuthAssignment::find()->asArray()->all(),'user_id','user_id');
+        if(in_array(Yii::$app->user->id,$authAssignment)) {
+            $model = $this->findModel($id);
+            if (Yii::$app->user->id == 10000) {
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    return $this->render('update', [
+                        'model' => $model,
+                    ]);
+                }
             } else {
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
+                throw new ForbiddenHttpException('非法操作');
             }
-        }else{
-            throw new ForbiddenHttpException('非法操作');
         }
     }
 
@@ -131,13 +141,15 @@ class EnterBackgroundController extends Controller
      */
     public function actionDelete($id)
     {
-        if(Yii::$app->user->id==10000){
-            $this->findModel($id)->delete();
-        }else{
-            throw new ForbiddenHttpException('非法操作');
+        $authAssignment= ArrayHelper::map(AuthAssignment::find()->asArray()->all(),'user_id','user_id');
+        if(in_array(Yii::$app->user->id,$authAssignment)) {
+            if (Yii::$app->user->id == 10000) {
+                $this->findModel($id)->delete();
+            } else {
+                throw new ForbiddenHttpException('非法操作');
+            }
+            return $this->redirect(['index']);
         }
-
-        return $this->redirect(['index']);
     }
 
     /**
