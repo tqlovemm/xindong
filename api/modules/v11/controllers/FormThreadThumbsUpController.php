@@ -38,6 +38,13 @@ class FormThreadThumbsUpController extends ActiveController {
         return $action;
     }
 
+    /**
+     * @return array
+     * post
+     * v11/form-thread-thumbs-ups?access-token={cid}
+     * 必传参数，user_id,thread_id
+     *
+     */
     public function actionCreate() {
 
     	$model = new $this->modelClass();

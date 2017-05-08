@@ -82,12 +82,18 @@ class FormThreadComments extends ActiveRecord
         $model = self::find()->where(['thread_id'=>$this->thread_id])->andWhere("first_id!=$this->first_id")->asArray()->all();
         $uids = ArrayHelper::map($model,'first_id','first_id');
         $userCid = array_filter(ArrayHelper::map(User::find()->where(['id'=>$uids])->asArray()->all(),'cid','cid'));
+        $thread_uid = FormThread::findOne($this->thread_id)->user_id;
         pushMessageToList(1, $msg , $extras , $title , $userCid);
-
         $data = array();
+        if($this->_first!=$thread_uid){
+            $data = [[$this->thread_id,$thread_uid,time(),time()]];
+        }
+
         foreach ($uids as $uid){
-            $da = [$this->thread_id,$uid,time(),time()];
-            array_push($data,$da);
+            if($uid!=$thread_uid){
+                $da = [$this->thread_id,$uid,time(),time()];
+                array_push($data,$da);
+            }
         }
 
         \Yii::$app->db->createCommand()->batchInsert('pre_app_form_thread_push_msg', ['wid','user_id','created_at','updated_at'],$data)->execute();
