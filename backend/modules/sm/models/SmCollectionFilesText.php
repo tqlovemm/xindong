@@ -137,7 +137,7 @@ class SmCollectionFilesText extends \yii\db\ActiveRecord
 
         //存入数据库
         $this->weima = $qiniu['key'];
-        $this->save();
+        $this->update();
         $data = array('id'=>$this->member_id,'path'=>Yii::$app->params['localandsm'].$qiniu['key']);
         return $data;
     }
