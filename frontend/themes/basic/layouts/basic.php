@@ -180,7 +180,7 @@ $rand_url = AccessToken::antiBlocking();
                 <div class="col-md-4 text-center">
                     <div class="visible-sm visible-xs">
                         <ul class="list-inline contact-phone">
-  <!--                          <li><a href="<?/*=Yii::getAlias('@web')*/?>/images/weixin/thirteenpingtai.jpg" data-lightbox="image" data-title="微信搜索公众号：心动三十一天" ><img alt="十三平台微信公众号" src="<?/*=Yii::getAlias('@web')*/?>/images/weichat-top.png"></a></li>-->
+                            <li><a href="<?=Yii::getAlias('@web')?>/images/weixin/thirteenpingtai.jpg" data-lightbox="image" data-title="微信搜索公众号：心动三十一天" ><img alt="十三平台微信公众号" src="<?=Yii::getAlias('@web')?>/images/weichat-top.png"></a></li>
                             <span></span>
                             <li><a href="<?=Yii::getAlias('@web')?>/images/weixin/ed9e98fbedd51d1e26ed6a7b397c4b27.png" data-lightbox="image" data-title="IOS APP 下载" ><img alt="APP  下载" src="<?=Yii::getAlias('@web')?>/images/weixin/210712181883005415.png"></a></li>
                             <span></span>
@@ -191,10 +191,10 @@ $rand_url = AccessToken::antiBlocking();
                         <img class="img-responsive center-block" alt="IOS APP下载" src="<?=Yii::getAlias('@web')?>/images/weixin/ed9e98fbedd51d1e26ed6a7b397c4b27.png" width="100%">
                         <div class="weixin">IOS - APP - 下载</div>
                     </div>
-                  <!--  <div class="visible-lg visible-md" style="width: 49%;float: left;">
-                        <img class="img-responsive center-block" alt="十三平台微信公众号" src="<?/*=Yii::getAlias('@web')*/?>/images/weixin/thirteenpingtai.jpg" width="100%">
+                    <div class="visible-lg visible-md" style="width: 49%;float: left;">
+                        <img class="img-responsive center-block" alt="十三平台微信公众号" src="<?=Yii::getAlias('@web')?>/images/weixin/thirteenpingtai.jpg" width="100%">
                         <div class="weixin-spacing">微信公众号</div>
-                    </div>-->
+                    </div>
                 </div>
         <!--        <div class="col-md-2 text-center">
                     <div class="visible-sm visible-xs">
