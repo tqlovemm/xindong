@@ -55,19 +55,19 @@ class FormThreadThumbsUpController extends ActiveController {
     	$model = new $this->modelClass();
     	$model->load(Yii::$app->request->getBodyParams(), '');
         if(empty(FormThread::findOne($model->thread_id))){
-            yii\myhelper\Response::show('203','评价失败',"该帖子不存在");
+            yii\myhelper\Response::show('203','该帖子不存在',"该帖子不存在");
         }elseif(empty(User::findOne($model->user_id))){
-            yii\myhelper\Response::show('203','评价失败',"评价人不存在");
+            yii\myhelper\Response::show('203','评价人不存在',"评价人不存在");
         }else{
             if (!$model->save()) {
-                yii\myhelper\Response::show('203','点赞失败',array_values($model->getFirstErrors())[0]);
+                yii\myhelper\Response::show('203',array_values($model->getFirstErrors())[0],array_values($model->getFirstErrors())[0]);
             }else{
                 $thread = FormThread::findOne($model->thread_id);
                 $thread->thumbs_count+=1;
                 if($thread->update()){
                     return $thread;
                 }else{
-                    yii\myhelper\Response::show('203','点赞失败',array_values($thread->getFirstErrors())[0]);
+                    yii\myhelper\Response::show('203',array_values($thread->getFirstErrors())[0],array_values($thread->getFirstErrors())[0]);
                 }
             }
         }
