@@ -32,7 +32,7 @@ $pre_url = Yii::$app->params['localandsm'];
                         <div class="weui_uploader_bd">
                             <div class="weui_uploader_files" id="preview">
                                 <?php if(!empty($img)):  foreach ($img as $item):?>
-                                <a data-lightbox="0" data-title="0" href="<?=$item['img_path']?>">
+                                <a data-lightbox="0" data-title="0" href="<?=$pre_url.$item['img_path']?>">
                                     <img src="<?=$pre_url.$item['img_path']?>" data-id="<?=$item['img_id']?>" class="preview collecting-files-img">
                                 </a>
                                 <?php endforeach; endif; ?>

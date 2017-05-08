@@ -77,23 +77,7 @@ class DefaultController extends Controller
         foreach ($_POST as $key=>$list){
             $model->$key = $list;
         }
-        /* $model->weichat = Yii::$app->request->post('weichat');
-         $model->weibo = Yii::$app->request->post('weibo');
-         $model->email = Yii::$app->request->post('email');
-         $model->qq = Yii::$app->request->post('qq');
-         $model->cellphone = Yii::$app->request->post('cellphone');
-         $model->birthday = Yii::$app->request->post('birthday');
-         $model->height = Yii::$app->request->post('height');
-         $model->weight = Yii::$app->request->post('weight');
-         $model->hobby = Yii::$app->request->post('hobby');
-         $model->annual_salary = Yii::$app->request->post('annual_salary');
-         $model->car_type = Yii::$app->request->post('car_type');
-         $model->often_go = Yii::$app->request->post('often_go');
-         $model->marry = Yii::$app->request->post('marry');
-         $model->job = Yii::$app->request->post('job');
-         $model->extra = Yii::$app->request->post('extra');
-        */
-         $model->status = 1;
+        $model->status = 1;
 
         if($model->update()){
             return $this->render('success');

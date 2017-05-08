@@ -108,12 +108,6 @@ $pre_url = Yii::$app->params['localandsm'];
                             <input class="weui_input" type="text" name="weibo" value="<?=$queries['weibo']?>" placeholder="请输入微博号"/>
                         </div>
                     </div>
-                    <div class="weui_cell">
-                        <div class="weui_cell_hd"><label class="weui_label">Q Q号</label></div>
-                        <div class="weui_cell_bd weui_cell_primary">
-                            <input class="weui_input" type="text" name="qq" value="<?=$queries['qq']?>" placeholder="请输入qq号"/>
-                        </div>
-                    </div>
                 </div>
                 <div class="weui_cells_title">选择</div>
                 <div class="weui_cells">
@@ -140,32 +134,41 @@ $pre_url = Yii::$app->params['localandsm'];
                         </div>
                     </div>
                 </div>
-                <div class="weui_cells weui_cells_form">
-                    <div class="weui_cell">
-                        <div class="weui_cell_hd"><label for="" class="weui_label">年龄<small> （必选）</small></label></div>
+                <div class="weui_cells">
+                    <div class="weui_cell weui_cell_select weui_select_after">
+                        <div class="weui_cell_hd">
+                            <label for="" class="weui_label">年龄</label>
+                        </div>
                         <div class="weui_cell_bd weui_cell_primary">
-                            <input class="weui_input" type="number" name="birthday" value="<?=$queries['birthday']?>"/>
+                            <select class="weui_select" name="birthday">
+                                <?php for ($i=18;$i<56;$i++):?>
+                                <option value="<?=$i?>" <?php if($queries['birthday']==$i):?>selected<?php endif;?>><?=$i?>岁</option>
+                                <?php endfor;?>
+                            </select>
                         </div>
                     </div>
-                    <?php
-
-                    if($queries['height']==0){
-                        $queries['height'] = '';
-                    }
-                    if($queries['weight']==0){
-                        $queries['weight'] = '';
-                    }
-                    ?>
-                    <div class="weui_cell">
-                        <div class="weui_cell_hd"><label class="weui_label">身高<small> （必填）</small></label></div>
+                    <div class="weui_cell weui_cell_select weui_select_after">
+                        <div class="weui_cell_hd">
+                            <label for="" class="weui_label">身高</label>
+                        </div>
                         <div class="weui_cell_bd weui_cell_primary">
-                            <input class="weui_input" type="number" name="height" pattern="[0-9]*" value="<?=$queries['height']?>" placeholder="请输入身高cm"/>
+                            <select class="weui_select" name="height">
+                                <?php for ($i=150;$i<210;$i++):?>
+                                    <option value="<?=$i?>" <?php if($queries['height']==$i):?>selected<?php endif;?>><?=$i?>cm</option>
+                                <?php endfor;?>
+                            </select>
                         </div>
                     </div>
-                    <div class="weui_cell">
-                        <div class="weui_cell_hd"><label class="weui_label">体重<small> （必填）</small></label></div>
+                    <div class="weui_cell weui_cell_select weui_select_after">
+                        <div class="weui_cell_hd">
+                            <label for="" class="weui_label">体重</label>
+                        </div>
                         <div class="weui_cell_bd weui_cell_primary">
-                            <input class="weui_input" type="number" name="weight" pattern="[0-9]*" value="<?=$queries['weight']?>" placeholder="请输入体重kg"/>
+                            <select class="weui_select" name="weight">
+                                <?php for ($i=45;$i<120;$i++):?>
+                                    <option value="<?=$i?>" <?php if($queries['weight']==$i):?>selected<?php endif;?>><?=$i?>kg</option>
+                                <?php endfor;?>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -173,7 +176,7 @@ $pre_url = Yii::$app->params['localandsm'];
                 <div class="weui_cells weui_cells_radio">
                     <label class="weui_cell weui_check_label" for="x13">
                         <div class="weui_cell_bd weui_cell_primary">
-                            <p>单身</p>
+                            <p>未婚</p>
                         </div>
                         <div class="weui_cell_ft">
                             <input type="radio" name="marry" value="0" class="weui_check" id="x13" <?php if($queries['marry']==0):?>checked<?php endif;?>>
@@ -186,15 +189,6 @@ $pre_url = Yii::$app->params['localandsm'];
                         </div>
                         <div class="weui_cell_ft">
                             <input type="radio" class="weui_check" name="marry" value="2" id="x11" <?php if($queries['marry']==2):?>checked<?php endif;?>>
-                            <span class="weui_icon_checked"></span>
-                        </div>
-                    </label>
-                    <label class="weui_cell weui_check_label" for="x12">
-                        <div class="weui_cell_bd weui_cell_primary">
-                            <p>有女友</p>
-                        </div>
-                        <div class="weui_cell_ft">
-                            <input type="radio" name="marry" value="1" class="weui_check" id="x12" <?php if($queries['marry']==1):?>checked<?php endif;?>>
                             <span class="weui_icon_checked"></span>
                         </div>
                     </label>
@@ -370,14 +364,6 @@ $pre_url = Yii::$app->params['localandsm'];
             }).submit();
         });
     });
-
-    /*    $(".collecting-files-img").on('click',function(e){
-     if(confirm('确定删除吗')) {
-     $.get('/collecting-files/delete?id=' + $(this).attr('data-id'), function (data) {
-     history.go(0);
-     });
-     }
-     });*/
 
     $('#preview_weima').on('click',function () {
         if(confirm('确定删除吗')){
