@@ -67,11 +67,9 @@ class UserLoginController extends Controller
             if($hash){
                 if(!empty($cid)&&strlen($cid)>=32){
                     Yii::$app->db->createCommand("update {{%user}} set cid='$cid' where username='$id'")->execute();
-
-                    $data = $this->getInfo($user['id']);
-                    exit(Response::show(202,"login success",$data));
                 }
-                exit(Response::show(601,"update fail","非法操作"));
+                $data = $this->getInfo($user['id']);
+                exit(Response::show(202,"login success",$data));
             }
             exit(Response::show(403,"password error"));
         }
