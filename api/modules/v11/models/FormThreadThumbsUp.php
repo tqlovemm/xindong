@@ -64,10 +64,11 @@ class FormThreadThumbsUp extends ActiveRecord
         $model = self::find()->where(['thread_id'=>$this->thread_id])->andWhere("user_id!=$this->user_id")->asArray()->all();
         if(!empty($model)){
             $uids = ArrayHelper::map($model,'user_id','user_id');
+            $userCid = array_filter(ArrayHelper::map(User::find()->where(['id'=>$uids])->asArray()->all(),'cid','cid'));
+        }else{
+            $userCid = "";
         }
         $thread_uid = FormThread::findOne($this->thread_id)->user_id;
-        array_push($uids,$thread_uid);
-        $userCid = array_filter(ArrayHelper::map(User::find()->where(['id'=>$uids])->asArray()->all(),'cid','cid'));
 
         pushMessageToList(1, $msg , $extras , $title , $userCid);
         $data = array();
