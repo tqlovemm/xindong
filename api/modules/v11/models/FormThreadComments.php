@@ -94,7 +94,7 @@ class FormThreadComments extends ActiveRecord
         }
 
         $data = array();
-        if($this->_first!=$thread_uid){
+        if($this->first_id!=$thread_uid){
             $data = [[$this->thread_id,$thread_uid,$this->first_id,$this->comment,time(),time()]];
         }
 
