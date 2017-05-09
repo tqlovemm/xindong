@@ -82,7 +82,7 @@ class FormThreadComments extends ActiveRecord
         $uids = array();
         $model = self::find()->where(['thread_id'=>$this->thread_id])->andWhere("first_id!=$this->first_id")->asArray()->all();
         if(!empty($model)){
-            $uids = ArrayHelper::map($model,'user_id','user_id');
+            $uids = ArrayHelper::map($model,'first_id','first_id');
             $userCid = array_filter(ArrayHelper::map(User::find()->where(['id'=>$uids])->asArray()->all(),'cid','cid'));
         }else{
             $userCid = "";
