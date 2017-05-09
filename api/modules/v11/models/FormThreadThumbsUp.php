@@ -70,7 +70,10 @@ class FormThreadThumbsUp extends ActiveRecord
         }
         $thread_uid = FormThread::findOne($this->thread_id)->user_id;
 
-        pushMessageToList(1, $msg , $extras , $title , $userCid);
+        if(!empty($userCid)){
+            pushMessageToList(1, $msg , $extras , $title , $userCid);
+        }
+
         $data = array();
         if($this->user_id!=$thread_uid){
             $data = [[$this->thread_id,$thread_uid,$this->user_id,"",time(),time()]];
