@@ -80,7 +80,7 @@ class FormThreadComments extends ActiveRecord
         $extras = "{'push_title':'fwaef','push_content':'fawe','push_type':'SSCOMM_NOTICE'}";
 
         $uids = array();
-        $model = self::find()->where(['thread_id'=>$this->thread_id])->andWhere("user_id!=$this->user_id")->asArray()->all();
+        $model = self::find()->where(['thread_id'=>$this->thread_id])->andWhere("first_id!=$this->first_id")->asArray()->all();
         if(!empty($model)){
             $uids = ArrayHelper::map($model,'user_id','user_id');
             $userCid = array_filter(ArrayHelper::map(User::find()->where(['id'=>$uids])->asArray()->all(),'cid','cid'));
