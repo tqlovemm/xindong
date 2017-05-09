@@ -60,11 +60,15 @@ class FormThreadThumbsUp extends ActiveRecord
         $title='朋友圈回复';
         $msg='您的朋友圈有回复哦';
         $extras = "{'push_title':'fwaef','push_content':'fawe','push_type':'SSCOMM_NOTICE'}";
-
+        $uids = array();
         $model = self::find()->where(['thread_id'=>$this->thread_id])->andWhere("user_id!=$this->user_id")->asArray()->all();
-        $uids = ArrayHelper::map($model,'user_id','user_id');
-        $userCid = array_filter(ArrayHelper::map(User::find()->where(['id'=>$uids])->asArray()->all(),'cid','cid'));
+        if(!empty($model)){
+            $uids = ArrayHelper::map($model,'user_id','user_id');
+        }
         $thread_uid = FormThread::findOne($this->thread_id)->user_id;
+        array_push($uids,$thread_uid);
+        $userCid = array_filter(ArrayHelper::map(User::find()->where(['id'=>$uids])->asArray()->all(),'cid','cid'));
+
         pushMessageToList(1, $msg , $extras , $title , $userCid);
         $data = array();
         if($this->user_id!=$thread_uid){
