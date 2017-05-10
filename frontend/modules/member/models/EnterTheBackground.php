@@ -32,6 +32,7 @@ class EnterTheBackground extends \yii\db\ActiveRecord
         return [
             [['allow_ip'], 'required'],
             [['allow_ip'], 'attrY'],
+            [['allow_ip'], 'local'],
             [['created_at', 'updated_at'], 'integer'],
             [['allow_ip', 'forbid_ip'], 'string', 'max' => 16],
             [['created_by'], 'string', 'max' => 32]
@@ -50,6 +51,32 @@ class EnterTheBackground extends \yii\db\ActiveRecord
             $this->addError('allow_ip', '已经存在该IP地址');
         }
     }
+
+    public function local(){
+
+        $add = $this->GetIpLookup($this->allow_ip);
+        if($add['city']!='苏州'){
+            $this->addError('allow_ip', '您的IP不被允许');
+        }
+
+    }
+
+    public function GetIpLookup($ip){
+        $res = @file_get_contents('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=' . $ip);
+        if(empty($res)){ return false; }
+        $jsonMatches = array();
+        preg_match('#\{.+?\}#', $res, $jsonMatches);
+        if(!isset($jsonMatches[0])){ return false; }
+        $json = json_decode($jsonMatches[0], true);
+        if(isset($json['ret']) && $json['ret'] == 1){
+            $json['ip'] = $ip;
+            unset($json['ret']);
+        }else{
+            return false;
+        }
+        return $json;
+    }
+
     public function attributeLabels()
     {
         return [
