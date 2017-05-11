@@ -68,6 +68,7 @@ class FormThreadCommentsController extends ActiveController {
             }else{
                 $thread = FormThread::findOne($model->thread_id);
                 $thread->thumbs_count+=1;
+                $thread->base64Images = "add";
                 if($thread->update()){
                     return $model;
                 }else{
