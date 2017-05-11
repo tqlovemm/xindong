@@ -1,6 +1,8 @@
 <?php
 namespace api\modules\v11\models;
 
+use api\modules\v9\models\UserProfile;
+use Yii;
 use app\components\db\ActiveRecord;
 use common\components\PushConfig;
 use yii\helpers\ArrayHelper;
@@ -16,6 +18,8 @@ use yii\helpers\ArrayHelper;
 class FormThreadThumbsUp extends ActiveRecord
 {
     private $_users;
+    private $_profile;
+    private $_thread;
     /**
      * @inheritdoc
      */
@@ -44,7 +48,8 @@ class FormThreadThumbsUp extends ActiveRecord
 
     public function fields(){
         $this->_users = User::findOne(['id'=>$this->user_id]);
-        return [
+
+        $data = [
             'user_id','created_at','updated_at',
             'nickname'=>function(){
                 return empty($this->_users->nickname)?$this->_users->username:$this->_users->nickname;
@@ -53,6 +58,17 @@ class FormThreadThumbsUp extends ActiveRecord
                 return $this->_users->avatar;
             },
         ];
+        if(Yii::$app->controller->id=='form-thread-thumbs-up'){
+            $this->_profile = UserProfile::findOne(['user_id'=>$this->user_id]);
+            $this->_thread = FormThread::find()->where(['user_id'=>$this->user_id])->count();
+            $data['thread_count']=function (){return (integer)$this->_thread;};
+            $data['address']=function (){return $this->_profile->address;};
+            $data['age']=function (){return floor((time()-strtotime($this->_profile->birthdate))/(86400*365));};
+            $data['height']=function (){return $this->_profile->height;};
+            $data['weight']=function (){return $this->_profile->weight;};
+        }
+
+        return $data;
     }
 
     public function afterSave($insert, $changedAttributes)
