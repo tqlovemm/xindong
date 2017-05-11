@@ -16,6 +16,7 @@ use api\modules\v9\models\TurnOverCardRecord;
 use api\modules\v9\models\TurnOverCardSuccess;
 use api\modules\v9\models\User;
 use backend\modules\app\models\UserImage;
+use common\components\PushConfig;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
@@ -663,8 +664,7 @@ class TurnOverCardController extends Controller
                 //添加推送
                 if($likeInfo['cid']){
 
-                    $this->config();
-
+                    PushConfig::config();
                     $title = '有人在翻牌那里找到了你，并对你表示了爱慕之心，快查看一下Ta的资料吧！';
                     $msg = '有人在翻牌那里找到了你，并对你表示了爱慕之心，快查看一下Ta的资料吧！';
                     $extra = json_encode(array('push_title'=>urlencode($title),'push_content'=>urlencode($msg),'push_user_id'=>$id,'push_type'=>'SSCOMM_SUPER_FLOP'));

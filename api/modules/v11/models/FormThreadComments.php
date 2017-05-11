@@ -2,7 +2,7 @@
 namespace api\modules\v11\models;
 
 use app\components\db\ActiveRecord;
-use app\components\PushConfig;
+use common\components\PushConfig;
 use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "pre_app_form_thread_comments".
