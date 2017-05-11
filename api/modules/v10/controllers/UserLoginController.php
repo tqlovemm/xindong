@@ -60,6 +60,9 @@ class UserLoginController extends Controller
         $user = self::findByUsername($id);
         $password = Yii::$app->request->get('password');
         $cid = Yii::$app->request->get('cid');
+        if($user->password_hash==null){
+            Response::show(401,"请使用第三方登陆","当前账号为第三方登陆账号");
+        }
 
         if($user){
 
