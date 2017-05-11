@@ -26,6 +26,14 @@ class WechatPushController extends ActiveController {
         return $action;
     }
 
+    /**
+     * sign加密验证  （210,'参数不正确'）('200','ok')，('201','错误信息')
+     * v11/wechat-pushes
+     * post
+     * 必传参数，user_id,recharge_id(充值后id)
+     * 可选参数，wechat
+     */
+
     public function actionCreate() {
 
     	$model = new $this->modelClass();
