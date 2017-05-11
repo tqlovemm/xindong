@@ -45,7 +45,7 @@ class FormThreadPushMsg extends ActiveRecord
         $this->_thread = FormThread::findOne($this->wid);
         $this->_user = User::findOne([$this->writer_id]);
         return [
-            'pid',"wid",'user_id', 'read_user','created_at',
+            'mid'=>"pid","wid",'user_id', 'read_user','created_at',
             'avatar'=>function(){return $this->_user->avatar;},
             'nickname'=>function(){return !empty($this->_user->nickname)?$this->_user->nickname:$this->_user->username;},
             'imgItemsArray'=>function(){
