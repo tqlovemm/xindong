@@ -75,10 +75,6 @@ class FormThreadComments extends ActiveRecord
 
         PushConfig::config();
 
-        $title='朋友圈回复';
-        $msg='您的朋友圈有回复哦';
-        $extras = "{'push_title':'fwaef','push_content':'fawe','push_type':'SSCOMM_NOTICE'}";
-
         $tuid = array();
         $cuid = array();
         $model = self::find()->where(['thread_id'=>$this->thread_id])->andWhere("first_id!=$this->first_id")->asArray()->all();
@@ -100,6 +96,14 @@ class FormThreadComments extends ActiveRecord
         $thread_uid = FormThread::findOne($this->thread_id)->user_id;
 
         if(!empty($userCid)){
+
+            $userModel = User::findOne($this->first_id);
+            $username = empty($userModel->nickname)?$userModel->username:$userModel->nickname;
+            $title="评论帖子：【{$username}】评价了你：【{$this->comment}】";
+            $msg='您的朋友圈有回复哦';
+            $data = array('push_title'=>$title,'push_content'=>$msg,'push_type'=>'SSCOMM_NOTICE');
+            $extras = json_encode($data);
+
             pushMessageToList(1, $msg , $extras , $title , $userCid);
         }
 
