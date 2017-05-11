@@ -181,7 +181,7 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => [
                         'v11/saveme','v11/saveme-comment','v11/saveme-info','v11/saveme-judge','v11/form-thread','v11/form','v11/form-thread-comments','v11/form-thread-thumbs-up','v11/form-thread-tag',
-                        'v11/form-thread-report-choice', 'v11/form-thread-report','v11/form-thread-push-msg','v11/we-chat-customer-service','v11/open-before-adv',
+                        'v11/form-thread-report-choice', 'v11/form-thread-report','v11/form-thread-push-msg','v11/we-chat-customer-service','v11/open-before-adv','v11/wechat-push',
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\w+>',
