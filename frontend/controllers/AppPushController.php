@@ -94,7 +94,7 @@ class AppPushController extends Controller
 
     protected function temp($openid,$user_id,$recharge_id,$wechat){
 
-        $url = "http://13loveme.com/forum/admin-check?id=$recharge_id";
+        $url = "http://13loveme.com/app?id=$recharge_id";
         $data = array(
             "touser"=>$openid,
             "template_id"=>"sj6-k6LNiMH1n86EuDcy0BA5QJGfqaNThVtVN-i8W_w",
