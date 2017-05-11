@@ -1,17 +1,13 @@
 <?php
 namespace api\modules\v11\controllers;
 
+use yii;
 use api\components\CsvDataProvider;
 use api\modules\v11\models\FormThread;
 use api\modules\v11\models\User;
-use yii;
 use yii\rest\ActiveController;
-use yii\filters\RateLimiter;
 use yii\web\NotFoundHttpException;
-use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\QueryParamAuth;
-use yii\filters\auth\HttpBearerAuth;
-
+use yii\myhelper\Response;
 class FormThreadThumbsUpController extends ActiveController {
 
     public $modelClass = 'api\modules\v11\models\FormThreadThumbsUp';
@@ -21,16 +17,6 @@ class FormThreadThumbsUpController extends ActiveController {
     ];
     public function behaviors() {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::className(),
-            'authMethods' => [
-                QueryParamAuth::className(),
-            ],
-        ];
-        $behaviors['rateLimiter'] = [
-            'class' => RateLimiter::className(),
-            'enableRateLimitHeaders' => true,
-        ];
         return $behaviors;
     }
 
@@ -66,7 +52,8 @@ class FormThreadThumbsUpController extends ActiveController {
     /**
      * @return array
      * post
-     * v11/form-thread-thumbs-ups?access-token={cid}
+     * sing加密
+     * v11/form-thread-thumbs-ups
      * 必传参数，user_id,thread_id
      *{
     "code": "203",
@@ -78,13 +65,17 @@ class FormThreadThumbsUpController extends ActiveController {
 
     	$model = new $this->modelClass();
     	$model->load(Yii::$app->request->getBodyParams(), '');
+        $decode = new yii\myhelper\Decode();
+        if(!$decode->decodeDigit($model->user_id)){
+            Response::show(210,'参数不正确');
+        }
         if(empty(FormThread::findOne($model->thread_id))){
-            yii\myhelper\Response::show('203','该帖子不存在',"该帖子不存在");
+            Response::show('203','该帖子不存在',"该帖子不存在");
         }elseif(empty(User::findOne($model->user_id))){
-            yii\myhelper\Response::show('203','评价人不存在',"评价人不存在");
+            Response::show('203','评价人不存在',"评价人不存在");
         }else{
             if (!$model->save()) {
-                yii\myhelper\Response::show('203',array_values($model->getFirstErrors())[0],array_values($model->getFirstErrors())[0]);
+                Response::show('203',array_values($model->getFirstErrors())[0],array_values($model->getFirstErrors())[0]);
             }else{
                 $thread = FormThread::findOne($model->thread_id);
                 $thread->thumbs_count+=1;
@@ -92,7 +83,7 @@ class FormThreadThumbsUpController extends ActiveController {
                 if($thread->update()){
                     return $thread;
                 }else{
-                    yii\myhelper\Response::show('203',array_values($thread->getFirstErrors())[0],array_values($thread->getFirstErrors())[0]);
+                    Response::show('203',array_values($thread->getFirstErrors())[0],array_values($thread->getFirstErrors())[0]);
                 }
             }
         }
