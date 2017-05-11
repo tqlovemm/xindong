@@ -70,13 +70,17 @@ class FormThreadCommentsController extends ActiveController {
                 $thread->thumbs_count+=1;
                 if($thread->update()){
                     return $model;
+                }else{
+                    return $thread->errors;
                 }
             }
         }
 
     }
+
     /**
-     * @return mixed
+     * @param $id
+     *
      * 删除评价接口delete
      * 必传?user_id={user_id}，使用者user_id,为了防止删除非自己评论
      * /v11/form-thread-comments/{comment_id}?user_id={user_id}&access-token={cid}
