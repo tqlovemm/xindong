@@ -39,7 +39,11 @@ class FormThreadThumbsUpController extends ActiveController {
         unset($action['index'], $action['view'], $action['create'], $action['update'], $action['delete']);
         return $action;
     }
-
+    /**
+     * @return CsvDataProvider
+     * v11/form-thread-thumbs-ups?thread_id={thread_id}帖子id
+     * get 获取和该帖子有关的所有点赞
+     */
     public function actionIndex() {
 
         $model = $this->modelClass;

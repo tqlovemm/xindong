@@ -28,8 +28,9 @@ class FormThreadPushMsgController extends ActiveController {
 
     /**
      * @return CsvDataProvider
-     * v11/form-thread-push-msgs?thread_id={thread_id}帖子id
-     * get 获取和该帖子有关的所有点赞
+     * v11/form-thread-push-msgs?thread_id={thread_id}
+     * type=1获取未读消息，type=0获取已读消息，无参数type则为所有消息
+     * 获取所有和他有关的帖子id，
      */
 
     public function actionIndex() {

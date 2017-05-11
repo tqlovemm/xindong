@@ -15,6 +15,7 @@ use yii\helpers\ArrayHelper;
  */
 class FormThreadThumbsUp extends ActiveRecord
 {
+    private $_users;
     /**
      * @inheritdoc
      */
@@ -42,11 +43,14 @@ class FormThreadThumbsUp extends ActiveRecord
     }
 
     public function fields(){
-
+        $this->_users = User::findOne(['id'=>$this->user_id]);
         return [
             'user_id','created_at','updated_at',
+            'nickname'=>function(){
+                return empty($this->_users->nickname)?$this->_users->username:$this->_users->nickname;
+            },
             'avatar'=>function(){
-                return User::findOne(['id'=>$this->user_id])->avatar;
+                return $this->_users->avatar;
             },
         ];
     }
