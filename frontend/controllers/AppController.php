@@ -1,14 +1,14 @@
 <?php
 namespace frontend\controllers;
-use Yii;
+
+use backend\modules\app\models\AppOrderList;
 use yii\web\Controller;
 
 class AppController extends Controller
 {
-
-    public function actionIndex(){
-
-        return $this->redirect('http://seventeenyj.com/bgadmin/seventeen-man/seventeen');
+    public function actionIndex($id){
+        $model = AppOrderList::findOne($id);
+        return $this->render('index',['model'=>$model]);
     }
 
 }

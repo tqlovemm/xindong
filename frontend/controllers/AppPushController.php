@@ -1,50 +1,26 @@
 <?php
-
-
 namespace frontend\controllers;
 
-use backend\models\JiecaoCoinOperation;
+use common\components\SaveToLog;
+use frontend\modules\weixin\models\AppWechatPush;
 use Yii;
-use yii\helpers\ArrayHelper;
+use yii\myhelper\AccessToken;
 use yii\web\Controller;
+use common\components\PushConfig;
 use backend\modules\setting\models\AppPush;
 
 class AppPushController extends Controller
 {
-
     const HOUR = 3600;
-    protected function config(){
-
-        Yii::setAlias('@apppush','@backend/apppush');
-        $path = Yii::getAlias('@apppush');
-        require_once ($path.'/demo.php');
-        //http的域名
-        define('HOST','http://sdk.open.api.igexin.com/apiex.htm');
-
-        //https的域名
-        //define('HOST','https://api.getui.com/apiex.htm');
-
-        define('APPKEY',Yii::$app->params['geAPPKEY']);
-        define('APPID',Yii::$app->params['geAPPID']);
-        define('MASTERSECRET',Yii::$app->params['geMASTERSECRET']);
-
-        // define('DEVICETOKEN','');
-        // define('Alias','请输入别名');
-        //define('BEGINTIME','2015-03-06 13:18:00');
-        //define('ENDTIME','2015-03-06 13:24:00');
-
-
-    }
-
     public function actionIndex(){
 
         if(!isset($_GET['app_name'])&&$_GET['app_name']!=='shisanpingtai'){
-
             return;
         }
-        self::updateData();//冻结节操币部分到期自动扣除
-        $this->config();
 
+        self::rechargePush();
+
+        PushConfig::config();
         $query = new AppPush();
         $model = $query->find()->where('status!=0')->asArray()->one();
         $models = $query->find()->select('count(*) as count')->where('status=0')->andWhere(['is_read'=>1,'cid'=>$model['cid']])->asArray()->all();
@@ -61,26 +37,20 @@ class AppPushController extends Controller
 
         define('CID',$model['cid']);
 
-
         if($model['status']==1){
-
             pushMessageToApp(1, $msg , $extras , $title);
             Yii::$app->db->createCommand("update {{%app_push}} set status=0 where id = $model[id]")->execute();
-
         }elseif($model['status']==2){
-
             pushMessageToList($count, $msg , $extras , $title , $cids);
             Yii::$app->db->createCommand("update {{%app_push}} set status=0 where id = $model[id]")->execute();
-
         }else{
-
             return;
         }
-
 
        // pushMessageToSingle('十三平台', 1, $msg , $extras , $title);
 
         // pushMessageToList();
+
         //getUserStatus();
 
         //pushMessageToApp();
@@ -90,7 +60,6 @@ class AppPushController extends Controller
         //setTag();
 
         //getUserTags();
-
 
         //pushMessageToSingleBatch();
 
@@ -106,37 +75,78 @@ class AppPushController extends Controller
 
     }
 
-    protected function updateData(){
-
-        $query = new JiecaoCoinOperation();
-
-        $model = $query->find()->where(['type'=>0,'status'=>10])->asArray()->all();
-
-        foreach($model as $item){
-
-            if(time()-$item['created_at']>self::HOUR*$item['expire']){
-
-                Yii::$app->db->createCommand("update {{%user_data}} set frozen_jiecao_coin=frozen_jiecao_coin-$item[value] where user_id=$item[user_id]")->execute();
-                Yii::$app->db->createCommand("update {{%jiecao_coin_operation}} set status=0 where id=$item[id]")->execute();
-
+    protected function rechargePush(){
+        $model = AppWechatPush::findOne(['status'=>1]);
+        if(!empty($model)){
+            $model->status = 0;
+            if(!$model->update()){
+                SaveToLog::log($model->errors,'w_push.log');
+            }else{
+                $result = $this->temp("olQJss1mkh6-2xNlHwPKKh1IEFLQ",$model->user_id,$model->recharge_id,$model->wechat);
+                if($result['errmsg']!="ok"){
+                    $model->extra = json_encode($result);
+                    $model->status = 1;
+                    $model->update();
+                }
             }
         }
     }
 
-    public function actionCleartable(){
+    protected function temp($openid,$user_id,$recharge_id,$wechat){
 
-        Yii::$app->db->createCommand("truncate table {{%cctv}}")->execute();
+        $url = "http://13loveme.com/forum/admin-check?id=$recharge_id";
+        $data = array(
+            "touser"=>$openid,
+            "template_id"=>"sj6-k6LNiMH1n86EuDcy0BA5QJGfqaNThVtVN-i8W_w",
+            "url"=>$url,
+            "topcolor"=>"#FF0000",
+            "data"=>array(
+                "first"=> array(
+                    "value"=>"",
+                    "color"=>"#000"
+                ),
+                "keyword1"=>array(
+                    "value"=>"会员ID：{$user_id}",
+                    "color"=>"#000"
+                ),
+                "keyword2"=> array(
+                    "value"=>"会员微信号：{$wechat}",
+                    "color"=>"#000"
+                ),
+                "keyword3"=> array(
+                    "value"=>date('Y-m-d H:i:s',time()),
+                    "color"=>"#000"
+                ),
+                "remark"=>array(
+                    "value"=>"感谢您的参与！",
+                    "color"=>"#000"
+                )
+            )
+        );
+        $msg = json_decode($this->sendTemp($data), true);
 
+        return $msg;
     }
 
+    /**
+     * @param $data
+     * @return mixed|string
+     * 发送模板消息
+     */
+    public function sendTemp($data){
 
+        $access = new AccessToken();
+        $access_token = $access->getAccessToken();
+
+        $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=".$access_token;
+
+        return $access->postData($url,json_encode($data));
+
+    }
     public function actionServer(){
         $this->layout = false;
-
         return $this->render('server');
-
     }
-
 
 
 }
