@@ -28,7 +28,8 @@ class FormThreadPushMsgController extends ActiveController {
 
     /**
      * @return CsvDataProvider
-     * v11/form-thread-push-msgs?access_token={cid}?user_id={user_id}
+     * v11/form-thread-push-msgs?user_id={user_id}&type=1
+     * type=1获取未读消息，type=0获取已读消息，无参数type则为所有消息
      * 获取所有和他有关的帖子id，
      */
 
@@ -36,7 +37,12 @@ class FormThreadPushMsgController extends ActiveController {
 
     	$model = $this->modelClass;
         $user_id = Yii::$app->request->get('user_id');
-        $query = $model::find()->where(['user_id'=>$user_id]);
+        $type = Yii::$app->request->get('type');
+        if(!empty($type)){
+            $query = $model::find()->where(['user_id'=>$user_id,'read_user'=>$type]);
+        }else{
+            $query = $model::find()->where(['user_id'=>$user_id]);
+        }
 
         return new CsvDataProvider([
             'query' =>  $query,
