@@ -1,6 +1,7 @@
 <?php
 namespace api\modules\v11\controllers;
 
+use api\components\CsvDataProvider;
 use api\modules\v11\models\FormThread;
 use api\modules\v11\models\User;
 use yii;
@@ -37,6 +38,25 @@ class FormThreadThumbsUpController extends ActiveController {
         $action = parent::actions();
         unset($action['index'], $action['view'], $action['create'], $action['update'], $action['delete']);
         return $action;
+    }
+
+    public function actionIndex() {
+
+        $model = $this->modelClass;
+        $thread_id= Yii::$app->request->get();
+        $query =  $model::find()->where(['thread_id'=>$thread_id]);
+
+        return new CsvDataProvider([
+            'query' =>  $query,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'created_at' => SORT_DESC,
+                ]
+            ],
+        ]);
     }
 
     /**
