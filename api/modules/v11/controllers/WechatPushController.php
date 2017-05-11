@@ -30,6 +30,10 @@ class WechatPushController extends ActiveController {
 
     	$model = new $this->modelClass();
     	$model->load(Yii::$app->request->getBodyParams(), '');
+        $decode = new yii\myhelper\Decode();
+        if(!$decode->decodeDigit($model->user_id)){
+            Response::show(210,'参数不正确');
+        }
         if (!$model->save()) {
             Response::show('201',array_values($model->getFirstErrors())[0], $model->getFirstErrors());
         }else{
@@ -39,7 +43,7 @@ class WechatPushController extends ActiveController {
 
     }
 
-    public function actionView($id) {
+/*    public function actionView($id) {
 
         $model = $this->findModel($id);
         return $model;
@@ -50,7 +54,7 @@ class WechatPushController extends ActiveController {
        if($this->findModel($id)->delete()){
            Response::show('200','ok');
         }
-    }
+    }*/
 
     protected function findModel($id)
     {
