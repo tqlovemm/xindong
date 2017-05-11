@@ -62,14 +62,20 @@ class FormThread extends ActiveRecord
 
         $this->_user_id = Yii::$app->request->get('user_id');
         $this->_user = User::findOne(['id'=>$this->user_id]);
-        //$this->_thumbs_up = FormThreadThumbsUp::findAll(['thread_id'=>$this->wid]);
-        $this->_thumbs_up = FormThreadThumbsUp::find()->where(['thread_id'=>$this->wid])->limit(5)->all();
-        //$this->_comment = FormThreadComments::findAll(['thread_id'=>$this->wid]);
-        $this->_comment = FormThreadComments::find()->where(['thread_id'=>$this->wid])->limit(5)->all();
+
+        if(Yii::$app->controller->action->id=="view"){
+            $this->_comment = FormThreadComments::findAll(['thread_id'=>$this->wid]);
+            $this->_thumbs_up = FormThreadThumbsUp::findAll(['thread_id'=>$this->wid]);
+        }else{
+            $this->_comment = FormThreadComments::find()->where(['thread_id'=>$this->wid])->limit(1)->all();
+            $this->_thumbs_up = FormThreadThumbsUp::find()->where(['thread_id'=>$this->wid])->limit(1)->all();
+        }
+
         return [
             "wid",'user_id', 'content','sex','tag','is_top','type','read_count','thumbs_count','created_at','groupid'=>function(){
                 return $this->_user->groupid;
             },
+
             'follow'=>function(){
                 $follow = Ufollow::findOne(['user_id'=>$this->_user_id,'people_id'=>$this->user_id]);
                 return empty($follow)?0:1;
