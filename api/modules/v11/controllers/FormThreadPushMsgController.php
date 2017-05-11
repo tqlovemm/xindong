@@ -5,13 +5,7 @@ use yii;
 use yii\helpers\Response;
 use yii\rest\ActiveController;
 use api\components\CsvDataProvider;
-use yii\filters\RateLimiter;
-use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
-use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\HttpBasicAuth;
-use yii\filters\auth\HttpBearerAuth;
-use yii\filters\auth\QueryParamAuth;
 
 class FormThreadPushMsgController extends ActiveController {
 
@@ -22,16 +16,7 @@ class FormThreadPushMsgController extends ActiveController {
     ];
     public function behaviors() {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::className(),
-            'authMethods' => [
-                QueryParamAuth::className(),
-            ],
-        ];
-        $behaviors['rateLimiter'] = [
-            'class' => RateLimiter::className(),
-            'enableRateLimitHeaders' => true,
-        ];
+
         return $behaviors;
     }
 
@@ -67,15 +52,36 @@ class FormThreadPushMsgController extends ActiveController {
     }
 
     /**
-     * @param $id
-     * v11/form-thread-push-msgs/{user_id}?access_token={cid}
+     * @param $id 消息id
+     * delete
+     * v11/form-thread-push-msgs/{id}?user_id={user_id}&type={11或12}  11删除单个消息，12删除所有和我有关的消息
      * 获取所有和他有关的未读消息数量integer类型，
      */
 
+    public function actionDelete($id){
+
+        $user_id = Yii::$app->request->get('user_id');
+        $type = Yii::$app->request->get('type');
+        $decode = new yii\myhelper\Decode();
+        if(!$decode->decodeDigit($user_id)){
+            Response::show(210,'参数不正确');
+        }
+        if($type==11){
+            if($this->findModel($id)->delete()){
+                Response::show(200,'删除该消息成功');
+            }
+        }elseif($type==12){
+            $model = $this->modelClass;
+            if($model::deleteAll(['user_id'=>$user_id])){
+                Response::show(200,'删除所有消息成功');
+            }
+        }else{
+            Response::show(201,'参数错误');
+        }
+    }
+
     public function actionView($id) {
-        $_model = $this->modelClass;
-        $count = $_model::find()->where(['user_id'=>$id,'read_user'=>0])->count();
-        yii\myhelper\Response::show('200',(integer)$count,(integer)$count);
+
     }
 
     protected function findModel($id)
