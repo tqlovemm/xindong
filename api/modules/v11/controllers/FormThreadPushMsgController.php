@@ -52,10 +52,12 @@ class FormThreadPushMsgController extends ActiveController {
     }
 
     /**
-     * @param $id 消息id
+     * 消息id
+     * @param $id
      * delete
      * v11/form-thread-push-msgs/{id}?user_id={user_id}&type={11或12}  11删除单个消息，12删除所有和我有关的消息
      * 获取所有和他有关的未读消息数量integer类型，
+     * 含有sign加密
      */
 
     public function actionDelete($id){
