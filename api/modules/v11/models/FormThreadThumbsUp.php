@@ -99,7 +99,7 @@ class FormThreadThumbsUp extends ActiveRecord
             $userModel = User::findOne($this->user_id);
             $username = empty($userModel->nickname)?$userModel->username:$userModel->nickname;
             $title="点赞帖子：【{$username}】点了个赞！";
-            $msg='您的朋友圈有点赞哦';
+            $msg="点赞帖子：【{$username}】点了个赞！";
             $data = array('push_title'=>$title,'push_content'=>$msg,'push_type'=>'SSCOMM_NOTICE');
             $extras = json_encode($data);
 

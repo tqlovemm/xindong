@@ -100,7 +100,7 @@ class FormThreadComments extends ActiveRecord
             $userModel = User::findOne($this->first_id);
             $username = empty($userModel->nickname)?$userModel->username:$userModel->nickname;
             $title="评论帖子：【{$username}】评价了你：【{$this->comment}】";
-            $msg='您的朋友圈有回复哦';
+            $msg="评论帖子：【{$username}】评价了你：【{$this->comment}】";
             $data = array('push_title'=>$title,'push_content'=>$msg,'push_type'=>'SSCOMM_NOTICE');
             $extras = json_encode($data);
 
