@@ -79,10 +79,20 @@ class FormThreadComments extends ActiveRecord
         $msg='您的朋友圈有回复哦';
         $extras = "{'push_title':'fwaef','push_content':'fawe','push_type':'SSCOMM_NOTICE'}";
 
-        $uids = array();
+        $tuid = array();
+        $cuid = array();
         $model = self::find()->where(['thread_id'=>$this->thread_id])->andWhere("first_id!=$this->first_id")->asArray()->all();
+        $thumbModel = FormThreadThumbsUp::find()->where(['thread_id'=>$this->thread_id])->andWhere("user_id!=$this->first_id")->asArray()->all();
+        if(!empty($thumbModel)){
+            $tuid = ArrayHelper::map($thumbModel,'user_id','user_id');
+        }
+
         if(!empty($model)){
-            $uids = ArrayHelper::map($model,'first_id','first_id');
+            $cuid = ArrayHelper::map($model,'first_id','first_id');
+        }
+        $uids = array_merge($cuid, $tuid);
+
+        if(!empty($uids)){
             $userCid = array_filter(ArrayHelper::map(User::find()->where(['id'=>$uids])->asArray()->all(),'cid','cid'));
         }else{
             $userCid = "";
