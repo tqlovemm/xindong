@@ -394,6 +394,10 @@ class WeiXinController extends Controller
                     $content = "链接: https://pan.baidu.com/s/1c2nEXfq 密码: iaks";
                     $this->text($content);
                     break;
+                case "openid":
+                    $content = "{$this->postObj->FromUserName}";
+                    $this->text($content);
+                    break;
             }
         }//if end
 
