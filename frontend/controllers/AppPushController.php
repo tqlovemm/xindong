@@ -82,7 +82,7 @@ class AppPushController extends Controller
             if(!$model->update()){
                 SaveToLog::log($model->errors,'w_push.log');
             }else{
-                $result = $this->temp("olQJss1mkh6-2xNlHwPKKh1IEFLQ",$model->user_id,$model->recharge_id,$model->wechat);
+                $result = $this->temp("olQJss7gU_Cqq_Yij7QCoXa9xc4c",$model->user_id,$model->recharge_id,$model->wechat);
                 if($result['errmsg']!="ok"){
                     $model->extra = json_encode($result);
                     $model->status = 1;
