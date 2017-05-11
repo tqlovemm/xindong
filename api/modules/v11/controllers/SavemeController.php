@@ -34,7 +34,7 @@ class SavemeController extends ActiveController {
             'class' => RateLimiter::className(),
             'enableRateLimitHeaders' => true,
         ];
-        return $behaviors;
+        return parent::behaviors();
     }
 
     public function actions() {
@@ -45,9 +45,13 @@ class SavemeController extends ActiveController {
 
     public function actionIndex() {
         $uid = isset($_GET['uid'])?$_GET['uid']:'';
+        $address = isset($_GET['address'])?$_GET['address']:'';
     	$model = $this->modelClass;
         $time = time();
         $where = "status > 0";
+        if($address){
+            $where .= " and address like '%".$address."%'";
+        }
         $query = $model::find();
         $pagination = new Pagination([
             'defaultPageSize' => 10,
