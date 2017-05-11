@@ -7,7 +7,7 @@ use yii\web\Controller;
 class AppController extends Controller
 {
     public function actionIndex($id){
-        $model = AppOrderList::findOne($id);
+        $model = AppOrderList::findOne(['order_number'=>$id]);
         return $this->render('index',['model'=>$model]);
     }
 

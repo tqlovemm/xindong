@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "pre_app_wechat_push".
  *
  * @property integer $wp_id
- * @property integer $recharge_id
+ * @property string $recharge_id
  * @property integer $user_id
  * @property integer $status
  * @property integer $created_at
@@ -33,8 +33,8 @@ class AppWechatPush extends \yii\db\ActiveRecord
     {
         return [
             [['recharge_id','user_id'],'required'],
-            [['wp_id','user_id', 'recharge_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['wechat','extra'], 'string'],
+            [['wp_id','user_id',  'status', 'created_at', 'updated_at'], 'integer'],
+            [['recharge_id','wechat','extra'], 'string'],
         ];
     }
 
