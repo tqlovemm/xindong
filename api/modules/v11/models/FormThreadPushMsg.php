@@ -49,7 +49,7 @@ class FormThreadPushMsg extends ActiveRecord
             'avatar'=>function(){return $this->_user->avatar;},
             'nickname'=>function(){return !empty($this->_user->nickname)?$this->_user->nickname:$this->_user->username;},
             'imgItemsArray'=>function(){
-                return !empty($this->_thread->cover)?$this->_thread->cover:'';
+                return !empty($this->_thread->cover)?$this->_thread->cover:array();
             },
             'unreadContent'=>function(){
                 return !empty($this->_thread->content)?$this->_thread->content:'';
