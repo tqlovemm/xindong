@@ -67,8 +67,8 @@ class FormThread extends ActiveRecord
             $this->_comment = FormThreadComments::findAll(['thread_id'=>$this->wid]);
             $this->_thumbs_up = FormThreadThumbsUp::findAll(['thread_id'=>$this->wid]);
         }else{
-            $this->_comment = FormThreadComments::find()->where(['thread_id'=>$this->wid])->limit(1)->all();
-            $this->_thumbs_up = FormThreadThumbsUp::find()->where(['thread_id'=>$this->wid])->limit(1)->all();
+            $this->_comment = FormThreadComments::find()->where(['thread_id'=>$this->wid])->limit(5)->all();
+            $this->_thumbs_up = FormThreadThumbsUp::find()->where(['thread_id'=>$this->wid])->limit(5)->all();
         }
 
         return [
