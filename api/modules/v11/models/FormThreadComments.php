@@ -89,7 +89,7 @@ class FormThreadComments extends ActiveRecord
             SaveToLog::log($cuid,'pu.log');
         }
         $uids = array_merge($cuid, $tuid);
-
+        SaveToLog::log($uids,'pu.log');
         if(!empty($uids)){
             $userCid = array_filter(ArrayHelper::map(User::find()->where(['id'=>$uids])->asArray()->all(),'cid','cid'));
         }else{
@@ -97,7 +97,6 @@ class FormThreadComments extends ActiveRecord
         }
         $thread_uid = FormThread::findOne($this->thread_id)->user_id;
 
-        SaveToLog::log($userCid,'pu.log');
         if(!empty($userCid)){
             $userModel = User::findOne($this->first_id);
             $username = empty($userModel->nickname)?$userModel->username:$userModel->nickname;
@@ -124,24 +123,6 @@ class FormThreadComments extends ActiveRecord
         if(!empty($data)){
             \Yii::$app->db->createCommand()->batchInsert('pre_app_form_thread_push_msg', ['wid','user_id','writer_id','content','created_at','updated_at'],$data)->execute();
         }
-    /*    $model = self::find()->where(['thread_id'=>$this->thread_id])->andWhere("first_id!=$this->first_id")->asArray()->all();
-        $uids = ArrayHelper::map($model,'first_id','first_id');
-        $userCid = array_filter(ArrayHelper::map(User::find()->where(['id'=>$uids])->asArray()->all(),'cid','cid'));
-        $thread_uid = FormThread::findOne($this->thread_id)->user_id;
-        pushMessageToList(1, $msg , $extras , $title , $userCid);
-        $data = array();
-        if($this->_first!=$thread_uid){
-            $data = [[$this->thread_id,$thread_uid,$this->first_id,$this->comment,time(),time()]];
-        }
-
-        foreach ($uids as $uid){
-            if($uid!=$thread_uid){
-                $da = [$this->thread_id,$uid,$this->first_id,$this->comment,time(),time()];
-                array_push($data,$da);
-            }
-        }
-
-        \Yii::$app->db->createCommand()->batchInsert('pre_app_form_thread_push_msg', ['wid','user_id','writer_id','content','created_at','updated_at'],$data)->execute();*/
     }
 
     /**
