@@ -277,7 +277,7 @@ function pushMessageToSingleBatch()
 }
 
 //多推接口案例
-function pushMessageToList($badge, $message, $payload, $locKey ,$cids)
+function pushMessageToList($badge, $title, $msg, $payload, $cids)
 {
     putenv("gexin_pushList_needDetails=true");
     putenv("gexin_pushList_needAsync=true");
@@ -291,9 +291,8 @@ function pushMessageToList($badge, $message, $payload, $locKey ,$cids)
     //$template = IGtNotyPopLoadTemplateDemo();
     //$template = IGtLinkTemplateDemo();
     //$template = IGtNotificationTemplateDemo();
-    $template = IGtTransmissionTemplateDemo();
-    $template->set_transmissionContent($payload);//透传内容
-    $template->set_pushInfo('十三平台', $badge, $message, '', '', $locKey, '', '');
+    $template = IGtTransmissionTemplateDemo($badge, $title, $msg, $payload);
+
     //个推信息体
     $message = new IGtListMessage();
     $message->set_isOffline(true);//是否离线
@@ -301,26 +300,17 @@ function pushMessageToList($badge, $message, $payload, $locKey ,$cids)
     $message->set_data($template);//设置推送消息类型
 //    $message->set_PushNetWorkType(1);	//设置是否根据WIFI推送消息，1为wifi推送，0为不限制推送
 //    $contentId = $igt->getContentId($message);
-    $contentId = $igt->getContentId($message,"toList任务别名功能");	//根据TaskId设置组名，支持下划线，中文，英文，数字
+    $contentId = $igt->getContentId($message);	//根据TaskId设置组名，支持下划线，中文，英文，数字
 
-    //接收方1
     $targetList = array();
     foreach($cids as $cid){
-
         $target1 = new IGtTarget();
         $target1->set_appId(APPID);
         $target1->set_clientId($cid);
         array_push($targetList,$target1);
     }
-//    $target1->set_alias(Alias);
 
-    //$targetList[] = $target1;
-
-    $rep = $igt->pushMessageToList($contentId, $targetList);
-
-    /*var_dump($rep);
-
-    echo ("<br><br>");*/
+    $igt->pushMessageToList($contentId, $targetList);
 
 }
 
@@ -360,10 +350,8 @@ function pushMessageToApp($badge, $message, $payload, $locKey){
     var_dump($rep);
     echo ("<br><br>");
 }
-
 //所有推送接口均支持四个消息模板，依次为通知弹框下载模板，通知链接模板，通知透传模板，透传模板
 //注：IOS离线推送需通过APN进行转发，需填写pushInfo字段，目前仅不支持通知弹框下载功能
-
 function IGtNotyPopLoadTemplateDemo(){
     $template =  new IGtNotyPopLoadTemplate();
 
@@ -392,7 +380,6 @@ function IGtNotyPopLoadTemplateDemo(){
 
     return $template;
 }
-
 function IGtLinkTemplateDemo(){
     $template =  new IGtLinkTemplate();
     $template ->set_appId(APPID);//应用appid
@@ -425,7 +412,6 @@ function IGtLinkTemplateDemo(){
 //        $template->set_apnInfo($apn);
     return $template;
 }
-
 function IGtNotificationTemplateDemo(){
     $template =  new IGtNotificationTemplate();
     $template->set_appId(APPID);//应用appid
@@ -460,56 +446,34 @@ function IGtNotificationTemplateDemo(){
     return $template;
 }
 
-function IGtTransmissionTemplateDemo(){
+function IGtTransmissionTemplateDemo($badge, $title, $msg, $payload){
     $template =  new IGtTransmissionTemplate();
     $template->set_appId(APPID);//应用appid
     $template->set_appkey(APPKEY);//应用appkey
     $template->set_transmissionType(1);//透传消息类型
-    $template->set_transmissionContent("测试离线dddtq");//透传内容
-    //$template->set_duration(BEGINTIME,ENDTIME); //设置ANDROID客户端在此时间区间内展示消息
-    //APN简单推送
-//        $template = new IGtAPNTemplate();
-//        $apn = new IGtAPNPayload();
-//        $alertmsg=new SimpleAlertMsg();
-//        $alertmsg->alertMsg="";
-//        $apn->alertMsg=$alertmsg;
-////        $apn->badge=2;
-////        $apn->sound="";
-//        $apn->add_customMsg("payload","payload");
-//        $apn->contentAvailable=1;
-//        $apn->category="ACTIONABLE";
-//        $template->set_apnInfo($apn);
-//        $message = new IGtSingleMessage();
+    $template->set_transmissionContent($payload);//透传内容
+    $template->set_pushInfo('', $badge, $title, '', $payload, '', '', '', 0);
 
-    //APN高级推送
     $apn = new IGtAPNPayload();
     $alertmsg=new DictionaryAlertMsg();
-    $alertmsg->body="body";
+    $alertmsg->body=$msg;
     $alertmsg->actionLocKey="ActionLockey";
     $alertmsg->locKey="LocKey";
     $alertmsg->locArgs=array("locargs");
     $alertmsg->launchImage="launchimage";
-//        IOS8.2 支持
-    $alertmsg->title="Title";
+
+    $alertmsg->title=$title;
     $alertmsg->titleLocKey="TitleLocKey";
     $alertmsg->titleLocArgs=array("TitleLocArg");
 
     $apn->alertMsg=$alertmsg;
-    $apn->badge=1;
+    $apn->badge=$badge;
     $apn->sound="";
-    $apn->add_customMsg("payload","payload");
-    //$apn->contentAvailable=1;
+    $apn->add_customMsg("payload",$payload);
+    $apn->contentAvailable=1;
     $apn->category="ACTIONABLE";
     $template->set_apnInfo($apn);
 
-    //PushApn老方式传参
-//    $template = new IGtAPNTemplate();
-//          $template->set_pushInfo("", 10, "", "com.gexin.ios.silence", "", "", "", "");
-
     return $template;
 }
-
-
-
-?>
 

@@ -96,15 +96,13 @@ class FormThreadComments extends ActiveRecord
         $thread_uid = FormThread::findOne($this->thread_id)->user_id;
 
         if(!empty($userCid)){
-
             $userModel = User::findOne($this->first_id);
             $username = empty($userModel->nickname)?$userModel->username:$userModel->nickname;
-            $title="评论帖子：【{$username}】评价了你：【{$this->comment}】";
-            $msg="评论帖子：【{$username}】评价了你：【{$this->comment}】";
-            $data = array('push_title'=>$title,'push_content'=>$msg,'push_type'=>'SSCOMM_NOTICE');
+            $title="{$username}评价了帖子";
+            $msg="{$this->comment}";
+            $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>$this->thread_id,'push_type'=>'SSCOMM_NEWSCOMMENT_DETAIL');
             $extras = json_encode($data);
-
-            pushMessageToList(1, $msg , $extras , $title , $userCid);
+            pushMessageToList(1, $title, $msg, $extras , $userCid);
         }
 
         $data = array();

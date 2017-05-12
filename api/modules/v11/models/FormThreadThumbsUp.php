@@ -1,8 +1,6 @@
 <?php
 namespace api\modules\v11\models;
 
-use api\modules\v9\models\UserProfile;
-use Yii;
 use app\components\db\ActiveRecord;
 use common\components\PushConfig;
 use yii\helpers\ArrayHelper;
@@ -93,26 +91,26 @@ class FormThreadThumbsUp extends ActiveRecord
         }else{
             $userCid = "";
         }
-        $thread_uid = FormThread::findOne($this->thread_id)->user_id;
+
+        $thread_uid = FormThread::findOne($this->thread_id);
 
         if(!empty($userCid)){
             $userModel = User::findOne($this->user_id);
             $username = empty($userModel->nickname)?$userModel->username:$userModel->nickname;
-            $title="点赞帖子：【{$username}】点了个赞！";
-            $msg="点赞帖子：【{$username}】点了个赞！";
-            $data = array('push_title'=>$title,'push_content'=>$msg,'push_type'=>'SSCOMM_NOTICE');
+            $title="{$username}点赞帖子";
+            $msg="{$thread_uid->content}";
+            $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>$this->thread_id,'push_type'=>'SSCOMM_NEWSCOMMENT_DETAIL');
             $extras = json_encode($data);
-
-            pushMessageToList(1, $msg , $extras , $title , $userCid);
+            pushMessageToList(1, $title, $msg, $extras ,$userCid);
         }
 
         $data = array();
-        if($this->user_id!=$thread_uid){
+        if($this->user_id!=$thread_uid->user_id){
             $data = [[$this->thread_id,$thread_uid,$this->user_id,"",time(),time()]];
         }
 
         foreach ($uids as $uid){
-            if($uid!=$thread_uid){
+            if($uid!=$thread_uid->user_id){
                 $da = [$this->thread_id,$uid,$this->user_id,"",time(),time()];
                 array_push($data,$da);
             }
