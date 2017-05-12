@@ -24,7 +24,7 @@ class SavemeJudgeController extends ActiveController {
             'class' => RateLimiter::className(),
             'enableRateLimitHeaders' => true,
         ];
-        return parent::behaviors();
+        return $behaviors;
     }
 
     public function actions() {

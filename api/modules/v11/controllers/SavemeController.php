@@ -53,7 +53,6 @@ class SavemeController extends ActiveController {
         if($address){
             $where .= " and address like '%".$address."%'";
         }
-        
         if($timetype){
             if($timetype == 1){
                 $time = time()-24*3600;
