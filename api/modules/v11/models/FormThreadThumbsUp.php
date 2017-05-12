@@ -78,6 +78,7 @@ class FormThreadThumbsUp extends ActiveRecord
         $cuid = array();
         $model = self::find()->where(['thread_id'=>$this->thread_id])->andWhere("user_id!=$this->user_id")->asArray()->all();
         $commentModel = FormThreadComments::find()->where(['thread_id'=>$this->thread_id])->andWhere("first_id!=$this->user_id")->asArray()->all();
+        $thread_uid = FormThread::findOne($this->thread_id);
         if(!empty($model)){
             $tuid = ArrayHelper::map($model,'user_id','user_id');
         }
@@ -85,13 +86,18 @@ class FormThreadThumbsUp extends ActiveRecord
             $cuid = ArrayHelper::map($commentModel,'first_id','first_id');
         }
         $uids = array_merge($cuid, $tuid);
+
+        if($this->user_id!=$thread_uid->user_id){
+            array_push($uids,$thread_uid->user_id);
+        }
+
         if(!empty($uids)){
             $userCid = array_filter(ArrayHelper::map(User::find()->where(['id'=>$uids])->asArray()->all(),'cid','cid'));
         }else{
             $userCid = "";
         }
 
-        $thread_uid = FormThread::findOne($this->thread_id);
+
 
         if(!empty($userCid)){
             $userModel = User::findOne($this->user_id);
