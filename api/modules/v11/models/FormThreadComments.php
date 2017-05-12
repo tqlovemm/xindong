@@ -100,7 +100,7 @@ class FormThreadComments extends ActiveRecord
             $username = empty($userModel->nickname)?$userModel->username:$userModel->nickname;
             $title="{$username}评价了帖子";
             $msg="{$this->comment}";
-            $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>$this->thread_id,'push_type'=>'SSCOMM_NEWSCOMMENT_DETAIL');
+            $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$this->thread_id",'push_type'=>'SSCOMM_NEWSCOMMENT_DETAIL');
             $extras = json_encode($data);
             pushMessageToList(1, $title, $msg, $extras , $userCid);
         }
