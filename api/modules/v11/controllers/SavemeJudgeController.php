@@ -45,7 +45,7 @@ class SavemeJudgeController extends ActiveController {
         foreach($addressarr as $v){
             $new .=  $v.",";
         }
-        $newarr[] = substr($new,0,-1);
+        $newarr['str'] = substr($new,0,-1);
         return $newarr;
     }
 
