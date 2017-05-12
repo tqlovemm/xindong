@@ -119,7 +119,7 @@ class RechargeRecord extends ActiveRecord
                 }elseif(strpos($datingUserInfo['avatar'],'http://13loveme.com/')!==false){
                     $avatar = str_replace('http://13loveme.com/',Yii::$app->params['shisangirl'],$datingUserInfo['avatar']);
                 }else{
-                    $avatar=$datingUserInfo['avatar'];
+                    $avatar=Yii::$app->params['shisangirl'].$datingUserInfo['avatar'];
                 }
                 $datingUserInfo['avatar']= $avatar;
                 /*$avatar = str_replace(Yii::$app->params['shisangirl'],'',$datingUserInfo['avatar']);
