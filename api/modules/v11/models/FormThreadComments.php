@@ -78,24 +78,25 @@ class FormThreadComments extends ActiveRecord
         $cuid = array();
         $model = self::find()->where(['thread_id'=>$this->thread_id])->andWhere("first_id!=$this->first_id")->asArray()->all();
         $thumbModel = FormThreadThumbsUp::find()->where(['thread_id'=>$this->thread_id])->andWhere("user_id!=$this->first_id")->asArray()->all();
-
+        $thread_uid = FormThread::findOne($this->thread_id)->user_id;
         if(!empty($thumbModel)){
             $tuid = ArrayHelper::map($thumbModel,'user_id','user_id');
-            SaveToLog::log($tuid,'pu.log');
         }
 
         if(!empty($model)){
             $cuid = ArrayHelper::map($model,'first_id','first_id');
-            SaveToLog::log($cuid,'pu.log');
         }
         $uids = array_merge($cuid, $tuid);
-        SaveToLog::log($uids,'pu.log');
+
+        if($this->first_id!=$thread_uid){
+            array_push($uids,$thread_uid);
+        }
         if(!empty($uids)){
             $userCid = array_filter(ArrayHelper::map(User::find()->where(['id'=>$uids])->asArray()->all(),'cid','cid'));
         }else{
             $userCid = "";
         }
-        $thread_uid = FormThread::findOne($this->thread_id)->user_id;
+
 
         if(!empty($userCid)){
             $userModel = User::findOne($this->first_id);
