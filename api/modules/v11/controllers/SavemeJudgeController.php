@@ -36,16 +36,17 @@ class SavemeJudgeController extends ActiveController {
     public function actionIndex()
     {
         $query = (new Query())->select('address')->from('{{%saveme}}')->where(['status'=>1])->orderBy('created_at desc')->groupBy('address')->all();
-        $newarr = '';
+        $new = '';
         for($i=1;$i<count($query);$i++){
             $arr = explode(" ",$query[$i]['address']);
             $addressarr[] = $arr[0];
         }
         $addressarr = array_unique($addressarr);
         foreach($addressarr as $v){
-            $newarr .=  $v.",";
+            $new .=  $v.",";
         }
-        return substr($newarr,0,-1);
+        $newarr[] = substr($new,0,-1);
+        return $newarr;
     }
 
     public function actionView($id) {
