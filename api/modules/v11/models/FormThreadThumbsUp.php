@@ -1,6 +1,7 @@
 <?php
 namespace api\modules\v11\models;
-
+use api\modules\v9\models\UserProfile;
+use Yii;
 use app\components\db\ActiveRecord;
 use common\components\PushConfig;
 use yii\helpers\ArrayHelper;
