@@ -81,10 +81,12 @@ class FormThreadComments extends ActiveRecord
 
         if(!empty($thumbModel)){
             $tuid = ArrayHelper::map($thumbModel,'user_id','user_id');
+            SaveToLog::log($tuid,'pu.log');
         }
 
         if(!empty($model)){
             $cuid = ArrayHelper::map($model,'first_id','first_id');
+            SaveToLog::log($cuid,'pu.log');
         }
         $uids = array_merge($cuid, $tuid);
 
