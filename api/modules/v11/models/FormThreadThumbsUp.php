@@ -97,8 +97,6 @@ class FormThreadThumbsUp extends ActiveRecord
             $userCid = "";
         }
 
-
-
         if(!empty($userCid)){
             $userModel = User::findOne($this->user_id);
             $username = empty($userModel->nickname)?$userModel->username:$userModel->nickname;
@@ -112,12 +110,12 @@ class FormThreadThumbsUp extends ActiveRecord
 
         $data = array();
         if($this->user_id!=$thread_uid->user_id){
-            $data = [[$this->thread_id,$thread_uid,$this->user_id,"nullthumbs",time(),time()]];
+            $data = [[$this->thread_id,$thread_uid,$this->user_id,"",time(),time()]];
         }
 
         foreach ($uids as $uid){
             if($uid!=$thread_uid->user_id){
-                $da = [$this->thread_id,$uid,$this->user_id,"nullthumbs",time(),time()];
+                $da = [$this->thread_id,$uid,$this->user_id,"",time(),time()];
                 array_push($data,$da);
             }
         }
