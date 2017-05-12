@@ -46,11 +46,21 @@ class SavemeController extends ActiveController {
     public function actionIndex() {
         $uid = isset($_GET['uid'])?$_GET['uid']:'';
         $address = isset($_GET['address'])?$_GET['address']:'';
+        $timetype = isset($_GET['timetype'])?$_GET['timetype']:'';
     	$model = $this->modelClass;
         $time = time();
         $where = "status > 0";
         if($address){
             $where .= " and address like '%".$address."%'";
+        }
+        if($timetype){
+            if($timetype == 1){
+                $time = time()-24*3600;
+                $where .= " and created_at > $time";
+            }elseif($timetype == 2){
+                $time = time()-72*3600;
+                $where .= " and created_at > $time";
+            }
         }
         $query = $model::find();
         $pagination = new Pagination([

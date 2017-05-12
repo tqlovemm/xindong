@@ -24,13 +24,23 @@ class SavemeJudgeController extends ActiveController {
             'class' => RateLimiter::className(),
             'enableRateLimitHeaders' => true,
         ];
-        return $behaviors;
+        return parent::behaviors();
     }
 
     public function actions() {
         $action = parent::actions();
         unset($action['index'], $action['view'], $action['create'], $action['update'], $action['delete']);
         return $action;
+    }
+
+    public function actionIndex()
+    {
+        $query = (new Query())->select('address')->from('{{%saveme}}')->where(['status'=>1])->orderBy('created_at desc')->groupBy('address')->all();
+        for($i=1;$i<count($query);$i++){
+            $arr = explode(" ",$query[$i]['address']);
+            $addressarr[] = $arr[0];
+        }
+        return array_unique($addressarr);
     }
 
     public function actionView($id) {
