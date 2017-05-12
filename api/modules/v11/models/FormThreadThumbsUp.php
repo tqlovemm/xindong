@@ -57,10 +57,6 @@ class FormThreadThumbsUp extends ActiveRecord
 
         PushConfig::config();
 
-        $title='朋友圈回复';
-        $msg='您的朋友圈有回复哦';
-        $extras = "{'push_title':'fwaef','push_content':'fawe','push_type':'SSCOMM_NOTICE'}";
-
         $tuid = array();
         $cuid = array();
         $model = self::find()->where(['thread_id'=>$this->thread_id])->andWhere("user_id!=$this->user_id")->asArray()->all();
@@ -77,19 +73,26 @@ class FormThreadThumbsUp extends ActiveRecord
         }else{
             $userCid = "";
         }
-        $thread_uid = FormThread::findOne($this->thread_id)->user_id;
+
+        $thread_uid = FormThread::findOne($this->thread_id);
 
         if(!empty($userCid)){
-            pushMessageToList(1, $msg , $extras , $title , $userCid);
+            $userModel = User::findOne($this->user_id);
+            $username = empty($userModel->nickname)?$userModel->username:$userModel->nickname;
+            $title="{$username}点赞帖子";
+            $msg="{$thread_uid->content}";
+            $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>$this->thread_id,'push_type'=>'SSCOMM_NEWSCOMMENT_DETAIL');
+            $extras = json_encode($data);
+            pushMessageToList(1, $title, $msg, $extras ,$userCid);
         }
 
         $data = array();
-        if($this->user_id!=$thread_uid){
+        if($this->user_id!=$thread_uid->user_id){
             $data = [[$this->thread_id,$thread_uid,$this->user_id,"",time(),time()]];
         }
 
         foreach ($uids as $uid){
-            if($uid!=$thread_uid){
+            if($uid!=$thread_uid->user_id){
                 $da = [$this->thread_id,$uid,$this->user_id,"",time(),time()];
                 array_push($data,$da);
             }
