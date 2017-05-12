@@ -56,10 +56,10 @@ class SavemeController extends ActiveController {
         if($timetype){
             if($timetype == 1){
                 $time = time()-24*3600;
-                $where .= " and created_at > $time";
+                $where .= " and created_at > ".$time;
             }elseif($timetype == 2){
                 $time = time()-72*3600;
-                $where .= " and created_at > $time";
+                $where .= " and created_at > ".$time;
             }
         }
         $query = $model::find();
