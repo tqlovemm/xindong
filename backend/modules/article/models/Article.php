@@ -3,6 +3,7 @@
 namespace backend\modules\article\models;
 
 use Yii;
+use backend\modules\article\models\ArticleType;
 
 class Article extends \yii\db\ActiveRecord
 {
@@ -36,7 +37,7 @@ class Article extends \yii\db\ActiveRecord
             'title' => '标题',
             'wimg' => '描述图片',
             'content' => '内容',
-            'wtype' => 'Wtype',
+            'wtype' => 'wtype',
             'wclick' => 'Wclick',
             'wdianzan' => 'Wdianzan',
             'hot' => 'Hot',
