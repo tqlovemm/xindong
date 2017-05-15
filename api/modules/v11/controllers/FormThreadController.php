@@ -52,7 +52,7 @@ class FormThreadController extends ActiveController {
      * 查看所有帖子接口get
      * /v11/form-threads?access-token={cid}
      * 可添加参数筛选/v11/form-threads?access-token={cid}
-     * url可选拼接参数：&sex=0 男生发帖 ，&sex=1 女生发帖 不拼接则为全部帖子，
+     * url可选拼接参数：&sex=0 男生发帖 ，&sex=1 女生发帖 $sex=3则为全部帖子，
      * &follow=1&user_id={user_id} 关注人的帖子，
      * &tag={tag} 所有该标签的帖子，
      * &people={user_id} 该会员发布的所有帖子，
@@ -74,8 +74,12 @@ class FormThreadController extends ActiveController {
         $query =  $model::find()->where(['type'=>[0,1]]);
 
         if(isset($getData['sex'])){
-            $sex_filter = [(integer)$getData['sex'],2];
-            $query =  $query->andWhere(['sex'=>$sex_filter]);
+            if($getData['sex']==3){
+                $this->threadData($query,$model,1);
+            }else{
+                $sex_filter = [(integer)$getData['sex'],2];
+                $query =  $query->andWhere(['sex'=>$sex_filter]);
+            }
         }
 
         if(isset($getData['people'])){
@@ -95,22 +99,43 @@ class FormThreadController extends ActiveController {
             $query =  $query->orderBy('total_score desc');
         }
 
-        return new CsvDataProvider([
-            'query' =>  $query,
-            'pagination' => [
-                'pageSize' => 16,
-            ],
-            'insert' => [
-                'modelName'=>$model::find()->where('type=2'),
-                'rank'=>8
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'is_top' => SORT_DESC,
-                    'created_at' => SORT_DESC,
-                ]
-            ],
-        ]);
+        return $this->threadData($query,$model);
+
+    }
+
+    protected function threadData($query,$model,$type=2){
+
+        if($type==1){
+            return new CsvDataProvider([
+                'query' =>  $query,
+                'pagination' => [
+                    'pageSize' => 16,
+                ],
+                'insert' => [
+                    'modelName'=>$model::find()->where('type=2'),
+                    'rank'=>2
+                ],
+                'sort' => [
+                    'defaultOrder' => [
+                        'is_top' => SORT_DESC,
+                        'created_at' => SORT_DESC,
+                    ]
+                ],
+            ]);
+        }else{
+            return new CsvDataProvider([
+                'query' =>  $query,
+                'pagination' => [
+                    'pageSize' => 16,
+                ],
+                'sort' => [
+                    'defaultOrder' => [
+                        'is_top' => SORT_DESC,
+                        'created_at' => SORT_DESC,
+                    ]
+                ],
+            ]);
+        }
     }
 
     /**
