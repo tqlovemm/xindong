@@ -2,9 +2,13 @@
 
 namespace api\modules\v7\controllers;
 
+use api\modules\v11\models\FormThreadPushMsg;
+use api\modules\v11\models\User;
+use api\modules\v3\models\AppPush;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
+use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
 
 
@@ -43,19 +47,14 @@ class AppPushController extends ActiveController
 
     public function actionView($id){
 
-        $user_id = (new Query())->select('id')->from('{{%user}}')->where(['cid'=>$id])->one();
+        $userModel = User::findOne($id);
+        $pushModel = ArrayHelper::map(AppPush::find()->select('count(*) as count,type')->where(['cid'=>$userModel->cid,'is_read'=>1])->groupBy('type')->asArray()->all(),'type','count');
 
-        $count = (new Query())
-            ->select('m.id')
-            ->from('{{%app_message}} as m ')
-            ->join('left join','{{%app_words}} as w','m.words_id = w.id')
-            ->where(" to_id = {$user_id['id']} and from_id <> {$user_id['id']} and is_read = 1 ")
-            //->orWhere(" w.user_id= {$user_id['id']} and from_id <> {$user_id['id']} and is_read = 1 ")
-            ->count();
-        $query['unread_thread_count'] = (int)$count;
-        $query_unread_group = Yii::$app->db->createCommand("select count(*) from {{%app_push}} where cid='$id'and type <> 'SSCOMM_NEWSCOMMENT_DETAIL' and is_read = 1 ")->queryScalar();
-        $query['other_message_count'] = (int)$query_unread_group;
-        $query['unread_count'] = $query['unread_thread_count']+$query['other_message_count'];
+        $query['unread_thread_count'] = (int)FormThreadPushMsg::find()->where(['user_id'=>$id,'read_user'=>0])->count();
+        $query['other_saveme_count'] = isset($pushModel['SSCOMM_SAVEME'])?$pushModel['SSCOMM_SAVEME']:0;
+        $query['other_message_count'] = array_sum($pushModel)-$query['other_saveme_count'];
+        $query['unread_count'] = array_sum($query);
+
         return $query;
 
     }
