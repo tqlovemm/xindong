@@ -19,13 +19,7 @@ $this->registerCss('
             .lightbox .lb-image{width:280px !important;height:280px !important;}
         }
 '); ?>
-<?php
-/*
-$dependency = [
-    'class' => 'yii\caching\DbDependency',
-    'sql' => 'SELECT MAX(created_at) FROM pre_website_content',
-];
-if ($this->beginCache($id=25, ['dependency' => $dependency])) :*/?>
+
 <div class="container visible-lg visible-md">
 
     <div class="row contact-title">
@@ -38,11 +32,11 @@ if ($this->beginCache($id=25, ['dependency' => $dependency])) :*/?>
             <div  style="position: absolute;top:50%;right:0;color:#fff;">扫描二维码加入微信</div>
         </div>
         <div class="col-md-2">
-            <img style="width: 170px;" src="<?=$pre_url.$boy[$boy_rand]['path']?>">
+            <img style="width: 170px;" src="<?=$pre_url.$boy['path']?>">
         </div>
         <div class="col-md-3">
             <h1 style="font-weight: bold;color:#fff;margin-top: 40px;">男生入口</h1>
-            <span style="font-size: 24px;color:#fff;border-radius: 10px;background-color: #163178;padding:0 20px;"><?=$boy[$boy_rand]['name']?></span>
+            <span style="font-size: 24px;color:#fff;border-radius: 10px;background-color: #163178;padding:0 20px;"><?=$boy['name']?></span>
         </div>
     </div>
 
@@ -52,11 +46,11 @@ if ($this->beginCache($id=25, ['dependency' => $dependency])) :*/?>
             <div  style="position: absolute;top:50%;right:0;color:#fff;">扫描二维码加入微信</div>
         </div>
         <div class="col-md-2">
-            <img style="width: 170px;" src="<?=$pre_url.$girl[$girl_rand]['path']?>">
+            <img style="width: 170px;" src="<?=$pre_url.$girl['path']?>">
         </div>
         <div class="col-md-3">
             <h1 style="font-weight: bold;color:#fff;margin-top: 40px;">女生入口</h1>
-            <span style="font-size: 24px;color:#fff;border-radius: 10px;background-color: #A51B4C;padding:0 20px;"><?=$girl[$girl_rand]['name']?></span>
+            <span style="font-size: 24px;color:#fff;border-radius: 10px;background-color: #A51B4C;padding:0 20px;"><?=$girl['name']?></span>
         </div>
     </div>
 
@@ -94,7 +88,7 @@ if ($this->beginCache($id=25, ['dependency' => $dependency])) :*/?>
                     <img style="width: 40px;margin-top: 5px;float: right;margin-right: 10px;" class="img-responsive" src="/images/contact/boy.png">
                 </div>
                 <div class="pull-left">
-                    <a data-title="男生入口 <?=$boy[$boy_rand]['name']?>" data-lightbox="dd" href="<?=$pre_url.$boy[$boy_rand]['path']?>" class="btn btn-boy">男生入口&nbsp;&nbsp;<img style="width: 28px;" src="/images/contact/arrow.png"></a>
+                    <a data-title="男生入口 <?=$boy['name']?>" data-lightbox="dd" href="<?=$pre_url.$boy['path']?>" class="btn btn-boy">男生入口&nbsp;&nbsp;<img style="width: 28px;" src="/images/contact/arrow.png"></a>
                 </div>
             </div>
         </div>
@@ -106,24 +100,21 @@ if ($this->beginCache($id=25, ['dependency' => $dependency])) :*/?>
                     <img style="width: 40px;margin-top: 5px;float: right;margin-right: 10px;" class="img-responsive" src="/images/contact/girlblack.png">
                 </div>
                 <div class="pull-left">
-                    <a data-title="女生入口 <?=$girl[$girl_rand]['name']?>" data-lightbox="dd" href="<?=$pre_url.$girl[$girl_rand]['path']?>" class="btn btn-girl">女生入口&nbsp;&nbsp;<img style="width: 28px;" src="/images/contact/arrow.png"></a>
+                    <a data-title="女生入口 <?=$girl['name']?>" data-lightbox="dd" href="<?=$pre_url.$girl['path']?>" class="btn btn-girl">女生入口&nbsp;&nbsp;<img style="width: 28px;" src="/images/contact/arrow.png"></a>
                 </div>
             </div>
         </div>
         <h5 class="row text-center" style="font-size: 14px;">点击进入</h5>
         <hr>
         <div class="row">
-
             <div class="center-block" style="width: 300px;">
                 <div class="pull-left" style="margin-left: 20px;">
                     <div style=" width: 40px;">&nbsp;</div>
                 </div>
                 <div class="pull-left btn btn-qq" style="margin-left: -15px;">
-
                         <img style="width: 28px;" src="/images/contact/qq.png"><a href="http://wpa.qq.com/msgrd?v=3&uin=8495167&site=qq&menu=yes">&nbsp;QQ客服&nbsp;<img style="width: 28px;" src="/images/contact/arrow2.png"></a>
                 </div>
             </div>
-
         </div>
         <h5 class="row text-center" style="font-size: 14px;">点击进入</h5>
 <hr>
@@ -139,8 +130,5 @@ if ($this->beginCache($id=25, ['dependency' => $dependency])) :*/?>
                 </div>
             </div>
         </div>
-
     </div>
-
 </div>
-<?php /*$this->endCache();endif;*/?>
