@@ -110,7 +110,7 @@ class FormThreadThumbsUp extends ActiveRecord
 
         $data = array();
         if($this->user_id!=$thread_uid->user_id){
-            $data = [[$this->thread_id,$thread_uid,$this->user_id,"",time(),time()]];
+            $data = [[$this->thread_id,$thread_uid->user_id,$this->user_id,"",time(),time()]];
         }
 
         foreach ($uids as $uid){
