@@ -192,6 +192,8 @@ class FormThreadController extends ActiveController {
 
         $user_id = Yii::$app->request->get('user_id');
         $model = $this->findModel($id);
+        $model->read_count += 1;
+        $model->update();
         FormThreadPushMsg::updateAll(['read_user'=>1],['user_id'=>$user_id,'wid'=>$id]);
         return $model;
     }
