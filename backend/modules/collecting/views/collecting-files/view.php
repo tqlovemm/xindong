@@ -16,7 +16,7 @@ $pre_url = Yii::$app->params['qiniushiqi'];
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?php if(!in_array(Yii::$app->user->id,[13674])):?>
+
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -25,7 +25,6 @@ $pre_url = Yii::$app->params['qiniushiqi'];
                 'method' => 'post',
             ],
         ]) ?>
-        <?php endif;?>
     </p>
         <?= DetailView::widget([
             'model' => $model,
@@ -62,9 +61,6 @@ $pre_url = Yii::$app->params['qiniushiqi'];
     <?php foreach ($img as $item):?>
         <div class="col-md-2">
             <img class="img-responsive" src="<?=$pre_url.$item['img']?>">
-            <a class="btn btn-primary" onclick="rotate_img(<?=$item['id']?>,1,this)">顺时针</a>
-            <a class="btn btn-primary" onclick="rotate_img(<?=$item['id']?>,2,this)">逆时针</a>
-            <?php if(!in_array(Yii::$app->user->id,[13674])):?>
                 <?= Html::a('Delete', ['delete-img', 'id' => $item['id']], [
                     'class' => 'btn btn-danger',
                     'data' => [
@@ -72,7 +68,6 @@ $pre_url = Yii::$app->params['qiniushiqi'];
                         'method' => 'post',
                     ],
                 ]) ?>
-            <?php endif;?>
         </div>
 
     <?php endforeach;?>
