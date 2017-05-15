@@ -75,7 +75,7 @@ class FormThreadController extends ActiveController {
 
         if(isset($getData['sex'])){
             if($getData['sex']==3){
-                $this->threadData($query,$model,1);
+                return $this->threadData($query,$model,1);
             }else{
                 $sex_filter = [(integer)$getData['sex'],2];
                 $query =  $query->andWhere(['sex'=>$sex_filter]);
@@ -113,7 +113,7 @@ class FormThreadController extends ActiveController {
                 ],
                 'insert' => [
                     'modelName'=>$model::find()->where('type=2'),
-                    'rank'=>2
+                    'rank'=>1
                 ],
                 'sort' => [
                     'defaultOrder' => [
