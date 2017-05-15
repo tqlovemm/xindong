@@ -67,7 +67,7 @@ class FormThreadCommentsController extends ActiveController {
                 yii\myhelper\Response::show('203','评价失败', array_values($model->getFirstErrors())[0]);
             }else{
                 $thread = FormThread::findOne($model->thread_id);
-                $thread->thumbs_count+=1;
+                $thread->comments_count+=1;
                 $thread->base64Images = "add";
                 if($thread->update()){
                     return $model;

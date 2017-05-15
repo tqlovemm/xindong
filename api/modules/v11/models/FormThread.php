@@ -21,6 +21,9 @@ use api\modules\v9\models\UserProfile;
  * @property integer $sex
  * @property integer $read_count
  * @property integer $thumbs_count
+ * @property integer $comments_count
+ * @property integer $admin_count
+ * @property double $total_score
  */
 class FormThread extends ActiveRecord
 {
@@ -44,8 +47,9 @@ class FormThread extends ActiveRecord
     {
         return [
             [['user_id', 'sex'], 'required','message'=>"{attribute}不可为空"],
-            [['user_id', 'type', 'is_top', 'sex','read_count','thumbs_count','created_at', 'status','updated_at'], 'integer'],
+            [['user_id', 'type', 'is_top', 'sex','read_count','thumbs_count','created_at', 'status','updated_at','comments_count','admin_count'], 'integer'],
             [['content','base64Images'], 'string'],
+            [['total_score'], 'number'],
             [['lat_long','tag'], 'string','max'=>128],
             [['content'], 'requiredWithout', 'skipOnEmpty' => false, 'skipOnError' => false],
         ];
@@ -72,7 +76,7 @@ class FormThread extends ActiveRecord
         }
 
         return [
-            "wid",'user_id', 'content','sex','tag','is_top','type','read_count','thumbs_count','created_at','groupid'=>function(){
+            "wid",'user_id', 'content','sex','tag','is_top','type','created_at','groupid'=>function(){
                 return $this->_user->groupid;
             },
 
@@ -123,6 +127,9 @@ class FormThread extends ActiveRecord
             'lat_long' => 'Lat Long',
             'read_count' => 'Read Count',
             'thumbs_count' => 'Thumbs Count',
+            'comments_count' => 'Comments Count',
+            'admin_count' => 'Admin Count',
+            'total_score' => 'Total Score',
             'base64Images' => 'Base64 Images',
         ];
     }
