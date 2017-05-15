@@ -1,6 +1,7 @@
 <?php
 namespace api\modules\v11\controllers;
 
+use api\modules\v11\models\FormThreadPushMsg;
 use yii;
 use yii\helpers\Response;
 use yii\rest\ActiveController;
@@ -43,7 +44,7 @@ class FormThreadPushMsgController extends ActiveController {
         }else{
             $query = $model::find()->where(['user_id'=>$user_id]);
         }
-
+        FormThreadPushMsg::updateAll(['read_user'=>1],['user_id'=>$user_id]);
         return new CsvDataProvider([
             'query' =>  $query,
             'pagination' => [
