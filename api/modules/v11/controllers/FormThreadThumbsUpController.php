@@ -27,13 +27,13 @@ class FormThreadThumbsUpController extends ActiveController {
     }
     /**
      * @return CsvDataProvider
-     * v11/form-thread-thumbs-ups?thread_id={thread_id}帖子id
+     * v11/form-thread-thumbs-ups?thread_id={thread_id}是帖子id
      * get 获取和该帖子有关的所有点赞
      */
     public function actionIndex() {
 
         $model = $this->modelClass;
-        $thread_id= Yii::$app->request->get();
+        $thread_id= Yii::$app->request->get('thread_id');
         $query =  $model::find()->where(['thread_id'=>$thread_id]);
 
         return new CsvDataProvider([
