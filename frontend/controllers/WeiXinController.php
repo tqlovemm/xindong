@@ -399,7 +399,7 @@ class WeiXinController extends Controller
                     $this->text($content);
                     break;
                 case "奸臣":
-                    $content = "http://pan.baidu.com/share/link?shareid=1531577098&uk=358115140";
+                    $content = "链接：http://pan.baidu.com/s/1hr9C8Xu 密码：r51r";
                     $this->text($content);
                     break;
             }
