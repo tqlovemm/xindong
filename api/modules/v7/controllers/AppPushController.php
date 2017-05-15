@@ -44,8 +44,7 @@ class AppPushController extends ActiveController
     }
 
     public function actionView($id){
-
-        if(strlen($id>10)){
+        if(strlen($id)>10){
             $userModel = User::findOne(['cid'=>$id]);
             $cid = $id;
             $uid = $userModel->id;
