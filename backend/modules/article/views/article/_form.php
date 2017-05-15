@@ -18,6 +18,7 @@ use yii\widgets\ActiveForm;
         <div class="help-block"></div>
     </div>
 
+    <?= $form->field($model, 'wtype')->textInput()->dropDownList($type) ?>
     <?= $form->field($model,'content')->label("内容")->widget('common\widgets\ueditor\ueditor',[
         'options'=>[
             'initialFrameHeight' => 300,
@@ -25,7 +26,7 @@ use yii\widgets\ActiveForm;
         ]
     ]) ?>
 
-    <?= $form->field($model, 'wtype')->textInput()->label("类型") ?>
+
 
     <?= $form->field($model, 'wclick')->textInput()->label("点击数") ?>
 

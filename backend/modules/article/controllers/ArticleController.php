@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\Qiniu\QiniuUploader;
+use yii\db\Query;
 
 
 /**
@@ -73,13 +74,18 @@ class ArticleController extends Controller
                 $model->wimg = $wimg;
             }
             if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['index']);
             }else{
                 return "添加失败";
             }
         } else {
+            $typeres = (new Query())->select('tid,typename')->from('{{%article_type}}')->all();
+            for($i=0;$i<count($typeres);$i++){
+                $typearr[$typeres[$i]['tid']] = $typeres[$i]['typename'];
+            }
             return $this->render('create', [
                 'model' => $model,
+                'type' => $typearr,
             ]);
         }
     }
@@ -103,8 +109,13 @@ class ArticleController extends Controller
                 return "添加失败";
             }
         } else {
+            $typeres = (new Query())->select('tid,typename')->from('{{%article_type}}')->all();
+            for($i=0;$i<count($typeres);$i++){
+                $typearr[$typeres[$i]['tid']] = $typeres[$i]['typename'];
+            }
             return $this->render('update', [
                 'model' => $model,
+                'type' => $typearr,
             ]);
         }
     }
@@ -115,6 +126,21 @@ class ArticleController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionShow($id){
+        $this->layout = false;
+        $model = article::findOne($id);
+        $user =  (new Query())->select('nickname,username')->from('{{%user}}')->where(['id'=>$model->created_id])->one();
+        if($user['nickname']){
+            $name = $user['nickname'];
+        }else{
+            $name = $user['username'];
+        }
+        return $this->render('show', [
+            'model' => $model,
+            'username' => $name,
+        ]);
     }
 
     protected function findModel($id)
