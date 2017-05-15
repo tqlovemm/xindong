@@ -92,7 +92,7 @@ class FormThreadController extends ActiveController {
         }
 
         if(isset($getData['sort'])){
-            $query =  $query->orderBy('thumbs_count desc');
+            $query =  $query->orderBy('total_score desc');
         }
 
         return new CsvDataProvider([
