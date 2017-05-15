@@ -210,6 +210,30 @@ class FinancialWechatController extends Controller
 
         return $this->render('today-fee-record',['model'=>$model,'q_1'=>$query_model1,'q_2'=>$query_model2,'q_3'=>$query_model3]);
     }
+    /**
+     * @param null $week
+     * @param null $mouth
+     * @return string
+     */
+    public function actionSelfFeeRecord($week=null,$mouth = null){
+
+        $user_id = Yii::$app->user->id;
+        $model = FinancialWechatJoinRecord::find()->select('group_concat(id) as id,day_time')->groupBy('day_time')->orderBy('day_time desc')->where(['day_time'=>strtotime('today')])->andWhere(['status'=>1,'created_by'=>$user_id])->asArray()->all();
+
+        $query_model1 = FinancialWechatJoinRecord::find()->select('sum(payment_amount) as sum,count(*) as count')->where(['day_time'=>strtotime('today')])->andWhere(['status'=>1])->asArray()->one();
+        $query_model2 = FinancialWechatJoinRecord::find()->select('sum(payment_amount) as sum,count(*) as count')->where(['mouth_time'=>mktime(0,0,0,date('m',time()),date('t'),date('Y',time()))])->andWhere(['status'=>1,'created_by'=>$user_id])->asArray()->one();
+        $query_model3 = FinancialWechatJoinRecord::find()->select('sum(payment_amount) as sum,count(*) as count')->where(['weekly_time'=>strtotime('next sunday')])->andWhere(['status'=>1,'created_by'=>$user_id])->asArray()->one();
+
+        if($week!=null){
+            $model = FinancialWechatJoinRecord::find()->select('group_concat(id) as id,day_time')->groupBy('day_time')->orderBy('day_time desc')->where(['weekly_time'=>$week])->andWhere(['status'=>1,'created_by'=>$user_id])->asArray()->all();
+        }
+
+        if($mouth!=null){
+            $model = FinancialWechatJoinRecord::find()->select('group_concat(id) as id,day_time')->groupBy('day_time')->orderBy('day_time desc')->where(['mouth_time'=>$mouth])->andWhere(['status'=>1,'created_by'=>$user_id])->asArray()->all();
+        }
+
+        return $this->render('self-fee-record',['model'=>$model,'q_1'=>$query_model1,'q_2'=>$query_model2,'q_3'=>$query_model3]);
+    }
 
     /**
      * @param $id
@@ -230,6 +254,15 @@ class FinancialWechatController extends Controller
 
         $model = FinancialWechatJoinRecord::find()->select('mouth_time')->andWhere(['status'=>1])->groupBy('mouth_time')->orderBy('mouth_time desc')->asArray()->all();
         return $this->render('choice-mouth',['model'=>$model,'type'=>$type]);
+    }
+    /**
+     * @param null $type
+     * @return string
+     */
+    public function actionSelfChoiceMouth($type=null){
+
+        $model = FinancialWechatJoinRecord::find()->select('mouth_time')->andWhere(['status'=>1])->groupBy('mouth_time')->orderBy('mouth_time desc')->asArray()->all();
+        return $this->render('self-choice-mouth',['model'=>$model,'type'=>$type]);
     }
 
     /**
