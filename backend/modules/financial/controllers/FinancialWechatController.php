@@ -220,7 +220,7 @@ class FinancialWechatController extends Controller
         $user_id = Yii::$app->user->id;
         $model = FinancialWechatJoinRecord::find()->select('group_concat(id) as id,day_time')->groupBy('day_time')->orderBy('day_time desc')->where(['day_time'=>strtotime('today')])->andWhere(['status'=>1,'created_by'=>$user_id])->asArray()->all();
 
-        $query_model1 = FinancialWechatJoinRecord::find()->select('sum(payment_amount) as sum,count(*) as count')->where(['day_time'=>strtotime('today')])->andWhere(['status'=>1])->asArray()->one();
+        $query_model1 = FinancialWechatJoinRecord::find()->select('sum(payment_amount) as sum,count(*) as count')->where(['day_time'=>strtotime('today')])->andWhere(['status'=>1,'created_by'=>$user_id])->asArray()->one();
         $query_model2 = FinancialWechatJoinRecord::find()->select('sum(payment_amount) as sum,count(*) as count')->where(['mouth_time'=>mktime(0,0,0,date('m',time()),date('t'),date('Y',time()))])->andWhere(['status'=>1,'created_by'=>$user_id])->asArray()->one();
         $query_model3 = FinancialWechatJoinRecord::find()->select('sum(payment_amount) as sum,count(*) as count')->where(['weekly_time'=>strtotime('next sunday')])->andWhere(['status'=>1,'created_by'=>$user_id])->asArray()->one();
 
