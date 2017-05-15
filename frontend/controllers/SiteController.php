@@ -524,38 +524,40 @@ class SiteController extends BaseController
     {
 
         $this->layout = 'basic';
-        $girl_rand = $boy_rand = 0;
+
+        $session = Yii::$app->session;
+        if(!$session->isActive){
+            $session->open();
+        }
         $model = Website::find()->with('photo')->asArray();
-        $ips = isset($_SERVER["HTTP_X_REAL_IP"])?$_SERVER["HTTP_X_REAL_IP"]:$_SERVER["REMOTE_ADDR"];
+
         $boy = $model->where(['website_id'=>2])->one();
         $girl = $model->where(['website_id'=>3])->one();
 
-        $limitIpModel = new ContactIpLimits();
+        if(!empty($session->get('contact_session_boy'))){
+            $boy_rand = $session->get('contact_session_boy');
+            $girl_rand = $session->get('contact_session_girl');
+        }else{
+            $session->set('contact_session_boy',mt_rand(0,count($boy['photo'])-1));
+            $session->set('contact_session_girl',mt_rand(0,count($girl['photo'])-1));
+            $boy_rand = $session->get('contact_session_boy');
+            $girl_rand = $session->get('contact_session_girl');
+        }
+        if(empty($boy['photo'][$boy_rand])||empty($girl['photo'][$girl_rand])){
 
-        if(($ip = $limitIpModel::findOne(['ip'=>$ips]))!=null){
-
-            $girl_rand = $ip->girl_rand;
-            $boy_rand = $ip->boy_rand;
+            $session->destroy();
+            return $this->redirect('contact');
 
         }else{
 
-            $girl_rand = mt_rand(0,count($girl['photo'])-1);
-            $boy_rand = mt_rand(0,count($boy['photo'])-1);
-
-            $limitIpModel->ip = $ips;
-            $limitIpModel->girl_rand = $girl_rand;
-            $limitIpModel->boy_rand = $boy_rand;
-            $limitIpModel->save();
-
+            $boys=$boy['photo'][$boy_rand];
+            $girls=$girl['photo'][$girl_rand];
+            return $this->render('contact',['boy'=>$boys,'girl'=>$girls]);
         }
 
-        return $this->render('contact',['boy'=>$boy['photo'],'girl'=>$girl['photo'],'girl_rand'=>$girl_rand,'boy_rand'=>$boy_rand]);
-    }
-    public function actionTextIp(){
-        $ip = Yii::$app->getRequest()->getUserIP();
-        return var_dump($ip);
 
     }
+
     /**
      * @return string
      * 联系我们
