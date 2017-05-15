@@ -81,24 +81,24 @@ $this->registerCss('
                     <li>
                         <a href="http://www.13loveme.com/contact">
 
-                            <img class="img-responsive" src="http://omldemh2u.bkt.clouddn.com/images/index/464021723025016472.jpg">
+                            <img class="img-responsive" src="http://omldemh2u.bkt.clouddn.com/images/home/464021723025016472.jpg">
                         </a>
 
                     </li>
                     <li>
                         <a href="http://www.13loveme.com/contact">
-                            <img class="img-responsive" src="http://omldemh2u.bkt.clouddn.com/images/index/790981646511215177.jpg">
+                            <img class="img-responsive" src="http://omldemh2u.bkt.clouddn.com/images/home/790981646511215177.jpg">
                         </a>
                     </li>
                     <li>
                         <a href="http://www.13loveme.com/date-today">
-                            <img class="img-responsive" src="http://omldemh2u.bkt.clouddn.com/images/index/3.jpg">
+                            <img class="img-responsive" src="http://omldemh2u.bkt.clouddn.com/images/home/3.jpg">
                             <!--<div class="home-img" style="background-image: url('<?/*= Yii::getAlias('@web')*/?>/images/index/3.jpg');"></div>-->
                         </a>
                     </li>
                     <li>
                         <a href="http://13loveme.com/test/check-service/index">
-                            <img class="img-responsive" src="http://omldemh2u.bkt.clouddn.com/images/index/404057364111307947.png">
+                            <img class="img-responsive" src="http://omldemh2u.bkt.clouddn.com/images/home/404057364111307947.png">
                         </a>
                     </li>
                 </ul>
