@@ -44,15 +44,17 @@ class UserLoginController extends Controller
     public static function findByUsername($username)
     {
         if(is_numeric($username)) {
-
             $param = 'cellphone';
-
         }else{
-
             $param = 'username';
         }
+        $model = User::findOne([$param => $username, 'status' => self::STATUS_ACTIVE]);
+        if(!empty($model)){
+            return $model;
+        }else{
+            exit(Response::show(405,"用户名不存在",'用户名不存在'));
+        }
 
-        return User::findOne([$param => $username, 'status' => self::STATUS_ACTIVE]);
     }
 
     public function actionView($id){
@@ -72,11 +74,11 @@ class UserLoginController extends Controller
                     Yii::$app->db->createCommand("update {{%user}} set cid='$cid' where username='$id'")->execute();
                 }
                 $data = $this->getInfo($user['id']);
-                exit(Response::show(202,"login success",$data));
+                exit(Response::show(202,"登陆成功",$data));
             }
-            exit(Response::show(403,"password error"));
+            exit(Response::show(403,"密码错误"));
         }
-        exit(Response::show(402,"user does not exist"));
+        exit(Response::show(402,"用户名不存在"));
 
     }
 
