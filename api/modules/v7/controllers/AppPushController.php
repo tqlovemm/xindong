@@ -5,9 +5,7 @@ namespace api\modules\v7\controllers;
 use api\modules\v11\models\FormThreadPushMsg;
 use api\modules\v11\models\User;
 use api\modules\v3\models\AppPush;
-use Yii;
 use yii\data\ActiveDataProvider;
-use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
 
