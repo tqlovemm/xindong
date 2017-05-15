@@ -398,6 +398,10 @@ class WeiXinController extends Controller
                     $content = "{$this->postObj->FromUserName}";
                     $this->text($content);
                     break;
+                case "奸臣":
+                    $content = "http://pan.baidu.com/share/link?shareid=1531577098&uk=358115140";
+                    $this->text($content);
+                    break;
             }
         }//if end
 
