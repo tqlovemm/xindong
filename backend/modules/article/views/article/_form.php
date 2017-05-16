@@ -26,8 +26,7 @@ use yii\widgets\ActiveForm;
         ]
     ]) ?>
 
-
-
+    
     <?= $form->field($model, 'wclick')->textInput()->label("点击数") ?>
 
     <?= $form->field($model, 'wdianzan')->textInput()->label("点赞数") ?>
