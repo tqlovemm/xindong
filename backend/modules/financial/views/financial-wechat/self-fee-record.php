@@ -83,9 +83,9 @@ $this->registerCss("
 <div class="today-fee-record-index row">
     <?php foreach ($model as $key=>$item):
             $ids = explode(',',$item['id']);
-            $query = \backend\modules\financial\models\FinancialWechatJoinRecord::find()->where(['id'=>$ids])->andWhere(['status'=>1])->asArray()->all();
+            $query = \backend\modules\financial\models\FinancialWechatJoinRecord::find()->with('wechat')->where(['id'=>$ids])->andWhere(['status'=>1])->asArray()->all();
         ?>
-        <div class="col-md-6">
+        <div class="col-md-12">
         <div class="box box-warning <?php if($key>1):?>collapsed-box<?php endif;?>">
             <div class="box-header with-border">
                 <h3 class="box-title"><?=date('Y-m-d',$item['day_time']);?></h3>
@@ -110,6 +110,7 @@ $this->registerCss("
                         <th>收款账号</th>
                         <th>收款人</th>
                         <th>时间</th>
+                        <th>微信号</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -129,6 +130,7 @@ $this->registerCss("
                             <td><?=$list['payment_to']==1?'专用号':'客服号'?></td>
                             <td><?=\backend\models\User::findOne($list['created_by'])->nickname?></td>
                             <td><?=date('H:i',$list['created_at'])?></td>
+                            <td><?=$list['wechat']['wechat']?></td>
                             <td><?=\yii\helpers\Html::a('无效',['delete-record','id'=>$list['id']],[
                                 'class'=>'btn-sm btn-danger',
                                     'data'=>[
