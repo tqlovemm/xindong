@@ -38,7 +38,7 @@ class ArticleType extends ActiveRecord
 
     public function fields(){
         return [
-            'typename',
+            'tid','typename',
         ];
     }
 

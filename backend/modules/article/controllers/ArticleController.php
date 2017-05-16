@@ -3,7 +3,7 @@
 namespace backend\modules\article\controllers;
 
 use Yii;
-use backend\modules\article\models\article;
+use backend\modules\article\models\Article;
 use backend\modules\article\models\ArticleSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -63,7 +63,7 @@ class ArticleController extends Controller
 
     public function actionCreate()
     {
-        $model = new article();
+        $model = new Article();
 
         if ($model->load(Yii::$app->request->post())) {
             if($_FILES['wimg']['name']){
