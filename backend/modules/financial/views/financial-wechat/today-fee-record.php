@@ -85,7 +85,7 @@ $this->registerCss("
             $ids = explode(',',$item['id']);
             $query = \backend\modules\financial\models\FinancialWechatJoinRecord::find()->where(['id'=>$ids])->andWhere(['status'=>1])->asArray()->all();
         ?>
-        <div class="col-md-6">
+        <div class="col-md-8">
         <div class="box box-warning <?php if($key>1):?>collapsed-box<?php endif;?>">
             <div class="box-header with-border">
                 <h3 class="box-title"><?=date('Y-m-d',$item['day_time']);?></h3>
@@ -134,7 +134,10 @@ $this->registerCss("
                                     'data'=>[
                                         'confirm' => '确定删除吗？删除后将无法恢复',
                                         'method' => 'post',
-                                ]])?></td>
+                                ]])?>&nbsp;
+
+                                <?=\yii\helpers\Html::a('修改',['financial-wechat-join-record/update','id'=>$list['id']],[
+                                'class'=>'btn-sm btn-warning',])?></td>
                         </tr>
                     <?php endforeach;?>
                     <tr><td>当日总计</td><td style="background-color: yellow;"><?=$sum?></td></tr>

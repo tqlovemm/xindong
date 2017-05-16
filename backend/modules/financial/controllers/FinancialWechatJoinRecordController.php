@@ -123,7 +123,7 @@ class FinancialWechatJoinRecordController extends Controller
         $wechat = ArrayHelper::map(FinancialWechat::findAll(['status'=>10]),'id','wechat');
         $province = ArrayHelper::map(Province::find()->where(['prov_state'=>1])->orderBy('prov_py asc')->all(),'prov_name','prov_name');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id, 'wechat_id' => $model->wechat_id]);
+            return $this->redirect('/financial/financial-wechat/everyday-fee-record');
         } else {
             return $this->render('update', [
                 'model' => $model,'wechat'=>$wechat,'province'=>$province,'platform'=>$platform,
