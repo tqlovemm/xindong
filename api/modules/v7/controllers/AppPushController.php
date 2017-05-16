@@ -5,6 +5,7 @@ namespace api\modules\v7\controllers;
 use api\modules\v11\models\FormThreadPushMsg;
 use api\modules\v11\models\User;
 use api\modules\v3\models\AppPush;
+use api\modules\v7\models\Message;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
@@ -46,7 +47,9 @@ class AppPushController extends ActiveController
     public function actionView($id){
         if(strlen($id)>10){
             $cid = $id;
-            $query['unread_thread_count'] = (int)AppPush::find()->select('count(*) as count,type')->where(['cid'=>$cid,'is_read'=>1])->andWhere(['type'=>'SSCOMM_NEWSCOMMENT_DETAIL'])->count();
+            $userModel = User::findOne(['cid'=>$cid]);
+            $uid = $userModel->id;
+            $query['unread_thread_count'] = Message::find()->where(['to_id'=>$uid])->count();
         }else{
             $userModel = User::findOne($id);
             $cid = $userModel->cid;
