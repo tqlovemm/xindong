@@ -97,9 +97,9 @@ class FormThread extends ActiveRecord
                     if(!empty($result)){
                         $res = json_decode($result);
                         //return $res->result->addressComponent->province;
-                        if(isset($res)){
-                            $add = $res->result->addressComponent->province.' '.$res->result->addressComponent->city;
-                            return $add;
+                        if(isset($res->result)){
+                            $address = $res->result->addressComponent->province.' '.$res->result->addressComponent->city;
+                            return $address;
                         }else{
                             return "";
                         }
