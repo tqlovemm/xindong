@@ -4,8 +4,6 @@ namespace api\modules\v11\models;
 use api\modules\v2\models\Ufollow;
 use Yii;
 use app\components\db\ActiveRecord;
-use api\modules\v9\models\UserProfile;
-use yii\myhelper\AccessToken;
 
 /**
  * This is the model class for table "pre_app_form_thread".
@@ -14,6 +12,7 @@ use yii\myhelper\AccessToken;
  * @property integer $user_id
  * @property string $content
  * @property string $lat_long
+ * @property string $address
  * @property string $tag
  * @property integer $updated_at
  * @property integer $created_at
@@ -33,7 +32,6 @@ class FormThread extends ActiveRecord
     private $_thumbs_up;
     private $_user_id;
     private $_comment;
-    private $_result;
     public $base64Images;
     /**
      * @inheritdoc
@@ -53,7 +51,7 @@ class FormThread extends ActiveRecord
             [['user_id', 'type', 'is_top', 'sex','read_count','thumbs_count','created_at', 'status','updated_at','comments_count','admin_count'], 'integer'],
             [['content','base64Images'], 'string'],
             [['total_score'], 'number'],
-            [['lat_long','tag'], 'string','max'=>128],
+            [['lat_long','tag','address'], 'string','max'=>128],
             [['content'], 'requiredWithout', 'skipOnEmpty' => false, 'skipOnError' => false],
         ];
     }
@@ -91,25 +89,7 @@ class FormThread extends ActiveRecord
 
             'avatar'=>function(){return $this->_user->avatar;},
 
-            'address'=>function(){
-                if(!empty($this->lat_long)){
-                    $result = (new AccessToken())->getData("http://api.map.baidu.com/geocoder?location={$this->lat_long}&output=json");
-                    if(!empty($result)){
-                        $res = json_decode($result);
-                        //return $res->result->addressComponent->province;
-                        if(isset($res->result)){
-                            $address = $res->result->addressComponent->province.' '.$res->result->addressComponent->city;
-                            return $address;
-                        }else{
-                            return "";
-                        }
-                    }else{
-                        return "";
-                    }
-                }else{
-                    return "";
-                }
-            },
+            'address',
 
             'imgItemsArray'=>function(){return FormThreadImages::findAll(['thread_id'=>$this->wid,'status'=>10]);},
 
@@ -146,6 +126,7 @@ class FormThread extends ActiveRecord
             'tag' => 'Tag',
             'type' => 'Type',
             'lat_long' => 'Lat Long',
+            'address' => 'Address',
             'read_count' => 'Read Count',
             'thumbs_count' => 'Thumbs Count',
             'comments_count' => 'Comments Count',
