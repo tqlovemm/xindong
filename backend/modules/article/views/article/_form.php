@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?= $form->field($model, 'wtype')->textInput()->dropDownList($type) ?>
-    <?= $form->field($model,'content')->label("内容")->widget('common\widgets\ueditor\ueditor',[
+    <?= $form->field($model,'content')->label("内容")->widget('common\widgets\ueditor\Ueditor',[
         'options'=>[
             'initialFrameHeight' => 300,
             'lang' =>'zh-cn',
