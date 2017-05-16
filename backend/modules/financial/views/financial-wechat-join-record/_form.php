@@ -4,7 +4,6 @@ use yii\widgets\ActiveForm;
 ?>
 <div class="financial-wechat-member-increase-form">
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
-    <?= $form->field($model, 'yesterday')->dropDownList([strtotime('today')=>'今天',strtotime('yesterday')=>'昨天'])->label('是否计算入昨天')  ?>
     <?= $form->field($model, 'platform')->dropDownList($platform)->label('平台')  ?>
     <?= $form->field($model, 'vip')->textInput(['maxlength' => true])->label('会员等级')  ?>
     <?= $form->field($model, 'number')->textInput(['maxlength' => true])->label('会员编号')  ?>
