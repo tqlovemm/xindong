@@ -21,7 +21,7 @@ class Article extends \yii\db\ActiveRecord
             [[ 'title', 'wimg', 'content', 'wtype', 'wclick', 'wdianzan', 'hot'], 'required'],
             [['created_id', 'wtype', 'wclick', 'wdianzan', 'hot', 'created_at', 'updated_at', 'status'], 'integer'],
             [['content'], 'string'],
-            [['title'], 'string', 'max' => 100],
+            [['title','miaoshu'], 'string', 'max' => 100],
             [['wimg'], 'string', 'max' => 255],
         ];
     }
@@ -35,6 +35,7 @@ class Article extends \yii\db\ActiveRecord
             'id' => 'ID',
             'created_id' => '发布人ID',
             'title' => '标题',
+            'miaoshu' => '描述',
             'wimg' => '描述图片',
             'content' => '内容',
             'wtype' => 'wtype',

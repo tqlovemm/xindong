@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'id',
             'created_id',
             'title',
+            'miaoshu',
             'wtype',
             'wimg',
 //            'content:ntext',
