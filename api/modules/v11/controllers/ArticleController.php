@@ -44,7 +44,15 @@ class ArticleController extends ActiveController {
 
     public function actionIndex() {
         $model = $this->modelClass;
+        $tid = isset($_GET['tid'])?$_GET['tid']:'';
+        $hot = isset($_GET['hot'])?$_GET['hot']:'';
         $where = ' status = 1';
+        if(!empty($tid)){
+            $where .= " and wtype = '".$tid."'";
+        }
+        if(!empty($hot)){
+            $where .= " and hot = '".$hot."'";
+        }
         $query = $model::find()->where($where)->orderBy('updated_at desc');
         return new CsvDataProvider(
             [
