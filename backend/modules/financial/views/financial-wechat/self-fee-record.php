@@ -23,7 +23,7 @@ $this->registerCss("
     <?=\yii\helpers\Html::a('查看所有已删除记录',['already-delete'],['class'=>'btn btn-success'])?>
 </p>
 <div class="row">
-    <a class="col-md-3 col-sm-6 col-xs-12" href="<?=Url::to(['everyday-fee-record'])?>">
+    <a class="col-md-3 col-sm-6 col-xs-12" href="<?=Url::to(['self-fee-record'])?>">
         <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
             <div class="info-box-content">
@@ -36,7 +36,7 @@ $this->registerCss("
         <!-- /.info-box -->
     </a>
     <!-- /.col -->
-    <a class="col-md-3 col-sm-6 col-xs-12" href="<?=Url::to(['everyday-fee-record','week'=>$week])?>">
+    <a class="col-md-3 col-sm-6 col-xs-12" href="<?=Url::to(['self-fee-record','week'=>$week])?>">
         <div class="info-box">
             <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
 
@@ -50,7 +50,7 @@ $this->registerCss("
         <!-- /.info-box -->
     </a>
     <!-- /.col -->
-    <a class="col-md-3 col-sm-6 col-xs-12" href="<?=Url::to(['everyday-fee-record','mouth'=>$mouth])?>">
+    <a class="col-md-3 col-sm-6 col-xs-12" href="<?=Url::to(['self-fee-record','mouth'=>$mouth])?>">
         <div class="info-box">
             <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
 
@@ -64,7 +64,7 @@ $this->registerCss("
         <!-- /.info-box -->
     </a>
     <!-- /.col -->
-    <a class="col-md-3 col-sm-6 col-xs-12" href="<?=Url::to(['choice-mouth'])?>">
+    <a class="col-md-3 col-sm-6 col-xs-12" href="<?=Url::to(['self-choice-mouth'])?>">
         <div class="info-box">
             <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
 
@@ -83,10 +83,10 @@ $this->registerCss("
 <div class="today-fee-record-index row">
     <?php foreach ($model as $key=>$item):
             $ids = explode(',',$item['id']);
-            $query = \backend\modules\financial\models\FinancialWechatJoinRecord::find()->where(['id'=>$ids])->andWhere(['status'=>1])->asArray()->all();
+            $query = \backend\modules\financial\models\FinancialWechatJoinRecord::find()->with('wechat')->where(['id'=>$ids])->andWhere(['status'=>1])->asArray()->all();
         ?>
-        <div class="col-md-8">
-        <div class="box box-warning <?php if($key>0):?>collapsed-box<?php endif;?>">
+        <div class="col-md-12">
+        <div class="box box-warning <?php if($key>1):?>collapsed-box<?php endif;?>">
             <div class="box-header with-border">
                 <h3 class="box-title"><?=date('Y-m-d',$item['day_time']);?></h3>
 
@@ -110,6 +110,7 @@ $this->registerCss("
                         <th>收款账号</th>
                         <th>收款人</th>
                         <th>时间</th>
+                        <th>微信号</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -129,15 +130,13 @@ $this->registerCss("
                             <td><?=$list['payment_to']==1?'专用号':'客服号'?></td>
                             <td><?=\backend\models\User::findOne($list['created_by'])->nickname?></td>
                             <td><?=date('H:i',$list['created_at'])?></td>
+                            <td><?=$list['wechat']['wechat']?></td>
                             <td><?=\yii\helpers\Html::a('无效',['delete-record','id'=>$list['id']],[
                                 'class'=>'btn-sm btn-danger',
                                     'data'=>[
                                         'confirm' => '确定删除吗？删除后将无法恢复',
                                         'method' => 'post',
-                                ]])?>&nbsp;
-
-                                <?=\yii\helpers\Html::a('修改',['financial-wechat-join-record/update','id'=>$list['id']],[
-                                'class'=>'btn-sm btn-warning',])?></td>
+                                ]])?></td>
                         </tr>
                     <?php endforeach;?>
                     <tr><td>当日总计</td><td style="background-color: yellow;"><?=$sum?></td></tr>

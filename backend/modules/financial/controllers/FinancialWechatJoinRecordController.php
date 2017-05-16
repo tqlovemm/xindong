@@ -52,10 +52,10 @@ class FinancialWechatJoinRecordController extends Controller
      * @param integer $wechat_id
      * @return mixed
      */
-    public function actionView($id, $wechat_id)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id, $wechat_id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -116,16 +116,17 @@ class FinancialWechatJoinRecordController extends Controller
      * @param integer $wechat_id
      * @return mixed
      */
-    public function actionUpdate($id, $wechat_id)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($id, $wechat_id);
+        $model = $this->findModel($id);
+        $platform = ArrayHelper::map(FinancialWechatPlatform::find()->all(),'platform_name','platform_name');
         $wechat = ArrayHelper::map(FinancialWechat::findAll(['status'=>10]),'id','wechat');
         $province = ArrayHelper::map(Province::find()->where(['prov_state'=>1])->orderBy('prov_py asc')->all(),'prov_name','prov_name');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id, 'wechat_id' => $model->wechat_id]);
+            return $this->redirect('/financial/financial-wechat/everyday-fee-record');
         } else {
             return $this->render('update', [
-                'model' => $model,'wechat'=>$wechat,'province'=>$province
+                'model' => $model,'wechat'=>$wechat,'province'=>$province,'platform'=>$platform,
             ]);
         }
     }
@@ -137,9 +138,9 @@ class FinancialWechatJoinRecordController extends Controller
      * @param integer $wechat_id
      * @return mixed
      */
-    public function actionDelete($id, $wechat_id)
+    public function actionDelete($id)
     {
-        $model = $this->findModel($id, $wechat_id);
+        $model = $this->findModel($id);
         $model->status = 0;
         $model->update();
         return $this->redirect(['index']);
@@ -153,9 +154,9 @@ class FinancialWechatJoinRecordController extends Controller
      * @return FinancialWechatJoinRecord the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id, $wechat_id)
+    protected function findModel($id)
     {
-        if (($model = FinancialWechatJoinRecord::findOne(['id' => $id, 'wechat_id' => $wechat_id])) !== null) {
+        if (($model = FinancialWechatJoinRecord::findOne(['id' => $id])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

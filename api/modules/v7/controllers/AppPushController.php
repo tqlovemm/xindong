@@ -5,6 +5,7 @@ namespace api\modules\v7\controllers;
 use api\modules\v11\models\FormThreadPushMsg;
 use api\modules\v11\models\User;
 use api\modules\v3\models\AppPush;
+use api\modules\v7\models\Message;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
@@ -45,17 +46,19 @@ class AppPushController extends ActiveController
 
     public function actionView($id){
         if(strlen($id)>10){
-            $userModel = User::findOne(['cid'=>$id]);
             $cid = $id;
+            $userModel = User::findOne(['cid'=>$cid]);
             $uid = $userModel->id;
+            $query['unread_thread_count'] = (int)Message::find()->where(['to_id'=>$uid,'is_read'=>1])->count();
         }else{
             $userModel = User::findOne($id);
             $cid = $userModel->cid;
             $uid = $id;
+            $query['unread_thread_count'] = (int)FormThreadPushMsg::find()->where(['user_id'=>$uid,'read_user'=>0])->count();
         }
-        $pushModel = ArrayHelper::map(AppPush::find()->select('count(*) as count,type')->where(['cid'=>$cid,'is_read'=>1])->groupBy('type')->asArray()->all(),'type','count');
 
-        $query['unread_thread_count'] = (int)FormThreadPushMsg::find()->where(['user_id'=>$uid,'read_user'=>0])->count();
+        $pushModel = ArrayHelper::map(AppPush::find()->select('count(*) as count,type')->where(['cid'=>$cid,'is_read'=>1])->andWhere("`type`!='SSCOMM_NEWSCOMMENT_DETAIL'")->groupBy('type')->asArray()->all(),'type','count');
+
         $query['other_saveme_count'] = isset($pushModel['SSCOMM_SAVEME'])?$pushModel['SSCOMM_SAVEME']:0;
         $query['other_message_count'] = array_sum($pushModel)-$query['other_saveme_count'];
         $query['unread_count'] = array_sum($query);

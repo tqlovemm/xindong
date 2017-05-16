@@ -4,7 +4,7 @@ namespace api\modules\v11\models;
 use api\modules\v2\models\Ufollow;
 use Yii;
 use app\components\db\ActiveRecord;
-use api\modules\v9\models\UserProfile;
+
 /**
  * This is the model class for table "pre_app_form_thread".
  *
@@ -12,6 +12,7 @@ use api\modules\v9\models\UserProfile;
  * @property integer $user_id
  * @property string $content
  * @property string $lat_long
+ * @property string $address
  * @property string $tag
  * @property integer $updated_at
  * @property integer $created_at
@@ -50,7 +51,7 @@ class FormThread extends ActiveRecord
             [['user_id', 'type', 'is_top', 'sex','read_count','thumbs_count','created_at', 'status','updated_at','comments_count','admin_count'], 'integer'],
             [['content','base64Images'], 'string'],
             [['total_score'], 'number'],
-            [['lat_long','tag'], 'string','max'=>128],
+            [['lat_long','tag','address'], 'string','max'=>128],
             [['content'], 'requiredWithout', 'skipOnEmpty' => false, 'skipOnError' => false],
         ];
     }
@@ -88,7 +89,7 @@ class FormThread extends ActiveRecord
 
             'avatar'=>function(){return $this->_user->avatar;},
 
-            'address'=>function(){return UserProfile::findOne(['user_id'=>$this->user_id])->address;},
+            'address',
 
             'imgItemsArray'=>function(){return FormThreadImages::findAll(['thread_id'=>$this->wid,'status'=>10]);},
 
@@ -125,6 +126,7 @@ class FormThread extends ActiveRecord
             'tag' => 'Tag',
             'type' => 'Type',
             'lat_long' => 'Lat Long',
+            'address' => 'Address',
             'read_count' => 'Read Count',
             'thumbs_count' => 'Thumbs Count',
             'comments_count' => 'Comments Count',

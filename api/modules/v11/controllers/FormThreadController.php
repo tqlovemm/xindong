@@ -4,20 +4,13 @@ namespace api\modules\v11\controllers;
 use api\modules\v11\models\FormThreadImages;
 use api\modules\v11\models\FormThreadPushMsg;
 use api\modules\v2\models\Ufollow;
-use api\modules\v3\models\AppPush;
-use api\modules\v3\models\Push;
 use common\Qiniu\QiniuUploader;
 use yii;
+use yii\filters\RateLimiter;
 use yii\helpers\Response;
 use yii\rest\ActiveController;
 use api\components\CsvDataProvider;
-use yii\filters\RateLimiter;
-use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
-use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\HttpBasicAuth;
-use yii\filters\auth\HttpBearerAuth;
-use yii\filters\auth\QueryParamAuth;
 
 class FormThreadController extends ActiveController {
 
@@ -28,12 +21,6 @@ class FormThreadController extends ActiveController {
     ];
     public function behaviors() {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::className(),
-            'authMethods' => [
-                QueryParamAuth::className(),
-            ],
-        ];
         $behaviors['rateLimiter'] = [
             'class' => RateLimiter::className(),
             'enableRateLimitHeaders' => true,
@@ -141,17 +128,23 @@ class FormThreadController extends ActiveController {
     /**
      * @return mixed
      * 发帖接口post
-     * /v11/form-threads?access-token={cid}
-     *
+     * /v11/form-threads
+     *sign加密
      * post 提交，必填字段：user_id,sex；
      * 必填一个字段： content文字内容,base64Images(base64字符串图片，多图片以@分开)；
-     * 可选字段：tag（标签）,lat_long(当前地理位置经纬度)
+     * 可选字段：tag（标签）,lat_long(当前地理位置经纬度用英文逗号隔开),address 当前地区
      */
     public function actionCreate() {
 
         $pre_url = Yii::$app->params['appimages'];
     	$model = new $this->modelClass();
     	$model->load(Yii::$app->request->getBodyParams(), '');
+
+        $decode = new yii\myhelper\Decode();
+        if(!$decode->decodeDigit($model->user_id)){
+            Response::show(210,'参数不正确');
+        }
+
         if (!$model->save()) {
             Response::show('201',array_values($model->getFirstErrors())[0], $model->getFirstErrors());
         }else{
@@ -241,7 +234,12 @@ class FormThreadController extends ActiveController {
 
     public function actionDelete($id)
     {
-       if($this->findModel($id)->delete()){
+        $model = $this->findModel($id);
+        $decode = new yii\myhelper\Decode();
+        if(!$decode->decodeDigit($model->user_id)){
+            Response::show(210,'参数不正确');
+        }
+       if($model->delete()){
            Response::show('200','ok');
         }
     }
