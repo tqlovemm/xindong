@@ -5,6 +5,8 @@ use api\modules\v2\models\Ufollow;
 use Yii;
 use app\components\db\ActiveRecord;
 use api\modules\v9\models\UserProfile;
+use yii\myhelper\AccessToken;
+
 /**
  * This is the model class for table "pre_app_form_thread".
  *
@@ -88,7 +90,14 @@ class FormThread extends ActiveRecord
 
             'avatar'=>function(){return $this->_user->avatar;},
 
-            'address'=>function(){return UserProfile::findOne(['user_id'=>$this->user_id])->address;},
+            'address'=>function(){
+                $getData = new AccessToken();
+                $result = $getData->getData("http://api.map.baidu.com/geocoder?location={$this->lat_long}&output=json");
+                $res = json_decode($result,true)['result']['addressComponent'];
+                $add = $res['province'].' '.$res['city'];
+                return $add;
+
+            },
 
             'imgItemsArray'=>function(){return FormThreadImages::findAll(['thread_id'=>$this->wid,'status'=>10]);},
 
