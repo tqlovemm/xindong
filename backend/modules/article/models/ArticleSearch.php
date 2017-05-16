@@ -5,12 +5,12 @@ namespace backend\modules\article\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\modules\article\models\article;
+use backend\modules\article\models\Article;
 
 /**
  * ArticleSearch represents the model behind the search form about `backend\modules\article\models\article`.
  */
-class ArticleSearch extends article
+class ArticleSearch extends Article
 {
     /**
      * @inheritdoc
