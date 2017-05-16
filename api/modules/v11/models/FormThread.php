@@ -69,9 +69,6 @@ class FormThread extends ActiveRecord
 
         $this->_user_id = Yii::$app->request->get('user_id');
         $this->_user = User::findOne(['id'=>$this->user_id]);
-        if(!empty($this->lat_long)){
-            $this->_result = (new AccessToken())->getData("http://api.map.baidu.com/geocoder?location={$this->lat_long}&output=json");
-        }
 
         if(Yii::$app->controller->action->id=="view"){
             $this->_comment = FormThreadComments::findAll(['thread_id'=>$this->wid]);
@@ -96,14 +93,18 @@ class FormThread extends ActiveRecord
 
             'address'=>function(){
                 if(!empty($this->lat_long)){
-                    if(!empty($this->_result)){
-                        $res = json_decode($this->_result,true)['result']['addressComponent'];
-                        $add = $res['province'].' '.$res['city'];
-                        return $add;
+                    $result = (new AccessToken())->getData("http://api.map.baidu.com/geocoder?location={$this->lat_long}&output=json");
+                    if(!empty($result)){
+                        $res = json_decode($result,true)['result']['addressComponent'];
+                        if(isset($res)){
+                            $add = $res['province'].' '.$res['city'];
+                            return $add;
+                        }else{
+                            return "";
+                        }
                     }else{
                         return "";
                     }
-
                 }else{
                     return "";
                 }
