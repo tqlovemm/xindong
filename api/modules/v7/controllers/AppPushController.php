@@ -49,7 +49,7 @@ class AppPushController extends ActiveController
             $cid = $id;
             $userModel = User::findOne(['cid'=>$cid]);
             $uid = $userModel->id;
-            $query['unread_thread_count'] = Message::find()->where(['to_id'=>$uid,'is_read'=>1])->count();
+            $query['unread_thread_count'] = (int)Message::find()->where(['to_id'=>$uid,'is_read'=>1])->count();
         }else{
             $userModel = User::findOne($id);
             $cid = $userModel->cid;
