@@ -46,7 +46,7 @@ class AppPushController extends ActiveController
     public function actionView($id){
         if(strlen($id)>10){
             $cid = $id;
-            $query['unread_thread_count'] = AppPush::find()->select('count(*) as count,type')->where(['cid'=>$cid,'is_read'=>1])->andWhere('type=SSCOMM_NEWSCOMMENT_DETAIL')->count();
+            $query['unread_thread_count'] = AppPush::find()->select('count(*) as count,type')->where(['cid'=>$cid,'is_read'=>1])->andWhere(['type'=>'SSCOMM_NEWSCOMMENT_DETAIL'])->count();
         }else{
             $userModel = User::findOne($id);
             $cid = $userModel->cid;
