@@ -356,7 +356,7 @@ class FinancialWechatController extends Controller
             $start_time = strtotime(Yii::$app->request->get('start_time'));
             $end_time = strtotime(Yii::$app->request->get('end_time'));
 
-            $model = FinancialWechatJoinRecord::find()->select("platform,sum(payment_amount) as pa,count(platform) as platform_c")->where(['between','day_time',$start_time,$end_time+86400])->andWhere(['status'=>1])->groupBy('platform')->asArray()->all();
+            $model = FinancialWechatJoinRecord::find()->select("platform,sum(payment_amount) as pa,count(platform) as platform_c")->where(['between','day_time',$start_time,$end_time])->andWhere(['status'=>1])->groupBy('platform')->asArray()->all();
 
             echo "<table class='table table-bordered' style='background-color: #fff;text-align: center;border: none;margin-bottom: 0px;'>
                     <tr><td colspan='3'><h3>".date('Y-m-d',$start_time)." - ".date('Y-m-d',$end_time)."销售收入明细表</h3></td></tr>
@@ -364,7 +364,7 @@ class FinancialWechatController extends Controller
             $sum = 0;
             foreach ($model as $key=>$item){
                 $sum += $item['pa'];
-                $query = FinancialWechatJoinRecord::find()->select("created_by,sum(payment_amount) as pas,count(created_by) as u_count")->where(['between','day_time',$start_time,$end_time+86400])->andWhere(['platform'=>$item['platform']])->andWhere(['status'=>1])->groupBy('created_by')->asArray()->all();
+                $query = FinancialWechatJoinRecord::find()->select("created_by,sum(payment_amount) as pas,count(created_by) as u_count")->where(['between','day_time',$start_time,$end_time])->andWhere(['platform'=>$item['platform']])->andWhere(['status'=>1])->groupBy('created_by')->asArray()->all();
                 echo "<tr>
                     <td style='vertical-align:middle;border-right: none;'>$item[platform]</td>
                     <td style='padding: 0;border:none !important;'>
