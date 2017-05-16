@@ -94,14 +94,17 @@ class FormThread extends ActiveRecord
                 if(!empty($this->lat_long)){
                     $getData = new AccessToken();
                     $result = $getData->getData("http://api.map.baidu.com/geocoder?location={$this->lat_long}&output=json");
-                    $res = json_decode($result,true)['result']['addressComponent'];
-                    $add = $res['province'].' '.$res['city'];
-                    return $add;
+                    if(!empty($result)){
+                        $res = json_decode($result,true)['result']['addressComponent'];
+                        $add = $res['province'].' '.$res['city'];
+                        return $add;
+                    }else{
+                        return "";
+                    }
+
                 }else{
                     return "";
                 }
-
-
             },
 
             'imgItemsArray'=>function(){return FormThreadImages::findAll(['thread_id'=>$this->wid,'status'=>10]);},
