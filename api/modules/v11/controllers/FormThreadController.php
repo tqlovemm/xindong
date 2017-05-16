@@ -145,7 +145,7 @@ class FormThreadController extends ActiveController {
      *
      * post 提交，必填字段：user_id,sex；
      * 必填一个字段： content文字内容,base64Images(base64字符串图片，多图片以@分开)；
-     * 可选字段：tag（标签）,lat_long(当前地理位置经纬度),address 当前地区
+     * 可选字段：tag（标签）,lat_long(当前地理位置经纬度用英文逗号隔开),address 当前地区
      */
     public function actionCreate() {
 
