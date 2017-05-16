@@ -49,7 +49,7 @@ class FormThreadCommentsController extends ActiveController {
     	$model = new $this->modelClass();
     	$model->load(Yii::$app->request->getBodyParams(), '');
         $decode = new yii\myhelper\Decode();
-        if(!$decode->decodeDigit($model->user_id)){
+        if(!$decode->decodeDigit($model->first_id)){
             yii\myhelper\Response::show(210,'参数不正确');
         }
         if(empty(FormThread::findOne($model->thread_id))){
