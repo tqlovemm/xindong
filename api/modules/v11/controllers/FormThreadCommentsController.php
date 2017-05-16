@@ -1,17 +1,13 @@
 <?php
 namespace api\modules\v11\controllers;
 
-use api\components\CsvDataProvider;
 use api\modules\v11\models\FormThread;
-use api\modules\v11\models\FormThreadComments;
 use api\modules\v11\models\User;
 use yii;
 use yii\rest\ActiveController;
 use yii\filters\RateLimiter;
 use yii\web\NotFoundHttpException;
-use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\QueryParamAuth;
-use yii\filters\auth\HttpBearerAuth;
+
 
 class FormThreadCommentsController extends ActiveController {
 
@@ -22,12 +18,6 @@ class FormThreadCommentsController extends ActiveController {
     ];
     public function behaviors() {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::className(),
-            'authMethods' => [
-                QueryParamAuth::className(),
-            ],
-        ];
         $behaviors['rateLimiter'] = [
             'class' => RateLimiter::className(),
             'enableRateLimitHeaders' => true,
@@ -58,6 +48,10 @@ class FormThreadCommentsController extends ActiveController {
 
     	$model = new $this->modelClass();
     	$model->load(Yii::$app->request->getBodyParams(), '');
+        $decode = new yii\myhelper\Decode();
+        if(!$decode->decodeDigit($model->user_id)){
+            yii\myhelper\Response::show(210,'参数不正确');
+        }
         if(empty(FormThread::findOne($model->thread_id))){
             yii\myhelper\Response::show('203','评价失败',"该帖子不存在");
         }elseif(empty(User::findOne($model->first_id))){
@@ -90,7 +84,12 @@ class FormThreadCommentsController extends ActiveController {
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
+
         $get = Yii::$app->request->getBodyParams();
+        $decode = new yii\myhelper\Decode();
+        if(!$decode->decodeDigit($get['user_id'])){
+            yii\myhelper\Response::show(210,'参数不正确');
+        }
         if($get['user_id']==$model->first_id){
             if($model->delete()){
                 yii\myhelper\Response::show('200','删除成功');

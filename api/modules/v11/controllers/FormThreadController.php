@@ -6,6 +6,7 @@ use api\modules\v11\models\FormThreadPushMsg;
 use api\modules\v2\models\Ufollow;
 use common\Qiniu\QiniuUploader;
 use yii;
+use yii\filters\RateLimiter;
 use yii\helpers\Response;
 use yii\rest\ActiveController;
 use api\components\CsvDataProvider;
@@ -20,6 +21,10 @@ class FormThreadController extends ActiveController {
     ];
     public function behaviors() {
         $behaviors = parent::behaviors();
+        $behaviors['rateLimiter'] = [
+            'class' => RateLimiter::className(),
+            'enableRateLimitHeaders' => true,
+        ];
         return $behaviors;
     }
 
@@ -229,7 +234,12 @@ class FormThreadController extends ActiveController {
 
     public function actionDelete($id)
     {
-       if($this->findModel($id)->delete()){
+        $model = $this->findModel($id);
+        $decode = new yii\myhelper\Decode();
+        if(!$decode->decodeDigit($model->user_id)){
+            Response::show(210,'参数不正确');
+        }
+       if($model->delete()){
            Response::show('200','ok');
         }
     }

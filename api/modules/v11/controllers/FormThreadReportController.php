@@ -51,6 +51,10 @@ class FormThreadReportController extends ActiveController {
 
         $model = new $this->modelClass();
         $model->load(Yii::$app->request->getBodyParams(), '');
+        $decode = new yii\myhelper\Decode();
+        if(!$decode->decodeDigit($model->user_id)){
+            Response::show(210,'参数不正确');
+        }
         if (!$model->save()) {
             return array_values($model->getFirstErrors())[0];
         }else{

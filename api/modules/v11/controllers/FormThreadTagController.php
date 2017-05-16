@@ -2,16 +2,11 @@
 namespace api\modules\v11\controllers;
 
 use yii;
-use yii\helpers\Response;
+
 use yii\rest\ActiveController;
 use api\components\CsvDataProvider;
 use yii\filters\RateLimiter;
-use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
-use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\HttpBasicAuth;
-use yii\filters\auth\HttpBearerAuth;
-use yii\filters\auth\QueryParamAuth;
 
 class FormThreadTagController extends ActiveController {
 
@@ -22,12 +17,6 @@ class FormThreadTagController extends ActiveController {
     ];
     public function behaviors() {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::className(),
-            'authMethods' => [
-                QueryParamAuth::className(),
-            ],
-        ];
         $behaviors['rateLimiter'] = [
             'class' => RateLimiter::className(),
             'enableRateLimitHeaders' => true,
