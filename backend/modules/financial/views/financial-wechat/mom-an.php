@@ -5,7 +5,7 @@ $percent02 = ($model_past['sum']==0)?0:round(($model_past['sum']-$model_past['su
 
 ?>
 
-<div class="box box-success" style="background-color: #fff;width: 50%;text-align: center;padding:10px;">
+<div class="box box-success" style="background-color: #fff;width: 80%;text-align: center;padding:10px;">
     <table class="table table-bordered">
         <caption>今日统计</caption>
         <tr>
@@ -19,7 +19,7 @@ $percent02 = ($model_past['sum']==0)?0:round(($model_past['sum']-$model_past['su
         <tr><td style="background-color: yellow;"><?=$model_last['sum']?></td><td style="background-color: yellow;"><?=$model_this['sum']?></td><td style="background-color: yellow;"><?=$model_past['sum']?></td><td><?=$percent01?>%</td><td><?=$percent02?>%</td></tr>
     </table>
 </div>
-<div class="box box-danger" style="width: 50%;background-color: #fff;">
+<div class="box box-danger" style="width: 80%;background-color: #fff;">
     <div class="clearfix" style="margin: 10px 0;">
         <form class="col-md-6">
             <label for="day_time">按天选择日期</label>
