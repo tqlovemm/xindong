@@ -22,6 +22,21 @@ class Vip
         return $vip;
     }
 
+    public static function specialVip($vipNumber){
+        if($vipNumber==2){
+            $vip = "普通及以上会员";
+        }elseif($vipNumber==3){
+            $vip = "高端及以上会员";
+        }elseif($vipNumber==4){
+            $vip = "至尊及以上会员";
+        }elseif($vipNumber==5){
+            $vip = "私人定制";
+        }else{
+            $vip = "网站会员";
+        }
+        return $vip;
+    }
+
     public static function status($statusNumber){
 
 
