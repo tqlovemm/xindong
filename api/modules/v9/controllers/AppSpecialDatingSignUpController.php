@@ -3,7 +3,7 @@
 namespace api\modules\v9\controllers;
 
 use api\modules\v9\models\AppSpecialDating;
-use backend\modules\app\models\User;
+use backend\models\User;
 use common\components\Vip;
 use frontend\models\UserData;
 use yii\myhelper\Response;
@@ -60,7 +60,7 @@ class AppSpecialDatingSignUpController extends ActiveController
             if(!$decode->decodeDigit($model->user_id)){
             Response::show(210,'参数不正确');
         }
-        $groupid = \backend\models\User::getVip($model->user_id);
+        $groupid = User::getVip($model->user_id);
         $coin = UserData::findOne($model->user_id);
         $specialModel = AppSpecialDating::findOne($model->zid);
 

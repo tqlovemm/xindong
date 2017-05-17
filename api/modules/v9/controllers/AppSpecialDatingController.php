@@ -27,6 +27,13 @@ class AppSpecialDatingController extends ActiveController
         return $actions;
     }
 
+    /**
+     * 获取单个专属女生信息接口
+     * get
+     * v9/app-special-dating-sign-ups/{zid}专属女生编号
+     * 存在状态
+     * 0.'401','该女生不存在'
+     */
     public function actionView($id){
 
         $model = $this->findModel($id);
@@ -36,6 +43,13 @@ class AppSpecialDatingController extends ActiveController
         return $model;
     }
 
+    /**
+     * 获取所有专属女生信息接口
+     * get
+     * v9/app-special-dating-sign-ups
+     * 拼接字段?area={area} 该地区的所有专属女生，不拼接则为全地区
+     * 200获取成功
+     */
     public function actionIndex(){
 
         $getData = Yii::$app->request->get('area');
