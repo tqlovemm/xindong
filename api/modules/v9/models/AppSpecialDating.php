@@ -109,7 +109,8 @@ class AppSpecialDating extends \yii\db\ActiveRecord
             },
             'avatar'=>function(){
                 if(Yii::$app->controller->action->id=="view"){
-                    return $this->images;
+                    $pre_url = Yii::$app->params['test'];
+                    return $pre_url.$this->images;
                 }
                 return $this->getCoverPhoto();
             },

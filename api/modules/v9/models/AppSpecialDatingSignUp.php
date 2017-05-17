@@ -1,7 +1,7 @@
 <?php
 
 namespace api\modules\v9\models;
-
+use app\components\db\ActiveRecord;
 /**
  * This is the model class for table "pre_app_special_dating_sign_up".
  *
@@ -14,7 +14,7 @@ namespace api\modules\v9\models;
  * @property integer $status
  *
  */
-class AppSpecialDatingSignUp extends \yii\db\ActiveRecord
+class AppSpecialDatingSignUp extends ActiveRecord
 {
     /**
      * @inheritdoc

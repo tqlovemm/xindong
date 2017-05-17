@@ -2,6 +2,7 @@
 
 namespace api\modules\v9\controllers;
 
+use api\components\CsvDataProvider;
 use api\modules\v9\models\AppSpecialDating;
 use backend\models\User;
 use common\components\Vip;
@@ -30,7 +31,24 @@ class AppSpecialDatingSignUpController extends ActiveController
         return $actions;
     }
 
+    public function actionIndex() {
 
+        $model = $this->modelClass;
+        $query =  $model::find();
+
+        return new CsvDataProvider([
+            'query' =>  $query,
+            'pagination' => [
+                'pageSize' => 16,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'created_at' => SORT_DESC,
+                ]
+            ],
+        ]);
+
+    }
     /**
      * 专属报名接口
      * post
@@ -63,6 +81,10 @@ class AppSpecialDatingSignUpController extends ActiveController
         $groupid = User::getVip($model->user_id);
         $coin = UserData::findOne($model->user_id);
         $specialModel = AppSpecialDating::findOne($model->zid);
+
+        if(!empty($model::findOne(['user_id'=>$model->user_id,'zid'=>$model->zid]))){
+            Response::show(202,'您已经报名，请等待审核','您已经报名，请等待审核');
+        }
 
         if(empty($groupid)){
             Response::show(202,'报名男生不存在','报名男生不存在');
