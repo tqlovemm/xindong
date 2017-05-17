@@ -83,9 +83,9 @@ $this->registerCss("
 <div class="today-fee-record-index row">
     <?php foreach ($model as $key=>$item):
             $ids = explode(',',$item['id']);
-            $query = \backend\modules\financial\models\FinancialWechatJoinRecord::find()->where(['id'=>$ids])->andWhere(['status'=>1])->asArray()->all();
+            $query = \backend\modules\financial\models\FinancialWechatJoinRecord::find()->with('wechat')->where(['id'=>$ids])->andWhere(['status'=>[1,2]])->asArray()->all();
         ?>
-        <div class="col-md-8">
+        <div class="col-md-12">
         <div class="box box-warning <?php if($key>0):?>collapsed-box<?php endif;?>">
             <div class="box-header with-border">
                 <h3 class="box-title"><?=date('Y-m-d',$item['day_time']);?></h3>
@@ -109,6 +109,7 @@ $this->registerCss("
                         <th>会员编号</th>
                         <th>收款账号</th>
                         <th>收款人</th>
+                        <th>微信号</th>
                         <th>时间</th>
                         <th>操作</th>
                     </tr>
@@ -119,7 +120,7 @@ $this->registerCss("
                     foreach ($query as $list):
                         $sum += $list['payment_amount'];
                         ?>
-                        <tr>
+                        <tr class="<?php if($list['status']==2){echo "bg-success";}?>">
                             <td><?=$list['vip']?></td>
                             <td><?=$list['payment_amount']?></td>
                             <td><?=$list['channel']?></td>
@@ -128,14 +129,19 @@ $this->registerCss("
                             <td><?=$list['number']?></td>
                             <td><?=$list['payment_to']==1?'专用号':'客服号'?></td>
                             <td><?=\backend\models\User::findOne($list['created_by'])->nickname?></td>
+                            <td><?=$list['wechat']['wechat']?></td>
                             <td><?=date('H:i',$list['created_at'])?></td>
-                            <td><?=\yii\helpers\Html::a('无效',['delete-record','id'=>$list['id']],[
+                            <td><?=\yii\helpers\Html::a('通过',['pass-record','id'=>$list['id']],[
+                                'class'=>'btn-sm btn-success',
+                                    'data'=>[
+                                        'confirm' => '确定准确无误吗',
+                                        'method' => 'post',
+                                ]])?>&nbsp;<?=\yii\helpers\Html::a('无效',['delete-record','id'=>$list['id']],[
                                 'class'=>'btn-sm btn-danger',
                                     'data'=>[
                                         'confirm' => '确定删除吗？删除后将无法恢复',
                                         'method' => 'post',
                                 ]])?>&nbsp;
-
                                 <?=\yii\helpers\Html::a('修改',['financial-wechat-join-record/update','id'=>$list['id']],[
                                 'class'=>'btn-sm btn-warning',])?></td>
                         </tr>

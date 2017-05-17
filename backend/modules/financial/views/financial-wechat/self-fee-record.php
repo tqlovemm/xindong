@@ -83,7 +83,7 @@ $this->registerCss("
 <div class="today-fee-record-index row">
     <?php foreach ($model as $key=>$item):
             $ids = explode(',',$item['id']);
-            $query = \backend\modules\financial\models\FinancialWechatJoinRecord::find()->with('wechat')->where(['id'=>$ids])->andWhere(['status'=>1])->asArray()->all();
+            $query = \backend\modules\financial\models\FinancialWechatJoinRecord::find()->with('wechat')->where(['id'=>$ids])->andWhere(['status'=>[1,2]])->asArray()->all();
         ?>
         <div class="col-md-12">
         <div class="box box-warning <?php if($key>1):?>collapsed-box<?php endif;?>">
