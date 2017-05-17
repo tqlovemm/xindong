@@ -85,7 +85,7 @@ $this->registerCss("
             $ids = explode(',',$item['id']);
             $query = \backend\modules\financial\models\FinancialWechatJoinRecord::find()->where(['id'=>$ids])->andWhere(['status'=>1])->asArray()->all();
         ?>
-        <div class="col-md-8">
+        <div class="col-md-12">
         <div class="box box-warning <?php if($key>0):?>collapsed-box<?php endif;?>">
             <div class="box-header with-border">
                 <h3 class="box-title"><?=date('Y-m-d',$item['day_time']);?></h3>
