@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'sex',
             'vip',
             'coin',
-            //'time',
+            'age',
             //'updated_at:datetime',
             [
                 'attribute' => '创建时间',
