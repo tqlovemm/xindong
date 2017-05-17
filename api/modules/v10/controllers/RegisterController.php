@@ -47,14 +47,14 @@ class RegisterController extends Controller
          */
         $model = new $this->modelClass();
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
-        if(empty($model->password_hash)){
+   /*     if(empty($model->password_hash)){
             $str = array(
                 'code'  =>  '201',
                 'message'   =>  '注册失败,密码不能为空',
                 'data'  =>  '密码不能为空',
             );
             return $str;
-        }
+        }*/
         $model->password_hash = Yii::$app->security->generatePasswordHash($model->password_hash);
 
         $age = strtotime($model->birthdate);
