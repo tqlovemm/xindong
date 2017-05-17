@@ -74,10 +74,10 @@ class AppSpecialDatingSignUpController extends ActiveController
         $model = new $this->modelClass();
         $model->load(Yii::$app->request->getBodyParams(), '');
 
-        $decode = new yii\myhelper\Decode();
+     /*   $decode = new yii\myhelper\Decode();
             if(!$decode->decodeDigit($model->user_id)){
             Response::show(210,'参数不正确');
-        }
+        }*/
         $groupid = User::getVip($model->user_id);
         $coin = UserData::findOne($model->user_id);
         $specialModel = AppSpecialDating::findOne($model->zid);
