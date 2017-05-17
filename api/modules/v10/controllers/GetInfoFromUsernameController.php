@@ -17,7 +17,7 @@ use yii\myhelper\Response;
 use yii\rest\Controller;
 use yii\web\NotFoundHttpException;
 
-class User3Controller extends Controller
+class GetInfoFromUsernameController extends Controller
 {
 
     public $modelClass = 'api\modules\v8\models\User';
