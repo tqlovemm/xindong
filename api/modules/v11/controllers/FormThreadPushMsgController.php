@@ -39,12 +39,12 @@ class FormThreadPushMsgController extends ActiveController {
     	$model = $this->modelClass;
         $user_id = Yii::$app->request->get('user_id');
         $type = Yii::$app->request->get('type');
-        if(!empty($type)){
+        if(isset($type)){
             $query = $model::find()->where(['user_id'=>$user_id,'read_user'=>$type]);
         }else{
             $query = $model::find()->where(['user_id'=>$user_id]);
         }
-        FormThreadPushMsg::updateAll(['read_user'=>1],['user_id'=>$user_id]);
+       // FormThreadPushMsg::updateAll(['read_user'=>1],['user_id'=>$user_id]);
         return new CsvDataProvider([
             'query' =>  $query,
             'pagination' => [
@@ -89,9 +89,6 @@ class FormThreadPushMsgController extends ActiveController {
         }
     }
 
-    public function actionView($id) {
-
-    }
 
     protected function findModel($id)
     {
