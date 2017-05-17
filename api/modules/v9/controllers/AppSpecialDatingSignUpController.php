@@ -35,7 +35,7 @@ class AppSpecialDatingSignUpController extends ActiveController
      * 获取报名记录接口
      * get
      * v9/app-special-dating-sign-ups
-     *
+     *拼接字段?area=1，不拼接为获取历史记录
      * 存在状态
      * 0.'200','ok'
      */
@@ -43,6 +43,12 @@ class AppSpecialDatingSignUpController extends ActiveController
 
         $model = $this->modelClass;
         $query =  $model::find();
+
+        $area = Yii::$app->request->get('area');
+        if(!empty($area)&&$area==1){
+            $getArea = array_values(yii\helpers\ArrayHelper::map(AppSpecialDating::find()->select('address')->asArray()->all(),'address','address'));
+            return $getArea;
+        }
 
         return new CsvDataProvider([
             'query' =>  $query,
