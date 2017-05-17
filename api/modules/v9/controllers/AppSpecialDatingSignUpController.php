@@ -117,7 +117,12 @@ class AppSpecialDatingSignUpController extends ActiveController
         if(!$model->save()) {
             Response::show(201,array_values($model->getFirstErrors())[0], $model->getFirstErrors());
         }else{
-            Response::show(200,'报名成功','报名成功');
+            $userData = UserData::findOne($model->user_id);
+            $userData->jiecao_coin -= $specialModel->coin;
+            if($userData->update()){
+                Response::show(200,'报名成功','报名成功');
+            }
+            Response::show(201,array_values($userData->getFirstErrors())[0], $userData->getFirstErrors());
         }
     }
 
