@@ -18,7 +18,7 @@ class BgadminGirlMemberSearch extends BgadminGirlMember
     public function rules()
     {
         return [
-            [['member_id', 'sex', 'vip', 'status', 'created_by','foreign'], 'integer'],
+            [['member_id', 'sex', 'vip', 'status','age', 'created_by','foreign'], 'integer'],
             [['number', 'weicaht', 'weibo', 'cellphone', 'address_a', 'address_b', 'time', 'updated_at', 'created_at','coin'], 'safe'],
         ];
     }
@@ -59,6 +59,7 @@ class BgadminGirlMemberSearch extends BgadminGirlMember
             'member_id' => $this->member_id,
             'sex' => $this->sex,
             'vip' => $this->vip,
+            'age' => $this->age,
             'status' => $this->status,
             'created_by' => $this->created_by,
             'coin' => $this->coin,
