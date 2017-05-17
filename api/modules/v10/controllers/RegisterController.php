@@ -47,7 +47,7 @@ class RegisterController extends Controller
          */
         $model = new $this->modelClass();
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
-        if(!(isset($model->password_hash) && !empty($model->password_hash))){
+        if(empty($model->password_hash)){
             $str = array(
                 'code'  =>  '201',
                 'message'   =>  '注册失败,密码不能为空',
