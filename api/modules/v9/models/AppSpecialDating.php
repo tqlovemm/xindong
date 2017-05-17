@@ -115,7 +115,7 @@ class AppSpecialDating extends \yii\db\ActiveRecord
             },
             'chatImages'=>function(){
 
-                return "";
+                return array();
             }
         ];
     }
