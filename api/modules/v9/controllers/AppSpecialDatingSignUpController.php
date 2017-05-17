@@ -31,6 +31,14 @@ class AppSpecialDatingSignUpController extends ActiveController
         return $actions;
     }
 
+    /**
+     * 获取报名记录接口
+     * get
+     * v9/app-special-dating-sign-ups
+     *
+     * 存在状态
+     * 0.'200','ok'
+     */
     public function actionIndex() {
 
         $model = $this->modelClass;
@@ -74,10 +82,10 @@ class AppSpecialDatingSignUpController extends ActiveController
         $model = new $this->modelClass();
         $model->load(Yii::$app->request->getBodyParams(), '');
 
-     /*   $decode = new yii\myhelper\Decode();
+        $decode = new yii\myhelper\Decode();
             if(!$decode->decodeDigit($model->user_id)){
             Response::show(210,'参数不正确');
-        }*/
+        }
         $groupid = User::getVip($model->user_id);
         $coin = UserData::findOne($model->user_id);
         $specialModel = AppSpecialDating::findOne($model->zid);
