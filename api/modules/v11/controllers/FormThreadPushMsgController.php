@@ -30,7 +30,7 @@ class FormThreadPushMsgController extends ActiveController {
     /**
      * @return CsvDataProvider
      * v11/form-thread-push-msgs?thread_id={thread_id}
-     * type=1获取未读消息，type=0获取已读消息，无参数type则为所有消息
+     * type=1获取已读消息，type=0获取未读消息，无参数type则为所有消息
      * 获取所有和他有关的帖子id，
      */
 
