@@ -54,7 +54,10 @@ class AppSpecialDatingSignUp extends ActiveRecord
     public function fields()
     {
         return [
-            'sid','user_id', 'zid', 'created_at', 'updated_at', 'status', 'created_by'
+            'sid','user_id', 'zid', 'created_at',
+            'info'=>function(){
+                return AppSpecialDating::findOne(['zid'=>$this->zid]);
+            }
         ];
     }
 
