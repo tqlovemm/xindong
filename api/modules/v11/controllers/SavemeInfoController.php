@@ -9,6 +9,7 @@ use yii\myhelper\Decode;
 use api\modules\v11\models\Saveme;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\QueryParamAuth;
+use common\components\PushConfig;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\RateLimiter;
 use yii\data\Pagination;
@@ -125,17 +126,16 @@ class SavemeInfoController extends ActiveController {
         }
         //推送
         $cid = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$aid)->queryOne();
-        $self = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$girlid)->queryOne();
-        if(!empty($cid['cid'])){
+        if(!empty($girlid)){
             if(empty($cid['nickname'])){
                 $cid['nickname'] = $cid['username'];
             }
             $title = $cid['nickname'].'申请了您发布的救我';
             $msg = $cid['nickname'].'申请了您发布的救我';
-            $date = time();
-            $icon = Yii::$app->params['icon'].'/images/app_push/u=3453872033,2552982116&fm=21&gp=0.png';
-            $extras = json_encode(array('push_title'=>urlencode($title),'push_content'=>urlencode($msg),'push_type'=>'SSCOMM_SAVEME'));
-            Yii::$app->db->createCommand("insert into {{%app_push}} (type,status,cid,title,msg,extras,platform,response,icon,created_at,updated_at) values('SSCOMM_SAVEME',2,'$self[cid]','$title','$msg','$extras','all','NULL','$icon',$date,$date)")->execute();
+            $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$aid",'push_type'=>'SSCOMM_SAVEME');
+            $extras = json_encode($data);
+            PushConfig::config();
+            pushMessageToList(1, $title, $msg, $extras , $girlid);
         }
         Response::show('200','操作成功',"申请成功");
     }
@@ -181,17 +181,17 @@ class SavemeInfoController extends ActiveController {
                     throw new ErrorException($e->getMessage());
                 }
                 //拒绝推送
-                $self = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$v)->queryOne();
                 if(!empty($cid['cid'])){
                     if(empty($cid['nickname'])){
                         $cid['nickname'] = $cid['username'];
                     }
+
                     $title = $cid['nickname'].'拒绝了您的救我申请';
                     $msg = $cid['nickname'].'拒绝了您的救我申请';
-                    $date = time();
-                    $icon = Yii::$app->params['icon'].'/images/app_push/u=3453872033,2552982116&fm=21&gp=0.png';
-                    $extras = json_encode(array('push_title'=>urlencode($title),'push_content'=>urlencode($msg),'push_type'=>'SSCOMM_SAVEME'));
-                    Yii::$app->db->createCommand("insert into {{%app_push}} (type,status,cid,title,msg,extras,platform,response,icon,created_at,updated_at) values('SSCOMM_SAVEME',2,'$self[cid]','$title','$msg','$extras','all','NULL','$icon',$date,$date)")->execute();
+                    $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$id",'push_type'=>'SSCOMM_SAVEME');
+                    $extras = json_encode($data);
+                    PushConfig::config();
+                    pushMessageToList(1, $title, $msg, $extras , $v);
                 }
             }
         }
@@ -203,17 +203,16 @@ class SavemeInfoController extends ActiveController {
             Response::show('201','操作成功',"审核失败2");
         }
         //接收推送
-        $self = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$apply_uid)->queryOne();
         if(!empty($cid['cid'])){
             if(empty($cid['nickname'])){
                 $cid['nickname'] = $cid['username'];
             }
             $title = $cid['nickname'].'通过了您的救我申请';
             $msg = $cid['nickname'].'通过了您的救我申请';
-            $date = time();
-            $icon = Yii::$app->params['icon'].'/images/app_push/u=3453872033,2552982116&fm=21&gp=0.png';
-            $extras = json_encode(array('push_title'=>urlencode($title),'push_content'=>urlencode($msg),'push_type'=>'SSCOMM_SAVEME'));
-            Yii::$app->db->createCommand("insert into {{%app_push}} (type,status,cid,title,msg,extras,platform,response,icon,created_at,updated_at) values('SSCOMM_SAVEME',2,'$self[cid]','$title','$msg','$extras','all','NULL','$icon',$date,$date)")->execute();
+            $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$id",'push_type'=>'SSCOMM_SAVEME');
+            $extras = json_encode($data);
+            PushConfig::config();
+            pushMessageToList(1, $title, $msg, $extras , $apply_uid);
         }
         $res3 = Yii::$app->db->createCommand("update pre_saveme set status = 2 where id = {$saveme_id}")->execute();
         if ($res3) {
