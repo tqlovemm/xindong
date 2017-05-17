@@ -119,7 +119,7 @@ $this->registerCss("
                     foreach ($query as $list):
                         $sum += $list['payment_amount'];
                         ?>
-                        <tr>
+                        <tr class="<?php if($list['status']==2){echo "bg-success";}?>">
                             <td><?=$list['vip']?></td>
                             <td><?=$list['payment_amount']?></td>
                             <td><?=$list['channel']?></td>
