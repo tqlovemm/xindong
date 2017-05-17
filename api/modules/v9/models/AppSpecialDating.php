@@ -56,7 +56,7 @@ class AppSpecialDating extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'zid' => '编号',
+            'zid' => '专属女生编号',
             'p_info' => '关于我',
             'h_info' => '我想要',
             'introduce' => '简介',
@@ -109,8 +109,8 @@ class AppSpecialDating extends \yii\db\ActiveRecord
             },
             'avatar'=>function(){
                 if(Yii::$app->controller->action->id=="view"){
-                    $pre_url = Yii::$app->params['test'];
-                    return $pre_url.$this->images;
+                    $images = \api\modules\v9\models\AppSpecialDatingImages::findAll(['zid'=>$this->zid]);
+                    return $images;
                 }
                 return $this->getCoverPhoto();
             },
