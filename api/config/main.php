@@ -156,7 +156,7 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => [
                         'v9/member-sort','v9/member-sort2','v9/member-sort3','v9/turn-over-card','v9/user-info','v9/judge','v9/turn-over-card-match',
-                        'v9/user-info','v9/dating','v9/send-msg','v9/check-user-info','v9/dating-signup','v9/area','v9/app-special-dating',
+                        'v9/user-info','v9/dating','v9/send-msg','v9/check-user-info','v9/dating-signup','v9/area','v9/app-special-dating','v9/app-special-dating-sign-up',
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\w+>',

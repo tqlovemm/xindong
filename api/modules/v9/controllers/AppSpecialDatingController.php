@@ -38,8 +38,13 @@ class AppSpecialDatingController extends ActiveController
 
     public function actionIndex(){
 
+        $getData = Yii::$app->request->get('area');
         $model = $this->modelClass;
-        $query = $model::find()->where(['status'=>10]);
+        if(!empty($getData)){
+            $query = $model::find()->where(['status'=>10,'address'=>$getData]);
+        }else{
+            $query = $model::find()->where(['status'=>10]);
+        }
 
         return new CsvDataProvider([
             'query' =>  $query,
