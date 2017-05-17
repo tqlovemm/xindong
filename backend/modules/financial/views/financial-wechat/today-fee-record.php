@@ -109,6 +109,7 @@ $this->registerCss("
                         <th>会员编号</th>
                         <th>收款账号</th>
                         <th>收款人</th>
+                        <th>微信号</th>
                         <th>时间</th>
                         <th>操作</th>
                     </tr>
@@ -128,6 +129,7 @@ $this->registerCss("
                             <td><?=$list['number']?></td>
                             <td><?=$list['payment_to']==1?'专用号':'客服号'?></td>
                             <td><?=\backend\models\User::findOne($list['created_by'])->nickname?></td>
+                            <td><?=$list['wechat']['wechat']?></td>
                             <td><?=date('H:i',$list['created_at'])?></td>
                             <td><?=\yii\helpers\Html::a('通过',['pass-record','id'=>$list['id']],[
                                 'class'=>'btn-sm btn-success',
