@@ -30,7 +30,7 @@ class AppSpecialDatingSignUp extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'zid'], 'required'],
+            [['user_id', 'zid'], 'required','message'=>'{attribute}不可为空'],
             [['user_id', 'zid', 'created_at', 'updated_at', 'status', 'created_by'], 'integer'],
         ];
     }

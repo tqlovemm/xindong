@@ -2,7 +2,10 @@
 
 namespace api\modules\v9\controllers;
 
-
+use api\modules\v9\models\AppSpecialDating;
+use backend\modules\app\models\User;
+use common\components\Vip;
+use frontend\models\UserData;
 use yii\myhelper\Response;
 use yii;
 use yii\rest\ActiveController;
@@ -34,7 +37,16 @@ class AppSpecialDatingSignUpController extends ActiveController
      * v9/app-special-dating-sign-ups
      * 必传参数
      * user_id用户id,zid专属女生编号
+     *
      * sign 加密 {210,'参数不正确'}
+     *
+     * 存在状态
+     * 0.'200','报名成功'
+     * 1.'201','您的节操币不足请充值','您的节操币不足请充值'
+     * 2.'201',"您的等级不足，专属女生仅限{$vip}报名","您的等级不足，专属女生仅限{$vip}报名"
+     * 3.'201','报名人数已满，请等待开放'
+     * 4.'201','用户ID不可为空'
+     * 5.'201','专属女生编号不可为空'
      */
 
     public function actionCreate() {
@@ -43,11 +55,28 @@ class AppSpecialDatingSignUpController extends ActiveController
         $model->load(Yii::$app->request->getBodyParams(), '');
 
         $decode = new yii\myhelper\Decode();
-        /*if(!$decode->decodeDigit($model->user_id)){
+            if(!$decode->decodeDigit($model->user_id)){
             Response::show(210,'参数不正确');
-        }*/
-        if (!$model->save()) {
+        }
 
+        $coin = UserData::findOne($model->user_id)->jiecao_coin;
+        $groupid = \backend\models\User::getVip($model->user_id);
+        $specialModel = AppSpecialDating::findOne($model->zid);
+
+        if($coin<$specialModel->coin){
+            Response::show('201','您的节操币不足请充值','您的节操币不足请充值');
+        }
+
+        if($groupid<$specialModel->limit_vip){
+            $vip = Vip::specialVip($specialModel->limit_vip);
+            Response::show('201',"您的等级不足，专属女生仅限{$vip}报名","您的等级不足，专属女生仅限{$vip}报名");
+        }
+
+        if($specialModel->limit_count<=$specialModel->sign_up_count){
+            Response::show('201','报名人数已满，请等待开放','报名人数已满，请等待开放');
+        }
+
+        if(!$model->save()) {
             Response::show('201',array_values($model->getFirstErrors())[0], $model->getFirstErrors());
         }else{
             Response::show('200','报名成功','报名成功');
