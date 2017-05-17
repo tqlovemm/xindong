@@ -78,7 +78,7 @@ class AppSpecialDating extends \yii\db\ActiveRecord
     public function fields()
     {
         return [
-            'coin', 'limit_count', 'limit_vip', 'created_at', 'updated_at', 'status', 'sign_up_count', 'introduce',
+            'zid','coin', 'limit_count', 'limit_vip', 'created_at', 'updated_at', 'status', 'sign_up_count', 'introduce',
             'p_info', 'h_info','address', 'address_detail',
             'tag_type'=>function(){
                 if($this->tag_type==1){
