@@ -113,6 +113,10 @@ class AppSpecialDating extends \yii\db\ActiveRecord
                 }
                 return $this->getCoverPhoto();
             },
+            'chatImages'=>function(){
+
+                return "";
+            }
         ];
     }
 
