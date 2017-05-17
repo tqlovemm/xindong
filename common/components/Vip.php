@@ -59,6 +59,6 @@ class Vip
 
     public static function sort(){
         //帖子热度 = (总赞数*0.2+总评论数*0.3+管理员参数*0.4+总阅读数*0.1)*1000/(发布时间距离当前时间的小时差+2)^1.2
-        \Yii::$app->db->createCommand("update pre_app_form_thread set total_score=(thumbs_count*0.2+comments_count*0.3+admin_count*0.4+read_count*0.1)/power(((unix_timestamp(now())-created_at)/3600)+2,1.2)")->execute();
+        \Yii::$app->db->createCommand("update pre_app_form_thread set total_score=(thumbs_count*0.2+comments_count*0.3+admin_count*0.4+read_count*0.1)/power(((unix_timestamp(now())-created_at)/3600)+1,1.1)")->execute();
     }
 }
