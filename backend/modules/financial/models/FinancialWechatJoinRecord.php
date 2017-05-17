@@ -50,7 +50,7 @@ class FinancialWechatJoinRecord extends \yii\db\ActiveRecord
             [['wechat_id', 'created_at', 'updated_at','status',  'created_by','yesterday', 'type','day_time','weekly_time','mouth_time','payment_to','year_time'], 'integer'],
             [['join_source', 'channel','platform','vip','number'], 'string', 'max' => 128],
             [['remarks','payment_screenshot'], 'string', 'max' => 256],
-            [[' payment_amount'], 'number']
+            [['payment_amount'], 'number']
         ];
     }
 
