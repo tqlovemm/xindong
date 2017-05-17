@@ -41,7 +41,7 @@ class AppPushController extends Controller
             pushMessageToApp(1, $msg , $extras , $title);
             Yii::$app->db->createCommand("update {{%app_push}} set status=0 where id = $model[id]")->execute();
         }elseif($model['status']==2){
-            pushMessageToList($count, $msg , $extras , $title , $cids);
+            pushMessageToList($count,$title, $msg , $extras , $cids);
             Yii::$app->db->createCommand("update {{%app_push}} set status=0 where id = $model[id]")->execute();
         }else{
             return;
