@@ -135,7 +135,7 @@ class SavemeInfoController extends ActiveController {
             $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$aid",'push_type'=>'SSCOMM_SAVEME');
             $extras = json_encode($data);
             PushConfig::config();
-            pushMessageToList(1, $title, $msg, $extras , $girlid);
+            pushMessageToList(1, $title, $msg, $extras , [$girlid]);
         }
         Response::show('200','操作成功',"申请成功");
     }
@@ -191,7 +191,7 @@ class SavemeInfoController extends ActiveController {
                     $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$id",'push_type'=>'SSCOMM_SAVEME');
                     $extras = json_encode($data);
                     PushConfig::config();
-                    pushMessageToList(1, $title, $msg, $extras , $v);
+                    pushMessageToList(1, $title, $msg, $extras , [$v]);
                 }
             }
         }
@@ -212,7 +212,7 @@ class SavemeInfoController extends ActiveController {
             $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$id",'push_type'=>'SSCOMM_SAVEME');
             $extras = json_encode($data);
             PushConfig::config();
-            pushMessageToList(1, $title, $msg, $extras , $apply_uid);
+            pushMessageToList(1, $title, $msg, $extras , [$apply_uid]);
         }
         $res3 = Yii::$app->db->createCommand("update pre_saveme set status = 2 where id = {$saveme_id}")->execute();
         if ($res3) {
