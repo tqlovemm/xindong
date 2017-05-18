@@ -101,7 +101,7 @@ class FormThreadThumbsUp extends ActiveRecord
             $userModel = User::findOne($this->user_id);
             $username = empty($userModel->nickname)?$userModel->username:$userModel->nickname;
             $title="{$username}点赞帖子";
-            $msg="{$thread_uid->content}";
+            $msg="{$username}点赞帖子";
             $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$this->thread_id",'push_type'=>'SSCOMM_NEWSCOMMENT_DETAIL');
             $extras = json_encode($data);
             PushConfig::config();

@@ -101,8 +101,8 @@ class FormThreadComments extends ActiveRecord
         if(!empty($userCid)){
             $userModel = User::findOne($this->first_id);
             $username = empty($userModel->nickname)?$userModel->username:$userModel->nickname;
-            $title="{$username}评价了帖子";
-            $msg="{$this->comment}";
+            $title="{$username}评价了帖子:{$this->comment}";
+            $msg="{$username}评价了帖子:{$this->comment}";
             $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$this->thread_id",'push_type'=>'SSCOMM_NEWSCOMMENT_DETAIL');
             $extras = json_encode($data);
             PushConfig::config();
