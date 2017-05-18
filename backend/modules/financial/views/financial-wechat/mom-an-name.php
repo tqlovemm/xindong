@@ -1,8 +1,46 @@
 <?php
     $this->title = "日期选择统计";
 ?>
-<?=\yii\helpers\Html::a('总收入环比计算',['mom-an'],['class'=>'btn btn-success'])?>
-<?=\yii\helpers\Html::a('分平台环比计算',['mom-an-detail'],['class'=>'btn btn-success'])?>
+<div class="row">
+    <a href="mom-an-detail" class="col-md-3 col-sm-6 col-xs-12" style="color: #000;">
+        <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Sub platform</span>
+                <span class="info-box-number">分平台环比计算</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </a>
+    <!-- /.col -->
+    <a href="mom-an-name" class="col-md-3 col-sm-6 col-xs-12" style="color: #000;">
+        <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Split customer service</span>
+                <span class="info-box-number">分客服环比计算</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </a>
+    <!-- /.col -->
+    <a href="mom-an" class="col-md-3 col-sm-6 col-xs-12" style="color: #000;">
+        <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Total revenue</span>
+                <span class="info-box-number">总收入环比计算</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </a>
+</div>
 <div class="form-group row" style="margin-top: 10px;">
     <div class="col-md-4">
         <div class="input-group">

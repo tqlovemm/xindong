@@ -4,8 +4,46 @@ $percent01 = ($model_this['sum']==0)?0:round(($model_this['sum']-$model_last['su
 $percent02 = ($model_past['sum']==0)?0:round(($model_past['sum']-$model_past['sum'])/$model_past['sum'],4)*100;
 
 ?>
-<?=\yii\helpers\Html::a('分平台环比计算',['mom-an-detail'],['class'=>'btn btn-success'])?>
-<?=\yii\helpers\Html::a('分客服环比计算',['mom-an-name'],['class'=>'btn btn-success'])?>
+<div class="row">
+    <a href="mom-an-detail" class="col-md-3 col-sm-6 col-xs-12" style="color: #000;">
+        <div class="info-box">
+            <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Sub platform</span>
+                <span class="info-box-number">分平台环比计算</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </a>
+    <!-- /.col -->
+    <a href="mom-an-name" class="col-md-3 col-sm-6 col-xs-12" style="color: #000;">
+        <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Split customer service</span>
+                <span class="info-box-number">分客服环比计算</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </a>
+    <!-- /.col -->
+    <a href="mom-an" class="col-md-3 col-sm-6 col-xs-12" style="color: #000;">
+        <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Total revenue</span>
+                <span class="info-box-number">总收入环比计算</span>
+            </div>
+            <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+    </a>
+</div>
 <div class="box box-success" style="background-color: #fff;width: 80%;text-align: center;padding:10px;margin-top: 10px;">
     <table class="table table-bordered">
         <caption>今日统计</caption>
