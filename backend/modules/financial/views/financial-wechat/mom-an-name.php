@@ -46,6 +46,7 @@ $this->registerJs("
             $.get('p?uid='+uid+'&s='+s+'&e='+e+'&t='+total,function (data) {
                 _this.children('.'+p).html(data);
                 $("#"+p).hide();
+                $("#"+p+"s").show();
             })
         });
     }

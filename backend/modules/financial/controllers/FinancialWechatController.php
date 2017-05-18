@@ -542,7 +542,7 @@ echo $html;
         $html = "<table class='table table-bordered text-center'>
         <tr><th colspan=6>各客服销售收入参考数据</th></tr>
         <tr><th rowspan='2' style='vertical-align: middle'>姓名</th><th rowspan='2' style='vertical-align: middle'>所属平台</th><th>$time_1_s ~ $time_1_e</th><th></th><th>$time_2_s ~ $time_2_e</th><th>$time_3_s ~ $time_3_e</th></tr>
-        <tr><th>$time_1</th><th>$time_1_1</th><th><a id='p_1' onclick=calc('p_1',$dateItem[2],$dateItem[3])>$time_2</a></th><th><a id='p_2' onclick=calc('p_2',$dateItem[7],$dateItem[6])>$time_3</a></th></tr>";
+        <tr><th>$time_1</th><th>$time_1_1</th><th><span id='p_1s' style='display: none;'>$time_2</span><a id='p_1' onclick=calc('p_1',$dateItem[2],$dateItem[3])>$time_2</a></th><th><span id='p_2s' style='display: none;'>$time_3</span><a id='p_2' onclick=calc('p_2',$dateItem[7],$dateItem[6])>$time_3</a></th></tr>";
         $sum = 0;
         foreach ($model as $item){
             $sum+=$item['pa'];
