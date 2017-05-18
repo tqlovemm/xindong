@@ -78,7 +78,7 @@ class AppSpecialDating extends \yii\db\ActiveRecord
     public function fields()
     {
         return [
-            'zid','coin', 'limit_count', 'limit_vip', 'created_at', 'updated_at', 'status', 'sign_up_count', 'introduce',
+            'zid','coin', 'limit_count', 'limit_vip', 'created_at', 'sign_up_count', 'introduce',
             'p_info'=>function(){
                 return explode(',',$this->p_info);
             },
