@@ -10,9 +10,9 @@ $percent02 = ($model_past['sum']==0)?0:round(($model_past['sum']-$model_past['su
         <caption>今日统计</caption>
         <tr>
             <td rowspan="2" style="vertical-align: middle">总收入</td>
-            <td><?=date('Y年m月d',$last_start_time).'-'.date('d日',$last_end_time-86400)?></td>
-            <td><?=date('Y年m月d',$this_start_time).'-'.date('d日',$this_end_time-86400)?></td>
-            <td><?=date('Y年m月d',$past_start_time).'-'.date('d日',$past_end_time-86400)?></td>
+            <td><?=date('Y年m月d',$last_start_time).'-'.date('d日',$last_end_time)?></td>
+            <td><?=date('Y年m月d',$this_start_time).'-'.date('d日',$this_end_time)?></td>
+            <td><?=date('Y年m月d',$past_start_time).'-'.date('d日',$past_end_time)?></td>
             <td>环比<?php if($percent01>=0){echo "增长";}else{echo "降低";}?></td>
             <td>同比<?php if($percent02>=0){echo "增长";}else{echo "降低";}?></td>
         </tr>

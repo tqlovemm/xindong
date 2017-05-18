@@ -5,6 +5,7 @@ namespace backend\modules\financial\controllers;
 use backend\models\User;
 use backend\modules\financial\models\FinancialWechatJoinRecord;
 use backend\modules\financial\models\FinancialWechatMemberIncrease;
+use backend\modules\financial\models\FinancialWechatPlatform;
 use Yii;
 use backend\modules\financial\models\FinancialWechat;
 use backend\modules\financial\models\FinancialWechatSearch;
@@ -394,6 +395,93 @@ class FinancialWechatController extends Controller
         }
 
     }
+
+    public function actionMomAnDetail(){
+
+        $choice_time = FinancialWechatJoinRecord::find()->select("day_time")->orderBy('day_time desc')->asArray()->all();
+
+        if(!empty(Yii::$app->request->get('end_time'))){
+
+            $end_time = Yii::$app->request->get('end_time');
+            $dateItem = $this->getData($end_time);
+            $start_time = $dateItem[4];
+
+            $platform = ArrayHelper::map(FinancialWechatPlatform::find()->asArray()->all(),'id','platform_name');
+
+            $model = new FinancialWechatJoinRecord();
+
+            $model_last_zero = $model::find()->select("platform,sum(payment_amount) as pa,day_time")->where(['between','day_time',$start_time,$end_time])->andWhere(['status'=>[1,2]])->groupBy('platform')->asArray()->all();
+            $model_last_first = $model::find()->select("platform,sum(payment_amount) as pa,day_time")->where(['between','day_time',$dateItem[2],$dateItem[3]])->andWhere(['status'=>[1,2]])->groupBy('platform')->asArray()->all();
+            $model_last_second = $model::find()->select("platform,sum(payment_amount) as pa,day_time")->where(['between','day_time',$dateItem[7],$dateItem[6]])->andWhere(['status'=>[1,2]])->groupBy('platform')->asArray()->all();
+
+            $zero = ArrayHelper::map($model_last_zero,'platform','pa');
+            $zero0 = !empty($zero[$platform[1]])?$zero[$platform[1]]:0;
+            $zero1 = !empty($zero[$platform[3]])?$zero[$platform[3]]:0;
+            $zero2 = !empty($zero[$platform[4]])?$zero[$platform[4]]:0;
+            $z = array_sum($zero);
+            $first = ArrayHelper::map($model_last_first,'platform','pa');
+            $first0 = !empty($first[$platform[1]])?$first[$platform[1]]:'';
+            $first1 = !empty($first[$platform[3]])?$first[$platform[3]]:'';
+            $first2 = !empty($first[$platform[4]])?$first[$platform[4]]:'';
+            $f = array_sum($first);
+            $first_percent = $this->percent($z,$f);
+            $first_percent_0 = $this->percent($zero0,$first0);
+            $first_percent_1 = $this->percent($zero1,$first1);
+            $first_percent_2 = $this->percent($zero2,$first2);
+
+            $second = ArrayHelper::map($model_last_second,'platform','pa');
+            $second0 = !empty($second[$platform[1]])?$second[$platform[1]]:'';
+            $second1 = !empty($second[$platform[3]])?$second[$platform[3]]:'';
+            $second2 = !empty($second[$platform[4]])?$second[$platform[4]]:'';
+            $s = array_sum($second);
+            $second_percent = $this->percent($z,$s);
+            $second_percent_0 = $this->percent($zero0,$second0);
+            $second_percent_1 = $this->percent($zero1,$second1);
+            $second_percent_2 = $this->percent($zero2,$second2);
+
+            $time_1 = date('n月份收入',$dateItem[4]);
+            $time_1_1 = date('n月份',$dateItem[4]);
+            $time_1_s = date('Y-m-d',$dateItem[4]);
+            $time_1_e = date('Y-m-d',$dateItem[5]);
+
+            $time_2 = date('同期n月份环比增长',$dateItem[2]);
+            $time_2_s = date('Y-m-d',$dateItem[2]);
+            $time_2_e = date('Y-m-d',$dateItem[3]);
+
+            $time_3 = date('同期n月份环比增长',$dateItem[6]);
+            $time_3_s = date('Y-m-d',$dateItem[7]);
+            $time_3_e = date('Y-m-d',$dateItem[6]);
+
+            $html = <<<eof
+<table class="table table-bordered text-center">
+    <tr><th colspan=4>各个平台销售收入参考数据</th></tr>
+    <tr><th></th><th>$time_1_s ~ $time_1_e</th><th></th><th>$time_2_s ~ $time_2_e</th><th>$time_3_s ~ $time_3_e</th></tr>
+    <tr><th>平台</th><th>$time_1</th><th>$time_1_1</th><th>$time_2</th><th>$time_3</th></tr>
+    <tr><td>$platform[1]</td><td>$zero0</td><td>$platform[1]</td><td>$first_percent_0</td><td>$second_percent_0</td></tr>
+    <tr><td>$platform[3]</td><td>$zero1</td><td>$platform[3]</td><td>$first_percent_1</td><td>$second_percent_1</td></tr>
+    <tr><td>$platform[4]</td><td>$zero2</td><td>$platform[4]</td><td>$first_percent_2</td><td>$second_percent_2</td></tr>
+    <tr style=background-color:yellow><td>总计</td><td>$z</td><td>总计</td><td>$first_percent</td><td>$second_percent</td></tr>
+</table>  
+eof;
+echo $html;
+
+        }else{
+            return $this->render('mom-an-detail',['end_time'=>date('Y-m-d',time()),'choice_time'=>ArrayHelper::map($choice_time,'day_time','day_time')]);
+        }
+
+    }
+
+
+    protected function percent($q,$e){
+
+        if($q!=0){
+            $r = (round(($q-$e)/$q,3)*100).'%';
+        }else{
+            $r = '0%';
+        }
+        return $r;
+    }
+
     /**
      * @param $date
      * @return string
@@ -452,9 +540,9 @@ class FinancialWechatController extends Controller
         $percent01 = ($model_this['sum']==0)?0:round(($model_this['sum']-$model_last['sum'])/$model_this['sum'],4)*100;
         $percent02 = ($model_past['sum']==0)?0:round(($model_past['sum']-$model_past['sum'])/$model_past['sum'],4)*100;
 
-        $time_1 = date('Y年m月d',$last_start_time).'-'.date('d日',$last_end_time-86400);
-        $time_2 = date('Y年m月d',$this_start_time).'-'.date('d日',$this_end_time-86400);
-        $time_3 = date('Y年m月d',$past_start_time).'-'.date('d日',$past_end_time-86400);
+        $time_1 = date('Y年m月d',$last_start_time).'-'.date('d日',$last_end_time);
+        $time_2 = date('Y年m月d',$this_start_time).'-'.date('d日',$this_end_time);
+        $time_3 = date('Y年m月d',$past_start_time).'-'.date('d日',$past_end_time);
 
         $html = <<<eof
             <table class="table table-bordered">
@@ -502,7 +590,10 @@ eof;
         $date_2 = strtotime((date('Y',$date) - 1) . '/' . date('m',$date) . '/' . date('d',$date));
         $date_1 = strtotime((date('Y',$date) - 1) . '/' . date('m',$date) . '/' . 1);
 
-        $dateArr = array($date_1,$date_2,$date_4,$date_3,$date_5,$date_6);
+        $date_7 = strtotime(date('Y',$date) . '/' . (date('m',$date)-2) . '/' . date('d',$date));
+        $date_8 = strtotime(date('Y',$date) . '/' . (date('m',$date)-2) . '/' . 1);
+
+        $dateArr = array($date_1,$date_2,$date_4,$date_3,$date_5,$date_6,$date_7,$date_8);
 
         return $dateArr;
     }
