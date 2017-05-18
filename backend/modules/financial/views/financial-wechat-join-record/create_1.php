@@ -18,7 +18,7 @@ $this->title = '会员入会收款记录';
         '微博'=>'微博','微信公众号'=>'微信公众号','知乎'=>'知乎','Twitter'=>'Twitter',
         'Facebook'=>'Facebook','Instagram'=>'Instagram','朋友推荐'=>'朋友推荐',
         '微信朋友圈'=>'微信朋友圈','官网'=>'官网','APP'=>'APP','其他'=>'其他'])->label('入会来源')  ?>
-    <?= $form->field($model, 'channel')->dropDownList(['微信'=>'微信','支付宝'=>'支付宝','淘宝'=>'淘宝','公司银行卡转账'=>'公司银行卡转账','海外代充'=>'海外代充'])->label('付款渠道')  ?>
+    <?= $form->field($model, 'channel')->dropDownList(['微信'=>'微信','支付宝'=>'支付宝','淘宝'=>'淘宝','公司银行卡转账'=>'公司银行卡转账','海外代充'=>'海外代充','PayPal'=>'PayPal'])->label('付款渠道')  ?>
     <?= $form->field($model, 'payment_to')->dropDownList([1=>'收款专用号',2=>'微信客服号'])->label('付款到')  ?>
     <?= $form->field($model, 'payment_amount')->textInput()->label('付款金额')  ?>
     <?= $form->field($model, 'payment_screenshot')->fileInput() ?>
