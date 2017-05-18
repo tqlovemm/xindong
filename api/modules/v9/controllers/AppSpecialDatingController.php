@@ -47,7 +47,9 @@ class AppSpecialDatingController extends ActiveController
      * 获取所有专属女生信息接口
      * get
      * v9/app-special-dating-sign-ups
-     * 拼接字段?area={area} 该地区的所有专属女生，不拼接则为全地区
+     * 拼接字段?area={area} 该地区的所有专属女生，不拼接则为全地区 于time字段互为叠加
+     * 拼接字段?time=1 24小时之内的所有女生，与area字段互为叠加
+     *
      * 200获取成功
      */
     public function actionIndex(){
