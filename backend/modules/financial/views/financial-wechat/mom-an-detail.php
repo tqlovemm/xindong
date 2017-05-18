@@ -1,7 +1,8 @@
 <?php
     $this->title = "日期选择统计";
 ?>
-<?=\yii\helpers\Html::a('总收入环比计算',['mom-an-detail'],['class'=>'btn btn-success'])?>
+<?=\yii\helpers\Html::a('总收入环比计算',['mom-an'],['class'=>'btn btn-success'])?>
+<?=\yii\helpers\Html::a('分客服环比计算',['mom-an-name'],['class'=>'btn btn-success'])?>
 <div class="form-group row" style="margin-top: 10px;">
     <div class="col-md-4">
         <div class="input-group">
