@@ -4,8 +4,8 @@ $percent01 = ($model_this['sum']==0)?0:round(($model_this['sum']-$model_last['su
 $percent02 = ($model_past['sum']==0)?0:round(($model_past['sum']-$model_past['sum'])/$model_past['sum'],4)*100;
 
 ?>
-<?=\yii\helpers\Html::a('分平台环比计算',['mom-an-detail'],['class'=>'btn btn-success'])?>
-<div class="box box-success" style="background-color: #fff;width: 80%;text-align: center;padding:10px;">
+<?=\yii\helpers\Html::a('分平台环比计算',['mom-an'],['class'=>'btn btn-success'])?>
+<div class="box box-success" style="background-color: #fff;width: 80%;text-align: center;padding:10px;margin-top: 10px;">
     <table class="table table-bordered">
         <caption>今日统计</caption>
         <tr>
