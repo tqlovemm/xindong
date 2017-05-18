@@ -15,7 +15,7 @@ class AppController extends Controller
 
     public function actionPush(){
 
-        $title = 'faw';
+        $title = null;
         $msg = 'ccc';
         PushConfig::config();
         $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"127",'push_type'=>'SSCOMM_NEWSCOMMENT_DETAIL');
@@ -24,7 +24,6 @@ class AppController extends Controller
     }
 
     public function actionThread(){
-        $Sort = Vip::sort(28);
-        return $Sort;
+        Vip::sort();
     }
 }

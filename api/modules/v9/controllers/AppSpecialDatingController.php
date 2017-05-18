@@ -52,12 +52,15 @@ class AppSpecialDatingController extends ActiveController
      */
     public function actionIndex(){
 
-        $getData = Yii::$app->request->get('area');
+        $getArea = Yii::$app->request->get('area');
+        $getTime = Yii::$app->request->get('time');
         $model = $this->modelClass;
-        if(!empty($getData)){
-            $query = $model::find()->where(['status'=>10,'address'=>$getData]);
-        }else{
-            $query = $model::find()->where(['status'=>10]);
+        $query = $model::find()->where(['status'=>10]);
+        if(!empty($getTime)&&$getTime==1){
+            $query = $query->andWhere("`created_at`>unix_timestamp(now())-86400");
+        }
+        if(!empty($getArea)){
+            $query = $query->andWhere(['address'=>$getArea]);
         }
 
         return new CsvDataProvider([
