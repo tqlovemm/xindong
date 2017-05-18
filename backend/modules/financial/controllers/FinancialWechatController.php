@@ -517,6 +517,52 @@ echo $html;
         ]);
     }
 
+    public function actionMomAnName(){
+
+        $choice_time = FinancialWechatJoinRecord::find()->select("day_time")->orderBy('day_time desc')->asArray()->all();
+
+        if(!empty(Yii::$app->request->get('end_time'))){
+            $end_time = Yii::$app->request->get('end_time');
+            $dateItem = $this->getData($end_time);
+            $start_time = $dateItem[4];
+            $model = FinancialWechatJoinRecord::find()->select("platform,sum(payment_amount) as pa,created_by")->where(['between','day_time',$start_time,$end_time])->andWhere(['status'=>[1,2]])->groupBy('created_by')->orderBy('pa desc')->asArray()->all();
+            $time_1 = date('n月份收入',$dateItem[4]);
+            $time_1_1 = date('n月份',$dateItem[4]);
+            $time_1_s = date('Y-m-d',$dateItem[4]);
+            $time_1_e = date('Y-m-d',$dateItem[5]);
+
+            $time_2 = date('同期n月份环比增长',$dateItem[2]);
+            $time_2_s = date('Y-m-d',$dateItem[2]);
+            $time_2_e = date('Y-m-d',$dateItem[3]);
+
+            $time_3 = date('同期n月份环比增长',$dateItem[6]);
+            $time_3_s = date('Y-m-d',$dateItem[7]);
+            $time_3_e = date('Y-m-d',$dateItem[6]);
+
+        $html = "<table class='table table-bordered text-center'>
+        <tr><th colspan=6>各客服销售收入参考数据</th></tr>
+        <tr><th rowspan='2' style='vertical-align: middle'>姓名</th><th rowspan='2' style='vertical-align: middle'>所属平台</th><th>$time_1_s ~ $time_1_e</th><th></th><th>$time_2_s ~ $time_2_e</th><th>$time_3_s ~ $time_3_e</th></tr>
+        <tr><th>$time_1</th><th>$time_1_1</th><th><a onclick=calc('.p_1',$dateItem[2],$dateItem[3])>$time_2</a></th><th><a onclick=calc('.p_2',$dateItem[7],$dateItem[6])>$time_3</a></th></tr>";
+        $sum = 0;
+        foreach ($model as $item){
+            $sum+=$item['pa'];
+            $username = User::findOne($item['created_by'])->nickname;
+            $html.="<tr class='username' data-id=$item[created_by]><td>$username</td><td>$item[platform]</td><td class='pa'>$item[pa]</td><td>$username</td><td class='p_1'></td><td class='p_2'></td></tr>";
+        }
+        $html .= "<tr style=background-color:yellow><td colspan='2'>总计</td><td>$sum</td><td>总计</td><td></td><td></td></tr></table>";
+        return $html;
+        }
+
+        return $this->render('mom-an-name',['choice_time'=>ArrayHelper::map($choice_time,'day_time','day_time')]);
+    }
+
+    public function actionP($uid,$s,$e,$t){
+
+        $model_this = FinancialWechatJoinRecord::find()->select("sum(payment_amount) as sum")->where(['created_by'=>$uid])->andWhere(['between','day_time',$s,$e])->andWhere(['status'=>[1,2]])->asArray()->one();
+        $r = $this->percent($t,$model_this['sum']);
+        echo $r;
+
+    }
     /**
      * @param $date
      */
