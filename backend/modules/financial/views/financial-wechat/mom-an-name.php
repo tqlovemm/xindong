@@ -44,7 +44,8 @@ $this->registerJs("
             var total = _this.children('.pa').html();
             var uid = $(this).attr('data-id');
             $.get('p?uid='+uid+'&s='+s+'&e='+e+'&t='+total,function (data) {
-                _this.children(p).html(data);
+                _this.children('.'+p).html(data);
+                $("#"+p).hide();
             })
         });
     }
