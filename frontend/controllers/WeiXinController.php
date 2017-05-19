@@ -415,6 +415,11 @@ class WeiXinController extends Controller
                     $content = "链接：http://pan.baidu.com/s/1nvFi8lV 密码：pmvm";
                     $this->text($content);
                     break;
+                case "打包福利":
+                case "打包":
+                    $content = "给链接：http://pan.baidu.com/s/1qXEgn9M 密码：w49s";
+                    $this->text($content);
+                    break;
             }
         }//if end
 
