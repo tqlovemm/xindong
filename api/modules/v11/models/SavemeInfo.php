@@ -8,9 +8,9 @@ use app\components\db\ActiveRecord;
 /**
  * This is the model class for table "pre_saveme_apply".
  *
- * @property string $id
- * @property string $saveme_id
- * @property string $apply_uid
+ * @property integer $id
+ * @property integer $saveme_id
+ * @property integer $apply_uid
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $status

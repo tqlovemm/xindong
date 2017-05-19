@@ -1,11 +1,7 @@
 <?php
 namespace api\modules\v11\controllers;
 
-use yii;
 use yii\rest\ActiveController;
-use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\QueryParamAuth;
-use yii\filters\auth\HttpBearerAuth;
 use yii\filters\RateLimiter;
 use yii\helpers\Response;
 use yii\db\Query;
@@ -14,12 +10,6 @@ class SavemeJudgeController extends ActiveController {
     public $modelClass = 'api\modules\v11\models\Saveme';
     public function behaviors() {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::className(),
-            'authMethods' => [
-                QueryParamAuth::className(),
-            ],
-        ];
         $behaviors['rateLimiter'] = [
             'class' => RateLimiter::className(),
             'enableRateLimitHeaders' => true,

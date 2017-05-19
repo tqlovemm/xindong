@@ -1,21 +1,19 @@
 <?php
 namespace api\modules\v11\controllers;
 
+use api\modules\v11\models\User;
 use yii;
 use yii\db\Query;
 use yii\helpers\Response;
 use yii\rest\ActiveController;
 use yii\myhelper\Decode;
 use api\modules\v11\models\Saveme;
-use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\QueryParamAuth;
 use common\components\PushConfig;
-use yii\filters\auth\HttpBearerAuth;
 use yii\filters\RateLimiter;
 use yii\data\Pagination;
 use common\components\SaveToLog;
-use api\components\CsvDataProvider;
-
+use yii\base\Exception;
+use yii\base\ErrorException;
 class SavemeInfoController extends ActiveController {
     public $wcity = array('上海','北京','重庆','天津');
     public $modelClass = 'api\modules\v11\models\SavemeInfo';
@@ -25,12 +23,7 @@ class SavemeInfoController extends ActiveController {
     ];
     public function behaviors() {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::className(),
-            'authMethods' => [
-                QueryParamAuth::className(),
-            ],
-        ];
+
         $behaviors['rateLimiter'] = [
             'class' => RateLimiter::className(),
             'enableRateLimitHeaders' => true,
@@ -111,8 +104,8 @@ class SavemeInfoController extends ActiveController {
             $jc = Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin=jiecao_coin-{$saveme['price']} where user_id=$aid")->execute();
             try{
                 SaveToLog::userBgRecord("报名救我花费{$saveme['price']}心动币",$aid);
-            }catch (Exception $e){
-                throw new ErrorException($e->getMessage());
+            }catch (yii\base\Exception $e){
+                throw new yii\base\ErrorException($e->getMessage());
             }
             if (!$jc) {
                 Response::show('201','3',"扣除心动币失败");
@@ -135,7 +128,7 @@ class SavemeInfoController extends ActiveController {
             $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$aid",'push_type'=>'SSCOMM_SAVEME');
             $extras = json_encode($data);
             PushConfig::config();
-            pushMessageToList(1, $title, $msg, $extras , [$girlid]);
+            pushMessageToList(1, $title, $msg, $extras , [User::findOne($girlid)->cid]);
         }
         Response::show('200','操作成功',"申请成功");
     }
@@ -191,7 +184,7 @@ class SavemeInfoController extends ActiveController {
                     $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$id",'push_type'=>'SSCOMM_SAVEME');
                     $extras = json_encode($data);
                     PushConfig::config();
-                    pushMessageToList(1, $title, $msg, $extras , [$v]);
+                    pushMessageToList(1, $title, $msg, $extras , [User::findOne($v)->cid]);
                 }
             }
         }
@@ -212,7 +205,7 @@ class SavemeInfoController extends ActiveController {
             $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$id",'push_type'=>'SSCOMM_SAVEME');
             $extras = json_encode($data);
             PushConfig::config();
-            pushMessageToList(1, $title, $msg, $extras , [$apply_uid]);
+            pushMessageToList(1, $title, $msg, $extras , [User::findOne($apply_uid)->cid]);
         }
         $res3 = Yii::$app->db->createCommand("update pre_saveme set status = 2 where id = {$saveme_id}")->execute();
         if ($res3) {

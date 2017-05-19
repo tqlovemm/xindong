@@ -9,13 +9,10 @@ use yii\rest\ActiveController;
 use yii\data\Pagination;
 use yii\myhelper\Decode;
 use api\modules\v11\models\SavemeInfo;
-use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\QueryParamAuth;
-use yii\filters\auth\HttpBearerAuth;
 use yii\filters\RateLimiter;
-use api\components\CsvDataProvider;
 
 class SavemeController extends ActiveController {
+
     public $modelClass = 'api\modules\v11\models\Saveme';
     public $serializer = [
         'class' => 'app\components\Serializer',
@@ -24,12 +21,6 @@ class SavemeController extends ActiveController {
 
     public function behaviors() {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::className(),
-            'authMethods' => [
-                QueryParamAuth::className(),
-            ],
-        ];
         $behaviors['rateLimiter'] = [
             'class' => RateLimiter::className(),
             'enableRateLimitHeaders' => true,

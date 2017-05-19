@@ -5,22 +5,12 @@ use yii;
 use yii\db\Query;
 use yii\helpers\Response;
 use yii\rest\ActiveController;
-use yii\data\ActiveDataProvider;
-use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\QueryParamAuth;
-use yii\filters\auth\HttpBearerAuth;
 use yii\filters\RateLimiter;
 
 class SavemeCommentController extends ActiveController {
     public $modelClass = 'api\modules\v11\models\SavemeComment';
     public function behaviors() {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::className(),
-            'authMethods' => [
-                QueryParamAuth::className(),
-            ],
-        ];
         $behaviors['rateLimiter'] = [
             'class' => RateLimiter::className(),
             'enableRateLimitHeaders' => true,

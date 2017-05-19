@@ -8,8 +8,8 @@ use app\components\db\ActiveRecord;
 /**
  * This is the model class for table "pre_saveme".
  *
- * @property string $id
- * @property string $created_id
+ * @property integer $id
+ * @property integer $created_id
  * @property integer $address
  * @property string $content
  * @property integer $end_time
