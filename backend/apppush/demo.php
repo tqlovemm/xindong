@@ -310,7 +310,7 @@ function pushMessageToList($badge, $title, $msg, $payload, $cids)
         array_push($targetList,$target1);
     }
 
-    $igt->pushMessageToList($contentId, $targetList);
+    return $igt->pushMessageToList($contentId, $targetList);
 
 }
 
@@ -457,14 +457,14 @@ function IGtTransmissionTemplateDemo($badge, $title, $msg, $payload){
     $apn = new IGtAPNPayload();
     $alertmsg=new DictionaryAlertMsg();
     $alertmsg->body=$msg;
-    $alertmsg->actionLocKey=$msg;
-    $alertmsg->locKey=$msg;
-    $alertmsg->locArgs=array($msg);
+    $alertmsg->actionLocKey=null;
+    $alertmsg->locKey=null;
+    $alertmsg->locArgs=null;
     $alertmsg->launchImage="launchimage";
 
     $alertmsg->title="十三平台";
-    $alertmsg->titleLocKey="十三平台";
-    $alertmsg->titleLocArgs=array("十三平台");
+    $alertmsg->titleLocKey=null;
+    $alertmsg->titleLocArgs=null;
 
     $apn->alertMsg=$alertmsg;
     $apn->badge=$badge;

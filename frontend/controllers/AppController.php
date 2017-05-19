@@ -15,12 +15,13 @@ class AppController extends Controller
 
     public function actionPush(){
 
-        $title = null;
+        $title = '十三平台';
         $msg = 'ccc';
         PushConfig::config();
-        $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"127",'push_type'=>'SSCOMM_NEWSCOMMENT_DETAIL');
+        $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"62",'push_type'=>'SSCOMM_NEWSCOMMENT_DETAIL');
         $extras = json_encode($data);
-        pushMessageToList(1, $title, $msg, $extras ,['2380569401cb7db1834eb482793a0321']);
+        $res = pushMessageToList(1, $title, $msg, $extras ,['2380569401cb7db1834eb482793a0321','852353a969268de35489f4712681f77a']);
+        return var_dump($res);
     }
 
     public function actionThread(){
