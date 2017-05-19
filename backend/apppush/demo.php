@@ -452,7 +452,7 @@ function IGtTransmissionTemplateDemo($badge, $title, $msg, $payload){
     $template->set_appkey(APPKEY);//应用appkey
     $template->set_transmissionType(1);//透传消息类型
     $template->set_transmissionContent($payload);//透传内容
-    $template->set_pushInfo('', $badge, $title, '', $payload, '', '', '', 1);
+    $template->set_pushInfo('', $badge, '十三平台', '', $payload, '', '', '', 1);
 
     $apn = new IGtAPNPayload();
     $alertmsg=new DictionaryAlertMsg();
@@ -462,7 +462,7 @@ function IGtTransmissionTemplateDemo($badge, $title, $msg, $payload){
     $alertmsg->locArgs=array("locargs");
     $alertmsg->launchImage="launchimage";
 
-    $alertmsg->title=$title;
+    $alertmsg->title="十三平台";
     $alertmsg->titleLocKey="TitleLocKey";
     $alertmsg->titleLocArgs=array("TitleLocArg");
 
