@@ -460,9 +460,9 @@ function IGtTransmissionTemplateDemo($badge, $title, $msg, $payload){
     $alertmsg->actionLocKey=null;
     $alertmsg->locKey=null;
     $alertmsg->locArgs=null;
-    $alertmsg->launchImage="launchimage";
+    $alertmsg->launchImage=null;
 
-    $alertmsg->title="十三平台";
+    $alertmsg->title=null;
     $alertmsg->titleLocKey=null;
     $alertmsg->titleLocArgs=null;
 
@@ -471,7 +471,8 @@ function IGtTransmissionTemplateDemo($badge, $title, $msg, $payload){
     $apn->sound="";
     $apn->add_customMsg("payload",$payload);
     $apn->contentAvailable=0;
-    $apn->category="ACTIONABLE";
+   // $apn->category="ACTIONABLE";
+    $apn->category=null;
     $template->set_apnInfo($apn);
 
     return $template;
