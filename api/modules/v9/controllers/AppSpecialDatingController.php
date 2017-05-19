@@ -59,7 +59,7 @@ class AppSpecialDatingController extends ActiveController
         $model = $this->modelClass;
         $query = $model::find()->where(['status'=>10]);
         if(!empty($getTime)&&$getTime==1){
-            $query = $query->andWhere("`created_at`>unix_timestamp(now())-86400");
+            $query = $query->andWhere("`created_at`>unix_timestamp(now())-259200");
         }
         if(!empty($getArea)){
             $query = $query->andWhere(['address'=>$getArea]);
