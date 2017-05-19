@@ -450,27 +450,27 @@ function IGtTransmissionTemplateDemo($badge, $title, $msg, $payload){
     $template =  new IGtTransmissionTemplate();
     $template->set_appId(APPID);//应用appid
     $template->set_appkey(APPKEY);//应用appkey
-    $template->set_transmissionType(1);//透传消息类型
+    $template->set_transmissionType(2);//透传消息类型
     $template->set_transmissionContent($payload);//透传内容
-    $template->set_pushInfo('', $badge, '十三平台', '', $payload, '', '', '', 1);
+    $template->set_pushInfo('', $badge, '十三平台', '', $payload, '', '', '', 0);
 
     $apn = new IGtAPNPayload();
     $alertmsg=new DictionaryAlertMsg();
     $alertmsg->body=$msg;
-    $alertmsg->actionLocKey="ActionLockey";
-    $alertmsg->locKey="LocKey";
-    $alertmsg->locArgs=array("locargs");
+    $alertmsg->actionLocKey=$msg;
+    $alertmsg->locKey=$msg;
+    $alertmsg->locArgs=array($msg);
     $alertmsg->launchImage="launchimage";
 
     $alertmsg->title="十三平台";
-    $alertmsg->titleLocKey="TitleLocKey";
-    $alertmsg->titleLocArgs=array("TitleLocArg");
+    $alertmsg->titleLocKey="十三平台";
+    $alertmsg->titleLocArgs=array("十三平台");
 
     $apn->alertMsg=$alertmsg;
     $apn->badge=$badge;
     $apn->sound="";
     $apn->add_customMsg("payload",$payload);
-    $apn->contentAvailable=1;
+    $apn->contentAvailable=0;
     $apn->category="ACTIONABLE";
     $template->set_apnInfo($apn);
 
