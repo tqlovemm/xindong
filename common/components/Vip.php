@@ -57,6 +57,16 @@ class Vip
         return $data;
     }
 
+    public static function time_d($key){
+
+        $arr = [0=>'午夜00点',1=>'凌晨1点',2=>'凌晨2点',3=>'凌晨3点',4=>'凌晨4点',5=>'凌晨5点',6=>'上午6点',
+            7=>'上午7点',8=>'上午8点',9=>'上午9点',10=>'上午10点',11=>'上午11点',12=>'中午12点',13=>'下午1点',14=>'下午2点',15=>'下午3点',16=>'下午4点',17=>'下午5点',18=>'下午6点',19=>'晚上7点',20=>'晚上8点',
+            21=>'晚上9点',22=>'晚上10点',23=>'晚上11点',24=>'晚上12点',
+        ];
+
+        return $arr[$key];
+    }
+
     public static function sort(){
         //帖子热度 = (总赞数*0.2+总评论数*0.3+管理员参数*0.4+总阅读数*0.1)*1000/(发布时间距离当前时间的小时差+2)^1.2
         \Yii::$app->db->createCommand("update pre_app_form_thread set total_score=(thumbs_count*0.3+comments_count*0.5+admin_count*0.1+read_count*0.1)/power(((unix_timestamp(now())-created_at)/604800)+2,1.2)")->execute();

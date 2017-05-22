@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use shiyang\masonry\Masonry;
-
+use common\components\Vip;
 /* @var $this yii\web\View */
 /* @var $model app\modules\home\models\Album */
 
@@ -43,6 +43,11 @@ $pre_url = Yii::$app->params['threadimg'];
                                 <img class="img-responsive" src="<?= $pre_url.$photo['path'] ?>">
                             </a>
                             <div class="img-name" style="padding: 10px;background-color: #fff;font-size: 18px;text-align: center;margin-top: 5px;"><?= Html::encode($photo['name']) ?></div>
+                            <div class="img-name" style="padding: 10px;background-color: #fff;font-size: 18px;text-align: center;margin-top: 5px;">
+                                <?php if($photo['status']==0):?>该二维码为选时间段二维码，<br>
+                                    启用时间为：<?=Vip::time_d($photo['start_time'])?>到<?=Vip::time_d($photo['end_time'])?>
+                                <?php else:?>该二维码为全天二维码，全天有效<?php endif;?>
+                            </div>
                         </div>
                         <div class="img-edit" style="margin-top: 5px;">
                             <a class="pull-left" href="<?= Url::toRoute(['/exciting/website/upload', 'type' => $photo['cid'], 'id' => $model->website_id]) ?>">
@@ -52,7 +57,7 @@ $pre_url = Yii::$app->params['threadimg'];
                                 <span class="btn btn-danger">删除</span>
                             </a>
                             <a class="pull-right" href="<?= Url::toRoute(['/exciting/website-content-search/update', 'id' => $photo['cid']]) ?>">
-                                <span class="btn btn-warning">修改文字</span>
+                                <span class="btn btn-warning">修改信息</span>
                             </a>
                         </div>
                     </div>

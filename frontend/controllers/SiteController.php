@@ -551,7 +551,7 @@ class SiteController extends BaseController
             $session->destroy();
             return $this->redirect('con');
         }
-        return $this->render('contact_2',['boy'=>$boys[$boy_rand],'girl'=>$girls[$girl_rand]]);
+        return $this->render('contact',['boy'=>$boys[$boy_rand],'girl'=>$girls[$girl_rand]]);
 
 
     }
