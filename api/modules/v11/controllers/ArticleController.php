@@ -1,16 +1,9 @@
 <?php
 namespace api\modules\v11\controllers;
 
-use common\Qiniu\QiniuUploader;
+
 use yii;
-use yii\db\Query;
-use yii\helpers\Response;
 use yii\rest\ActiveController;
-use yii\data\Pagination;
-use yii\myhelper\Decode;
-use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\QueryParamAuth;
-use yii\filters\auth\HttpBearerAuth;
 use yii\filters\RateLimiter;
 use api\components\CsvDataProvider;
 
@@ -23,12 +16,6 @@ class ArticleController extends ActiveController {
 
     public function behaviors() {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::className(),
-            'authMethods' => [
-                QueryParamAuth::className(),
-            ],
-        ];
         $behaviors['rateLimiter'] = [
             'class' => RateLimiter::className(),
             'enableRateLimitHeaders' => true,

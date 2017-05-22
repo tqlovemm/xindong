@@ -3,9 +3,6 @@ namespace api\modules\v11\controllers;
 
 use yii;
 use yii\rest\ActiveController;
-use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\QueryParamAuth;
-use yii\filters\auth\HttpBearerAuth;
 use yii\filters\RateLimiter;
 use api\components\CsvDataProvider;
 
@@ -18,12 +15,6 @@ class ArticleTypeController extends ActiveController {
 
     public function behaviors() {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::className(),
-            'authMethods' => [
-                QueryParamAuth::className(),
-            ],
-        ];
         $behaviors['rateLimiter'] = [
             'class' => RateLimiter::className(),
             'enableRateLimitHeaders' => true,
