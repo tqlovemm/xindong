@@ -64,7 +64,7 @@ class Dating extends ActiveRecord
     public function fields(){
 
         return [
-            'dating_id'=>'id','title','created_at','end_time'=>function(){return $this->created_at+($this->expire*3600);},
+            'dating_id'=>'id','title','created_at'=>function(){return $this->updated_at;},'end_time'=>function(){return $this->updated_at+($this->expire*3600);},
             'tag_type'=>function(){
                 if($this->tag_type==1){
                     return "HOT";
