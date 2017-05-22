@@ -13,6 +13,7 @@ use backend\modules\setting\models\MemberSorts;
 use frontend\models\UserProfile;
 use frontend\modules\member\Member;
 use frontend\modules\member\models\UserVipTempAdjust;
+use yii\base\Object;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -178,6 +179,7 @@ class UserShowController extends Controller
         if(!empty($uid)){
             $userModel = User::findOne($uid);
             $group_id = $userModel->groupid;
+            $need_price = $query_app->price_1-$this->appPrice($group_id);
         }else{
             $group_id = !Yii::$app->user->isGuest?Yii::$app->user->identity->groupid:1;
         }
@@ -193,6 +195,12 @@ class UserShowController extends Controller
 
         return $this->render('update-details',['model'=>$model,'update_id'=>$query_app->id,'model_member'=>$model_member,'group_id'=>$group_id,'need_price'=>$need_price,'level'=>$level,'query'=>$query]);
 
+    }
+
+    protected function appPrice($group_id){
+        $query_app = MemberSorts::findOne(['groupid'=>$group_id,'flag'=>1]);
+        $price = !empty($query_app)?$query_app->price_1:0;
+        return $price;
     }
 
     protected function getPrice($id,$uid=null){
