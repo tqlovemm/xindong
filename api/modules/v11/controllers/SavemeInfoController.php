@@ -133,10 +133,10 @@ class SavemeInfoController extends ActiveController {
         Response::show('200','操作成功',"申请成功");
     }
     public function actionUpdate($id) {
-        $decode = new Decode();
-        if(!$decode->decodeDigit($id)){
-            Response::show(210,'参数不正确');
-        }
+//        $decode = new Decode();
+//        if(!$decode->decodeDigit($id)){
+//            Response::show(210,'参数不正确');
+//        }
         $model = new $this->modelClass();
         $cid = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$id)->queryOne();
         $apply_uid = Yii::$app->request->getBodyParam('apply_uid');
