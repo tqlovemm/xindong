@@ -24,11 +24,11 @@ class DefaultController extends Controller
             return $this->render('index', [
                 'model' => $model,
             ]);
-        }elseif($model->status==1){
+        }/*elseif($model->status==1){
             return $this->render('index', [
                 'model' => $model,
             ]);
-        }else{
+        }*/else{
             return $this->redirect(['register-type','flag'=>$flag]);
         }
     }
