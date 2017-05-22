@@ -137,6 +137,7 @@ class SavemeInfoController extends ActiveController {
 //        if(!$decode->decodeDigit($id)){
 //            Response::show(210,'参数不正确');
 //        }
+        PushConfig::config();
         $model = new $this->modelClass();
         $cid = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$id)->queryOne();
         $apply_uid = Yii::$app->request->getBodyParam('apply_uid');
@@ -183,7 +184,7 @@ class SavemeInfoController extends ActiveController {
                     $msg = $cid['nickname'].'拒绝了您的救我申请';
                     $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$id",'push_type'=>'SSCOMM_SAVEME');
                     $extras = json_encode($data);
-                    PushConfig::config();
+
                     pushMessageToList(1, $title, $msg, $extras , [User::findOne($v)->cid]);
                 }
             }
@@ -204,7 +205,6 @@ class SavemeInfoController extends ActiveController {
             $msg = $cid['nickname'].'通过了您的救我申请';
             $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$id",'push_type'=>'SSCOMM_SAVEME');
             $extras = json_encode($data);
-            PushConfig::config();
             pushMessageToList(1, $title, $msg, $extras , [User::findOne($apply_uid)->cid]);
         }
         $res3 = Yii::$app->db->createCommand("update pre_saveme set status = 2 where id = {$saveme_id}")->execute();
