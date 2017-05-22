@@ -58,6 +58,7 @@ class ChangeUserInfoController extends Controller
         }
         $pre_url = Yii::$app->params['appimages'];
         //$pre_url = 'http://omu5j530t.bkt.clouddn.com/';
+        $files_path = array();
         if($model->img_url){
 
             $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
@@ -80,6 +81,7 @@ class ChangeUserInfoController extends Controller
 
             //保存新图片
             $pathStr = "uploads/";
+
             foreach ($data as $item){
 
                 $location = $pathStr.time().rand(1,10000).'.jpg';
@@ -87,6 +89,7 @@ class ChangeUserInfoController extends Controller
                 $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$id.'_'.md5(rand(1000,9999));
                 $qiniu = $qn->upload_app('appimages','uploads/user/files/'.$mkdir,$location);
                 $path = $pre_url.$qiniu['key'];
+                array_push($files_path,$path);
                 Yii::$app->db->createCommand('insert into pre_user_image(user_id,img_url,created_at,updated_at) values('.$id.','."'$path'".','.time().','.time().')')->execute();
                 @unlink($location);
             }
@@ -197,7 +200,7 @@ class ChangeUserInfoController extends Controller
             return array_values($model->getFirstErrors())[0];
         }else{
 
-            Response::show('200','更新成功');
+            Response::show('200','更新成功',$files_path);
         }
     }
 
