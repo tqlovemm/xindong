@@ -133,10 +133,10 @@ class SavemeInfoController extends ActiveController {
         Response::show('200','操作成功',"申请成功");
     }
     public function actionUpdate($id) {
-//        $decode = new Decode();
-//        if(!$decode->decodeDigit($id)){
-//            Response::show(210,'参数不正确');
-//        }
+        $decode = new Decode();
+        if(!$decode->decodeDigit($id)){
+            Response::show(210,'参数不正确');
+        }
         PushConfig::config();
         $model = new $this->modelClass();
         $cid = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$id)->queryOne();
@@ -184,10 +184,10 @@ class SavemeInfoController extends ActiveController {
                     $msg = $cid['nickname'].'拒绝了您的救我申请';
                     $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$id",'push_type'=>'SSCOMM_SAVEME');
                     $extras = json_encode($data);
-
-                    pushMessageToList(1, $title, $msg, $extras , [User::findOne($v)->cid]);
+                    $user_cid[] = User::findOne($v)->cid;
                 }
             }
+            pushMessageToList(1, $title, $msg, $extras , $user_cid);
         }
         if (!$res1) {
             Response::show('201','操作失败',"审核失败1");
