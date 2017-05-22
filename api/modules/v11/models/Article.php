@@ -22,7 +22,7 @@ class Article extends ActiveRecord
     public function rules()
     {
         return [
-            [['created_id', 'title', 'wimg', 'content', 'wtype', 'wclick', 'wdianzan', 'hot', 'created_at', 'updated_at', 'status'], 'required'],
+            [['created_id', 'title', 'wimg', 'content', 'wtype', 'wclick', 'wdianzan', 'hot','status'], 'required'],
             [['created_id', 'wtype', 'wclick', 'wdianzan', 'hot', 'created_at', 'updated_at', 'status'], 'integer'],
             [['content'], 'string'],
             [['title','miaoshu'], 'string', 'max' => 100],
