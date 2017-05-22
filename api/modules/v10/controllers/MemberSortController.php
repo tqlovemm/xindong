@@ -60,7 +60,7 @@ class MemberSortController extends Controller
         $lunbo = (new Query())->from('{{%app_lunbo}}')->where('')->all();
 
         //审核状态 1 ，生产状态 0
-        $status = 1;
+        $status = 0;
 
         if($status == 1){
 
