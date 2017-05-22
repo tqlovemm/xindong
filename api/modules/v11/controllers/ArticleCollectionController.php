@@ -70,11 +70,12 @@ class ArticleCollectionController extends ActiveController {
             Response::show(210,'参数不正确','参数不正确');
         }
         $model = new $this->modelClass();
-        $userid = isset($_GET['userid'])?$_GET['userid']:'';
-        if($userid){
-            $res = $model::deleteAll(['userid'=>$userid]);
+        $delall = isset($_GET['delall'])?$_GET['delall']:'';
+        $cid = isset($_GET['cid'])?$_GET['cid']:'';
+        if($delall){
+            $res = $model::deleteAll(['userid'=>$id]);
         }else{
-            $Collection = $model::find()->where(['id'=>$id])->one();
+            $Collection = $model::find()->where(['id'=>$cid])->one();
             if(!$Collection){
                 Response::show('202','操作失败','该数据不存在');
             }
