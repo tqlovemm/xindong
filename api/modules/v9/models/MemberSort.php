@@ -153,7 +153,7 @@ class MemberSort extends ActiveRecord
             'detail_link'=>function($model){
                 if($model->groupid!=2){
                     $msort = MemberSort::findOne(['member_name'=>$this->member_name,'flag'=>0]);
-                    return "http://13loveme.com/member/user-show/update-details?id=".$msort->id.'&top=2&uid=';
+                    return Yii::$app->params['hostname']."/member/user-show/update-details?id=".$msort->id.'&top=2&uid=';
                 }
 
             },
