@@ -46,7 +46,7 @@ class SavemeInfoController extends ActiveController {
         }
         $model2 = new Saveme;
         if(!$sids){
-            return $this->datares(201,0,$res,'not data!');
+            return $this->datares(201,0,'not data!','not data!');
         }
         $save_query = $model2::find()->where(['id'=>$sids]);
         $pagination = new Pagination([
