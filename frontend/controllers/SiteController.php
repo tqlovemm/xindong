@@ -549,7 +549,7 @@ class SiteController extends BaseController
 
         if(empty($boys[$boy_rand])||empty($girls[$girl_rand])){
             $session->destroy();
-            return $this->redirect('con');
+            return $this->redirect('contact');
         }
         return $this->render('contact',['boy'=>$boys[$boy_rand],'girl'=>$girls[$girl_rand]]);
 
