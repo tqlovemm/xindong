@@ -5,9 +5,8 @@ use api\modules\v11\models\FormThreadPushMsg;
 use yii;
 use yii\helpers\Response;
 use yii\rest\ActiveController;
-use api\components\CsvDataProvider;
 use yii\web\NotFoundHttpException;
-
+use yii\data\ActiveDataProvider;
 class FormThreadPushMsgController extends ActiveController {
 
     public $modelClass = 'api\modules\v11\models\FormThreadPushMsg';
@@ -28,7 +27,7 @@ class FormThreadPushMsgController extends ActiveController {
     }
 
     /**
-     * @return CsvDataProvider
+     * @return ActiveDataProvider
      * v11/form-thread-push-msgs?thread_id={thread_id}
      * type=1获取已读消息，type=0获取未读消息，无参数type则为所有消息
      * 获取所有和他有关的帖子id，
@@ -45,7 +44,7 @@ class FormThreadPushMsgController extends ActiveController {
             $query = $model::find()->where(['user_id'=>$user_id]);
         }
        // FormThreadPushMsg::updateAll(['read_user'=>1],['user_id'=>$user_id]);
-        return new CsvDataProvider([
+        return new ActiveDataProvider([
             'query' =>  $query,
             'pagination' => [
                 'pageSize' => 20,
