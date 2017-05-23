@@ -23,7 +23,7 @@ $this->registerCss("
     <?=\yii\helpers\Html::a('返还每日统计',['everyday-fee-record'],['class'=>'btn btn-success'])?>
 </p>
 <div class="today-fee-record-index row">
-        <div class="col-md-6">
+        <div class="col-md-12">
         <div class="box box-warning">
             <div class="box-header with-border">
                 <h3 class="box-title">所有被删除</h3>

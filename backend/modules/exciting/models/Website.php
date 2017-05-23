@@ -46,6 +46,7 @@ class Website extends \yii\db\ActiveRecord
             'title' => '标题',
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
+
         ];
     }
 
@@ -97,13 +98,6 @@ class Website extends \yii\db\ActiveRecord
         $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
         $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->website_id;
         $qiniu = $qn->upload('threadimages',"uploads/otherpick/$mkdir");
- /*       $config = [
-            'savePath' => Yii::getAlias('@backend').'/web/images/website/', //存储文件夹
-            'maxSize' => 4096 ,//允许的文件最大尺寸，单位KB
-            'allowFiles' => ['.png' , '.jpg' , '.jpeg'],  //允许的文件格式
-        ];
-        $up = new Uploader2("file", $config, 'website'.$this->website_id,false);
-        $info = $up->getFileInfo();*/
 
         if($type!=-1){
             $website_content = WebsiteContent::findOne($type);

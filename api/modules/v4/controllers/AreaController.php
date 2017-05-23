@@ -2,6 +2,7 @@
 
 namespace api\modules\v4\controllers;
 
+use backend\modules\sm\models\Province;
 use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
 use yii\data\ActiveDataProvider;
@@ -29,13 +30,10 @@ class AreaController extends ActiveController
 	public function actionIndex()
 	{
 
-			$modelClass = $this->modelClass;
-
-			$query = $modelClass::find()->select('title as area')->groupBy('title')->where(['status'=>2,'cover_id'=>0])->asArray()->all();
-
-
+			//$modelClass = $this->modelClass;
+            $query = Province::find()->select('prov_name as area')->orderBy('prov_type asc')->asArray()->all();
+		//	$query = $modelClass::find()->select('title as area')->groupBy('title')->where(['status'=>2,'cover_id'=>0])->asArray()->all();
 			return $query;
-		
 
 	}
 

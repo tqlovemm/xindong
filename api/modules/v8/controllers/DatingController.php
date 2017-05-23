@@ -32,23 +32,26 @@ class DatingController extends ActiveController
         $time = isset($_GET['time'])?htmlspecialchars($_GET['time']):'';
         $title = isset($_GET['title'])?$_GET['title']:'';
 
-        $where = ' status = 2 and cover_id = 0 ';
-        if(!empty($time) && $time === 1){
-            $t = time()-86400;
-            $where['cover_id'] = 0;
-            $where .= ' and created_at > '.$t;
+        $query = $model::find()->where(['status' => 2,'cover_id' => 0]);
+        $t = time()-86400*3;
+        if(!empty($time) && $time == 1){
+            $query = $query->andWhere("updated_at>$t");
         }
         if(!empty($title)){
-            $where .= " and title = '".$title."'";
+            $query = $query->andWhere(['title'=>$title]);
         }
-
-        $query = $model::find()->where($where)->orderBy(' updated_at desc');
-        //return $model::find()->where($where)->orderBy(' created_at desc')->createCommand()->getRawSql();
         return new ActiveDataProvider(
             [
                 'query' =>  $query,
+                'pagination' => [
+                    'pageSize' => 20,
+                ],
+                'sort' => [
+                    'defaultOrder' => [
+                        'updated_at' => SORT_DESC,
+                    ]
+                ],
             ]
         );
     }
-
 }

@@ -1,5 +1,6 @@
 <?php
 namespace frontend\controllers;
+use backend\modules\exciting\models\WebsiteContent;
 use common\components\SaveToLog;
 use frontend\models\CollectingSeventeenFilesText;
 use frontend\models\ContactIpLimits;
@@ -529,31 +530,28 @@ class SiteController extends BaseController
         if(!$session->isActive){
             $session->open();
         }
-        $model = Website::find()->with('photo')->asArray();
-
-        $boy = $model->where(['website_id'=>2])->one();
-        $girl = $model->where(['website_id'=>3])->one();
+        $model = WebsiteContent::find();
+        $boy_1 = $model->where(['website_id'=>2,'status'=>10])->asArray()->all();
+        $now = date('H',time());
+        $boy_2 = $model->where(['website_id'=>2,'status'=>0])->andWhere("start_time<=$now")->andWhere("end_time>=$now")->asArray()->all();
+        $girls =  $model->where(['website_id'=>3,'status'=>10])->asArray()->all();
+        $boys = array_merge($boy_1,$boy_2);
 
         if(!empty($session->get('contact_session_boy'))){
             $boy_rand = $session->get('contact_session_boy');
             $girl_rand = $session->get('contact_session_girl');
         }else{
-            $session->set('contact_session_boy',mt_rand(0,count($boy['photo'])-1));
-            $session->set('contact_session_girl',mt_rand(0,count($girl['photo'])-1));
+            $session->set('contact_session_boy',mt_rand(0,count($boys)-1));
+            $session->set('contact_session_girl',mt_rand(0,count($girls)-1));
             $boy_rand = $session->get('contact_session_boy');
             $girl_rand = $session->get('contact_session_girl');
         }
-        if(empty($boy['photo'][$boy_rand])||empty($girl['photo'][$girl_rand])){
 
+        if(empty($boys[$boy_rand])||empty($girls[$girl_rand])){
             $session->destroy();
             return $this->redirect('contact');
-
-        }else{
-
-            $boys=$boy['photo'][$boy_rand];
-            $girls=$girl['photo'][$girl_rand];
-            return $this->render('contact',['boy'=>$boys,'girl'=>$girls]);
         }
+        return $this->render('contact',['boy'=>$boys[$boy_rand],'girl'=>$girls[$girl_rand]]);
 
 
     }

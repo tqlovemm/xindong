@@ -10,6 +10,9 @@ namespace backend\modules\exciting\models;
  * @property string $path
  * @property integer $created_at
  * @property integer $created_by
+ * @property integer $start_time
+ * @property integer $end_time
+ * @property integer $status
  */
 class WebsiteContent extends \yii\db\ActiveRecord
 {
@@ -28,7 +31,7 @@ class WebsiteContent extends \yii\db\ActiveRecord
     {
         return [
             [['website_id', 'name', 'path'], 'required'],
-            [['website_id', 'created_at'], 'integer'],
+            [['website_id', 'created_at','start_time','end_time','status'], 'integer'],
             [['path'], 'string', 'max' => 128],
             [['name', 'created_by'], 'string', 'max' => 32],
         ];
@@ -63,6 +66,9 @@ class WebsiteContent extends \yii\db\ActiveRecord
             'path' => 'Path',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
+            'start_time' => \Yii::t('app', 'Start Time'),
+            'end_time' => \Yii::t('app', 'End Time'),
+            'status' => \Yii::t('app', 'Status'),
         ];
     }
 }
