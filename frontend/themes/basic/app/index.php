@@ -1,5 +1,5 @@
 <?php
-
+return var_dump(json_encode($model));
 $this->registerCss("
     .container-fluid {padding-right: 0;padding-left: 0;}
     .weui_cells {margin-top: 0 !important;}
