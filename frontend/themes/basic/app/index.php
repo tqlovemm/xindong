@@ -13,7 +13,7 @@ $this->registerCss("
         <div class="weui_cell_bd weui_cell_primary">
             <p>用户ID</p>
         </div>
-        <div class="weui_cell_ft"><?=$model->user_id?></div>
+        <div class="weui_cell_ft"><?=json_encode($model)?></div>
     </div>
 </div>
 <div class="weui_panel weui_panel_access">
