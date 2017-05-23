@@ -33,7 +33,7 @@ class Article extends ActiveRecord
     public function fields(){
         $this->_user = Yii::$app->db->createCommand("select nickname,avatar,sex,groupid from {{%user}} where id=$this->created_id")->queryOne();
         return [
-            'title', 'wimg', 'miaoshu','wclick','wdianzan','hot','wtype','level'=>function(){return $this->_user['groupid'];},'nickname'=>function(){return $this->_user['nickname'];},'avatar'=>function(){return $this->_user['avatar'];},'sex'=>function(){return $this->_user['sex'];},'created_at',
+            'id','title', 'wimg', 'miaoshu','wclick','wdianzan','hot','wtype','level'=>function(){return $this->_user['groupid'];},'nickname'=>function(){return $this->_user['nickname'];},'avatar'=>function(){return $this->_user['avatar'];},'sex'=>function(){return $this->_user['sex'];},'created_at',
         ];
     }
 
