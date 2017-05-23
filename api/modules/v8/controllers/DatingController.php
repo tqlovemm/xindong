@@ -31,15 +31,15 @@ class DatingController extends ActiveController
         $model = $this->modelClass;
         $time = isset($_GET['time'])?htmlspecialchars($_GET['time']):'';
         $title = isset($_GET['title'])?$_GET['title']:'';
-        $query = [];
-        if(!empty($time) && $time === 1){
-            $t = time()-86400*3;
-            $query = $model::find()->where(['status' => 2,'cover_id' => 0])->andWhere("created_at>$t");
+
+        $query = $model::find()->where(['status' => 2,'cover_id' => 0]);
+        $t = time()-86400*3;
+        if(!empty($time) && $time == 1){
+            $query = $query->andWhere("created_at>$t");
         }
         if(!empty($title)){
-            $query = $model::find()->where(['status' => 2,'cover_id' => 0,'title'=>$title]);
+            $query = $query->where(['title'=>$title]);
         }
-
         return new ActiveDataProvider(
             [
                 'query' =>  $query,
@@ -54,5 +54,4 @@ class DatingController extends ActiveController
             ]
         );
     }
-
 }
