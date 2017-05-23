@@ -35,10 +35,10 @@ class DatingController extends ActiveController
         $query = $model::find()->where(['status' => 2,'cover_id' => 0]);
         $t = time()-86400*3;
         if(!empty($time) && $time == 1){
-            $query = $query->andWhere("created_at>$t");
+            $query = $query->andWhere("updated_at>$t");
         }
         if(!empty($title)){
-            $query = $query->where(['title'=>$title]);
+            $query = $query->andWhere(['title'=>$title]);
         }
         return new ActiveDataProvider(
             [
