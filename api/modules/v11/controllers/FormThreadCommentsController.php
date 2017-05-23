@@ -48,10 +48,10 @@ class FormThreadCommentsController extends ActiveController {
 
     	$model = new $this->modelClass();
     	$model->load(Yii::$app->request->getBodyParams(), '');
-        $decode = new yii\myhelper\Decode();
+      /*  $decode = new yii\myhelper\Decode();
         if(!$decode->decodeDigit($model->first_id)){
             yii\myhelper\Response::show(210,'参数不正确');
-        }
+        }*/
         if(empty(FormThread::findOne($model->thread_id))){
             yii\myhelper\Response::show('203','评价失败',"该帖子不存在");
         }elseif(empty(User::findOne($model->first_id))){

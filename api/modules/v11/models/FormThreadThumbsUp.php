@@ -85,7 +85,7 @@ class FormThreadThumbsUp extends ActiveRecord
         if(!empty($commentModel)){
             $cuid = ArrayHelper::map($commentModel,'first_id','first_id');
         }
-        $uids = array_merge($cuid, $tuid);
+        $uids = array_unique(array_merge($cuid, $tuid));
 
         if($this->user_id!=$thread_uid->user_id){
             array_push($uids,$thread_uid->user_id);
@@ -109,9 +109,9 @@ class FormThreadThumbsUp extends ActiveRecord
         }
 
         $data = array();
-        if($this->user_id!=$thread_uid->user_id){
+      /*  if($this->user_id!=$thread_uid->user_id){
             $data = [[$this->thread_id,$thread_uid->user_id,$this->user_id,"",time(),time()]];
-        }
+        }*/
 
         foreach ($uids as $uid){
             if($uid!=$thread_uid->user_id){
