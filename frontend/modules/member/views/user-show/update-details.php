@@ -37,7 +37,7 @@ $join_member_process = explode('@',$query['member_introduce']);
 $join_member_permissions = explode('@',$query['permissions']);
 $pre_url = Yii::$app->params['threadimg'];
 if(!empty(Yii::$app->request->get('uid'))){
-    $price = $query['price_1'];
+    $price = $query_app['price_1'];
 }else{
     $price = isset($model['price'])?$model['price']:$query['price_1'];
 }
