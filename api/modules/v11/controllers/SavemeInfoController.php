@@ -39,11 +39,15 @@ class SavemeInfoController extends ActiveController {
     public function actionView($id) {
         $model = new $this->modelClass();
         $query = $model::find()->where(['and',['=','apply_uid',$id],['<>','type',1]])->orderBy('created_at desc')->all();
+        $sids = '';
         for ($i=0; $i < count($query); $i++) { 
             $sids[] = $query[$i]['saveme_id'];
             $statuss[$query[$i]['saveme_id']] = $query[$i]['status'];
         }
         $model2 = new Saveme;
+        if(!$sids){
+            return $this->datares(201,0,'not data!','not data!');
+        }
         $save_query = $model2::find()->where(['id'=>$sids]);
         $pagination = new Pagination([
             'defaultPageSize' => 10,
