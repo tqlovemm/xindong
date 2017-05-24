@@ -30,7 +30,7 @@ class WeichatVoteController extends Controller
         $cookie = \Yii::$app->request->cookies;
         $this->user_wei_info = json_encode($cookie->getValue('userweinfo'));
 
-        if(empty($this->openid)){
+        if(empty($this->user_wei_info)){
 
             return $this->redirect('weichat-vote/vote-check');
         }
