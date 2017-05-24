@@ -104,7 +104,7 @@ class VoteSignInfo extends \yii\db\ActiveRecord
     public function upload()
     {
         $pre_url = Yii::$app->params['vote'];
-        $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $qn = new QiniuUploader('photoimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
         $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
         $qiniu = $qn->upload('vote',"$mkdir");
 
