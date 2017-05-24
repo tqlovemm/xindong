@@ -50,7 +50,7 @@ class VoteSignInfoController extends Controller
      */
     public function actionView($id, $openid)
     {
-        $model = $this->findModel($id, $openid);
+        $model = $this->findModel($id);
         $img = $model->voteSignImgs;
         return $this->render('view', [
             'model' => $model,'img'=>$img,
@@ -84,7 +84,7 @@ class VoteSignInfoController extends Controller
      */
     public function actionUpdate($id, $openid)
     {
-        $model = $this->findModel($id, $openid);
+        $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id, 'openid' => $model->openid]);
@@ -104,7 +104,7 @@ class VoteSignInfoController extends Controller
      */
     public function actionDelete($id, $openid)
     {
-        $this->findModel($id, $openid)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -132,7 +132,7 @@ class VoteSignInfoController extends Controller
     public function actionPass($id, $openid){
 
         $url = Yii::$app->request->referrer;
-        $model = $this->findModel($id, $openid);
+        $model = $this->findModel($id);
         $model->status = 2;
         $model->extra = Null;
         if($model->update()){
@@ -149,7 +149,7 @@ class VoteSignInfoController extends Controller
     public function actionNoPass($id, $openid, $extra){
 
         $url = Yii::$app->request->referrer;
-        $model = $this->findModel($id, $openid);
+        $model = $this->findModel($id);
         $model->status = 3;
         $model->extra = $extra;
         if($model->update()){
@@ -166,9 +166,9 @@ class VoteSignInfoController extends Controller
      * @return VoteSignInfo the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id, $openid)
+    protected function findModel($id)
     {
-        if (($model = VoteSignInfo::findOne(['id' => $id, 'openid' => $openid])) !== null) {
+        if (($model = VoteSignInfo::findOne(['id' => $id])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
