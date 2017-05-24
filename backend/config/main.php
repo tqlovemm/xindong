@@ -69,7 +69,7 @@ return [
             'class' => 'mdm\admin\Module',
         ],
         'note' => [
-            'class' => 'backend\modules\note\NoteModule;',
+            'class' => 'backend\modules\note\NoteModule',
         ],
 
         'good' => [
