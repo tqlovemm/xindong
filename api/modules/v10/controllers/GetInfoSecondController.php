@@ -44,10 +44,10 @@ class GetInfoSecondController extends Controller
 
         $model = $this->findModel($id);
         $uid = isset($_GET['uid'])?$_GET['uid']:0;
-      /*  $decode = new Decode();
+        $decode = new Decode();
         if(!$decode->decodeDigit($id)){
             Response::show(210,'参数不正确');
-        }*/
+        }
         $follow = Yii::$app->db->createCommand("select * from pre_user_follow where user_id = {$uid} and people_id={$model['id']}")->queryOne();
         if(!$follow){
             $follow['follow'] = 0;
