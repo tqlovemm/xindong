@@ -62,7 +62,6 @@ $this->registerJs("
                     break;
                 ?>
                 <div class="vote-top-box">
-                    <img class="vote-top-icon" src="/images/vote/woman<?=$key+1?>.png">
                     <a href="sign-detail?id=<?=$woman_top['id']?>" class="vote-top-img vote-top-img-a">
                         <span>编号:<?=$woman_top['id']?></span>
                         <img class="img-responsive center-block" src="<?=$pre_url.$woman_top['img']['img']?>">
