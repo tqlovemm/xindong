@@ -19,6 +19,9 @@ return [
         'sm' => [
             'class' => 'backend\modules\sm\Sm',
         ],
+        'apps' => [
+            'class' => 'backend\modules\apps\apps',
+        ],
         'male' => [
             'class' => 'backend\modules\male\male',
         ],
@@ -64,6 +67,9 @@ return [
 
         'admin' => [
             'class' => 'mdm\admin\Module',
+        ],
+        'note' => [
+            'class' => 'backend\modules\note\NoteModule;',
         ],
 
         'good' => [
