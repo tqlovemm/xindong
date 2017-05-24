@@ -15,15 +15,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id, 'openid' => $model->openid], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id, 'openid' => $model->openid], [
+        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a('Pass', ['pass', 'id' => $model->id, 'openid' => $model->openid], [
+        <?= Html::a('Pass', ['pass', 'id' => $model->id], [
             'class' => 'btn btn-success',
             'data' => [
                 'confirm' => 'Are you sure you want to pass this item?',
@@ -88,7 +88,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="col-md-10">
                             <input class="form-control" type="text" name="extra" placeholder="审核不通过原因">
                             <input type="hidden" name="id" value="<?=$model->id?>">
-                            <input type="hidden" name="openid" value="<?=$model->openid?>">
                         </div>
                         <div class="col-md-2">
                             <input class="btn btn-default" type="submit" value="提交">
