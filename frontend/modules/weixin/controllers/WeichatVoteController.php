@@ -43,7 +43,9 @@ class WeichatVoteController extends Controller
 
     public function actionIndex(){
 
+        $cookie = \Yii::$app->response->cookies;
 
+        $cookie->removeAll();
         echo "<pre>";
         var_dump($this->headimgurl);
         var_dump($this->nickname);
