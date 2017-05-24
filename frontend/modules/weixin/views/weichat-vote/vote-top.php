@@ -8,7 +8,8 @@ $this->registerCss('
     .vote-top-box{background-color: #fff;padding:10px;margin-bottom: 10px;position: relative;}
     .vote-top-icon{width: 80px;position: absolute;top:10px;left:10px;z-index:8;}
     .vote-top-img-a{position: relative;display: block;}
-    .vote-top-img-a span{position: absolute;right: 5px;top:5px;background-color: #fff;padding:5px 10px;color:gray;box-shadow: 0 0 4px #aaa;color:rgb(231,0,108);font-weight:500;border-radius:3px;}
+    .vote-top-img-a .number{position: absolute;right: 5px;top:5px;background-color: #fff;padding:5px 10px;color:gray;box-shadow: 0 0 4px #aaa;color:rgb(231,0,108);font-weight:500;border-radius:3px;}
+    .vote-top-img-a .rank{position: absolute;left: 5px;top:5px;background-color: #fff;padding:5px 10px;color:gray;box-shadow: 0 0 4px #aaa;color:rgb(231,0,108);font-weight:500;border-radius:3px;}
     .vote-top-img-a img{border-radius: 4px;}
     .nav-tabs > li > a{border-radius:0 !important;}
     #topTab{background-color: #fff;margin-bottom: 10px;margin-top:10px;}
@@ -60,8 +61,8 @@ $this->registerJs("
             <?php foreach ($model as $key=>$woman_top):?>
                 <div class="vote-top-box">
                     <a href="sign-detail?id=<?=$woman_top['id']?>" class="vote-top-img vote-top-img-a">
-                        <span>编号:<?=$woman_top['id']?></span>
-                        <span>名次:第<?=$key+1?>名</span>
+                        <span class="number">编号:<?=$woman_top['id']?></span>
+                        <span class="rank">名次:第<?=$key+1?>名</span>
                         <img class="img-responsive center-block" src="<?=$pre_url.$woman_top['img']['img']?>">
                     </a>
                     <div class="row" style="padding: 10px;margin: 0;">
