@@ -1,7 +1,7 @@
 <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
 <link rel="stylesheet" href="/weui/dist/style/weui.min.css"/>
 <?php
-$this->title = "男神女神参赛申请表";
+$this->title = "晒花样童年照";
 $this->registerCss('
     .navbar.navbar-custom ,footer,#izl_rmenu{display:none;}
     .preview{border:solid 1px #dedede;padding:10px;height:75px;width:75px;margin-right: 9px;margin-bottom: 9px;float:left;}
@@ -38,8 +38,8 @@ $pre_url = Yii::$app->params['vote'];
                     <div class="weui_cell_bd weui_cell_primary">
                         <div class="weui_uploader">
                             <div class="weui_uploader_hd weui_cell">
-                                <div class="weui_cell_bd weui_cell_primary">参赛照上传<small>（单张上传至少3张，第一张作为投票封面照）</small></div>
-                                <div class="weui_cell_ft weui_cell_fts"><span><?=count($img)?></span>/6</div>
+                                <div class="weui_cell_bd weui_cell_primary">参赛照上传</div>
+                                <div class="weui_cell_ft weui_cell_fts"><span><?=count($img)?></span>/1</div>
                             </div>
                             <div class="weui_uploader_bd">
                                 <div class="weui_uploader_files" id="preview">
@@ -53,7 +53,7 @@ $pre_url = Yii::$app->params['vote'];
                                     endif;
                                     ?>
                                 </div>
-                                <?php if(count($img)<6):?>
+                                <?php if(count($img)<1):?>
                                     <div class="weui_uploader_input_wrp btn" id="up_btn">
                                         <input class="weui_uploader_input" type="file" id="photoimg" name="photoimg" accept="image/*" multiple />
                                     </div>
@@ -97,11 +97,11 @@ $pre_url = Yii::$app->params['vote'];
                     </div>
                 </label>
             </div>
-            <div class="weui_cells_title">交友宣言</div>
+            <div class="weui_cells_title">晒照宣言</div>
             <div class="weui_cells weui_cells_form">
                 <div class="weui_cell">
                     <div class="weui_cell_bd weui_cell_primary">
-                        <textarea class="weui_textarea" maxlength="50" name="declaration" placeholder="请输入交友宣言" rows="3"></textarea>
+                        <textarea class="weui_textarea" maxlength="50" name="declaration" placeholder="请输入晒照宣言" rows="3"></textarea>
                         <div class="weui_textarea_counter"><span>0</span>/50</div>
                     </div>
                 </div>
@@ -153,8 +153,8 @@ $pre_url = Yii::$app->params['vote'];
     {
         with (thisform)
         {
-            if (validate_required(declaration,'交友宣言不可为空')==false)
-            {declaration.focus();return false}
+//            if (validate_required(declaration,'交友宣言不可为空')==false)
+//            {declaration.focus();return false}
         }
 
     }
@@ -169,8 +169,8 @@ $pre_url = Yii::$app->params['vote'];
 
     $('#submit_text').click(function () {
 
-        if($('#preview img').size()<3){
-            $('.notice_content').html('上传图片数量不可小于3张');
+        if($('#preview img').size()<1){
+            $('.notice_content').html('上传图片数量不可小于1张');
             { $('#dialog').show();return false}
         }
 
