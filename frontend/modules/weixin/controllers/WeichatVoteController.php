@@ -314,7 +314,7 @@ defo;
 
         $query = VoteSignInfo::findOne(['openid'=>$openid,'status'=>[1,2]]);
 
-        $tongJi2 = Yii::$app->db->createCommand("select * from pre_vote_sign_info where id in(select participantid from pre_weichat_note_userinfo where unionid='{$openid}')")->queryAll();
+        $tongJi2 = Yii::$app->db->createCommand("select * from pre_vote_sign_info where id in(select participantid from pre_weichat_note_userinfo where openid='{$openid}')")->queryAll();
 
         if(!empty($query)){
 
