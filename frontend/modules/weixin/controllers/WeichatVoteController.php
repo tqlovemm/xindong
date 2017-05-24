@@ -29,9 +29,9 @@ class WeichatVoteController extends Controller
             'appsecret'=>Yii::$app->params['appsecret'],
         );
         $cookie = \Yii::$app->request->cookies;
-        $this->openid = $cookie->getValue(['vote_01_openid']);
-        $this->headimgurl = $cookie->getValue(['vote_01_headimgurl']);
-        $this->nickname = $cookie->getValue(['vote_01_nickname']);
+        $this->openid = $cookie->getValue('vote_01_openid');
+        $this->headimgurl = $cookie->getValue('vote_01_headimgurl');
+        $this->nickname = $cookie->getValue('vote_01_nickname');
 
         if(empty($this->openid)){
 
