@@ -18,11 +18,8 @@ class WeichatVoteController extends Controller
 {
     const NOTE_NUMBER = 10;
     public $enableCsrfValidation = false;
-    private $openid;
-    private $headimgurl;
-    private $nickname;
     private $options;
-    private $subscribe;
+    private $user_wei_info;
 
     public function init()
     {
@@ -31,10 +28,7 @@ class WeichatVoteController extends Controller
             'appsecret'=>Yii::$app->params['appsecret'],
         );
         $cookie = \Yii::$app->request->cookies;
-        $this->openid = $cookie->getValue('vote_01_openid');
-        $this->headimgurl = $cookie->getValue('vote_01_headimgurl');
-        $this->nickname = $cookie->getValue('vote_01_nickname');
-        $this->subscribe = $cookie->getValue('vote_01_subscribe');
+        $this->user_wei_info = json_encode($cookie->getValue('userweinfo'));
 
         if(empty($this->openid)){
 
@@ -45,11 +39,7 @@ class WeichatVoteController extends Controller
     }
 
     public function actionIndex(){
-
-        var_dump($this->headimgurl);
-        var_dump($this->nickname);
-        var_dump($this->subscribe);
-        return var_dump($this->openid);
+        return var_dump($this->user_wei_info);
     }
     protected function getCode($callback){
         $callback = urlencode($callback);
@@ -86,10 +76,7 @@ class WeichatVoteController extends Controller
                 return $this->redirect('weichat-vote/vote-check');
             }
 
-            $this->addCookie('vote_01_openid',$userInfo['openid']);
-            $this->addCookie('vote_01_headimgurl',$userInfo['headimgurl']);
-            $this->addCookie('vote_01_nickname',$userInfo['nickname']);
-            $this->addCookie('vote_01_subscribe',$userInfo['subscribe']);
+            $this->addCookie('userweinfo',json_encode($userInfo));
 
             $voteUrl = '/weixin/weichat-vote/vote-man';//投票地址
 
@@ -119,7 +106,7 @@ class WeichatVoteController extends Controller
        return $this->render('vote-man',[
            'model' => $model,
            'pages' => $pages,
-           'subscribe'=>$this->subscribe,
+           'subscribe'=>$this->user_wei_info['subscribe'],
        ]);
 
     }
@@ -195,21 +182,38 @@ class WeichatVoteController extends Controller
 
     }
 
-    public function actionVoteClick($id){
+    public function actionVoteClick($id,$type){
 
         $query = VoteSignInfo::findOne($id);
-
-        if(1){
+        $voteUserInfo = new WeichatNoteUserinfo();
+        if(empty($voteUserInfo::findOne(['unionid'=>$this->openid,'noteid'=>self::NOTE_NUMBER,'type'=>$type,'status'=>1]))){
 
             $query->vote_count+=1;
             $query->update();
 
-            $result = $this->toAndRank($query);
-            echo $query->vote_count."<script>
-            if(confirm('[男神女神评选]您已成功为{$id}号投了一票！当前排名为第{$result['rank']}名，距离前一名还差{$result['to']}票',分享给好友为ta拉票吧)){
-                location.href = 'sign-detail?id={$id}&show=1';
+            $voteUserInfo->noteid = self::NOTE_NUMBER;
+            $voteUserInfo->participantid = $id;
+            $voteUserInfo->city = $user_info['city'];
+            $voteUserInfo->country = $user_info['country'];
+            $voteUserInfo->province = $user_info['province'];
+            $voteUserInfo->nickname = $user_info['nickname'];
+            $voteUserInfo->sex = $user_info['sex'];
+            $voteUserInfo->openid = $user_info['openid'];
+            $voteUserInfo->headimgurl = $user_info['headimgurl'];
+            $voteUserInfo->unionid = $user_info['unionid'];
+            $voteUserInfo->subscribe = $user_info['subscribe'];
+            $voteUserInfo->subscribe_time = $user_info['subscribe_time'];
+            $voteUserInfo->type = $type;
+
+            if($voteUserInfo->save()){
+
+                $result = $this->toAndRank($query);
+                echo $query->vote_count."<script>
+                if(confirm('[男神女神评选]您已成功为{$id}号投了一票！当前排名为第{$result['rank']}名，距离前一名还差{$result['to']}票',分享给好友为ta拉票吧)){
+                    location.href = 'sign-detail?id={$id}&show=1';
+                }
+                </script>";
             }
-            </script>";
 
         }else{
 
