@@ -37,8 +37,10 @@ $join_member_process = explode('@',$query['member_introduce']);
 $join_member_permissions = explode('@',$query['permissions']);
 $pre_url = Yii::$app->params['threadimg'];
 if(!empty(Yii::$app->request->get('uid'))){
-    $price = $query['price_1'];
+    $giveaway = $query_app['giveaway'];
+    $price = $query_app['price_1'];
 }else{
+    $giveaway = $query['giveaway'];
     $price = isset($model['price'])?$model['price']:$query['price_1'];
 }
 
@@ -85,7 +87,7 @@ $uid = !empty(Yii::$app->request->get('uid'))?"&top=1&uid=".Yii::$app->request->
     <div style="background-color: #fff;margin: 0 -15px 10px -15px;">
         <div class="row" style="margin: 0;border-top: 1px solid #eee;">
             <div style="padding-right: 10px;float: left;padding-left: 10px;"><img style="width: 40px;" class="img-responsive" src="/images/member/zeng.png"></div>
-            <div style="float: left;line-height: 40px;"><?=$query['giveaway']?>节操币</div>
+            <div style="float: left;line-height: 40px;"><?=$giveaway?>节操币</div>
         </div>
         <div class="row" style="margin: 0;border-top: 1px solid #eee;">
             <div style="padding-right: 10px;float: left;padding-left: 10px;"><img style="width: 40px;" class="img-responsive" src="/images/member/zeng.png"></div>

@@ -19,6 +19,7 @@ use backend\modules\financial\models\FinancialWechat;
  */
 class FinancialWechatJoinRecordController extends Controller
 {
+    public $enableCsrfValidation = false;
     public function behaviors()
     {
         return [

@@ -10,6 +10,8 @@ namespace api\modules\v10\controllers;
 
 use api\modules\v11\models\FormThread;
 use api\modules\v2\models\Profile;
+use backend\modules\app\models\UserData;
+use frontend\models\UserProfile;
 use Yii;
 use yii\db\Query;
 use yii\myhelper\Decode;
@@ -54,37 +56,31 @@ class GetInfoSecondController extends Controller
             unset($follow['id'],$follow['people_id']);
         }
 
-        $credit = (new Query())->select('levels,viscosity,lan_skills,sex_skills,appearance')->from('{{%credit_value}}')->where(['user_id'=>$model['id']])->one();
-        if(empty($credit)) {
-
-            Yii::$app->db->createCommand()->insert('{{%credit_value}}', [
-                'user_id' => $model['id'],
-                'created_at' => time(),
-                'updated_at' => time()
-            ])->execute();
-
-            $glamorous = 600;
-        }else{
-            $glamorous = array_sum($credit);
+        $userData = new UserData();
+        if(($data = $userData::findOne($model['id']))==null){
+            $userData->user_id = $model['id'];
+            $userData->save();
+            $data = $userData;
         }
-        $data = Yii::$app->db->createCommand('select * from {{%user_data}} WHERE user_id='.$model['id'])->queryOne();
-        //未读帖子数
-        $count = (new Query())->select('id')->from('{{%app_message}}')->where(['to_id'=>$id,'action'=>2])->count();
-        $data['feed_count']=$count;
-        $data['thread_count'] = FormThread::find()->where(['user_id'=>$model['id']])->count();
-        $profile = Yii::$app->db->createCommand('select *,description as self_introduction from {{%user_profile}} WHERE user_id='.$model['id'])->queryOne();
-        if(!$profile){
-            $model2 = new Profile();
-            $model2->user_id = $id;
-            $model2->created_at = time();
-            $model2->updated_at = time();
-            $model2->save();
+        $data = $data->getAttributes();//节操币，粉丝，关注数
+
+        $data['thread_count'] = FormThread::find()->where(['user_id'=>$model['id']])->count();//发帖数
+
+        $userProfile = new UserProfile();
+        if(($profile = $userProfile::findOne($model['id']))==null){
+            $userProfile->user_id = $model['id'];
+            $userProfile->created_at = time();
+            $userProfile->updated_at = time();
+            $userProfile->save();
+            $profile = $userProfile;
         }
+        $profile = $profile->getAttributes();
+        $profile['is_marry'] = (string)$profile['is_marry'];
         unset($model['password_hash'],$model['cellphone'],$model['invitation'],$model['openId'],$model['weibo_num'],$model['none'],$profile['description'],$model['auth_key'],$model['password_reset_token'],$model['id'],$model['role'],$model['identity']);
         $profile['mark']=json_decode($profile['mark']);
         $profile['make_friend']=json_decode($profile['make_friend']);
         $profile['hobby']=json_decode($profile['hobby']);
-        $profile['glamorous'] = $glamorous;
+        $profile['glamorous'] = 600;
 
         $img_url = (new Query())->select('img_url')->from('pre_user_image')->where(['user_id'=>$id])->all();
         $row = array();
