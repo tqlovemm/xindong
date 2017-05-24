@@ -57,13 +57,11 @@ $this->registerJs("
 <div style="padding-bottom: 60px;">
     <div id="topTabContent" class="tab-content" style="min-height: 300px;">
         <div class="tab-pane fade in active" id="womans">
-            <?php foreach ($model as $key=>$woman_top):
-                if($key>=5)
-                    break;
-                ?>
+            <?php foreach ($model as $key=>$woman_top):?>
                 <div class="vote-top-box">
                     <a href="sign-detail?id=<?=$woman_top['id']?>" class="vote-top-img vote-top-img-a">
                         <span>编号:<?=$woman_top['id']?></span>
+                        <span>名次:第<?=$key+1?>名</span>
                         <img class="img-responsive center-block" src="<?=$pre_url.$woman_top['img']['img']?>">
                     </a>
                     <div class="row" style="padding: 10px;margin: 0;">
