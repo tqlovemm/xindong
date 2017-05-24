@@ -83,7 +83,7 @@ class WeichatVoteController extends Controller
 
             if(isset($userInfo['errcode'])&&$userInfo['errcode']==40001){
                 Yii::$app->cache->delete('access_token_js');
-                return $this->refresh();
+                return $this->redirect('weichat-vote/vote-check');
             }
             return var_dump($userInfo);
             $this->addCookie('vote_01_openid',$userInfo['openid']);
