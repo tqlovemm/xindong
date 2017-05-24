@@ -88,7 +88,7 @@ class WeichatVoteController extends Controller
             $this->addCookie('vote_01_nickname',$userInfo['nickname']);
 
             $voteUrl = '/weixin/weichat-vote/vote-man';//投票地址
-
+var_dump($userInfo);
             return $this->redirect($voteUrl);
         }
 
