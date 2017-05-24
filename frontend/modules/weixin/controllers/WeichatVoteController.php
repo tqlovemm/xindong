@@ -140,10 +140,9 @@ class WeichatVoteController extends Controller
 
         $this->layout = '@app/themes/basic/layouts/vote_02';
 
-        $model_man = VoteSignInfo::find()->joinWith('img')->where(['sex'=>0,'status'=>2])->orderBy('vote_count desc')->asArray()->limit(20)->all();
-        $model_woman = VoteSignInfo::find()->joinWith('img')->where(['sex'=>1,'status'=>2])->orderBy('vote_count desc')->asArray()->limit(30)->all();
+        $model = VoteSignInfo::find()->with('img')->where(['status'=>2])->orderBy('vote_count desc')->asArray()->limit(20)->all();
 
-        return $this->render('vote-top',['model_man'=>$model_man,'model_woman'=>$model_woman]);
+        return $this->render('vote-top',['$model'=>$model]);
 
     }
 

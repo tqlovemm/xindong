@@ -53,15 +53,11 @@ $this->registerJs("
             </a>
         </li>
     </ul>
-    <ul id="topTab" class="nav nav-tabs">
-        <li class="woman active" style="width: 50%;"><a href="#womans" data-toggle="tab">女神榜</a></li>
-        <li class="man" style="width: 50%;"><a href="#mans" data-toggle="tab">男神榜</a></li>
-    </ul>
 </div>
 <div style="padding-bottom: 60px;">
     <div id="topTabContent" class="tab-content" style="min-height: 300px;">
         <div class="tab-pane fade in active" id="womans">
-            <?php foreach ($model_woman as $key=>$woman_top):
+            <?php foreach ($model as $key=>$woman_top):
                 if($key>=5)
                     break;
                 ?>
@@ -79,34 +75,6 @@ $this->registerJs("
                             </a>
                         <?php else:?>
                             <div class="col-xs-6" style="padding:0;text-align: right;" data-sex="<?=$woman_top['sex']?>" onclick="vote_notes(<?=$woman_top['id']?>,this)">
-                                <span class="weicaht-note">投票</span>
-                            </div>
-                        <?php endif;?>
-                    </div>
-                </div>
-            <?php endforeach;?>
-        </div>
-        <div class="tab-pane fade" id="mans">
-            <?php foreach ($model_man as $k=>$man_top):
-                if($k>=5)
-                    break;
-
-                ?>
-
-                <div class="vote-top-box">
-                    <img class="vote-top-icon" src="/images/vote/man<?=$k+1?>.png">
-                    <a href="sign-detail?id=<?=$man_top['id']?>" class="vote-top-img vote-top-img-a">
-                        <span>编号:<?=$man_top['id']?></span>
-                        <img class="img-responsive center-block" src="<?=$pre_url.$man_top['img']['img']?>">
-                    </a>
-                    <div class="row" style="padding: 10px;margin: 0;">
-                        <div class="col-xs-6 note-count"><?=$man_top['vote_count']?></div>
-                        <?php if($subscribe!=1):?>
-                            <a class="col-xs-6" style="padding:0;text-align: right;" data-lightbox="d" data-title="请关注微信公众号进行投票" href="/images/weixin/149129585220305657.jpg">
-                                <span class="weicaht-note">投票</span>
-                            </a>
-                        <?php else:?>
-                            <div class="col-xs-6" style="padding:0;text-align: right;" data-sex="<?=$man_top['sex']?>" onclick="vote_notes(<?=$man_top['id']?>,this)">
                                 <span class="weicaht-note">投票</span>
                             </div>
                         <?php endif;?>
