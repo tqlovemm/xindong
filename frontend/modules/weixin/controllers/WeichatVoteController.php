@@ -94,6 +94,8 @@ class WeichatVoteController extends Controller
             $voteUrl = '/weixin/weichat-vote/vote-man';//投票地址
 
             return $this->redirect($voteUrl);
+        }else{
+            return $this->redirect('weichat-vote/vote-check');
         }
 
     }
