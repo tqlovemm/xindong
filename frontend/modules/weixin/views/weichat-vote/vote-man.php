@@ -11,6 +11,7 @@ $this->registerCss("
     .contact{display:none;}
     .wall-column{padding-bottom:0 !important;}
 ");
+$pre_url = Yii::$app->params['vote'];
 $this->registerJs("
 
     var obj = '.nav-tabs-top';
@@ -70,7 +71,7 @@ $this->registerJs("
                         <a href="sign-detail?id=<?=$item['id']?>">
                             <?php foreach ($item['voteSignImgs'] as $k=>$list):
                                 if($k==1) break; ?>
-                                <img src="<?=$list['img']?>"/>
+                                <img src="<?=$pre_url.$list['img']?>"/>
                             <?php endforeach;?>
                         </a>
 

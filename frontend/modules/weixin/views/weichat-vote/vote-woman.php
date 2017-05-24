@@ -32,6 +32,7 @@ $this->registerJs("
         }
     });
 ");
+$pre_url = Yii::$app->params['vote'];
 ?>
 <div class="row form-group" style="margin: 10px 10px;">
     <form action="vote-woman" method="get" class="sidebar-form">
@@ -73,7 +74,7 @@ $this->registerJs("
                     <a href="sign-detail?id=<?=$item['id']?>">
                         <?php foreach ($item['voteSignImgs'] as $k=>$list):
                             if($k==1) break; ?>
-                            <img src="<?=$list['img']?>"/>
+                            <img src="<?=$pre_url.$list['img']?>"/>
                         <?php endforeach;?>
                     </a>
 
