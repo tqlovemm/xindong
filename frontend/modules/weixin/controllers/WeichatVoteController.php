@@ -178,7 +178,7 @@ class WeichatVoteController extends Controller
         $jsdk = new Jssdk();
         $signPackage = $jsdk->getSignPackage();
 
-        return $this->render('sign-detail',['model'=>$model,'to'=>$to,'rank'=>$key+1,'signPackage'=>$signPackage,'show'=>Yii::$app->request->get(),'subscribe'=>$this->user_wei_info['subscribe'],]);
+        return $this->render('sign-detail',['model'=>$model,'to'=>$to,'rank'=>$key+1,'signPackage'=>$signPackage,'show'=>Yii::$app->request->get(),'userInfo'=>$this->user_wei_info,]);
 
     }
 

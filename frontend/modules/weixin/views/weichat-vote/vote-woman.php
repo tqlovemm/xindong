@@ -1,11 +1,6 @@
 <?php
 use yii\widgets\LinkPager;
-$session = Yii::$app->session;
-if(!$session->isActive){
-    $session->open();
-}
 $this->title = "晒花样童年照";
-$dinyue_userinfo= new \frontend\models\DinyueWeichatUserinfo();
 $this->registerCss("
     .nav-tabs-top{width:100%;z-index:9;}
     .contact{display:none;}

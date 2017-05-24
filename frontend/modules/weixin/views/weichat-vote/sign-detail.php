@@ -1,9 +1,4 @@
 <?php
-$session = Yii::$app->session;
-if(!$session->isActive){
-    $session->open();
-}
-$dinyue_userinfo = new \frontend\models\DinyueWeichatUserinfo();
 $this->title = "详情";
 $this->registerCss("
 .weicaht-note-share,.weicaht-notes{width: 20%;padding: 6px 10px;border-radius: 4px;font-size: 14px;z-index: 100;border: none;color: #fff;box-shadow: 0 0 7px #d7d7d7;}
@@ -50,7 +45,7 @@ $this->registerJs("
 </div>
 <div class="row" style="background-color: #fff;padding:10px;margin: 0;border-top: 1px solid #eee;border-bottom: 1px solid #eee;">
     <div class="col-xs-4 note-count" style="font-size: 15px;line-height: 27px;padding: 0;text-align: left;"> <?=$model['vote_count']?></div>
-    <?php if($subscribe!=1):?>
+    <?php if($userInfo['subscribe']!=1):?>
         <a class="col-xs-4" style="padding:0;text-align: right;line-height: 27px;" data-lightbox="d" data-title="请关注微信公众号进行投票" href="/images/weixin/149129585220305657.jpg">
             <span class="weicaht-notes">给TA投票</span>
         </a>
@@ -132,8 +127,8 @@ $this->registerJs("
     wx.ready(function () {
         // 在这里调用 API
         wx.onMenuShareAppMessage({
-            title: '<?=$session->get('vote_01_nickname')?>邀您来投票', // 分享标题
-            desc: '投票参与‘男神女神’评选，交友更有现金大奖拿。', // 分享描述
+            title: '<?=$userInfo['nickname']?>邀您来投票', // 分享标题
+            desc: '<?=$model['id']?>号邀请您来为他投票。', // 分享描述
             link: 'http://13loveme.com/weixin/weichat-vote/sign-detail?id=<?=$model['id']?>&before=2', // 分享链接
             imgUrl: '<?=$pre_url.$item_img?>', // 分享图标
             type: 'link', // 分享类型,music、video或link，不填默认为link
@@ -152,7 +147,7 @@ $this->registerJs("
         });
 
         wx.onMenuShareTimeline({
-            title: '投票参与‘男神女神’评选，交友更有现金大奖拿。', // 分享标题
+            title: '晒花样童年照投票。', // 分享标题
             link: 'http://13loveme.com/weixin/weichat-vote/sign-detail?id=<?=$model['id']?>&before=2', // 分享链接
             imgUrl: '<?=$pre_url.$item_img?>', // 分享图标
             success: function () {

@@ -1,10 +1,5 @@
 <?php
-$session = Yii::$app->session;
-if(!$session->isActive){
-    $session->open();
-}
-$this->title = "男神女神排行榜";
-$dinyue_userinfo= new \frontend\models\DinyueWeichatUserinfo();
+$this->title = "晒花样童年照";
 $pre_url = Yii::$app->params['vote'];
 $this->registerCss('
     .nav-tabs-top{width:100%;z-index:9;}
@@ -78,8 +73,8 @@ $this->registerJs("
                     </a>
                     <div class="row" style="padding: 10px;margin: 0;">
                         <div class="col-xs-6 note-count"><?=$woman_top['vote_count']?></div>
-                        <?php if(empty($dinyue_userinfo::findOne(['unionid'=>$session->get('vote_01_openid')]))):?>
-                            <a class="col-xs-6" style="padding:0;text-align: right;" data-lightbox="d" data-title="请关注微信订阅号进行投票" href="/images/weixin/149129585220305657.jpg">
+                        <?php if($subscribe!=1):?>
+                            <a class="col-xs-6" style="padding:0;text-align: right;" data-lightbox="d" data-title="请关注微信公众号进行投票" href="/images/weixin/149129585220305657.jpg">
                                 <span class="weicaht-note">投票</span>
                             </a>
                         <?php else:?>
@@ -106,8 +101,8 @@ $this->registerJs("
                     </a>
                     <div class="row" style="padding: 10px;margin: 0;">
                         <div class="col-xs-6 note-count"><?=$man_top['vote_count']?></div>
-                        <?php if(empty($dinyue_userinfo::findOne(['unionid'=>$session->get('vote_01_openid')]))):?>
-                            <a class="col-xs-6" style="padding:0;text-align: right;" data-lightbox="d" data-title="请关注微信订阅号进行投票" href="/images/weixin/149129585220305657.jpg">
+                        <?php if($subscribe!=1):?>
+                            <a class="col-xs-6" style="padding:0;text-align: right;" data-lightbox="d" data-title="请关注微信公众号进行投票" href="/images/weixin/149129585220305657.jpg">
                                 <span class="weicaht-note">投票</span>
                             </a>
                         <?php else:?>
