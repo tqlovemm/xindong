@@ -20,6 +20,7 @@ use yii\filters\VerbFilter;
  */
 class FinancialWechatController extends Controller
 {
+    public $enableCsrfValidation = false;
     public function behaviors()
     {
         return [

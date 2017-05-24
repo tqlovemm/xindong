@@ -17,6 +17,7 @@ use yii\filters\VerbFilter;
  */
 class FinancialWechatMemberIncreaseController extends Controller
 {
+    public $enableCsrfValidation = false;
     public function behaviors()
     {
         return [
