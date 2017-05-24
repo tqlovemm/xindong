@@ -117,7 +117,7 @@ $(function(){
                 var result = '';
                 $.ajax({
                     type: 'GET',
-                    url: "http://localhost:81/article/article/getcomment?page="+page+"&aid="+<?= $cmodel->id;?>,
+                    url: "http://120.27.226.102:82/article/article/getcomment?page="+page+"&aid="+<?= $cmodel->id;?>,
                     dataType: 'json',
                     success: function(data){
                         var arrLen = data.length;
