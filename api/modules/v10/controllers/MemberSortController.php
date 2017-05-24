@@ -11,6 +11,7 @@ namespace api\modules\v10\controllers;
 use api\modules\v4\models\PredefinedJiecaoCoin;
 use api\modules\v4\models\User;
 use api\modules\v9\models\MemberSort;
+use frontend\models\UserData;
 use Yii;
 use yii\db\Query;
 use yii\myhelper\Decode;
@@ -39,10 +40,19 @@ class MemberSortController extends Controller
             Response::show(210,'参数不正确');
         }
         $res = (new PredefinedJiecaoCoin())->find()->where(['type'=>1,'member_type'=>0,'status'=>10])->orderBy('money asc')->all();
-        $res2 = (new Query())->select('jiecao_coin')->from('{{%user_data}}')->where(['user_id'=>$id])->one();
+        $userData = new UserData();
+
+        if(($res2=$userData::findOne($id))==null){
+            $userData->user_id = $id;
+            $userData->jiecao_coin = 0;
+            $userData->save();
+            $coin = $userData->jiecao_coin;
+        }else{
+            $coin = $res2['jiecao_coin'];
+        }
         $data = array();
-        $data['jiecao_coin'] = $res2['jiecao_coin'];
-        array_fill_keys($data,$res2['jiecao_coin']);
+        $data['jiecao_coin'] = $coin;
+        array_fill_keys($data,$coin);
         $data['member'] = $res;
         $data['is_status'] = 0; //1审核环境；0生产环境
         return $data;
