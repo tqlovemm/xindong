@@ -135,7 +135,7 @@ $this->registerJs("
             title: '<?=$session->get('vote_01_nickname')?>邀您来投票', // 分享标题
             desc: '投票参与‘男神女神’评选，交友更有现金大奖拿。', // 分享描述
             link: 'http://13loveme.com/weixin/weichat-vote/sign-detail?id=<?=$model['id']?>&before=2', // 分享链接
-            imgUrl: 'http://13loveme.com/<?=$item_img?>', // 分享图标
+            imgUrl: '<?=$pre_url.$item_img?>', // 分享图标
             type: 'link', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () {
@@ -154,7 +154,7 @@ $this->registerJs("
         wx.onMenuShareTimeline({
             title: '投票参与‘男神女神’评选，交友更有现金大奖拿。', // 分享标题
             link: 'http://13loveme.com/weixin/weichat-vote/sign-detail?id=<?=$model['id']?>&before=2', // 分享链接
-            imgUrl: 'http://13loveme.com/<?=$item_img?>', // 分享图标
+            imgUrl: '<?=$pre_url.$item_img?>', // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数
                 alert('分享成功');
