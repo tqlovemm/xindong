@@ -1,14 +1,11 @@
 <?php
 namespace api\modules\v11\controllers;
 
-use api\modules\v11\models\OpenBeforeAdv;
 use yii;
 use yii\rest\ActiveController;
-use api\components\CsvDataProvider;
 use yii\filters\RateLimiter;
 use yii\web\NotFoundHttpException;
-use yii\filters\auth\CompositeAuth;
-use yii\filters\auth\QueryParamAuth;
+
 
 class OpenBeforeAdvController extends ActiveController {
 
@@ -19,12 +16,7 @@ class OpenBeforeAdvController extends ActiveController {
     ];
     public function behaviors() {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::className(),
-            'authMethods' => [
-                QueryParamAuth::className(),
-            ],
-        ];
+
         $behaviors['rateLimiter'] = [
             'class' => RateLimiter::className(),
             'enableRateLimitHeaders' => true,
