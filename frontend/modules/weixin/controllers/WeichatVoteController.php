@@ -4,7 +4,6 @@ namespace frontend\modules\weixin\controllers;
 use yii\data\Pagination;
 use Yii;
 use yii\base\Object;
-use yii\myhelper\AccessToken;
 use yii\myhelper\Jssdk;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -76,7 +75,7 @@ class WeichatVoteController extends Controller
 
             $result = json_decode($access);
 
-            $access_token = (new AccessToken())->getAccessToken();
+            $access_token = $result->access_token;
 
             $openid = $result->openid;
 
