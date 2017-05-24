@@ -80,7 +80,7 @@ class MemberSortController extends Controller
                 if($i == 0){
                     $result[0]['price_1'] = 4998;
                     $result[0]['giveaway'] = 1880;
-                }else if($i == 1){
+                }else{
                     $result[1]['price_1'] = 1998;
                     $result[1]['giveaway'] = 990;
                 }
