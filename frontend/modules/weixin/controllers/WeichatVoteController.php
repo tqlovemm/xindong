@@ -178,7 +178,7 @@ class WeichatVoteController extends Controller
         $jsdk = new Jssdk();
         $signPackage = $jsdk->getSignPackage();
 
-        return $this->render('sign-detail',['model'=>$model,'to'=>$to,'rank'=>$key+1,'signPackage'=>$signPackage,'show'=>Yii::$app->request->get()]);
+        return $this->render('sign-detail',['model'=>$model,'to'=>$to,'rank'=>$key+1,'signPackage'=>$signPackage,'show'=>Yii::$app->request->get(),'subscribe'=>$this->user_wei_info['subscribe'],]);
 
     }
 
@@ -364,23 +364,6 @@ defo;
 
         return $toAndRank;
     }
-
-    protected function findOpenid($id=0,$before=1){
-
-        $session = Yii::$app->session;
-        if(!$session->isActive){
-            $session->open();
-        }
-        if(empty($session->get('vote_01_openid'))){
-            if($before!=1){
-                return $this->redirect('/wei-xin/vote-share?id='.$id);
-            }
-            return $this->redirect('/wei-xin/vote-check');
-        }
-        $all_session = array('openid'=>$session->get('vote_01_openid'),'headimgurl'=>$session->get('vote_01_headimgurl'),'nickname'=>$session->get('vote_01_nickname'));
-        return $all_session;
-    }
-
 
     protected function addCookie($cookie_name,$cookie_value){
 
