@@ -121,7 +121,7 @@ class User5Controller extends Controller
         $modelClass = $this->modelClass;
 
         $model = $modelClass::find()
-            ->select('id,number,cid,groupid,username,nickname,role,sex,job,identify,email,status,created_at,updated_at,avatar,openId')
+            ->select('id,cid,groupid,username,nickname,role,sex,job,identify,email,status,created_at,updated_at,avatar,openId')
             ->from('pre_user')->where(['username' => $id])->asArray()->one();
 
         if ($model !== null) {
