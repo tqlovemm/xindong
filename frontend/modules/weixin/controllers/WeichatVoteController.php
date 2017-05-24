@@ -142,7 +142,7 @@ class WeichatVoteController extends Controller
 
         $model = VoteSignInfo::find()->with('img')->where(['status'=>2])->orderBy('vote_count desc')->asArray()->limit(20)->all();
 
-        return $this->render('vote-top',['model'=>$model]);
+        return $this->render('vote-top',['model'=>$model,'subscribe'=>$this->user_wei_info['subscribe'],]);
 
     }
 
