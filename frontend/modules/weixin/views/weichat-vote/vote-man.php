@@ -55,7 +55,7 @@ $this->registerJs("
         </li>
     </ul>
 </div>
-    <div id="myTabContent" class="tab-content" style="padding-bottom: 50px;min-height: 300px;">
+    <div id="myTabContent" class="tab-content" style="padding-bottom: 50px;">
         <div class="tab-pane fade in active" id="man">
             <ul class="wall">
                 <?php
