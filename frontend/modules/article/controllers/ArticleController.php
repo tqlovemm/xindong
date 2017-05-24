@@ -77,10 +77,14 @@ class ArticleController extends Controller
         }
     }
     public function actionGetcomment(){
+        $aid = intval($_GET['aid']);
+        if(empty($aid)){
+            return '';
+        }
         $model = new ArticleComment();
         $pages = new Pagination(['totalCount' =>$model::find()->count(), 'pageSize' => '3']);
         $pages->validatePage=false;
-        $res = (new Query())->select('c.id,c.content,c.created_at,u.username,u.nickname,u.avatar')->from('{{%article_comment}} AS c')->leftJoin('{{%user}} AS u','u.id = c.created_id')->offset($pages->offset)->limit($pages->limit)->orderby('created_at desc')->all();
+        $res = (new Query())->select('c.id,c.content,c.created_at,u.username,u.nickname,u.avatar')->from('{{%article_comment}} AS c')->leftJoin('{{%user}} AS u','u.id = c.created_id')->offset($pages->offset)->limit($pages->limit)->orderby('created_at desc')->where("aid = $aid")->all();
         $time = time();
         for($i=0;$i<count($res);$i++){
             if(!$res[$i]['nickname']){
