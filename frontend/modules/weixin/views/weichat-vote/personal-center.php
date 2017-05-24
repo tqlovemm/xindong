@@ -1,10 +1,6 @@
 <?php
 use yii\widgets\LinkPager;
 
-$session = Yii::$app->session;
-if(!$session->isActive){
-    $session->open();
-}
 $this->title = "统计";
 $this->registerCss('
     .vote-result{padding:10px;background-color:#fff;margin-top:10px;margin-bottom:10px;}
@@ -29,10 +25,10 @@ $this->registerCss('
 </div>
 <div class="row" style="background-color: #fff;padding: 10px;margin-bottom: 10px;">
     <div class="col-xs-3" style="padding:0;">
-        <img style="border-radius: 4px;" class="img-responsive" src='<?=$session->get('vote_01_headimgurl')?>'>
+        <img style="border-radius: 4px;" class="img-responsive" src='<?=$userInfo['headimgurl']?>'>
     </div>
     <div class="col-xs-9" style="padding-right:0;">
-        <h5 style="margin: 5px 0;color:gray;font-size: 16px;"><?=$session->get('vote_01_nickname')?></h5>
+        <h5 style="margin: 5px 0;color:gray;font-size: 16px;"><?=$userInfo['nickname']?></h5>
         <?php if(!empty($query->declaration)):?>
         <p style="margin: 10px 0 0;color:gray;">
             <?= \yii\myhelper\Helper::truncate_utf8_string($query->declaration,28)?>

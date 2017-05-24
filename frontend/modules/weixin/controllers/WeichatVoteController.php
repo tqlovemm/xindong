@@ -324,10 +324,10 @@ defo;
             $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '20']);
             $tongJi = $data->offset($pages->offset)->limit($pages->limit)->all();
 
-            return $this->render('personal-center',['query'=>$query,'to'=>$result['to'],'rank'=>$result['rank'],'pages' => $pages,'tj'=>$tongJi,'tj2'=>$tongJi2]);
+            return $this->render('personal-center',['query'=>$query,'to'=>$result['to'],'rank'=>$result['rank'],'pages' => $pages,'tj'=>$tongJi,'tj2'=>$tongJi2,'userInfo'=>$this->user_wei_info]);
         }
 
-        return  $this->render('personal-center',['query'=>$query,'to'=>'','rank'=>'','tj'=>array(),'tj2'=>$tongJi2]);
+        return  $this->render('personal-center',['query'=>$query,'to'=>'','rank'=>'','tj'=>array(),'tj2'=>$tongJi2,'userInfo'=>$this->user_wei_info]);
     }
 
     /**
