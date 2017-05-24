@@ -32,7 +32,7 @@ class DatingController extends ActiveController
         $time = isset($_GET['time'])?htmlspecialchars($_GET['time']):'';
         $title = isset($_GET['title'])?$_GET['title']:'';
 
-        $query = $model::find()->where(['status' => 2,'cover_id' => 0]);
+        $query = $model::find()->where(['status' => 2,'cover_id' => 0])->andWhere('cover_id!=-1');
         $t = time()-86400*3;
         if(!empty($time) && $time == 1){
             $query = $query->andWhere("updated_at>$t");

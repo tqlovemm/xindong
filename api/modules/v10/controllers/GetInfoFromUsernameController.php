@@ -79,7 +79,7 @@ class GetInfoFromUsernameController extends Controller
             $profile = $userProfile;
         }
         $profile = $profile->getAttributes();
-
+        $profile['is_marry'] = (string)$profile['is_marry'];
         unset($model['password_hash'],$model['cellphone'],$model['invitation'],$model['openId'],$model['weibo_num'],$model['none'],$profile['description'],$model['auth_key'],$model['password_reset_token'],$model['id'],$model['role'],$model['identity']);
         $profile['mark']=json_decode($profile['mark']);
         $profile['make_friend']=json_decode($profile['make_friend']);
