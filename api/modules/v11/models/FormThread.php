@@ -3,7 +3,8 @@ namespace api\modules\v11\models;
 
 use api\modules\v2\models\Ufollow;
 use Yii;
-use app\components\db\ActiveRecord;
+use yii\db\ActiveRecord;
+
 
 /**
  * This is the model class for table "pre_app_form_thread".
@@ -112,6 +113,22 @@ class FormThread extends ActiveRecord
     /**
      * @inheritdoc
      */
+    public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert)){
+
+            if($this->isNewRecord){
+                $this->created_at = time();
+                $this->updated_at = time();
+            }else{
+                $this->updated_at = time();
+            }
+
+            return true;
+        }
+        return false;
+    }
+
     public function attributeLabels()
     {
         return [
