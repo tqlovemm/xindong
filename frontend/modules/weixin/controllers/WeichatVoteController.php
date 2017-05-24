@@ -119,6 +119,7 @@ class WeichatVoteController extends Controller
        return $this->render('vote-man',[
            'model' => $model,
            'pages' => $pages,
+           'subscribe'=>$this->subscribe,
        ]);
 
     }
@@ -143,6 +144,7 @@ class WeichatVoteController extends Controller
         return $this->render('vote-woman',[
             'model' => $model,
             'pages' => $pages,
+            'subscribe'=>$this->subscribe,
         ]);
 
     }

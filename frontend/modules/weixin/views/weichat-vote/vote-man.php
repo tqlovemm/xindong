@@ -1,11 +1,6 @@
 <?php
 use yii\widgets\LinkPager;
-$session = Yii::$app->session;
-if(!$session->isActive){
-    $session->open();
-}
 $this->title = "男神评选";
-$dinyue_userinfo= new \frontend\models\DinyueWeichatUserinfo();
 $this->registerCss("
     .nav-tabs-top{width:100%;z-index:9;}
     .contact{display:none;}
@@ -76,8 +71,8 @@ $this->registerJs("
                         </a>
 
                         <div class="note-count note-padding"> <?=$item['vote_count']?></div>
-                        <?php if(empty($dinyue_userinfo::findOne(['unionid'=>$session->get('vote_01_openid')]))):?>
-                            <a class="weicaht-note" style="display: block;text-align: center;background-color:#23212E" data-lightbox="d" data-title="请关注微信订阅号进行投票" href="/images/weixin/149129585220305657.jpg">
+                        <?php if($subscribe!=1):?>
+                            <a class="weicaht-note" style="display: block;text-align: center;background-color:#23212E" data-lightbox="d" data-title="请关注微信公众号进行投票" href="/images/weixin/149129585220305657.jpg">
                                <span class="glyphicon glyphicon-heart"></span> <span style="font-size: 16px;">投票</span>
                             </a>
                         <?php else:?>
