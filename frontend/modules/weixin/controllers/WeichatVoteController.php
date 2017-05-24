@@ -32,7 +32,7 @@ class WeichatVoteController extends Controller
 
         if(empty($this->user_wei_info)){
 
-            return $this->redirect('weichat-vote/vote-check');
+            return $this->redirect('vote-check');
         }
 
         parent::init();
@@ -73,7 +73,7 @@ class WeichatVoteController extends Controller
 
             if(isset($userInfo['errcode'])&&$userInfo['errcode']==40001){
                 Yii::$app->cache->delete('access_token_js');
-                return $this->redirect('weichat-vote/vote-check');
+                return $this->redirect('vote-check');
             }
 
             $this->addCookie('userweinfo',json_encode($userInfo));
@@ -82,7 +82,7 @@ class WeichatVoteController extends Controller
 
             return $this->redirect($voteUrl);
         }else{
-            return $this->redirect('weichat-vote/vote-check');
+            return $this->redirect('vote-check');
         }
 
     }
