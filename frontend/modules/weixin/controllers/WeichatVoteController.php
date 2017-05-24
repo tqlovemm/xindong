@@ -22,6 +22,7 @@ class WeichatVoteController extends Controller
     private $headimgurl;
     private $nickname;
     private $options;
+    private $subscribe;
 
     public function init()
     {
@@ -33,6 +34,7 @@ class WeichatVoteController extends Controller
         $this->openid = $cookie->getValue('vote_01_openid');
         $this->headimgurl = $cookie->getValue('vote_01_headimgurl');
         $this->nickname = $cookie->getValue('vote_01_nickname');
+        $this->subscribe = $cookie->getValue('vote_01_subscribe');
 
         if(empty($this->openid)){
 
@@ -49,6 +51,7 @@ class WeichatVoteController extends Controller
         echo "<pre>";
         var_dump($this->headimgurl);
         var_dump($this->nickname);
+        var_dump($this->subscribe);
         return var_dump($this->openid);
     }
     protected function getCode($callback){
@@ -89,7 +92,7 @@ class WeichatVoteController extends Controller
             $this->addCookie('vote_01_openid',$userInfo['openid']);
             $this->addCookie('vote_01_headimgurl',$userInfo['headimgurl']);
             $this->addCookie('vote_01_nickname',$userInfo['nickname']);
-            $this->addCookie('subscribe',$userInfo['subscribe']);
+            $this->addCookie('vote_01_subscribe',$userInfo['subscribe']);
 
             $voteUrl = '/weixin/weichat-vote/vote-man';//投票地址
 
