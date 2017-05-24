@@ -46,7 +46,7 @@ class WeichatVoteController extends Controller
     }
     public function actionVoteCheck(){
 
-        $callback = "http://13loveme.com/weichat-vote/weichat-info";
+        $callback = "http://13loveme.com/wexin/weichat-vote/weichat-info";
         $this->getCode($callback);
     }
     public function actionVoteShare($id){
