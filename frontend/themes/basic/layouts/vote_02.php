@@ -49,7 +49,7 @@ $this->registerCss("
     </div>
     <div class="wapper adv_1">
         <a href="vote-woman">
-            <img class="img-responsive" src="<?=Yii::getAlias('@web')?>/images/vote/48627877580200137.jpg">
+            <img class="img-responsive" src="http://oqfwt261i.bkt.clouddn.com/wex_20170524124623.jpg">
         </a>
     </div>
     <div class="wapper text-center">

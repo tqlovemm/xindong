@@ -1,6 +1,6 @@
 <?php
 use yii\widgets\LinkPager;
-$this->title = "男神评选";
+$this->title = "晒花样童年照";
 $this->registerCss("
     .nav-tabs-top{width:100%;z-index:9;}
     .contact{display:none;}
