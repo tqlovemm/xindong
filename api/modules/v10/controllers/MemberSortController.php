@@ -74,7 +74,7 @@ class MemberSortController extends Controller
 
         if($status == 1){
 
-            $result = MemberSort::find()->where(['flag'=>[1]])->orderby(' groupid DESC ')->all();
+            $result = MemberSort::find()->where(['flag'=>[1]])->andWhere('groupid!=2')->orderby(' groupid DESC ')->all();
 
             for($i = 0 ; $i < count($result); $i ++){
                 if($i == 0){
