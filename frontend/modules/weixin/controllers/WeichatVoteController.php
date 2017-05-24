@@ -35,7 +35,7 @@ class WeichatVoteController extends Controller
 
         if(empty($this->openid)){
 
-            return $this->redirect('vote-check');
+            return $this->redirect('weichat-vote/vote-check');
         }
 
         parent::init();
