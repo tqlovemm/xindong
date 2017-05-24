@@ -131,7 +131,7 @@ class WeichatVoteController extends Controller
         return $this->render('vote-woman',[
             'model' => $model,
             'pages' => $pages,
-            'subscribe'=>$this->subscribe,
+            'subscribe'=>$this->user_wei_info['subscribe'],
         ]);
 
     }
