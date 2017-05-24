@@ -186,23 +186,23 @@ class WeichatVoteController extends Controller
 
         $query = VoteSignInfo::findOne($id);
         $voteUserInfo = new WeichatNoteUserinfo();
-        if(empty($voteUserInfo::findOne(['unionid'=>$this->openid,'noteid'=>self::NOTE_NUMBER,'type'=>$type,'status'=>1]))){
+        if(empty($voteUserInfo::findOne(['unionid'=>$this->user_wei_info['openid'],'noteid'=>self::NOTE_NUMBER,'type'=>$type,'status'=>1]))){
 
             $query->vote_count+=1;
             $query->update();
 
             $voteUserInfo->noteid = self::NOTE_NUMBER;
             $voteUserInfo->participantid = $id;
-            $voteUserInfo->city = $user_info['city'];
-            $voteUserInfo->country = $user_info['country'];
-            $voteUserInfo->province = $user_info['province'];
-            $voteUserInfo->nickname = $user_info['nickname'];
-            $voteUserInfo->sex = $user_info['sex'];
-            $voteUserInfo->openid = $user_info['openid'];
-            $voteUserInfo->headimgurl = $user_info['headimgurl'];
-            $voteUserInfo->unionid = $user_info['unionid'];
-            $voteUserInfo->subscribe = $user_info['subscribe'];
-            $voteUserInfo->subscribe_time = $user_info['subscribe_time'];
+            $voteUserInfo->city = $this->user_wei_info['city'];
+            $voteUserInfo->country = $this->user_wei_info['country'];
+            $voteUserInfo->province = $this->user_wei_info['province'];
+            $voteUserInfo->nickname = $this->user_wei_info['nickname'];
+            $voteUserInfo->sex = $this->user_wei_info['sex'];
+            $voteUserInfo->openid = $this->user_wei_info['openid'];
+            $voteUserInfo->headimgurl = $this->user_wei_info['headimgurl'];
+            $voteUserInfo->unionid = $this->user_wei_info['unionid'];
+            $voteUserInfo->subscribe = $this->user_wei_info['subscribe'];
+            $voteUserInfo->subscribe_time = $this->user_wei_info['subscribe_time'];
             $voteUserInfo->type = $type;
 
             if($voteUserInfo->save()){
@@ -235,13 +235,13 @@ class WeichatVoteController extends Controller
 
         $vote_sign = new VoteSignInfo();
 
-        $query = $vote_sign::findOne(['openid'=>$this->openid]);
+        $query = $vote_sign::findOne(['openid'=>$this->user_wei_info['openid']]);
 
         if(empty($query)){
 
-            $vote_sign->openid = $this->openid;
-            $vote_sign->headimgurl = $this->headimgurl;
-            $vote_sign->nickname = $this->nickname;
+            $vote_sign->openid = $this->user_wei_info['openid'];
+            $vote_sign->headimgurl = $this->user_wei_info['headimgurl'];
+            $vote_sign->nickname = $this->user_wei_info['nickname'];
 
             if($vote_sign->save()){
 
@@ -266,7 +266,7 @@ class WeichatVoteController extends Controller
     public function actionInfo(){
 
         $vote_sign = new VoteSignInfo();
-        $query = $vote_sign::findOne(['openid'=>$this->openid]);
+        $query = $vote_sign::findOne(['openid'=>$this->user_wei_info['openid']]);
 
         return $this->render('info',['model'=>$query,'img'=>$query->voteSignImgs]);
     }
@@ -310,7 +310,7 @@ defo;
     public function actionPersonalCenter(){
 
         //$openid = "oxWFGswoCkmnk75DFJ_rxaKVRtJI";
-        $openid = $this->openid;
+        $openid = $this->user_wei_info['openid'];
 
         $query = VoteSignInfo::findOne(['openid'=>$openid,'status'=>[1,2]]);
 
