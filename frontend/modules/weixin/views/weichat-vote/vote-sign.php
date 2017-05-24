@@ -14,6 +14,7 @@ $this->registerCss('
     .weui_cells{font-size:12px !important;}
 
 ');
+$pre_url = Yii::$app->params['vote'];
 ?>
 <?php $this->registerJsFile('js/jquery.wallform.js', ['depends' => ['frontend\assets\AppAsset'], 'position' => $this::POS_HEAD]); ?>
 <div class="row" style="background-color: #31313e;height: 40px;">
@@ -46,7 +47,7 @@ $this->registerCss('
                                     if(!empty($img)):
                                         foreach ($img as $item):
                                             ?>
-                                            <img src="<?=$item['img']?>" data-id="<?=$item['id']?>" class="preview collecting-files-img">
+                                            <img src="<?=$pre_url.$item['img']?>" data-id="<?=$item['id']?>" class="preview collecting-files-img">
                                             <?php
                                         endforeach;
                                     endif;

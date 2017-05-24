@@ -20,7 +20,7 @@ if($model->status==1){
 }else{
     $result = '<span style="color:red;">网站内部错误<small>（请联系客服修改）</small></span>';
 }
-
+$pre_url = Yii::$app->params['vote'];
 ?>
 <link rel="stylesheet" href="/weui/dist/style/weui.min.css"/>
 <?php $this->registerJsFile('js/jquery.wallform.js', ['depends' => ['frontend\assets\AppAsset'], 'position' => $this::POS_HEAD]); ?>
@@ -44,8 +44,8 @@ if($model->status==1){
                                     <?php
                                     if(!empty($img)):
                                         foreach ($img as $item):
-                                            ?><a href="<?=$item['img']?>" data-title="d" data-lightbox="d">
-                                            <img src="<?=$item['img']?>" data-id="<?=$item['id']?>" class="preview collecting-files-img">
+                                            ?><a href="<?=$pre_url.$item['img']?>" data-title="d" data-lightbox="d">
+                                            <img src="<?=$pre_url.$item['img']?>" data-id="<?=$item['id']?>" class="preview collecting-files-img">
                                         </a>
                                             <?php
                                         endforeach;

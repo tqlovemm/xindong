@@ -1,6 +1,6 @@
 <?php
 use yii\widgets\LinkPager;
-//var_dump($model);
+
 $session = Yii::$app->session;
 if(!$session->isActive){
     $session->open();

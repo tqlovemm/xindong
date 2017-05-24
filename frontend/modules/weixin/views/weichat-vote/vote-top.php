@@ -5,7 +5,7 @@ if(!$session->isActive){
 }
 $this->title = "男神女神排行榜";
 $dinyue_userinfo= new \frontend\models\DinyueWeichatUserinfo();
-
+$pre_url = Yii::$app->params['vote'];
 $this->registerCss('
     .nav-tabs-top{width:100%;z-index:9;}
     #topTab > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{background-color: #22222E !important;color:#fff !important;}
@@ -74,7 +74,7 @@ $this->registerJs("
                     <img class="vote-top-icon" src="/images/vote/woman<?=$key+1?>.png">
                     <a href="sign-detail?id=<?=$woman_top['id']?>" class="vote-top-img vote-top-img-a">
                         <span>编号:<?=$woman_top['id']?></span>
-                        <img class="img-responsive center-block" src="<?=$woman_top['img']['img']?>">
+                        <img class="img-responsive center-block" src="<?=$pre_url.$woman_top['img']['img']?>">
                     </a>
                     <div class="row" style="padding: 10px;margin: 0;">
                         <div class="col-xs-6 note-count"><?=$woman_top['vote_count']?></div>
@@ -102,7 +102,7 @@ $this->registerJs("
                     <img class="vote-top-icon" src="/images/vote/man<?=$k+1?>.png">
                     <a href="sign-detail?id=<?=$man_top['id']?>" class="vote-top-img vote-top-img-a">
                         <span>编号:<?=$man_top['id']?></span>
-                        <img class="img-responsive center-block" src="<?=$man_top['img']['img']?>">
+                        <img class="img-responsive center-block" src="<?=$pre_url.$man_top['img']['img']?>">
                     </a>
                     <div class="row" style="padding: 10px;margin: 0;">
                         <div class="col-xs-6 note-count"><?=$man_top['vote_count']?></div>

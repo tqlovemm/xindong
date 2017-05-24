@@ -12,7 +12,7 @@ $this->registerCss("
 .contact{display:none;}
 .adv_1,.adv_2{display:none;}
 ");
-
+$pre_url = Yii::$app->params['vote'];
 $this->registerJs("
 
     var obj = '.nav-tabs-top';
@@ -70,7 +70,7 @@ $this->registerJs("
 </div>
 <div class="row" style="padding:10px 10px;margin: 0 0 60px 0;background-color: #fff;">
     <?php foreach ($model->voteSignImgs as $item):?>
-        <img style="margin-bottom: 10px;" class="img-responsive" src="<?=$item['img']?>">
+        <img style="margin-bottom: 10px;" class="img-responsive" src="<?=$pre_url.$item['img']?>">
     <?php endforeach;?>
 </div>
 

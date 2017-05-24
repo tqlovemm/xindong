@@ -3,6 +3,7 @@
 namespace frontend\modules\weixin\models;
 
 use app\components\Uploader;
+use common\Qiniu\QiniuUploader;
 use Yii;
 
 /**
@@ -102,27 +103,17 @@ class VoteSignInfo extends \yii\db\ActiveRecord
 
     public function upload()
     {
-        $config = [
-            'savePath' => Yii::getAlias('@webroot/uploads/vote/01/'), //存储文件夹
-            'maxSize' => 5000 ,//允许的文件最大尺寸，单位KB
-            'allowFiles' => ['.png' , '.jpg' , '.jpeg' , '.bmp'],  //允许的文件格式
-        ];
-
-        $up = new Uploader("photoimg", $config, $this->id);
-
-
-        $save_path =  Yii::getAlias('@web/uploads/vote/01/');
-
-        $info = $up->getFileInfo();
-
-        //存入数据库
+        $pre_url = Yii::$app->params['vote'];
+        $qn = new QiniuUploader('photoimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
+        $qiniu = $qn->upload('vote',"$mkdir");
 
         $save_img = new VoteSignImg();
         $save_img->info_id = $this->id;
-        $save_img->img = $save_path.$info['name'];
+        $save_img->img = $qiniu['key'];
         $save_img->save();
 
-        $data = array('id'=>$this->id,'path'=>$save_path.$info['name']);
+        $data = array('id'=>$save_img->id,'path'=>$pre_url.$qiniu['key']);
         return $data;
     }
 }
