@@ -46,16 +46,11 @@ class WeichatVoteController extends Controller
     }
     public function actionVoteCheck(){
 
-        $callback = "http://13loveme.com/wexin/weichat-vote/weichat-info";
-        $this->getCode($callback);
-    }
-    public function actionVoteShare($id){
-
-        $callback = "http://13loveme.com/wei-xin/weichat-info-share?id=".$id;
+        $callback = "http://13loveme.com/weixin/weichat-vote/wei-user";
         $this->getCode($callback);
     }
 
-    public function actionWeichatInfo(){
+    public function actionWeiUser(){
 
 
         $data['code'] = Yii::$app->request->get('code');
