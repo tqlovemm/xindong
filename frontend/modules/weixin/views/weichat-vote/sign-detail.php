@@ -69,7 +69,11 @@ $this->registerJs("
     <p style="padding:10px 0;margin: 0;"><span style="color:#000;">交友宣言：</span><?=$model['declaration']?></p>
 </div>
 <div class="row" style="padding:10px 10px;margin: 0 0 60px 0;background-color: #fff;">
-    <?php foreach ($model->voteSignImgs as $item):?>
+    <?php
+    $item_img = '';
+    foreach ($model->voteSignImgs as $item):
+        $item_img = $item['img'];
+        ?>
         <img style="margin-bottom: 10px;" class="img-responsive" src="<?=$pre_url.$item['img']?>">
     <?php endforeach;?>
 </div>
@@ -150,7 +154,7 @@ $this->registerJs("
         wx.onMenuShareTimeline({
             title: '投票参与‘男神女神’评选，交友更有现金大奖拿。', // 分享标题
             link: 'http://13loveme.com/weixin/weichat-vote/sign-detail?id=<?=$model['id']?>&before=2', // 分享链接
-            imgUrl: 'http://13loveme.com/<?=$item['img']?>', // 分享图标
+            imgUrl: 'http://13loveme.com/<?=$item_img?>', // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数
                 alert('分享成功');
