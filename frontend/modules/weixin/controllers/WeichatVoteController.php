@@ -85,11 +85,11 @@ class WeichatVoteController extends Controller
                 Yii::$app->cache->delete('access_token_js');
                 return $this->redirect('weichat-vote/vote-check');
             }
-            return var_dump($userInfo);
+
             $this->addCookie('vote_01_openid',$userInfo['openid']);
             $this->addCookie('vote_01_headimgurl',$userInfo['headimgurl']);
             $this->addCookie('vote_01_nickname',$userInfo['nickname']);
-            $this->addCookie('vote_01_nickname',$userInfo['nickname']);
+            $this->addCookie('subscribe',$userInfo['subscribe']);
 
             $voteUrl = '/weixin/weichat-vote/vote-man';//投票地址
 
