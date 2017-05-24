@@ -63,7 +63,6 @@ class ArticleCollectionController extends ActiveController {
             Response::show('201','收藏失败','收藏失败');
         }
     }
-
     public function actionDelete($id){
         $decode = new Decode();
         if(!$decode->decodeDigit($id)){
