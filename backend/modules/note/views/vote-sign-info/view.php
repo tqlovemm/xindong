@@ -5,7 +5,7 @@ use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model backend\modules\note\models\VoteSignInfo */
-
+$pre_url = Yii::$app->params['vote'];
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Vote Sign Infos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <?php foreach ($img as $item): ?>
             <div class="col-md-2">
-                <img class="img-responsive" src="http://13loveme.com/<?=$item['img']?>">
+                <img class="img-responsive" src="<?=$pre_url.$item['img']?>">
                 <?= Html::a('Delete', ['delete-img', 'id' => $item['id']], [
                     'class' => 'btn btn-danger',
                     'data' => [
