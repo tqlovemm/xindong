@@ -46,9 +46,6 @@ class WeichatVoteController extends Controller
 
     public function actionIndex(){
 
-        $cookie = \Yii::$app->request->cookies;
-        echo $cookie->getValue('vote_01_openid');
-        echo "<pre>";
         var_dump($this->headimgurl);
         var_dump($this->nickname);
         var_dump($this->subscribe);
