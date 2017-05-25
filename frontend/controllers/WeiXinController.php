@@ -208,6 +208,12 @@ class WeiXinController extends Controller
                     'sub_button'=>array(
                         array(
                             "type"=>"view",
+                            "name"=>urlencode("花样童年照"),
+                            "url"=>"http://13loveme.com/weixin/weichat-vote/vote-woman",
+                            "sub_button"=>[],
+
+                        ),array(
+                            "type"=>"view",
                             "name"=>urlencode("APP下载"),
                             "url"=>"https://itunes.apple.com/cn/app/xin-dong-san-shi-yi-tian/id1070045426?mt=8",
                             "sub_button"=>[],
