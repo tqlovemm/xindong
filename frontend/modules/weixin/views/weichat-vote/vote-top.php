@@ -63,12 +63,12 @@ $this->registerJs("
                     <a href="sign-detail?id=<?=$woman_top['id']?>" class="vote-top-img vote-top-img-a">
                         <span class="number">编号:<?=$woman_top['id']?></span>
                         <span class="rank">名次:第<?=$key+1?>名</span>
-                        <img class="img-responsive center-block" src="<?=$pre_url.$woman_top['img']['img']?>">
+                        <img class="img-responsive center-block" src="<?=$pre_url.$woman_top['img']['img']?>?imageView2/1/w/160/h/160">
                     </a>
                     <div class="row" style="padding: 10px;margin: 0;">
                         <div class="col-xs-6 note-count"><?=$woman_top['vote_count']?></div>
                         <?php if($subscribe!=1):?>
-                            <a class="col-xs-6" style="padding:0;text-align: right;" data-lightbox="d" data-title="请关注微信公众号进行投票" href="/images/weixin/149129585220305657.jpg">
+                            <a class="col-xs-6" style="padding:0;text-align: right;" data-lightbox="d" data-title="请关注微信公众号进行投票" href="/images/weixin/thirteenpingtai.jpg">
                                 <span class="weicaht-note">投票</span>
                             </a>
                         <?php else:?>

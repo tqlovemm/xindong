@@ -66,13 +66,13 @@ $this->registerJs("
                         <a href="sign-detail?id=<?=$item['id']?>">
                             <?php foreach ($item['voteSignImgs'] as $k=>$list):
                                 if($k==1) break; ?>
-                                <img src="<?=$pre_url.$list['img']?>"/>
+                                <img src="<?=$pre_url.$list['img']?>?imageView2/1/w/160/h/160"/>
                             <?php endforeach;?>
                         </a>
 
                         <div class="note-count note-padding"> <?=$item['vote_count']?></div>
                         <?php if($subscribe!=1):?>
-                            <a class="weicaht-note" style="display: block;text-align: center;background-color:#23212E" data-lightbox="d" data-title="请关注微信公众号进行投票" href="/images/weixin/149129585220305657.jpg">
+                            <a class="weicaht-note" style="display: block;text-align: center;background-color:#23212E" data-lightbox="d" data-title="请关注微信公众号进行投票" href="/images/weixin/thirteenpingtai.jpg">
                                <span class="glyphicon glyphicon-heart"></span> <span style="font-size: 16px;">投票</span>
                             </a>
                         <?php else:?>
