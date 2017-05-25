@@ -15,7 +15,6 @@ class ArticleLikeController extends ActiveController {
         'class' => 'app\components\Serializer',
         'collectionEnvelope' => 'data',
     ];
-
     public function behaviors() {
         $behaviors = parent::behaviors();
         $behaviors['rateLimiter'] = [
