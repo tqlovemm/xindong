@@ -60,7 +60,7 @@ $this->registerCss("
     </div>
     <?=$content?>
     <div class="wrapper footer-list">
-        <a class="col-xs-4" href="http://mp.weixin.qq.com/s?__biz=MzI1MTEyMDI0Mw==&mid=2667464138&idx=1&sn=f74b546062babcb3fdd76738ec5c2304&chksm=f2fd3ad6c58ab3c028f7258e6342b0ed06e33e9a6a1e0aefbd4ba1348266d81938e75db2ccc5&scene=1&srcid=09109c1SKV9dl3B8K54Y2t7f#wechat_redirect">活动细则</a>
+        <a class="col-xs-4" href="http://mp.weixin.qq.com/s/X4Lyw-41_WZ8_sGmAwqX_Q">活动细则</a>
         <a class="col-xs-4" href="vote-sign" style="box-shadow: 0 0 6px rgb(231,0,108);border-radius: 30px;font-size: 16px;font-weight: bold;background-color: #fff;color:rgb(231,0,108);">我要晒照</a>
         <?php if(empty($id)):?>
             <a class="col-xs-4" href="vote-sign">个人中心</a>
