@@ -24,12 +24,13 @@ class AppSpecialDatingSignupController extends \yii\web\Controller
     }
 
     public function actionSignupCheck($id,$status){
+        $pre_url = \Yii::$app->params['test'];
         $model = $this->findModel($id);
         $zinfo = AppSpecialDating::findOne(['zid'=>$model->zid]);
         $model->status = $status;
         if($model->update()){
             if($status==1){
-                $this->sendApp($zinfo->weima,'xdd','测试测试');
+                $this->sendApp($pre_url.$zinfo->weima,'xdd','测试测试');
             }
 
             return $this->redirect(\Yii::$app->request->referrer);
