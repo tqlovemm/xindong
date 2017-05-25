@@ -223,7 +223,7 @@ class WeichatVoteController extends Controller
             $voteUserInfo->nickname = isset($this->user_wei_info['nickname'])?$this->user_wei_info['nickname']:'null';
             $voteUserInfo->sex = isset($this->user_wei_info['sex'])?$this->user_wei_info['sex']:1;
             $voteUserInfo->openid = $this->user_wei_info['openid'];
-            $voteUserInfo->headimgurl = $this->user_wei_info['headimgurl'];
+            $voteUserInfo->headimgurl = isset($this->user_wei_info['headimgurl'])?$this->user_wei_info['headimgurl']:'null';
             $voteUserInfo->unionid = $this->user_wei_info['unionid'];
             $voteUserInfo->subscribe = $this->user_wei_info['subscribe'];
             $voteUserInfo->subscribe_time = $this->user_wei_info['subscribe_time'];
