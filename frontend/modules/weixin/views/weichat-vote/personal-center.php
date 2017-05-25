@@ -105,7 +105,7 @@ $this->registerCss('
                     </div>
                     <div class="col-xs-10">
                         <h5 style="margin: 5px 0;color:gray;"><?=$list['nickname']?> <img style="width: 18px;margin-top: -5px;" src="/images/vote/<?=$sex?>"></h5>
-                        <h5 style="margin: 10px 0 0;color:gray;">我为<?=$ta?>投了：1票</h5>
+                        <h5 style="margin: 10px 0 0;color:gray;">我为<?=$list['id']?>号投了：1票</h5>
                     </div>
                 </div>
             <?php endforeach;else:?>
