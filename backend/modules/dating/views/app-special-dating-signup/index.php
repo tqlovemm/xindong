@@ -27,7 +27,7 @@ $this->registerCss("
                 <div class="box box-widget widget-user">
                     <!-- Add the bg color to the header using any of the bg-* classes -->
                     <div class="widget-user-header <?=$status['color']?>">
-                        <h3 class="widget-user-username">会员编号：<?=$number?>，网站ID：<?=$val['user_id']?></h3>
+                        <h3 class="widget-user-username">网站ID：<?=$val['user_id']?>，会员名：<?=$user->username?>，会员编号：<?=$number?></h3>
                         <h5 class="widget-user-desc">审核状态：<?=$status['status']?></h5>
                     </div>
                     <div class="widget-user-image">
