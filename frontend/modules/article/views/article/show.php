@@ -95,6 +95,7 @@ use yii\widgets\ActiveForm;
         alert(1);
         //document.getElementById('name').innerHTML = '你好 ' + msg + ', 我也很高兴见到你'
     }
+    
 $(function(){
 //    var title = $(".related").offset().top-200;
 //    var oDiv = document.getElementById("nav");
