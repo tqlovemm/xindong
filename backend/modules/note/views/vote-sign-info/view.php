@@ -15,22 +15,23 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('修改', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('上传图片', ['upload', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('删除', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a('Pass', ['pass', 'id' => $model->id], [
+        <?= Html::a('通过', ['pass', 'id' => $model->id], [
             'class' => 'btn btn-success',
             'data' => [
                 'confirm' => 'Are you sure you want to pass this item?',
                 'method' => 'post',
             ],
         ]) ?>
-        <button class="btn btn-warning" data-toggle="modal" data-target="#nopassModal">No Pass</button>
+        <button class="btn btn-warning" data-toggle="modal" data-target="#nopassModal">不通过</button>
     </p>
 
     <?= DetailView::widget([

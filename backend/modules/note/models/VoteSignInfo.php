@@ -2,6 +2,7 @@
 
 namespace backend\modules\note\models;
 
+use common\Qiniu\QiniuUploader;
 use Yii;
 
 /**
@@ -61,6 +62,22 @@ class VoteSignInfo extends \yii\db\ActiveRecord
             'updated_at' => '更新时间',
             'status' => '审核状态（1等待审核，2审核通过，3审核不通过）',
         ];
+    }
+
+
+    /**
+     * 处理图片的上传
+     */
+    public function upload()
+    {
+        $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->id;
+        $qiniu = $qn->upload('vote',"$mkdir");
+
+        $model = new VoteSignImg();
+        $model->info_id = $this->id;
+        $model->img = $qiniu['key'];
+        $model->save();
     }
 
     /**

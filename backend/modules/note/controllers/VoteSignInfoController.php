@@ -3,6 +3,7 @@
 namespace backend\modules\note\controllers;
 
 use backend\modules\note\models\VoteSignImg;
+use common\Qiniu\QiniuUploader;
 use Yii;
 use backend\modules\note\models\VoteSignInfo;
 use backend\modules\note\models\VoteSignInfoSearch;
@@ -15,6 +16,7 @@ use yii\filters\VerbFilter;
  */
 class VoteSignInfoController extends Controller
 {
+    public $enableCsrfValidation = false;
     public function behaviors()
     {
         return [
@@ -74,6 +76,17 @@ class VoteSignInfoController extends Controller
         }
     }
 
+    public function actionUpload($id)
+    {
+        $model = $this->findModel($id);
+        if (Yii::$app->request->isPost) {
+            $model->upload();
+        }
+        return $this->render('upload', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
     /**
      * Updates an existing VoteSignInfo model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -115,6 +128,8 @@ class VoteSignInfoController extends Controller
         $model = VoteSignImg::findOne($id);
         $url = Yii::$app->request->referrer;
         if($model->delete()){
+            $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+            $qn->delete('vote',$model->img);
             return $this->redirect($url);
         }
 
