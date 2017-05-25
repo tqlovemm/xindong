@@ -308,12 +308,17 @@ class Easemob
         $result = $this->request('chatgroups'.'/'.$groupId,'', 'DELETE');
         return $result;
     }
+    public function deleteSingleUser($username){
+
+        $result = $this->request('users/'.$username,'', 'DELETE');
+        return $result;
+    }
     /*
     * 获取群组用户
     * @param $groupId 必填 群组ID Stirng
     */
     public function getGroupUsers($groupId){
-        $result = $this->request('chatgroups/'.$groupId.'/users','', 'GET');
+        $result = $this->request('chatdemoui/'.$groupId.'/users','', 'GET');
         return $result;
     }
 
