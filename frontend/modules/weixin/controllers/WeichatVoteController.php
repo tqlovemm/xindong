@@ -20,7 +20,7 @@ class WeichatVoteController extends Controller
     public $enableCsrfValidation = false;
     private $options;
     private $user_wei_info;
-
+    private $subscribe;
     public function init()
     {
         $this->options = array(
@@ -30,8 +30,18 @@ class WeichatVoteController extends Controller
         $cookie = \Yii::$app->request->cookies;
         $this->user_wei_info = json_decode($cookie->getValue('userweinfo'),true);
 
-        if(empty($this->user_wei_info)){
+        $token = (new AccessToken())->getAccessToken();
+        $openid = $this->user_wei_info['openid'];
+        $url3 = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$token&openid=$openid";
+        $userInfo = json_decode(file_get_contents($url3),true);
 
+        if(isset($userInfo['errcode'])&&$userInfo['errcode']==40001){
+            Yii::$app->cache->delete('access_token_js');
+            return $this->redirect('vote-check');
+        }
+        $this->subscribe = $userInfo['subscribe'];
+        $this->user_wei_info['subscribe'] = $userInfo['subscribe'];
+        if(empty($this->user_wei_info)){
             return $this->redirect('vote-check');
         }
 
@@ -106,7 +116,7 @@ class WeichatVoteController extends Controller
        return $this->render('vote-man',[
            'model' => $model,
            'pages' => $pages,
-           'subscribe'=>$this->user_wei_info['subscribe'],
+           'subscribe'=>$this->subscribe,
        ]);
 
     }
@@ -131,7 +141,7 @@ class WeichatVoteController extends Controller
         return $this->render('vote-woman',[
             'model' => $model,
             'pages' => $pages,
-            'subscribe'=>$this->user_wei_info['subscribe'],
+            'subscribe'=>$this->subscribe,
         ]);
 
     }
@@ -142,7 +152,7 @@ class WeichatVoteController extends Controller
 
         $model = VoteSignInfo::find()->with('img')->where(['status'=>2])->orderBy('vote_count desc')->asArray()->limit(20)->all();
 
-        return $this->render('vote-top',['model'=>$model,'subscribe'=>$this->user_wei_info['subscribe'],]);
+        return $this->render('vote-top',['model'=>$model,'subscribe'=>$this->subscribe,]);
 
     }
 
