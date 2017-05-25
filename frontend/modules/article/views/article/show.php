@@ -105,8 +105,8 @@ $(function(){
     $(".sc").click(function(){
         window.webkit.messageHandlers.abcdefg.postMessage('test');
     });
-    function getUserId(userID) {
-        alert('你好 ' + userID + ', 我也很高兴见到你');
+    function getUserId() {
+        alert('你好我也很高兴见到你');
         //document.getElementById('name').innerHTML = '你好 ' + msg + ', 我也很高兴见到你'
     }
 });
