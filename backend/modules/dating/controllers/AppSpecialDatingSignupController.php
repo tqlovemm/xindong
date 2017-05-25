@@ -15,7 +15,7 @@ class AppSpecialDatingSignupController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        $data = AppSpecialDatingSignUp::find()->with('zinfo')->with('cover')->asArray();
+        $data = AppSpecialDatingSignUp::find()->with('zinfo')->with('cover')->orderBy('created_at desc')->asArray();
         $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '20']);
         $model = $data->offset($pages->offset)->limit($pages->limit)->all();
         return $this->render('index',[
