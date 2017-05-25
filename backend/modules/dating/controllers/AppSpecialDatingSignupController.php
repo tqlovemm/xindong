@@ -25,7 +25,7 @@ class AppSpecialDatingSignupController extends \yii\web\Controller
 
     public function actionSignupCheck($id,$status){
         $model = $this->findModel($id);
-        $zinfo = AppSpecialDating::findOne(['zid'=>$model->sid]);
+        $zinfo = AppSpecialDating::findOne(['zid'=>$model->zid]);
         $model->status = $status;
         if($model->update()){
             if($status==1){
