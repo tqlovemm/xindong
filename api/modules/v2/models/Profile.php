@@ -26,6 +26,7 @@ use app\components\db\ActiveRecord;
 class Profile extends ActiveRecord
 {
 
+    public $glamorous;
     public static function tableName()
     {
         return '{{%user_profile}}';
@@ -40,7 +41,7 @@ class Profile extends ActiveRecord
     public function rules()
     {
         return [
-            [['user_id','height','weight','updated_at','created_at'], 'integer'],
+            [['user_id','height','weight','updated_at','created_at','glamorous'], 'integer'],
             [['address','mark','hobby','make_friend','signature','description'], 'string'],
             [['birthdate'],'string']
         ];

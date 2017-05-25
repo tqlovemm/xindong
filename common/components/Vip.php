@@ -57,6 +57,26 @@ class Vip
         return $data;
     }
 
+    public static function sign_status($statusNumber){
+
+        if($statusNumber==0){
+            $status = "等待审核";
+            $color = "bg-aqua-active";
+        }elseif($statusNumber==1){
+            $status = "审核通过";
+            $color = "bg-green";
+        }elseif($statusNumber==2){
+            $status = "审核失败";
+            $color = "bg-red";
+        }else{
+            $status = "待定";
+            $color = "bg-red";
+        }
+        $data = ['color'=>$color,'status'=>$status];
+        return $data;
+    }
+
+
     public static function time_d($key){
 
         $arr = [0=>'午夜00点',1=>'凌晨1点',2=>'凌晨2点',3=>'凌晨3点',4=>'凌晨4点',5=>'凌晨5点',6=>'上午6点',
