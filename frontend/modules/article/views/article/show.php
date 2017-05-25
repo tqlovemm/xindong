@@ -48,7 +48,7 @@ use yii\widgets\ActiveForm;
     }
 </style>
 <body>
-<div id="nav">
+<div id="nav" >
         <?php $form = ActiveForm::begin(); ?>
         <input type="text" name="content" class="plinput" placeholder="  写评论..." onfocus="this.placeholder=''" onblur="this.placeholder='  写评论...'"/>
         <input type="hidden" name="aid" value="<?= $cmodel->id;?>" />
@@ -92,12 +92,10 @@ use yii\widgets\ActiveForm;
 <div style="height:38px;"></div>
 <script type="text/javascript">
     function getUserId() {
-        alert(1);
-        //document.getElementById('name').innerHTML = '你好 ' + msg + ', 我也很高兴见到你'
+        location.reload();
     }
-    
 $(function(){
-//    var title = $(".related").offset().top-200;
+//    var title = $(".related").offset().top-150;
 //    var oDiv = document.getElementById("nav");
 //    $(window).scroll(function(){
 //        var this_scrollTop = $(this).scrollTop();
