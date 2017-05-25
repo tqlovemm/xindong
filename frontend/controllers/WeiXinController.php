@@ -334,7 +334,7 @@ class WeiXinController extends Controller
                 if(($allVoteUser = $voteUserInfo::find()->where(['openid'=>$openid])->asArray()->all())!=null){
 
                     $prid = ArrayHelper::map($allVoteUser,'id','participantid');
-                    VoteSignInfo::updateAllCounters(['vote_count'=>-1,['id'=>$prid]]);
+                    VoteSignInfo::updateAllCounters(['vote_count'=>-1],['id'=>$prid]);
                     $voteUserInfo::deleteAll(['openid'=>$openid]);
                 }
 
