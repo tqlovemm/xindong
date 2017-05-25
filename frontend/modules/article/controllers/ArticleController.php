@@ -31,6 +31,7 @@ class ArticleController extends Controller
     public function actionShow(){
         $id = Yii::$app->request->get('id');
         $model = new ArticleComment();
+        $url = Yii::$app->request->hostInfo;
         if($model->load(Yii::$app->request->post(),'')){
             $this->layout = false;
             $cmodel = new $this->cmodelClass();
@@ -56,6 +57,7 @@ class ArticleController extends Controller
                 'username' => $name,
                 'articlearr' => $articlearr,
                 'cyes' => $cyes,
+                'url' => $url,
             ]);
         }else{
             $this->layout = false;
@@ -73,6 +75,7 @@ class ArticleController extends Controller
                 'cmodel' => $content,
                 'username' => $name,
                 'articlearr' => $articlearr,
+                'url' => $url,
             ]);
         }
     }
@@ -91,10 +94,14 @@ class ArticleController extends Controller
                 $res[$i]['nickname'] = $res[$i]['username'];
             }
             $res[$i]['time'] = $time-$res[$i]['created_at'];
-            if($res[$i]['time'] >= 3600){
-                $res[$i]['time'] = floor($res[$i]['time']/3600)."小时前";
+            if($res[$i]['time'] >= 24*3600){
+                $res[$i]['time'] = date('Y-m-d',$res[$i]['created_at']);
             }else{
-                $res[$i]['time'] = floor($res[$i]['time']/60)."分钟前";
+                if($res[$i]['time'] >= 3600){
+                    $res[$i]['time'] = floor($res[$i]['time']/3600)."小时前";
+                }else{
+                    $res[$i]['time'] = floor($res[$i]['time']/60)."分钟前";
+                }
             }
         }
         return json_encode($res);
