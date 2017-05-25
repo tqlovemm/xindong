@@ -102,6 +102,9 @@ $(function(){
             oDiv.style = "display: none;"
         }
     });
+    $(".sc").click(function(){
+        window.webkit.messageHandlers.abcdefg.postMessage('test');
+    });
 });
 </script>
 <script>
@@ -117,7 +120,7 @@ $(function(){
                 var result = '';
                 $.ajax({
                     type: 'GET',
-                    url: "http://120.27.226.102:82/article/article/getcomment?page="+page+"&aid="+<?= $cmodel->id;?>,
+                    url: "<?= $url;?>/article/article/getcomment?page="+page+"&aid=<?= $cmodel->id;?>",
                     dataType: 'json',
                     success: function(data){
                         var arrLen = data.length;
