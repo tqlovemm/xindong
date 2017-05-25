@@ -92,7 +92,7 @@ use yii\widgets\ActiveForm;
 <div style="height:38px;"></div>
 <script type="text/javascript">
     function getUserId() {
-        alert('你好我也很高兴见到你');
+        alert(1);
         //document.getElementById('name').innerHTML = '你好 ' + msg + ', 我也很高兴见到你'
     }
 $(function(){
