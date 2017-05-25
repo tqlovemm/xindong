@@ -26,7 +26,6 @@ class SavemeController extends Controller
     {
         $searchModel = new SavemeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
