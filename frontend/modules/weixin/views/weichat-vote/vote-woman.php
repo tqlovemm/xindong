@@ -88,6 +88,7 @@ $pre_url = Yii::$app->params['vote'];
         </ul>
     </div>
     <div class="text-center"><?= LinkPager::widget(['pagination' => $pages,'firstPageLabel'=>false,'lastPageLabel'=>false]); ?></div>
+    <div class="clearfix"></div>
 </div>
 
 
