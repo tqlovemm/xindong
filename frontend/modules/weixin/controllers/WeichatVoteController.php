@@ -217,7 +217,7 @@ class WeichatVoteController extends Controller
 
             $voteUserInfo->noteid = self::NOTE_NUMBER;
             $voteUserInfo->participantid = $id;
-            $voteUserInfo->city = $this->user_wei_info['city'];
+            $voteUserInfo->city = isset($this->user_wei_info['city'])?$this->user_wei_info['city']:'null';
             $voteUserInfo->country = $this->user_wei_info['country'];
             $voteUserInfo->province = $this->user_wei_info['province'];
             $voteUserInfo->nickname = $this->user_wei_info['nickname'];
