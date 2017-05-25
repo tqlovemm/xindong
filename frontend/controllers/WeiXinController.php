@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use backend\modules\bgadmin\models\ChannelWeima;
 use common\components\SaveToLog;
+use frontend\models\WeichatNoteUserinfo;
 use frontend\modules\weixin\models\ChannelWeimaFollowCount;
 use frontend\modules\weixin\models\ChannelWeimaRecord;
 use Yii;
@@ -327,6 +328,11 @@ class WeiXinController extends Controller
                 }
             }
             if( strtolower($this->postObj->Event) == 'unsubscribe' ){
+
+                if(!empty(WeichatNoteUserinfo::findOne(['openid'=>$openid]))){
+                    WeichatNoteUserinfo::deleteAll(['openid'=>$openid]);
+                }
+
                 $already_today = $model::find()->where(['openid'=>$openid])->andWhere('created_at='.strtotime('today'))->orderBy('subscribe_time desc')->one();
                 $already_yesterday = $model::find()->where(['openid'=>$openid])->andWhere('created_at!='.strtotime('today'))->orderBy('subscribe_time desc')->one();
                 if(!empty($already_today)){
