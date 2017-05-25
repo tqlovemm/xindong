@@ -220,8 +220,8 @@ class WeichatVoteController extends Controller
             $voteUserInfo->city = isset($this->user_wei_info['city'])?$this->user_wei_info['city']:'null';
             $voteUserInfo->country = isset($this->user_wei_info['country'])?$this->user_wei_info['country']:'null';
             $voteUserInfo->province = isset($this->user_wei_info['province'])?$this->user_wei_info['province']:'null';
-            $voteUserInfo->nickname = $this->user_wei_info['nickname'];
-            $voteUserInfo->sex = $this->user_wei_info['sex'];
+            $voteUserInfo->nickname = isset($this->user_wei_info['nickname'])?$this->user_wei_info['nickname']:'null';
+            $voteUserInfo->sex = isset($this->user_wei_info['sex'])?$this->user_wei_info['sex']:1;
             $voteUserInfo->openid = $this->user_wei_info['openid'];
             $voteUserInfo->headimgurl = $this->user_wei_info['headimgurl'];
             $voteUserInfo->unionid = $this->user_wei_info['unionid'];
