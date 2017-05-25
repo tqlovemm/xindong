@@ -264,8 +264,8 @@ class WeichatVoteController extends Controller
         if(empty($query)){
 
             $vote_sign->openid = $this->user_wei_info['openid'];
-            $vote_sign->headimgurl = $this->user_wei_info['headimgurl'];
-            $vote_sign->nickname = $this->user_wei_info['nickname'];
+            $vote_sign->headimgurl = isset($this->user_wei_info['headimgurl'])?$this->user_wei_info['headimgurl']:'null';
+            $vote_sign->nickname = isset($this->user_wei_info['nickname'])?$this->user_wei_info['nickname']:'null';
 
             if($vote_sign->save()){
 
