@@ -323,8 +323,8 @@ class WeiXinController extends Controller
                             array(
                                 'title'=>"晒花样童年照",
                                 'description'=>"晒花样童年照,迎千元大奖！",
-                                'picUrl'=>'http://oqfwt261i.bkt.clouddn.com/wex_20170524124623.jpg',
-                                'url'=>'http://oqfwt261i.bkt.clouddn.com/wex_20170524124623.jpg',
+                                'picUrl'=>'http://oqfwt261i.bkt.clouddn.com/wex_20170524124623.jpg?imageView2/1/w/400/h/200',
+                                'url'=>'http://13loveme.com/weixin/weichat-vote/vote-man',
                             ),
                         );
                         $this->news($data);
