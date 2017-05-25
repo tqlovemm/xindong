@@ -91,6 +91,10 @@ use yii\widgets\ActiveForm;
 </div>
 <div style="height:38px;"></div>
 <script type="text/javascript">
+    function getUserId() {
+        alert('你好我也很高兴见到你');
+        //document.getElementById('name').innerHTML = '你好 ' + msg + ', 我也很高兴见到你'
+    }
 $(function(){
 //    var title = $(".related").offset().top-200;
 //    var oDiv = document.getElementById("nav");
@@ -105,10 +109,6 @@ $(function(){
     $(".sc").click(function(){
         window.webkit.messageHandlers.abcdefg.postMessage('test');
     });
-    function getUserId() {
-        alert('你好我也很高兴见到你');
-        //document.getElementById('name').innerHTML = '你好 ' + msg + ', 我也很高兴见到你'
-    }
 });
 </script>
 <script>
