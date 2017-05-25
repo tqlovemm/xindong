@@ -10,7 +10,9 @@ use yii\widgets\ActiveForm;
 
 <div class="vote-sign-info-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin();
+    $model->openid = 'No need to fill in';
+    ?>
 
     <?= $form->field($model, 'openid')->textInput(['maxlength' => true]) ?>
 
