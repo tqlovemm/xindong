@@ -261,6 +261,7 @@ class WeiXinController extends Controller
 
                 //$this->text($this->postObj->EventKey);exit();
                 $user_info = json_decode($this->getUserInfo($openid));
+                $k = 0;
                 try{
                     if (!empty($this->postObj->EventKey)) {
                         $key = explode('_', $this->postObj->EventKey);
@@ -269,6 +270,7 @@ class WeiXinController extends Controller
                         }else{
                             $model->scene_id = 0;
                         }
+                        $k = $model->scene_id;
                         $model->openid = "{$openid}";
                         $model->headimgurl = "$user_info->headimgurl";
                         $model->subscribe_time = $user_info->subscribe_time;
@@ -316,7 +318,18 @@ class WeiXinController extends Controller
                     SaveToLog::log($e->getMessage(),'we13.log');
                 }finally{
 
-                    $content = "欢迎来到有节操有内涵有故事的十三平台！\n
+                    if($k==45){
+                        $data = array(
+                            array(
+                                'title'=>"晒花样童年照",
+                                'description'=>"晒花样童年照,迎千元大奖！",
+                                'picUrl'=>'http://oqfwt261i.bkt.clouddn.com/wex_20170524124623.jpg',
+                                'url'=>'http://oqfwt261i.bkt.clouddn.com/wex_20170524124623.jpg',
+                            ),
+                        );
+                        $this->news($data);
+                    }else{
+                        $content = "欢迎来到有节操有内涵有故事的十三平台！\n
 <a href='http://mp.weixin.qq.com/s/IhEg7rG-ls01lFpBAGri6w'>☞如何.·玩转☜</a>
 十三在手！天下我有！\n
 <a href='http://13loveme.com/date-past?title=%E6%B1%9F%E8%8B%8F&company=13pt'>☞那些.·觅约☜</a>
@@ -325,7 +338,8 @@ class WeiXinController extends Controller
 真实互动，展开自我！\n
 <a href='http://www.13loveme.com/contact'>☞PAO圈.·入口☜</a>
 撩起来！约一啪！";
-                    $this->text($content);
+                        $this->text($content);
+                    }
                 }
             }
             if( strtolower($this->postObj->Event) == 'unsubscribe' ){
