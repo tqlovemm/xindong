@@ -48,7 +48,7 @@ use yii\widgets\ActiveForm;
     }
 </style>
 <body>
-<div id="nav" style="display: none;">
+<div id="nav" >
         <?php $form = ActiveForm::begin(); ?>
         <input type="text" name="content" class="plinput" placeholder="  写评论..." onfocus="this.placeholder=''" onblur="this.placeholder='  写评论...'"/>
         <input type="hidden" name="aid" value="<?= $cmodel->id;?>" />
@@ -92,16 +92,16 @@ use yii\widgets\ActiveForm;
 <div style="height:38px;"></div>
 <script type="text/javascript">
 $(function(){
-    var title = $(".related").offset().top-150;
-    var oDiv = document.getElementById("nav");
-    $(window).scroll(function(){
-        var this_scrollTop = $(this).scrollTop();
-        if(this_scrollTop>title){
-            oDiv.style = "display: inline;"
-        }else {
-            oDiv.style = "display: none;"
-        }
-    });
+//    var title = $(".related").offset().top-150;
+//    var oDiv = document.getElementById("nav");
+//    $(window).scroll(function(){
+//        var this_scrollTop = $(this).scrollTop();
+//        if(this_scrollTop>title){
+//            oDiv.style = "display: inline;"
+//        }else {
+//            oDiv.style = "display: none;"
+//        }
+//    });
     $(".sc").click(function(){
         window.webkit.messageHandlers.abcdefg.postMessage('test');
     });
