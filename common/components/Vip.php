@@ -59,13 +59,13 @@ class Vip
 
     public static function sign_status($statusNumber){
 
-        if($statusNumber==0){
+        if($statusNumber==10){
             $status = "等待审核";
             $color = "bg-aqua-active";
-        }elseif($statusNumber==1){
+        }elseif($statusNumber==11){
             $status = "审核通过";
             $color = "bg-green";
-        }elseif($statusNumber==2){
+        }elseif($statusNumber==12){
             $status = "审核失败";
             $color = "bg-red";
         }else{

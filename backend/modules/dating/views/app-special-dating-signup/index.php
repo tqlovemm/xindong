@@ -83,8 +83,8 @@ $this->registerCss("
                                 <div class="description-block">
                                     <h5 class="description-header">操作</h5><br>
                                     <div class="description-text">
-                                        <a href="<?=Url::to(['signup-check','id'=>$val['sid'],'status'=>1])?>" class="btn btn-success">通过</a>
-                                        <a href="<?=Url::to(['signup-check','id'=>$val['sid'],'status'=>2])?>" class="btn btn-warning">失败</a>
+                                        <a href="<?=Url::to(['signup-check','id'=>$val['sid'],'status'=>11])?>" class="btn btn-success">通过</a>
+                                        <a href="<?=Url::to(['signup-check','id'=>$val['sid'],'status'=>12])?>" class="btn btn-warning">失败</a>
                                     </div>
                                 </div>
                                 <!-- /.description-block -->
