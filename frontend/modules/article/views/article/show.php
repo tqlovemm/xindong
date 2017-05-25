@@ -68,7 +68,7 @@ use yii\widgets\ActiveForm;
     <!--相关-->
     <div class="related">
         <h1 style="margin-bottom: 1;">RELATED</h1>
-        <h3 style="margin-top: 1;">相关内容</h3>
+        <h3 style="margin-top: 1;" class="xg">相关内容</h3>
     </div>
     <ul class="list">
         <?php foreach ($articlearr as $vo): ?>
@@ -91,8 +91,8 @@ use yii\widgets\ActiveForm;
 </div>
 <div style="height:38px;"></div>
 <script type="text/javascript">
-    function getUserId() {
-        location.reload();
+    function getUserId($userid) {
+        $('.xg').html($userid);
     }
 $(function(){
 //    var title = $(".related").offset().top-150;
