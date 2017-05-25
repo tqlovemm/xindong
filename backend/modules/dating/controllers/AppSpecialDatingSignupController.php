@@ -32,7 +32,7 @@ class AppSpecialDatingSignupController extends \yii\web\Controller
         $model->status = $status;
         if($model->update()){
             if($status==1){
-                $this->sendApp($pre_url.$zinfo->weima,$username,"专属女生报名成功，专属女生编号为$zinfo->zid，请保存对方微信二维码并添加为好友，祝您交友愉快");
+                $this->sendApp($pre_url.$zinfo->weima,$username,"专属女生报名成功，专属女生编号为{$zinfo->zid}，请保存对方微信二维码并添加为好友，祝您交友愉快");
             }
 
             return $this->redirect(\Yii::$app->request->referrer);
