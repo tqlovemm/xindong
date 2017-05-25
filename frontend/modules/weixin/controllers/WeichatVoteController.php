@@ -226,7 +226,7 @@ class WeichatVoteController extends Controller
             $voteUserInfo->headimgurl = isset($this->user_wei_info['headimgurl'])?$this->user_wei_info['headimgurl']:'null';
             $voteUserInfo->unionid = $this->user_wei_info['unionid'];
             $voteUserInfo->subscribe = $this->user_wei_info['subscribe'];
-            $voteUserInfo->subscribe_time = $this->user_wei_info['subscribe_time'];
+            $voteUserInfo->subscribe_time = isset($this->user_wei_info['subscribe_time'])?$this->user_wei_info['subscribe_time']:'0';
             $voteUserInfo->type = $type;
 
             if($voteUserInfo->save()){
