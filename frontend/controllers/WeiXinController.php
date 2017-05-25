@@ -6,6 +6,7 @@ use common\components\SaveToLog;
 use frontend\models\WeichatNoteUserinfo;
 use frontend\modules\weixin\models\ChannelWeimaFollowCount;
 use frontend\modules\weixin\models\ChannelWeimaRecord;
+use frontend\modules\weixin\models\VoteSignInfo;
 use Yii;
 use yii\data\Pagination;
 use yii\db\Query;
@@ -329,8 +330,12 @@ class WeiXinController extends Controller
             }
             if( strtolower($this->postObj->Event) == 'unsubscribe' ){
 
-                if(!empty(WeichatNoteUserinfo::findOne(['openid'=>$openid]))){
-                    WeichatNoteUserinfo::deleteAll(['openid'=>$openid]);
+                $voteUserInfo = new WeichatNoteUserinfo();
+                if(($allVoteUser = $voteUserInfo::find()->where(['openid'=>$openid])->asArray()->all())!=null){
+
+                    $prid = ArrayHelper::map($allVoteUser,'id','participantid');
+                    VoteSignInfo::updateAllCounters(['vote_count'=>-1,['id'=>$prid]]);
+                    $voteUserInfo::deleteAll(['openid'=>$openid]);
                 }
 
                 $already_today = $model::find()->where(['openid'=>$openid])->andWhere('created_at='.strtotime('today'))->orderBy('subscribe_time desc')->one();
