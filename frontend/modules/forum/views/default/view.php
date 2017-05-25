@@ -74,25 +74,31 @@ $headimgurl = $thread['user']['headimgurl'];
     </div>
 
     <div data-am-widget="gallery" class="row am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-overlay clearfix" data-am-gallery="{ pureview: true }" >
-        <?php if(count($thread['img'])==1):?>
-            <?php foreach ($thread['img'] as $key=>$img):?>
-                <a style="padding: 0 0 10px 10px;" href="<?=$img['img']?>" class="col-xs-6 am-gallery-item">
-                    <img class="img-responsive" src="<?=$pre_url.$img['img']?>">
+        <?php foreach ($thread['img'] as $key=>$img):?>
+            <a style="padding: 0 0 10px 10px;" href="<?=$img['img']?>" class="am-gallery-item">
+                <img class="img-responsive" src="<?=$pre_url.$img['img']?>">
+            </a>
+        <?php endforeach;?>
+
+  <!--      <?php /*if(count($thread['img'])==1):*/?>
+            <?php /*foreach ($thread['img'] as $key=>$img):*/?>
+                <a style="padding: 0 0 10px 10px;" href="<?/*=$img['img']*/?>" class="col-xs-6 am-gallery-item">
+                    <img class="img-responsive" src="<?/*=$pre_url.$img['img']*/?>?imageView2/1/w/136/h/105">
                 </a>
-            <?php endforeach;?>
-        <?php elseif(in_array(count($thread['img']),[2,4])):?>
-            <?php foreach ($thread['img'] as $key=>$img):?>
-                <a href="<?=$img['img']?>" class="col-xs-6 am-gallery-item" style="<?php if(in_array($key,[1,3])){echo 'float:right;';}?>;height: 130px;margin-bottom: 2px;overflow: hidden;padding:0;">
-                    <img class="img-responsive" src="<?=$pre_url.$img['img']?>">
+            <?php /*endforeach;*/?>
+        <?php /*elseif(in_array(count($thread['img']),[2,4])):*/?>
+            <?php /*foreach ($thread['img'] as $key=>$img):*/?>
+                <a href="<?/*=$img['img']*/?>" class="col-xs-6 am-gallery-item" style="<?php /*if(in_array($key,[1,3])){echo 'float:right;';}*/?>;height: 130px;margin-bottom: 2px;overflow: hidden;padding:0;">
+                    <img class="img-responsive" src="<?/*=$pre_url.$img['img']*/?>?imageView2/1/w/136/h/105">
                 </a>
-            <?php endforeach;?>
-        <?php elseif(in_array(count($thread['img']),[3,5,6,7,8,9])): ?>
-            <?php foreach ($thread['img'] as $key=>$img):?>
-                <a href="<?=$headimgurl.$img['img']?>" class="col-xs-4 am-gallery-item" style="<?php if(in_array($key,[1,4,7])){echo 'margin:0 0.6%;';}?>;<?php if(in_array($key,[2,5,8])){echo 'float:right;';}?>;height: 105px;margin-bottom: 2px;overflow: hidden;">
-                    <img class="img-responsive" src="<?=$pre_url.$img['img']?>">
+            <?php /*endforeach;*/?>
+        <?php /*elseif(in_array(count($thread['img']),[3,5,6,7,8,9])): */?>
+            <?php /*foreach ($thread['img'] as $key=>$img):*/?>
+                <a href="<?/*=$headimgurl.$img['img']*/?>" class="col-xs-4 am-gallery-item" style="<?php /*if(in_array($key,[1,4,7])){echo 'margin:0 0.6%;';}*/?>;<?php /*if(in_array($key,[2,5,8])){echo 'float:right;';}*/?>;height: 105px;margin-bottom: 2px;overflow: hidden;">
+                    <img class="img-responsive" src="<?/*=$pre_url.$img['img']*/?>?imageView2/1/w/136/h/105">
                 </a>
-            <?php endforeach;?>
-        <?php endif;?>
+            <?php /*endforeach;*/?>
+        --><?php /*endif;*/?>
     </div>
 
     <div class="row">

@@ -71,7 +71,7 @@ class DefaultController extends Controller
                 if(count($item["img"])==1){
                     foreach ($item["img"] as $key=>$img) {
                         $str .= '<div style="padding: 0 0 0 5px;" class="col-xs-6">';
-                        $str .= '<img class="img-responsive lazy" src="'.$pre_url.$img["img"].'"></div>';
+                        $str .= '<img class="img-responsive lazy" src="'.$pre_url.$img["img"].'?imageView2/1/w/136/h/105"></div>';
                     }
                 }elseif(count($item["img"])==2) {
                     foreach ($item["img"] as $key => $img) {
@@ -81,7 +81,7 @@ class DefaultController extends Controller
                             $str .= 'float:right;';
                         }
                         $str .= 'height: 130px;overflow: hidden;">';
-                        $str .= '<img class="img-responsive lazy" src="'.$pre_url.$img["img"].'"></div>';
+                        $str .= '<img class="img-responsive lazy" src="'.$pre_url.$img["img"].'?imageView2/1/w/136/h/105"></div>';
                     }
                 }elseif(count($item["img"])>=3) {
                     foreach ($item["img"] as $key => $img){
@@ -90,7 +90,7 @@ class DefaultController extends Controller
                         if($key==1){$str .= 'margin:0 0.6%;';}
                         if($key==2){$str .= 'float:right;';}
                         $str .= 'height: 105px;overflow: hidden;">';
-                        $str .= '<img class="img-responsive lazy" src="'.$pre_url.$img["img"].'"></div>';
+                        $str .= '<img class="img-responsive lazy" src="'.$pre_url.$img["img"].'?imageView2/1/w/136/h/105"></div>';
                         if ($key == 2){ break;}
                     }
                 }
