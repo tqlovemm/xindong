@@ -30,12 +30,13 @@ class ArticleController extends Controller
     }
     public function actions()
     {
+        $url = Yii::$app->request->hostInfo;
         return [
             'ueditor' => [
                 'class' => 'common\widgets\ueditor\UeditorAction',
                 'config'=>[
                     //上传图片配置
-                    'imageUrlPrefix' => "http://120.27.226.102:81", /* 图片访问路径前缀 */
+                    'imageUrlPrefix' => $url, /* 图片访问路径前缀 */
                     'imagePathFormat' => "/uploads/{yyyy}{mm}{dd}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
                 ]
             ]
