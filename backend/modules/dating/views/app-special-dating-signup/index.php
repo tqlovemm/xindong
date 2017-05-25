@@ -7,7 +7,12 @@ $this->registerCss("
 
 .widget-user .widget-user-image{margin-left:-135px;}
 .widget-user .widget-user-username{font-size:16px;}
-
+.border-right h6{
+   display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 ");
 ?>
 <div class="male-info-text-index">
