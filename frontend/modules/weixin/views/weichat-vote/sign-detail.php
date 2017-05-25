@@ -100,6 +100,7 @@ $this->registerJs("
     },false);
 
 ");
+$nickname = isset($userInfo['nickname'])?$userInfo['nickname']:$model['id'];
 ?>
 
 <script>
@@ -127,7 +128,7 @@ $this->registerJs("
     wx.ready(function () {
         // 在这里调用 API
         wx.onMenuShareAppMessage({
-            title: '<?=$userInfo['nickname']?>邀您来投票', // 分享标题
+            title: '<?=$nickname?>邀您来投票', // 分享标题
             desc: '<?=$model['id']?>号邀请您来为他投票。', // 分享描述
             link: 'http://13loveme.com/weixin/weichat-vote/sign-detail?id=<?=$model['id']?>&before=2', // 分享链接
             imgUrl: '<?=$pre_url.$item_img?>', // 分享图标
