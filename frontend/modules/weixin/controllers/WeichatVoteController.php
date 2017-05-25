@@ -185,7 +185,7 @@ class WeichatVoteController extends Controller
 
         $query = VoteSignInfo::findOne($id);
         $voteUserInfo = new WeichatNoteUserinfo();
-        if(empty($voteUserInfo::findOne(['openid'=>$this->user_wei_info['openid'],'noteid'=>self::NOTE_NUMBER,'type'=>$type,'status'=>1]))){
+        if(empty($voteUserInfo::findOne(['openid'=>$this->user_wei_info['openid'],'participantid'=>$id]))){
 
             $query->vote_count+=1;
             $query->update();
