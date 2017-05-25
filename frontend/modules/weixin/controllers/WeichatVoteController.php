@@ -33,8 +33,8 @@ class WeichatVoteController extends Controller
         if(empty($this->user_wei_info)){
             return $this->redirect('vote-check');
         }else{
-            $this->subscribe = $this->subscribe();
-            $this->user_wei_info['subscribe']=$this->subscribe();
+            $this->subscribe = $this->subscribe()['subscribe'];
+            $this->user_wei_info=$this->subscribe();
         }
 
         parent::init();
@@ -51,7 +51,7 @@ class WeichatVoteController extends Controller
             Yii::$app->cache->delete('access_token_js');
             self::subscribe();
         }
-        return $userInfo['subscribe'];
+        return $userInfo;
     }
 
 
