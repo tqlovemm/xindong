@@ -75,7 +75,7 @@ $pre_url = Yii::$app->params['vote'];
 
                     <div class="note-count note-padding"> <?=$item['vote_count']?></div>
                     <?php if($subscribe!=1):?>
-                        <a class="weicaht-note" style="display: block;text-align: center;background-color:#23212E" data-lightbox="d" data-title="请关注微信公众号进行投票" href="/images/weixin/thirteenpingtai.jpg">
+                        <a class="weicaht-note" style="display: block;text-align: center;background-color:#23212E" data-lightbox="d" data-title="请关注微信公众号进行投票" href="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQG68jwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAySXZCczk1bDI5SVAxMDAwMDAwM3IAAgSAgM9YAwQAAAAA">
                             <span class="glyphicon glyphicon-heart"></span> <span style="font-size: 16px;">投票</span>
                         </a>
                     <?php else:?>

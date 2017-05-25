@@ -68,7 +68,7 @@ $this->registerJs("
                     <div class="row" style="padding: 10px;margin: 0;">
                         <div class="col-xs-6 note-count"><?=$woman_top['vote_count']?></div>
                         <?php if($subscribe!=1):?>
-                            <a class="col-xs-6" style="padding:0;text-align: right;" data-lightbox="d" data-title="请关注微信公众号进行投票" href="/images/weixin/thirteenpingtai.jpg">
+                            <a class="col-xs-6" style="padding:0;text-align: right;" data-lightbox="d" data-title="请关注微信公众号进行投票" href="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQG68jwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAySXZCczk1bDI5SVAxMDAwMDAwM3IAAgSAgM9YAwQAAAAA">
                                 <span class="weicaht-note">投票</span>
                             </a>
                         <?php else:?>
