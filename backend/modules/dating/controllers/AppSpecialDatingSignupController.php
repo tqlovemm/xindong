@@ -3,6 +3,7 @@
 namespace backend\modules\dating\controllers;
 
 use api\modules\v9\models\AppSpecialDatingSignUp;
+use backend\models\User;
 use backend\modules\dating\models\AppSpecialDating;
 use yii\data\Pagination;
 use yii\myhelper\AccessToken;
@@ -27,17 +28,18 @@ class AppSpecialDatingSignupController extends \yii\web\Controller
         $pre_url = \Yii::$app->params['test'];
         $model = $this->findModel($id);
         $zinfo = AppSpecialDating::findOne(['zid'=>$model->zid]);
+        $username = User::getUsername($model->user_id);
         $model->status = $status;
         if($model->update()){
             if($status==1){
-                $this->sendApp($pre_url.$zinfo->weima,'xdd','测试测试');
+                $this->sendApp($pre_url.$zinfo->weima,$username,"专属女生报名成功，专属女生编号为$zinfo->zid，请保存对方微信二维码并添加为好友，祝您交友愉快");
             }
 
             return $this->redirect(\Yii::$app->request->referrer);
         }
     }
 
-    protected function sendApp($img,$username,$word="您的密约报名成功，请及时添加女生二维码！"){
+    protected function sendApp($img,$username,$word="专属女生报名成功，请保存对方微信二维码并添加为好友，祝您交友愉快"){
 
         $data = array(
             'username'=>$username,
