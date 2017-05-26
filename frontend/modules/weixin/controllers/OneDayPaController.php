@@ -30,7 +30,7 @@ class OneDayPaController extends Controller
 
             $access = file_get_contents($url);
             $result = json_decode($access);
-            $token = (new AccessToken())->getAccessToken();
+            $token = (new AccessToken())->getAccessTokenKs();
             $openid = $result->openid;
 
             $url3 = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$token&openid=$openid";
