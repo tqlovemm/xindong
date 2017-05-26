@@ -56,7 +56,7 @@ class WeichatVoteController extends Controller
 
 
     protected function access_token(){
-        $token = (new AccessToken())->getAccessToken();
+        $token = (new AccessToken())->getAccessTokenKs();
         $openid = $this->user_wei_info['openid'];
         $url3 = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$token&openid=$openid";
         $userInfo = json_decode(file_get_contents($url3),true);
