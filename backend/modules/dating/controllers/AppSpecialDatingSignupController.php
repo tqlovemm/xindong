@@ -37,7 +37,7 @@ class AppSpecialDatingSignupController extends \yii\web\Controller
                 $userData = UserData::findOne($model->user_id);
                 $userData->jiecao_coin+=$zinfo->coin;
                 if($userData->update()){
-                    $this->sendApp($pre_url.$zinfo->getCoverPhoto(),$username,"专属女生报名失败，专属女生编号为{$zinfo->zid}，已退还您心动币{$zinfo->coin}");
+                    $this->sendApp($zinfo->getCoverPhoto(),$username,"专属女生报名失败，专属女生编号为{$zinfo->zid}，已退还您心动币{$zinfo->coin}");
                 }
 
             }
