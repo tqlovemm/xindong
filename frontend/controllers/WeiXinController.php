@@ -177,6 +177,13 @@ class WeiXinController extends Controller
                     'name'=>urlencode("新人必看"),
                     'sub_button'=>array(
                         array(
+                            "type"=>"view",
+                            "name"=>urlencode("花样童年照"),
+                            "url"=>"http://13loveme.com/weixin/weichat-vote/vote-woman",
+                            "sub_button"=>[],
+
+                        ),
+                        array(
                             'type'=>'view',
                             'name'=>urlencode("平台简介"),
                             'url'=>'http://mp.weixin.qq.com/s/IhEg7rG-ls01lFpBAGri6w',
@@ -206,13 +213,7 @@ class WeiXinController extends Controller
                 array(
                     'name'=>urlencode("平台相关"),
                     'sub_button'=>array(
-                        array(
-                            "type"=>"view",
-                            "name"=>urlencode("花样童年照"),
-                            "url"=>"http://13loveme.com/weixin/weichat-vote/vote-woman",
-                            "sub_button"=>[],
-
-                        ),array(
+                       array(
                             "type"=>"view",
                             "name"=>urlencode("APP下载"),
                             "url"=>"https://itunes.apple.com/cn/app/xin-dong-san-shi-yi-tian/id1070045426?mt=8",
@@ -453,6 +454,10 @@ class WeiXinController extends Controller
                     break;
                 case "鸭王":
                     $content = "http://pan.baidu.com/s/1hsxcgEo 密码：9wgn";
+                    $this->text($content);
+                    break;
+                case "十三叔":
+                    $content = "http://pan.baidu.com/s/1o8Bdg2e 密码：0bf2";
                     $this->text($content);
                     break;
             }
