@@ -30,20 +30,23 @@ class AppSpecialDatingSignupController extends \yii\web\Controller
         $username = User::getUsername($model->user_id);
         $model->status = $status;
         $model->created_by = Yii::$app->user->id;
-        if($model->update()){
-            if($status==11){
-                $this->sendApp($pre_url.$zinfo->weima,$username,"专属女生报名成功，专属女生编号为{$zinfo->zid}，请保存对方微信二维码并添加为好友，祝您交友愉快");
-            }else{
+        if($status==11){
+            $send = $this->sendApp($pre_url.$zinfo->weima,$username,"专属女生报名成功，专属女生编号为{$zinfo->zid}，请保存对方微信二维码并添加为好友，祝您交友愉快");
+            if($send){
+                $model->update();
+            }
+        }else{
+            $send = $this->sendApp($zinfo->getCoverPhoto(),$username,"专属女生报名失败，专属女生编号为{$zinfo->zid}，已退还您心动币{$zinfo->coin}");
+            if($send){
                 $userData = UserData::findOne($model->user_id);
                 $userData->jiecao_coin+=$zinfo->coin;
                 if($userData->update()){
-                    $this->sendApp($zinfo->getCoverPhoto(),$username,"专属女生报名失败，专属女生编号为{$zinfo->zid}，已退还您心动币{$zinfo->coin}");
+                    $model->update();
                 }
-
             }
-
-            return $this->redirect(\Yii::$app->request->referrer);
         }
+        return $this->redirect(\Yii::$app->request->referrer);
+
     }
 
     protected function sendApp($img,$username,$word="专属女生报名成功，请保存对方微信二维码并添加为好友，祝您交友愉快"){
