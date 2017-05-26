@@ -33,8 +33,8 @@ class WeichatVoteController extends Controller
         if(empty($this->user_wei_info)){
             return $this->redirect('vote-check');
         }else{
-            $this->subscribe = $this->subscribe();
-            $this->user_wei_info['subscribe']=$this->subscribe();
+            $this->subscribe = $this->subscribe()['subscribe'];
+            $this->user_wei_info=$this->subscribe();
         }
 
         parent::init();
@@ -51,7 +51,7 @@ class WeichatVoteController extends Controller
             Yii::$app->cache->delete('access_token_js');
             self::subscribe();
         }
-        return $userInfo['subscribe'];
+        return $userInfo;
     }
 
 
@@ -217,16 +217,16 @@ class WeichatVoteController extends Controller
 
             $voteUserInfo->noteid = self::NOTE_NUMBER;
             $voteUserInfo->participantid = $id;
-            $voteUserInfo->city = $this->user_wei_info['city'];
-            $voteUserInfo->country = $this->user_wei_info['country'];
-            $voteUserInfo->province = $this->user_wei_info['province'];
-            $voteUserInfo->nickname = $this->user_wei_info['nickname'];
-            $voteUserInfo->sex = $this->user_wei_info['sex'];
+            $voteUserInfo->city = isset($this->user_wei_info['city'])?$this->user_wei_info['city']:'null';
+            $voteUserInfo->country = isset($this->user_wei_info['country'])?$this->user_wei_info['country']:'null';
+            $voteUserInfo->province = isset($this->user_wei_info['province'])?$this->user_wei_info['province']:'null';
+            $voteUserInfo->nickname = isset($this->user_wei_info['nickname'])?$this->user_wei_info['nickname']:'null';
+            $voteUserInfo->sex = isset($this->user_wei_info['sex'])?$this->user_wei_info['sex']:1;
             $voteUserInfo->openid = $this->user_wei_info['openid'];
-            $voteUserInfo->headimgurl = $this->user_wei_info['headimgurl'];
+            $voteUserInfo->headimgurl = isset($this->user_wei_info['headimgurl'])?$this->user_wei_info['headimgurl']:'null';
             $voteUserInfo->unionid = $this->user_wei_info['unionid'];
             $voteUserInfo->subscribe = $this->user_wei_info['subscribe'];
-            $voteUserInfo->subscribe_time = $this->user_wei_info['subscribe_time'];
+            $voteUserInfo->subscribe_time = isset($this->user_wei_info['subscribe_time'])?$this->user_wei_info['subscribe_time']:'0';
             $voteUserInfo->type = $type;
 
             if($voteUserInfo->save()){
@@ -264,8 +264,8 @@ class WeichatVoteController extends Controller
         if(empty($query)){
 
             $vote_sign->openid = $this->user_wei_info['openid'];
-            $vote_sign->headimgurl = $this->user_wei_info['headimgurl'];
-            $vote_sign->nickname = $this->user_wei_info['nickname'];
+            $vote_sign->headimgurl = isset($this->user_wei_info['headimgurl'])?$this->user_wei_info['headimgurl']:'null';
+            $vote_sign->nickname = isset($this->user_wei_info['nickname'])?$this->user_wei_info['nickname']:'null';
 
             if($vote_sign->save()){
 
