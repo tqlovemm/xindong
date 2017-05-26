@@ -30,13 +30,13 @@ class AccessToken
     }
     public function getAccessTokenKs() {
         $this->cache = Yii::$app->cache;
-        $data = $this->cache->get('access_token_js');
+        $data = $this->cache->get('access_token_ks');
         if (empty($data)) {
             $token_access_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" . Yii::$app->params['id_ks'] . "&secret=" . Yii::$app->params['secret_ks'];
             $res = json_decode($this->getData($token_access_url));
             $access_token = $res->access_token;
             if ($access_token) {
-                $this->cache->set('access_token_js',$access_token,7000);
+                $this->cache->set('access_token_ks',$access_token,7000);
             }
         } else {
             $access_token = $data;
