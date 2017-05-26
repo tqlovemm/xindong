@@ -34,7 +34,7 @@ class OneDayPaController extends Controller
             $openid = $result->openid;
 
             $url3 = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$token&openid=$openid";
-
+            var_dump($openid);
             $userInfo = json_decode(file_get_contents($url3),true);
 
             if(isset($userInfo['errcode'])&&$userInfo['errcode']==40001){
