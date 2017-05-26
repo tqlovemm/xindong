@@ -2,6 +2,7 @@
 
 namespace backend\modules\dating\models;
 
+use api\modules\v9\models\AppSpecialDatingImages;
 use common\Qiniu\QiniuUploader;
 use Yii;
 

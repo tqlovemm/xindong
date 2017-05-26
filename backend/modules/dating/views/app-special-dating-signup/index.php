@@ -15,9 +15,10 @@ $this->registerCss("
 }
 ");
 ?>
+<?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 <div class="male-info-text-index">
     <div class="row">
-        <?php foreach($model as $key=>$val):
+        <?php foreach($dataProvider['model'] as $key=>$val):
 
             $user = \backend\models\User::findOne($val['user_id']);
             $userProfile = \frontend\models\UserProfile::findOne($val['user_id']);
@@ -32,7 +33,7 @@ $this->registerCss("
                 <div class="box box-widget widget-user">
                     <!-- Add the bg color to the header using any of the bg-* classes -->
                     <div class="widget-user-header <?=$status['color']?>">
-                        <h3 class="widget-user-username">网站ID：<?=$val['user_id']?>，会员名：<?=$user->username?>，会员编号：<?=$number?></h3>
+                        <h3 class="widget-user-username">用户ID：<?=$val['user_id']?>，会员名：<?=$user->username?>，会员编号：<?=$number?></h3>
                         <h5 class="widget-user-desc">审核状态：<?=$status['status']?></h5>
                     </div>
                     <div class="widget-user-image">
@@ -75,17 +76,37 @@ $this->registerCss("
                                 <h6>关于女孩：<?= $val['zinfo']['p_info']?></h6>
                                 <h6>希望对象：<?= $val['zinfo']['h_info']?></h6>
                                 <h6>已经报名人数：<?= $val['zinfo']['sign_up_count']?></h6>
-                                <h6>发布时间：<?= date('Y-m-d H:i:s',$val['zinfo']['created_at'])?></h6>
                                 <h6>女生地址：<?= $val['zinfo']['address']?> <?= $val['zinfo']['address_detail']?></h6>
+                                <h6>发布时间：<?= date('Y-m-d H:i:s',$val['zinfo']['created_at'])?></h6>
+
                             </div>
                             <!-- /.col -->
                             <div class="col-sm-6 border-right">
                                 <div class="description-block">
+                                    <h6>报名时间：<?= date('Y-m-d H:i:s',$val['created_at'])?></h6>
                                     <h5 class="description-header">操作</h5><br>
+
+                                        <?php if($val['status']==10):?>
                                     <div class="description-text">
-                                        <a href="<?=Url::to(['signup-check','id'=>$val['sid'],'status'=>11])?>" class="btn btn-success">通过</a>
-                                        <a href="<?=Url::to(['signup-check','id'=>$val['sid'],'status'=>12])?>" class="btn btn-warning">失败</a>
+                                        <?= \yii\helpers\Html::a('通过', ['signup-check', 'id' => $val['sid'],'status'=>11], [
+                                            'class' => 'btn btn-success',
+                                            'data' => [
+                                                'confirm' => '确定通过审核吗？',
+                                                'method' => 'post',
+                                            ],
+                                        ]) ?>
+                                        <?= \yii\helpers\Html::a('失败', ['signup-check', 'id' => $val['sid'],'status'=>12], [
+                                            'class' => 'btn btn-danger',
+                                            'data' => [
+                                                'confirm' => '确定报名失败吗，失败后将会退还节操币！',
+                                                'method' => 'post',
+                                            ],
+                                        ]) ?>
                                     </div>
+                                        <?php else:?>
+                                            <?=$status['status']?>，审核人：<?=\backend\models\User::findOne($val['created_by'])->username?>
+                                        <?php endif;?>
+
                                 </div>
                                 <!-- /.description-block -->
                             </div>
@@ -97,7 +118,7 @@ $this->registerCss("
             </div>
         <?php endforeach;?>
     </div>
-    <?= LinkPager::widget(['pagination' => $pages]); ?>
+    <?= LinkPager::widget(['pagination' => $dataProvider['pages']]); ?>
 </div>
 <script>
     function pushapp(content){

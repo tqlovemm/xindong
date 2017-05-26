@@ -14,7 +14,7 @@ use Yii;
  *
  * @property AppSpecialDating $z
  */
-class AppSpecialDatingImages extends \yii\db\ActiveRecord
+class AppSpecialDatingImg extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc

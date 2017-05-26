@@ -2,10 +2,11 @@
 
 namespace backend\modules\dating\controllers;
 
+use Yii;
 use api\modules\v9\models\AppSpecialDatingSignUp;
 use backend\models\User;
 use backend\modules\dating\models\AppSpecialDating;
-use yii\data\Pagination;
+use backend\modules\dating\models\AppSpecialDatingSignupSearch;
 use yii\myhelper\AccessToken;
 use yii\web\NotFoundHttpException;
 
@@ -15,13 +16,10 @@ class AppSpecialDatingSignupController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        $data = AppSpecialDatingSignUp::find()->with('zinfo')->with('cover')->orderBy('created_at desc')->asArray();
-        $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '20']);
-        $model = $data->offset($pages->offset)->limit($pages->limit)->all();
-        return $this->render('index',[
-            'model' => $model,
-            'pages' => $pages,
-        ]);
+
+        $searchModel = new AppSpecialDatingSignupSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('index',['dataProvider'=>$dataProvider,'searchModel'=>$searchModel]);
     }
 
     public function actionSignupCheck($id,$status){
@@ -30,6 +28,7 @@ class AppSpecialDatingSignupController extends \yii\web\Controller
         $zinfo = AppSpecialDating::findOne(['zid'=>$model->zid]);
         $username = User::getUsername($model->user_id);
         $model->status = $status;
+        $model->created_by = Yii::$app->user->id;
         if($model->update()){
             if($status==11){
                 $this->sendApp($pre_url.$zinfo->weima,$username,"专属女生报名成功，专属女生编号为{$zinfo->zid}，请保存对方微信二维码并添加为好友，祝您交友愉快");
