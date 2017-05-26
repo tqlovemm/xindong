@@ -9,6 +9,7 @@
 namespace api\modules\v10\controllers;
 
 use api\modules\v2\models\Profile;
+use backend\modules\app\models\UserImage;
 use Yii;
 use yii\db\Query;
 use yii\myhelper\Decode;
@@ -82,7 +83,6 @@ class User3Controller extends Controller
             $glamorous = array_sum($credit);
         }
 
-        $user_id = $model['id'];
         $data = Yii::$app->db->createCommand('select * from {{%user_data}} WHERE user_id=' . $model['id'])->queryOne();
         $data['thread_count']= (new Query())->select('id')->from('{{%app_words}}')->where(['user_id'=>$user['id']])->count();
         //获取帖子未读消息数
@@ -95,13 +95,15 @@ class User3Controller extends Controller
             $model2->updated_at = time();
             $model2->save();
         }
-        unset($model['password_hash'], $profile['description'], $model['auth_key'], $model['password_reset_token'], $model['avatarid'], $model['avatartemp'], $model['id'], $model['role'], $model['identity']);
+        unset($model['password_hash'], $profile['description'], $model['auth_key'], $model['password_reset_token'], $model['avatarid'], $model['avatartemp'], $model['role'], $model['identity']);
         $profile['mark'] = json_decode($profile['mark']);
         $profile['make_friend'] = json_decode($profile['make_friend']);
         $profile['hobby'] = json_decode($profile['hobby']);
         $profile['glamorous'] = $glamorous;
 
-        $photos = Yii::$app->db->createCommand('select img_url from {{%user_image}} WHERE user_id=' . $user_id)->queryAll();
+        $imgs['photos'] = array_values(UserImage::find()->select('img_url')->where(['user_id'=>$model['id']])->asArray()->column());
+
+    /*    $photos = Yii::$app->db->createCommand('select img_url from {{%user_image}} WHERE user_id=' . $model['id'])->queryAll();
         $imgs = array();
         if (!$photos) {
             $imgs['photos'] = null;
@@ -110,7 +112,7 @@ class User3Controller extends Controller
 
                 $imgs['photos'][] = $list['img_url'];
             }
-        }
+        }*/
         return $model + $data + $profile + $follow + $imgs;
 
     }
