@@ -121,11 +121,11 @@ class AccessToken
      */
     public static function getUserInfo($openid){
 
-        $token = self::getAccessToken();
-        $url3 = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$token&openid=$openid";
-        $userInfo = json_decode(file_get_contents($url3),true);
+        $token = self::getAccessTokenKs();
+        $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$token&openid=$openid";
+        $userInfo = json_decode(file_get_contents($url),true);
         if(isset($userInfo['errcode'])&&$userInfo['errcode']==40001){
-            Yii::$app->cache->delete('access_token_js');
+            Yii::$app->cache->delete('access_token_ks');
             self::getUserInfo($openid);
         }
         return $userInfo;
