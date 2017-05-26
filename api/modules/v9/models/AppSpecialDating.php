@@ -2,7 +2,6 @@
 
 namespace api\modules\v9\models;
 
-use backend\modules\dating\models\AppSpecialDatingImages;
 use Yii;
 
 /**
@@ -109,7 +108,7 @@ class AppSpecialDating extends \yii\db\ActiveRecord
             },
             'avatar'=>function(){
                 if(Yii::$app->controller->action->id=="view"){
-                    $images = \api\modules\v9\models\AppSpecialDatingImages::findAll(['zid'=>$this->zid]);
+                    $images = AppSpecialDatingImages::findAll(['zid'=>$this->zid]);
                     return $images;
                 }
                 return $this->getCoverPhoto();
