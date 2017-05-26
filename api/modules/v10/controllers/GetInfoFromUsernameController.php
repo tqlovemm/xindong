@@ -88,13 +88,12 @@ class GetInfoFromUsernameController extends Controller
         $profile['hobby']=json_decode($profile['hobby']);
         $profile['glamorous'] = 600;
 
-        $img_url = array_values(UserImage::find()->select('img_url')->where(['user_id'=>$model['id']])->asArray()->column());
+        $ims['photos'] = array_values(UserImage::find()->select('img_url')->where(['user_id'=>$model['id']])->asArray()->column());
      /*   $img_url = (new Query())->select('img_url')->from('pre_user_image')->where(['user_id'=>$model['id']])->all();
         $row = array();
         foreach($img_url as $list){
             $row[] = $list['img_url'];
         }*/
-        $ims['photos'] = $img_url;
 
         return $model+$data+$profile+$follow+$ims;
 
