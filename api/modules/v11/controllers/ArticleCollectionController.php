@@ -64,10 +64,10 @@ class ArticleCollectionController extends ActiveController {
         }
     }
     public function actionDelete($id){
-//        $decode = new Decode();
-//        if(!$decode->decodeDigit($id)){
-//            Response::show(210,'参数不正确','参数不正确');
-//        }
+        $decode = new Decode();
+        if(!$decode->decodeDigit($id)){
+            Response::show(210,'参数不正确','参数不正确');
+        }
         $model = new $this->modelClass();
         $delall = isset($_GET['delall'])?$_GET['delall']:'';
         $cid = isset($_GET['cid'])?$_GET['cid']:'';
