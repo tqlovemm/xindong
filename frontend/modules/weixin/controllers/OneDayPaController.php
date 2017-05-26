@@ -8,7 +8,7 @@ class OneDayPaController extends Controller
 {
     public function actionIndex()
     {
-        $callback = "http://13loveme.com/weixin/one-day-pa/wei-user";
+        $callback = "http://www.13loveme.com/weixin/one-day-pa/wei-user";
         $this->getCode($callback);
     }
 
