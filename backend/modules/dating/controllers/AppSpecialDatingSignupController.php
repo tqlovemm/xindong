@@ -2,6 +2,7 @@
 
 namespace backend\modules\dating\controllers;
 
+use frontend\models\UserData;
 use Yii;
 use api\modules\v9\models\AppSpecialDatingSignUp;
 use backend\models\User;
@@ -32,6 +33,13 @@ class AppSpecialDatingSignupController extends \yii\web\Controller
         if($model->update()){
             if($status==11){
                 $this->sendApp($pre_url.$zinfo->weima,$username,"专属女生报名成功，专属女生编号为{$zinfo->zid}，请保存对方微信二维码并添加为好友，祝您交友愉快");
+            }else{
+                $userData = UserData::findOne($model->user_id);
+                $userData->jiecao_coin+=$zinfo->coin;
+                if($userData->update()){
+                    $this->sendApp($pre_url.$zinfo->getCoverPhoto(),$username,"专属女生报名失败，专属女生编号为{$zinfo->zid}，已退还您心动币{$zinfo->coin}");
+                }
+
             }
 
             return $this->redirect(\Yii::$app->request->referrer);
