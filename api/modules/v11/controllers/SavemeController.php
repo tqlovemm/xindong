@@ -112,7 +112,7 @@ class SavemeController extends ActiveController {
             $sql = "INSERT INTO `pre_saveme_img` (`saveme_id`,`path`,`status`)  VALUES ".implode(",", $photoname);
 	    	Yii::$app->db->createCommand($sql)->execute();
     	}
-        Response::show('200','操作成功','发布成功');
+        Response::show('200','操作成功','发布成功,等待审核');
     }
     //女生通知列表
     public function actionView($id) {
