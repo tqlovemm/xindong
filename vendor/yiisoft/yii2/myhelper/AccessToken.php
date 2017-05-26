@@ -110,7 +110,7 @@ class AccessToken
         $url3 = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$token&openid=$openid";
         $userInfo = json_decode(file_get_contents($url3),true);
         if(isset($userInfo['errcode'])&&$userInfo['errcode']==40001){
-            Yii::$app->cache->delete('access_token');
+            Yii::$app->cache->delete('access_token_js');
             self::getUserInfo($openid);
         }
         return $userInfo;
