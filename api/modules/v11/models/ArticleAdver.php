@@ -40,7 +40,7 @@ class ArticleAdver extends ActiveRecord
 
     public function fields(){
         return [
-            'adver_id'=>'id','thumb','created_id','url',
+            'adver_id'=>'id','thumb','url',
         ];
     }
 
