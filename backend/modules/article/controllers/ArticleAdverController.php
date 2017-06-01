@@ -3,19 +3,17 @@
 namespace backend\modules\article\controllers;
 
 use Yii;
-use backend\modules\article\models\Article;
-use backend\modules\article\models\ArticleSearch;
+use backend\modules\article\models\ArticleAdver;
+use backend\modules\article\models\ArticleAdverSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\Qiniu\QiniuUploader;
-use yii\db\Query;
-
 
 /**
- * ArticleController implements the CRUD actions for article model.
+ * ArticleAdverController implements the CRUD actions for ArticleAdver model.
  */
-class ArticleController extends Controller
+class ArticleAdverController extends Controller
 {
     public function behaviors()
     {
@@ -28,23 +26,14 @@ class ArticleController extends Controller
             ],
         ];
     }
-    public function actions()
-    {
-        $url = Yii::$app->request->hostInfo;
-        return [
-            'ueditor' => [
-                'class' => 'common\widgets\ueditor\UeditorAction',
-                'config'=>[
-                    //上传图片配置
-                    'imageUrlPrefix' => $url, /* 图片访问路径前缀 */
-                    'imagePathFormat' => "/uploads/{yyyy}{mm}{dd}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
-                ]
-            ]
-        ];
-    }
+
+    /**
+     * Lists all ArticleAdver models.
+     * @return mixed
+     */
     public function actionIndex()
     {
-        $searchModel = new ArticleSearch();
+        $searchModel = new ArticleAdverSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -53,6 +42,11 @@ class ArticleController extends Controller
         ]);
     }
 
+    /**
+     * Displays a single ArticleAdver model.
+     * @param integer $id
+     * @return mixed
+     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -60,17 +54,22 @@ class ArticleController extends Controller
         ]);
     }
 
+    /**
+     * Creates a new ArticleAdver model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
     public function actionCreate()
     {
-        $model = new Article();
+        $model = new ArticleAdver();
 
         if ($model->load(Yii::$app->request->post())) {
-            if($_FILES['wimg']['name']){
-                $qn = new QiniuUploader('wimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+            if($_FILES['thumb']['name']){
+                $qn = new QiniuUploader('thumb',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
                 $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.uniqid();
                 $qiniu = $qn->upload_water('appimages',"uploads/qinhua/$mkdir");
                 $wimg =  Yii::$app->params['appimages'].$qiniu['key'];
-                $model->wimg = $wimg;
+                $model->thumb = $wimg;
             }
             if($model->save()){
                 return $this->redirect(['index']);
@@ -78,29 +77,29 @@ class ArticleController extends Controller
                 return "添加失败";
             }
         } else {
-            $typeres = (new Query())->select('tid,typename')->from('{{%article_type}}')->all();
-            for($i=0;$i<count($typeres);$i++){
-                $typearr[$typeres[$i]['tid']] = $typeres[$i]['typename'];
-            }
             return $this->render('create', [
                 'model' => $model,
-                'type' => $typearr,
             ]);
         }
     }
 
-
+    /**
+     * Updates an existing ArticleAdver model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            if($_FILES['wimg']['name']){
-                $qn = new QiniuUploader('wimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+            if($_FILES['thumb']['name']){
+                $qn = new QiniuUploader('thumb',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
                 $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.uniqid();
                 $qiniu = $qn->upload_water('appimages',"uploads/qinhua/$mkdir");
                 $wimg =  Yii::$app->params['appimages'].$qiniu['key'];
-                $model->wimg = $wimg;
+                $model->thumb = $wimg;
             }
             if($model->save()){
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -108,18 +107,18 @@ class ArticleController extends Controller
                 return "添加失败";
             }
         } else {
-            $typeres = (new Query())->select('tid,typename')->from('{{%article_type}}')->all();
-            for($i=0;$i<count($typeres);$i++){
-                $typearr[$typeres[$i]['tid']] = $typeres[$i]['typename'];
-            }
             return $this->render('update', [
                 'model' => $model,
-                'type' => $typearr,
             ]);
         }
     }
 
-
+    /**
+     * Deletes an existing ArticleAdver model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -127,24 +126,16 @@ class ArticleController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionShow($id){
-        $this->layout = false;
-        $model = article::findOne($id);
-        $user =  (new Query())->select('nickname,username')->from('{{%user}}')->where(['id'=>$model->created_id])->one();
-        if($user['nickname']){
-            $name = $user['nickname'];
-        }else{
-            $name = $user['username'];
-        }
-        return $this->render('show', [
-            'model' => $model,
-            'username' => $name,
-        ]);
-    }
-
+    /**
+     * Finds the ArticleAdver model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return ArticleAdver the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
     protected function findModel($id)
     {
-        if (($model = article::findOne($id)) !== null) {
+        if (($model = ArticleAdver::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

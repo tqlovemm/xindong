@@ -40,7 +40,7 @@ class SavemeController extends ActiveController {
         $timetype = isset($_GET['timetype'])?$_GET['timetype']:'';
     	$model = $this->modelClass;
         $time = time();
-        $where = "status > 0";
+        $where = "status > 0 AND status < 3";
         if($address){
             $where .= " and address like '%".$address."%'";
         }
@@ -98,7 +98,7 @@ class SavemeController extends ActiveController {
     	if($img){
     		$img = array_unique(array_filter(explode(";",Yii::$app->request->getBodyParam('img'))));
         }
-    	$model->status = 1;
+    	$model->status = 3;
         $model->price = 98;
 		if(!$model->save()){
 			// return $model->getFirstErrors();
@@ -112,7 +112,7 @@ class SavemeController extends ActiveController {
             $sql = "INSERT INTO `pre_saveme_img` (`saveme_id`,`path`,`status`)  VALUES ".implode(",", $photoname);
 	    	Yii::$app->db->createCommand($sql)->execute();
     	}
-        Response::show('200','操作成功','发布成功');
+        Response::show('200','操作成功','发布成功,等待审核');
     }
     //女生通知列表
     public function actionView($id) {

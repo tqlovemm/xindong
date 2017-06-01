@@ -40,6 +40,11 @@ return [
             'class' => 'frontend\modules\weixin\Weixin',
 
         ],
+        'article' => [
+
+            'class' => 'frontend\modules\article\Article',
+
+        ],
         'forum' => [
             'class' => 'frontend\modules\forum\Forum',
             'aliases' => [

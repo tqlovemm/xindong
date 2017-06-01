@@ -5,12 +5,12 @@ namespace backend\modules\article\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\modules\article\models\Article;
+use backend\modules\article\models\ArticleAdver;
 
 /**
- * ArticleSearch represents the model behind the search form about `backend\modules\article\models\article`.
+ * ArticleAdverSearch represents the model behind the search form about `backend\modules\article\models\ArticleAdver`.
  */
-class ArticleSearch extends Article
+class ArticleAdverSearch extends ArticleAdver
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class ArticleSearch extends Article
     public function rules()
     {
         return [
-            [['id', 'created_id', 'wtype', 'wclick', 'wdianzan', 'hot', 'created_at', 'updated_at', 'status'], 'integer'],
-            [['title', 'wimg', 'content','miaoshu'], 'safe'],
+            [['id', 'created_id', 'created_at', 'updated_at', 'status'], 'integer'],
+            [['thumb', 'url'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class ArticleSearch extends Article
      */
     public function search($params)
     {
-        $query = article::find();
+        $query = ArticleAdver::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -58,20 +58,13 @@ class ArticleSearch extends Article
         $query->andFilterWhere([
             'id' => $this->id,
             'created_id' => $this->created_id,
-            'wtype' => $this->wtype,
-            'wclick' => $this->wclick,
-            'wdianzan' => $this->wdianzan,
-            'hot' => $this->hot,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'wimg', $this->wimg])
-            ->andFilterWhere(['like', 'miaoshu', $this->miaoshu])
-            ->andFilterWhere(['like', 'content', $this->content])
-            ->orderBy('created_at desc');
+        $query->andFilterWhere(['like', 'thumb', $this->thumb])
+            ->andFilterWhere(['like', 'url', $this->url]);
 
         return $dataProvider;
     }

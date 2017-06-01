@@ -66,7 +66,8 @@ class SavemeSearch extends Saveme
         ]);
 
         $query->andFilterWhere(['like', 'address', $this->address])
-            ->andFilterWhere(['like', 'content', $this->content]);
+            ->andFilterWhere(['like', 'content', $this->content])
+            ->orderBy('created_at desc');
 
         return $dataProvider;
     }
