@@ -58,7 +58,7 @@ $this->registerCss("
             <img class="img-responsive" src="<?=Yii::getAlias('@web')?>/images/vote/669179008377191553.png">
         </a>
     </div>
-<marquee style="color: red;" direction=left behavior=scroll loop=30 scrollamount=5 scrolldelay=5 align=top bgcolor=#ffffff height=30 width=100% hspace=20 vspace=10 onmouseover=this.stop() onmouseout=this.start()>投票已经结束，管理员正在统计有效票数，请耐心等待统计结果。</marquee>
+<marquee style="color: red;" direction=left behavior=scroll loop=30 scrollamount=5 scrolldelay=5 align=top bgcolor=#ffffff height=30 width=100% hspace=0 vspace=10 onmouseover=this.stop() onmouseout=this.start()>投票已经结束，管理员正在统计有效票数，请耐心等待统计结果。</marquee>
     <?=$content?>
     <div class="wrapper footer-list">
         <a class="col-xs-4" href="http://mp.weixin.qq.com/s/X4Lyw-41_WZ8_sGmAwqX_Q">活动细则</a>
