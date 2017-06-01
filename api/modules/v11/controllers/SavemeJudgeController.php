@@ -42,7 +42,7 @@ class SavemeJudgeController extends ActiveController {
     public function actionView($id) {
         $saveme = (new Query())->select('created_id,end_time,status')->from('{{%saveme}}')->where(['created_id'=>$id])->orderBy('created_at desc')->one();
         $time = time();
-        if ($saveme['status'] != 2 && $saveme['end_time'] > $time) {
+        if (!in_array($saveme['status'],[0,2]) && $saveme['end_time'] > $time) {
             Response::show('201','2',"2");
         }
         Response::show('200','1',"1");
