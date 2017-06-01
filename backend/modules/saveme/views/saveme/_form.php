@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'updated_at')->textInput() ?>
 
     <?= $form->field($model, 'end_time')->textInput() ?>
-    <?= $form->field($model, 'status')->textInput()->dropDownList([1=>'正常',3=>'未审核']) ?>
+    <?= $form->field($model, 'status')->textInput()->dropDownList([1=>'正常',3=>'未审核',4=>'审核不通过']) ?>
 
 
     <div class="form-group">

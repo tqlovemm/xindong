@@ -56,6 +56,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             return "<font color='red'>已删除</font>";
                         }elseif($res == 3){
                             return "<font color='red'>未审核</font>";
+                        }elseif($res == 4){
+                            return "<font color='red'>审核不通过</font>";
                         }
                     },
                 'format' => 'raw',
