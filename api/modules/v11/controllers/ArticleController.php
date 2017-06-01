@@ -6,6 +6,8 @@ use yii;
 use yii\rest\ActiveController;
 use yii\filters\RateLimiter;
 use api\components\CsvDataProvider;
+use yii\db\Query;
+use yii\helpers\Response;
 
 class ArticleController extends ActiveController {
     public $modelClass = 'api\modules\v11\models\Article';
@@ -33,6 +35,10 @@ class ArticleController extends ActiveController {
         $model = $this->modelClass;
         $tid = isset($_GET['tid'])?$_GET['tid']:'';
         $hot = isset($_GET['hot'])?$_GET['hot']:'';
+        $userid = isset($_GET['uid'])?$_GET['uid']:'';
+        if(!$userid){
+            Response::show('201','获取失败','参数不全');
+        }
         $where = ' status = 1';
         if(!empty($tid)){
             $where .= " and wtype = '".$tid."'";
@@ -41,10 +47,11 @@ class ArticleController extends ActiveController {
             $where .= " and hot = '".$hot."'";
         }
         $query = $model::find()->where($where)->orderBy('updated_at desc');
-        return new CsvDataProvider(
+        $res = new CsvDataProvider(
             [
                 'query' =>  $query,
             ]
         );
+        return $res;
     }
 }
