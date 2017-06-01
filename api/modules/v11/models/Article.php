@@ -41,7 +41,7 @@ class Article extends ActiveRecord
         $this->_iscollection = Yii::$app->db->createCommand("select status from {{%article_collection}} where aid=$this->id and userid=$this->_uid")->queryOne();
         $this->_islike = Yii::$app->db->createCommand("select status from {{%article_like}} where aid=$this->id and userid=$this->_uid")->queryOne();
         return [
-            'article_id'=>'id','title', 'wimg', 'miaoshu','wclick','wdianzan','hot','wtype','level'=>function(){return $this->_user['groupid'];},'nickname'=>function(){return $this->_user['nickname'];},'avatar'=>function(){return $this->_user['avatar'];},'sex'=>function(){return $this->_user['sex'];},'created_at','url'=>function(){return "http://120.27.226.102:82/article/article/show?id=".$this->id;},'comment_count'=>function(){return count($this->_comment);},'iscollection'=>function(){return $this->_iscollection?1:0;},'islike'=>function(){return $this->_islike?1:0;},
+            'article_id'=>'id','title', 'wimg', 'miaoshu','wclick','wdianzan','hot','wtype','level'=>function(){return $this->_user['groupid'];},'nickname'=>function(){return $this->_user['nickname'];},'avatar'=>function(){return $this->_user['avatar'];},'sex'=>function(){return $this->_user['sex'];},'created_at','url'=>function(){return "http://120.27.226.102:82/article/article/show?id=".$this->id."&uid=".$this->_uid;},'comment_count'=>function(){return count($this->_comment);},'iscollection'=>function(){return $this->_iscollection?1:0;},'islike'=>function(){return $this->_islike?1:0;},
         ];
     }
 
