@@ -87,8 +87,8 @@ class SavemeController extends ActiveController {
         $img = Yii::$app->request->getBodyParam('img');
     	$saveme = (new Query())->select('created_id,end_time,status')->from('{{%saveme}}')->where(['created_id'=>$cid])->orderBy('created_at desc')->one();
     	$time = time();
-    	if ($saveme['status'] != 2 && $saveme['end_time'] > $time && $saveme['status'] != 3) {
-    		Response::show('201','操作失败',"上一个救我还没结束");
+    	if ($saveme['status'] != 2 && $saveme['end_time'] > $time &&$saveme['status'] != 3) {
+            Response::show('201','操作失败',"上一个救我还没结束");
     	}
         $userres = (new Query())->select('sex')->from('{{%user}}')->where(['id'=>$cid])->one();
         if ($userres['sex'] != 1) {
