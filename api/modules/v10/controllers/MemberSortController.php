@@ -74,13 +74,13 @@ class MemberSortController extends Controller
 
         if($status == 1){
 
-            $result = MemberSort::find()->where(['flag'=>[1]])->orderby(' groupid DESC ')->all();
+            $result = MemberSort::find()->where(['flag'=>[1]])->andWhere('groupid!=2')->orderby(' groupid DESC ')->all();
 
             for($i = 0 ; $i < count($result); $i ++){
                 if($i == 0){
                     $result[0]['price_1'] = 4998;
                     $result[0]['giveaway'] = 1880;
-                }else if($i == 1){
+                }else{
                     $result[1]['price_1'] = 1998;
                     $result[1]['giveaway'] = 990;
                 }

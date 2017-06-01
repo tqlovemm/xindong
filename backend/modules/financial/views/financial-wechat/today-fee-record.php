@@ -130,7 +130,7 @@ $this->registerCss("
                             <td><?=$list['payment_to']==1?'专用号':'客服号'?></td>
                             <td><?=\backend\models\User::findOne($list['created_by'])->nickname?></td>
                             <td><?=$list['wechat']['wechat']?></td>
-                            <td><?=date('H:i',$list['created_at'])?></td>
+                            <td><?=date('Y/m/d H:i',$list['created_at'])?></td>
                             <td><?=\yii\helpers\Html::a('通过',['pass-record','id'=>$list['id']],[
                                 'class'=>'btn-sm btn-success',
                                     'data'=>[

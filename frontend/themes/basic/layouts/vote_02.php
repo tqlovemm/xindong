@@ -49,7 +49,7 @@ $this->registerCss("
     </div>
     <div class="wapper adv_1">
         <a href="vote-woman">
-            <img class="img-responsive" src="<?=Yii::getAlias('@web')?>/images/vote/48627877580200137.jpg">
+            <img class="img-responsive" src="http://oqfwt261i.bkt.clouddn.com/wex_20170524124623.jpg">
         </a>
     </div>
     <div class="wapper text-center">
@@ -58,9 +58,10 @@ $this->registerCss("
             <img class="img-responsive" src="<?=Yii::getAlias('@web')?>/images/vote/669179008377191553.png">
         </a>
     </div>
+<marquee style="color: red;" direction=left behavior=scroll loop=30 scrollamount=5 scrolldelay=5 align=top bgcolor=#ffffff height=30 width=100% hspace=0 vspace=10 onmouseover=this.stop() onmouseout=this.start()>投票已经结束，管理员正在统计有效票数，请耐心等待统计结果。</marquee>
     <?=$content?>
     <div class="wrapper footer-list">
-        <a class="col-xs-4" href="http://mp.weixin.qq.com/s?__biz=MzI1MTEyMDI0Mw==&mid=2667464138&idx=1&sn=f74b546062babcb3fdd76738ec5c2304&chksm=f2fd3ad6c58ab3c028f7258e6342b0ed06e33e9a6a1e0aefbd4ba1348266d81938e75db2ccc5&scene=1&srcid=09109c1SKV9dl3B8K54Y2t7f#wechat_redirect">活动细则</a>
+        <a class="col-xs-4" href="http://mp.weixin.qq.com/s/X4Lyw-41_WZ8_sGmAwqX_Q">活动细则</a>
         <a class="col-xs-4" href="vote-sign" style="box-shadow: 0 0 6px rgb(231,0,108);border-radius: 30px;font-size: 16px;font-weight: bold;background-color: #fff;color:rgb(231,0,108);">我要晒照</a>
         <?php if(empty($id)):?>
             <a class="col-xs-4" href="vote-sign">个人中心</a>

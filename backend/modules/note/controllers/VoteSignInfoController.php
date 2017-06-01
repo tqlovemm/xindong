@@ -3,6 +3,7 @@
 namespace backend\modules\note\controllers;
 
 use backend\modules\note\models\VoteSignImg;
+use common\Qiniu\QiniuUploader;
 use Yii;
 use backend\modules\note\models\VoteSignInfo;
 use backend\modules\note\models\VoteSignInfoSearch;
@@ -15,6 +16,7 @@ use yii\filters\VerbFilter;
  */
 class VoteSignInfoController extends Controller
 {
+    public $enableCsrfValidation = false;
     public function behaviors()
     {
         return [
@@ -45,12 +47,11 @@ class VoteSignInfoController extends Controller
     /**
      * Displays a single VoteSignInfo model.
      * @param integer $id
-     * @param string $openid
      * @return mixed
      */
-    public function actionView($id, $openid)
+    public function actionView($id)
     {
-        $model = $this->findModel($id, $openid);
+        $model = $this->findModel($id);
         $img = $model->voteSignImgs;
         return $this->render('view', [
             'model' => $model,'img'=>$img,
@@ -67,7 +68,7 @@ class VoteSignInfoController extends Controller
         $model = new VoteSignInfo();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id, 'openid' => $model->openid]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -75,19 +76,29 @@ class VoteSignInfoController extends Controller
         }
     }
 
+    public function actionUpload($id)
+    {
+        $model = $this->findModel($id);
+        if (Yii::$app->request->isPost) {
+            $model->upload();
+        }
+        return $this->render('upload', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
     /**
      * Updates an existing VoteSignInfo model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
-     * @param string $openid
      * @return mixed
      */
-    public function actionUpdate($id, $openid)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($id, $openid);
+        $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id, 'openid' => $model->openid]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -99,12 +110,11 @@ class VoteSignInfoController extends Controller
      * Deletes an existing VoteSignInfo model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
-     * @param string $openid
      * @return mixed
      */
-    public function actionDelete($id, $openid)
+    public function actionDelete($id)
     {
-        $this->findModel($id, $openid)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -118,6 +128,8 @@ class VoteSignInfoController extends Controller
         $model = VoteSignImg::findOne($id);
         $url = Yii::$app->request->referrer;
         if($model->delete()){
+            $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+            $qn->delete('vote',$model->img);
             return $this->redirect($url);
         }
 
@@ -125,14 +137,13 @@ class VoteSignInfoController extends Controller
 
     /**
      * @param $id
-     * @param $openid
      * @return \yii\web\Response
      */
 
-    public function actionPass($id, $openid){
+    public function actionPass($id){
 
         $url = Yii::$app->request->referrer;
-        $model = $this->findModel($id, $openid);
+        $model = $this->findModel($id);
         $model->status = 2;
         $model->extra = Null;
         if($model->update()){
@@ -142,14 +153,13 @@ class VoteSignInfoController extends Controller
 
     /**
      * @param $id
-     * @param $openid
      * @return \yii\web\Response
      */
 
-    public function actionNoPass($id, $openid, $extra){
+    public function actionNoPass($id, $extra){
 
         $url = Yii::$app->request->referrer;
-        $model = $this->findModel($id, $openid);
+        $model = $this->findModel($id);
         $model->status = 3;
         $model->extra = $extra;
         if($model->update()){
@@ -162,13 +172,12 @@ class VoteSignInfoController extends Controller
      * Finds the VoteSignInfo model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @param string $openid
      * @return VoteSignInfo the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id, $openid)
+    protected function findModel($id)
     {
-        if (($model = VoteSignInfo::findOne(['id' => $id, 'openid' => $openid])) !== null) {
+        if (($model = VoteSignInfo::findOne(['id' => $id])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

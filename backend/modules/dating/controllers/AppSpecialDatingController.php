@@ -2,12 +2,12 @@
 
 namespace backend\modules\dating\controllers;
 
+use api\modules\v9\models\AppSpecialDatingImages;
+use Yii;
+use backend\modules\dating\models\AppSpecialDatingSearch;
 use backend\modules\dating\models\AppSpecialDating;
-use backend\modules\dating\models\AppSpecialDatingImages;
 use backend\modules\sm\models\Province;
 use common\Qiniu\QiniuUploader;
-use Yii;
-use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 
@@ -17,13 +17,9 @@ class AppSpecialDatingController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        $data = AppSpecialDating::find()->andWhere(['status' => 10]);
-        $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '20']);
-        $model = $data->offset($pages->offset)->limit($pages->limit)->all();
-        return $this->render('index',[
-            'model' => $model,
-            'pages' => $pages,
-        ]);
+        $searchModel = new AppSpecialDatingSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('index',['dataProvider'=>$dataProvider,'searchModel'=>$searchModel]);
     }
 
     public function actionCreate(){

@@ -1,7 +1,7 @@
 <?php
 namespace api\modules\v11\models;
 
-use app\components\db\ActiveRecord;
+use yii\db\ActiveRecord;
 /**
  * This is the model class for table "pre_app_form_thread_tag".
  *
@@ -54,5 +54,23 @@ class FormThreadTag extends ActiveRecord
             'created_at' => 'Created At',
             'sort' => 'Sort',
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert)){
+
+            if($this->isNewRecord){
+                $this->created_at = time();
+                $this->updated_at = time();
+            }else{
+                $this->updated_at = time();
+            }
+            return true;
+        }
+        return false;
     }
 }

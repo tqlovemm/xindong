@@ -11,9 +11,11 @@ namespace api\modules\v10\controllers;
 use api\modules\v11\models\FormThread;
 use api\modules\v2\models\Profile;
 use backend\modules\app\models\UserData;
+use backend\modules\app\models\UserImage;
 use frontend\models\UserProfile;
 use Yii;
 use yii\db\Query;
+use yii\helpers\ArrayHelper;
 use yii\myhelper\Decode;
 use yii\myhelper\Response;
 use yii\rest\Controller;
@@ -80,18 +82,18 @@ class GetInfoFromUsernameController extends Controller
         }
         $profile = $profile->getAttributes();
         $profile['is_marry'] = (string)$profile['is_marry'];
-        unset($model['password_hash'],$model['cellphone'],$model['invitation'],$model['openId'],$model['weibo_num'],$model['none'],$profile['description'],$model['auth_key'],$model['password_reset_token'],$model['id'],$model['role'],$model['identity']);
+        unset($model['password_hash'],$model['cellphone'],$model['invitation'],$model['openId'],$model['weibo_num'],$model['none'],$profile['description'],$model['auth_key'],$model['password_reset_token'],$model['role'],$model['identity']);
         $profile['mark']=json_decode($profile['mark']);
         $profile['make_friend']=json_decode($profile['make_friend']);
         $profile['hobby']=json_decode($profile['hobby']);
         $profile['glamorous'] = 600;
 
-        $img_url = (new Query())->select('img_url')->from('pre_user_image')->where(['user_id'=>$id])->all();
+        $ims['photos'] = array_values(UserImage::find()->select('img_url')->where(['user_id'=>$model['id']])->asArray()->column());
+     /*   $img_url = (new Query())->select('img_url')->from('pre_user_image')->where(['user_id'=>$model['id']])->all();
         $row = array();
         foreach($img_url as $list){
             $row[] = $list['img_url'];
-        }
-        $ims['photos'] = $row;
+        }*/
 
         return $model+$data+$profile+$follow+$ims;
 

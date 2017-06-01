@@ -47,7 +47,7 @@ class UserController extends BaseController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'create', 'delete','disconnect','address-info', 'upload', 'update','update-address','user-info','user-dating','user-dating-total','user-file-total','delete-payment','show-payment','dating-success-dropped'],
+                        'actions' => ['index', 'view','delete-si', 'create', 'delete','disconnect','address-info', 'upload', 'update','update-address','user-info','user-dating','user-dating-total','user-file-total','delete-payment','show-payment','dating-success-dropped'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -216,11 +216,13 @@ class UserController extends BaseController
      * @param integer $id
      * @return mixed
      */
+
     public function actionDelete($id)
     {
 
         $model = $this->findModel($id);
         if($model->delete()){
+            $this->setMes()->deleteSingleUser($model->username);
             $data_arr = array('description'=>"删除网站会员{$id}",'data'=>json_encode($model->attributes),'old_data'=>'','new_data'=>'','type'=>2);
             AddRecord::record($data_arr);
         }

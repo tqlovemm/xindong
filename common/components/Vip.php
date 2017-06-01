@@ -57,6 +57,26 @@ class Vip
         return $data;
     }
 
+    public static function sign_status($statusNumber){
+
+        if($statusNumber==10){
+            $status = "等待审核";
+            $color = "bg-aqua-active";
+        }elseif($statusNumber==11){
+            $status = "审核通过";
+            $color = "bg-green";
+        }elseif($statusNumber==12){
+            $status = "审核失败";
+            $color = "bg-red";
+        }else{
+            $status = "待定";
+            $color = "bg-red";
+        }
+        $data = ['color'=>$color,'status'=>$status];
+        return $data;
+    }
+
+
     public static function time_d($key){
 
         $arr = [0=>'午夜00点',1=>'凌晨1点',2=>'凌晨2点',3=>'凌晨3点',4=>'凌晨4点',5=>'凌晨5点',6=>'上午6点',
@@ -69,6 +89,6 @@ class Vip
 
     public static function sort(){
         //帖子热度 = (总赞数*0.2+总评论数*0.3+管理员参数*0.4+总阅读数*0.1)*1000/(发布时间距离当前时间的小时差+2)^1.2
-        \Yii::$app->db->createCommand("update pre_app_form_thread set total_score=(thumbs_count*0.3+comments_count*0.5+admin_count*0.1+read_count*0.1)/power(((unix_timestamp(now())-created_at)/604800)+2,1.2)")->execute();
+        \Yii::$app->db->createCommand("update pre_app_form_thread set total_score=(thumbs_count*0.3+comments_count*0.5+admin_count*0.1+read_count*0.1)/power(((unix_timestamp(now())-created_at)/604800)+2,1.2) where `type`=0")->execute();
     }
 }

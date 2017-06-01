@@ -1,11 +1,6 @@
 <?php
 use yii\widgets\LinkPager;
-$session = Yii::$app->session;
-if(!$session->isActive){
-    $session->open();
-}
-$this->title = "男神评选";
-$dinyue_userinfo= new \frontend\models\DinyueWeichatUserinfo();
+$this->title = "晒花样童年照";
 $this->registerCss("
     .nav-tabs-top{width:100%;z-index:9;}
     .contact{display:none;}
@@ -60,7 +55,7 @@ $this->registerJs("
         </li>
     </ul>
 </div>
-    <div id="myTabContent" class="tab-content" style="padding-bottom: 50px;min-height: 300px;">
+    <div id="myTabContent" class="tab-content" style="padding-bottom: 50px;">
         <div class="tab-pane fade in active" id="man">
             <ul class="wall">
                 <?php
@@ -71,13 +66,13 @@ $this->registerJs("
                         <a href="sign-detail?id=<?=$item['id']?>">
                             <?php foreach ($item['voteSignImgs'] as $k=>$list):
                                 if($k==1) break; ?>
-                                <img src="<?=$pre_url.$list['img']?>"/>
+                                <img src="<?=$pre_url.$list['img']?>?imageView2/1/w/160/h/160"/>
                             <?php endforeach;?>
                         </a>
 
                         <div class="note-count note-padding"> <?=$item['vote_count']?></div>
-                        <?php if(empty($dinyue_userinfo::findOne(['unionid'=>$session->get('vote_01_openid')]))):?>
-                            <a class="weicaht-note" style="display: block;text-align: center;background-color:#23212E" data-lightbox="d" data-title="请关注微信订阅号进行投票" href="/images/weixin/149129585220305657.jpg">
+                        <?php if($subscribe!=1):?>
+                            <a class="weicaht-note" style="display: block;text-align: center;background-color:#23212E" data-lightbox="d" data-title="请关注微信公众号进行投票" href="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQG68jwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAySXZCczk1bDI5SVAxMDAwMDAwM3IAAgSAgM9YAwQAAAAA">
                                <span class="glyphicon glyphicon-heart"></span> <span style="font-size: 16px;">投票</span>
                             </a>
                         <?php else:?>
@@ -90,7 +85,7 @@ $this->registerJs("
             </ul>
         </div>
         <div class="text-center"><?= LinkPager::widget(['pagination' => $pages,'firstPageLabel'=>false,'lastPageLabel'=>false]); ?></div>
-
+<div class="clearfix"></div>
     </div>
 
 

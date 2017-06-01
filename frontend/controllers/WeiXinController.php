@@ -3,8 +3,10 @@ namespace frontend\controllers;
 
 use backend\modules\bgadmin\models\ChannelWeima;
 use common\components\SaveToLog;
+use frontend\models\WeichatNoteUserinfo;
 use frontend\modules\weixin\models\ChannelWeimaFollowCount;
 use frontend\modules\weixin\models\ChannelWeimaRecord;
+use frontend\modules\weixin\models\VoteSignInfo;
 use Yii;
 use yii\data\Pagination;
 use yii\db\Query;
@@ -175,6 +177,13 @@ class WeiXinController extends Controller
                     'name'=>urlencode("新人必看"),
                     'sub_button'=>array(
                         array(
+                            "type"=>"view",
+                            "name"=>urlencode("花样童年照"),
+                            "url"=>"http://13loveme.com/weixin/weichat-vote/vote-woman",
+                            "sub_button"=>[],
+
+                        ),
+                        array(
                             'type'=>'view',
                             'name'=>urlencode("平台简介"),
                             'url'=>'http://mp.weixin.qq.com/s/IhEg7rG-ls01lFpBAGri6w',
@@ -204,7 +213,7 @@ class WeiXinController extends Controller
                 array(
                     'name'=>urlencode("平台相关"),
                     'sub_button'=>array(
-                        array(
+                       array(
                             "type"=>"view",
                             "name"=>urlencode("APP下载"),
                             "url"=>"https://itunes.apple.com/cn/app/xin-dong-san-shi-yi-tian/id1070045426?mt=8",
@@ -259,6 +268,7 @@ class WeiXinController extends Controller
 
                 //$this->text($this->postObj->EventKey);exit();
                 $user_info = json_decode($this->getUserInfo($openid));
+                $k = 0;
                 try{
                     if (!empty($this->postObj->EventKey)) {
                         $key = explode('_', $this->postObj->EventKey);
@@ -267,6 +277,7 @@ class WeiXinController extends Controller
                         }else{
                             $model->scene_id = 0;
                         }
+                        $k = $model->scene_id;
                         $model->openid = "{$openid}";
                         $model->headimgurl = "$user_info->headimgurl";
                         $model->subscribe_time = $user_info->subscribe_time;
@@ -314,7 +325,18 @@ class WeiXinController extends Controller
                     SaveToLog::log($e->getMessage(),'we13.log');
                 }finally{
 
-                    $content = "欢迎来到有节操有内涵有故事的十三平台！\n
+                    if($k==45){
+                        $data = array(
+                            array(
+                                'title'=>"晒花样童年照",
+                                'description'=>"晒花样童年照,迎千元大奖！",
+                                'picUrl'=>'http://oqfwt261i.bkt.clouddn.com/wex_20170524124623.jpg?imageView2/1/w/400/h/200',
+                                'url'=>'http://13loveme.com/weixin/weichat-vote/vote-man',
+                            ),
+                        );
+                        $this->news($data);
+                    }else{
+                        $content = "欢迎来到有节操有内涵有故事的十三平台！\n
 <a href='http://mp.weixin.qq.com/s/IhEg7rG-ls01lFpBAGri6w'>☞如何.·玩转☜</a>
 十三在手！天下我有！\n
 <a href='http://13loveme.com/date-past?title=%E6%B1%9F%E8%8B%8F&company=13pt'>☞那些.·觅约☜</a>
@@ -323,10 +345,20 @@ class WeiXinController extends Controller
 真实互动，展开自我！\n
 <a href='http://www.13loveme.com/contact'>☞PAO圈.·入口☜</a>
 撩起来！约一啪！";
-                    $this->text($content);
+                        $this->text($content);
+                    }
                 }
             }
             if( strtolower($this->postObj->Event) == 'unsubscribe' ){
+
+                $voteUserInfo = new WeichatNoteUserinfo();
+                if(($allVoteUser = $voteUserInfo::find()->where(['openid'=>$openid])->asArray()->all())!=null){
+
+                    $prid = ArrayHelper::map($allVoteUser,'id','participantid');
+                    VoteSignInfo::updateAllCounters(['vote_count'=>-1],['id'=>$prid]);
+                    $voteUserInfo::deleteAll(['openid'=>$openid]);
+                }
+
                 $already_today = $model::find()->where(['openid'=>$openid])->andWhere('created_at='.strtotime('today'))->orderBy('subscribe_time desc')->one();
                 $already_yesterday = $model::find()->where(['openid'=>$openid])->andWhere('created_at!='.strtotime('today'))->orderBy('subscribe_time desc')->one();
                 if(!empty($already_today)){
@@ -418,6 +450,14 @@ class WeiXinController extends Controller
                 case "打包福利":
                 case "打包":
                     $content = "给链接：http://pan.baidu.com/s/1qXEgn9M 密码：w49s";
+                    $this->text($content);
+                    break;
+                case "鸭王":
+                    $content = "http://pan.baidu.com/s/1hsxcgEo 密码：9wgn";
+                    $this->text($content);
+                    break;
+                case "十三叔":
+                    $content = "http://pan.baidu.com/s/1o8Bdg2e 密码：0bf2";
                     $this->text($content);
                     break;
             }

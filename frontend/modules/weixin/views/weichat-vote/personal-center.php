@@ -1,10 +1,6 @@
 <?php
 use yii\widgets\LinkPager;
 
-$session = Yii::$app->session;
-if(!$session->isActive){
-    $session->open();
-}
 $this->title = "统计";
 $this->registerCss('
     .vote-result{padding:10px;background-color:#fff;margin-top:10px;margin-bottom:10px;}
@@ -29,10 +25,10 @@ $this->registerCss('
 </div>
 <div class="row" style="background-color: #fff;padding: 10px;margin-bottom: 10px;">
     <div class="col-xs-3" style="padding:0;">
-        <img style="border-radius: 4px;" class="img-responsive" src='<?=$session->get('vote_01_headimgurl')?>'>
+        <img style="border-radius: 4px;" class="img-responsive" src='<?=isset($userInfo['headimgurl'])?$userInfo['headimgurl']:'null'?>'>
     </div>
     <div class="col-xs-9" style="padding-right:0;">
-        <h5 style="margin: 5px 0;color:gray;font-size: 16px;"><?=$session->get('vote_01_nickname')?></h5>
+        <h5 style="margin: 5px 0;color:gray;font-size: 16px;"><?=isset($userInfo['nickname'])?$userInfo['nickname']:'your message'?></h5>
         <?php if(!empty($query->declaration)):?>
         <p style="margin: 10px 0 0;color:gray;">
             <?= \yii\myhelper\Helper::truncate_utf8_string($query->declaration,28)?>
@@ -109,7 +105,7 @@ $this->registerCss('
                     </div>
                     <div class="col-xs-10">
                         <h5 style="margin: 5px 0;color:gray;"><?=$list['nickname']?> <img style="width: 18px;margin-top: -5px;" src="/images/vote/<?=$sex?>"></h5>
-                        <h5 style="margin: 10px 0 0;color:gray;">我为<?=$ta?>投了：1票</h5>
+                        <h5 style="margin: 10px 0 0;color:gray;">我为<?=$list['id']?>号投了：1票</h5>
                     </div>
                 </div>
             <?php endforeach;else:?>

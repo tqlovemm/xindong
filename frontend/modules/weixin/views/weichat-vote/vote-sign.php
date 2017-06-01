@@ -209,7 +209,7 @@ $pre_url = Yii::$app->params['vote'];
                 },
                 success:function(){
                     status.hide();
-                    if( $('#preview img').size()>=6 ){
+                    if( $('#preview img').size()>=1 ){
                         btn.hide();
                     }else {
                         btn.show();

@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use backend\modules\app\models\AppOrderList;
 use common\components\PushConfig;
 use common\components\Vip;
+use frontend\modules\weixin\models\VoteSignInfo;
 use yii\web\Controller;
 
 class AppController extends Controller
@@ -26,5 +27,10 @@ class AppController extends Controller
 
     public function actionThread(){
         Vip::sort();
+    }
+
+    public function actionT(){
+
+        VoteSignInfo::updateAllCounters(['vote_count'=>-1],['id'=>20]);
     }
 }

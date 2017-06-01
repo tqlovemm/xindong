@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Update Vote Sign Info: ' . ' ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Vote Sign Infos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id, 'openid' => $model->openid]];
+$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="vote-sign-info-update">

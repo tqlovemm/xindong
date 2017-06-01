@@ -24,7 +24,7 @@ class AppPushController extends Controller
         $query = new AppPush();
         $model = $query->find()->where('status!=0')->asArray()->one();
         $models = $query->find()->select('count(*) as count')->where('status=0')->andWhere(['is_read'=>1,'cid'=>$model['cid']])->asArray()->all();
-        $count = (integer)$models[0]['count']+1;
+        $count = (integer)$models[0]['count'];
         if(empty($model)){
             return;
         }

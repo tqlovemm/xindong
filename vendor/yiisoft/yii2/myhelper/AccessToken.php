@@ -28,6 +28,22 @@ class AccessToken
         }
         return $access_token;
     }
+    public function getAccessTokenKs() {
+        $cache = Yii::$app->cache;
+        $data = $cache->get('access_token_ks');
+        if (empty($data)) {
+            $token_access_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" . Yii::$app->params['id_ks'] . "&secret=" . Yii::$app->params['secret_ks'];
+            $res = json_decode($this->getData($token_access_url));
+            $access_token = $res->access_token;
+            if ($access_token) {
+                $cache->set('access_token_ks',$access_token,7000);
+            }
+        } else {
+            $access_token = $data;
+        }
+
+        return $access_token;
+    }
 
     public function getAccessTokenSub(){
 
@@ -99,5 +115,43 @@ class AccessToken
         return $tmpInfo;
     }
 
+    /**
+     * @param $openid
+     * @return mixed
+     * 获取用户信息
+     */
+    public function getUserInfo($openid){
 
+        $token = self::getAccessTokenKs();
+        $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$token&openid=$openid";
+        $userInfo = json_decode(file_get_contents($url),true);
+        if(isset($userInfo['errcode'])&&$userInfo['errcode']==40001){
+            Yii::$app->cache->delete('access_token_ks');
+            self::getUserInfo($openid);
+        }
+        return $userInfo;
+    }
+
+    /**
+     * @param $cookie_name
+     * @param $cookie_value
+     * 添加cookie
+     */
+    public function addCookie($cookie_name,$cookie_value){
+
+        $cookies = \Yii::$app->response->cookies;
+        $cookie = \Yii::$app->request->cookies;
+        if(empty($cookie->get($cookie_name))){
+            $cookies->add(new \yii\web\Cookie([
+                'name' => $cookie_name,
+                'value' => $cookie_value,
+                'expire'=>time()+3600*24*7,
+            ]));
+        }
+    }
+
+    public function getCookie($cookie_name){
+        $cookie = \Yii::$app->request->cookies;
+        return $cookie->getValue($cookie_name);
+    }
 }

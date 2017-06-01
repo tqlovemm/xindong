@@ -8,8 +8,9 @@ $this->title = "创建会员专属";
 <p>
     <?= Html::a($this->title, ['create'], ['class' => 'btn btn-success']) ?>
 </p>
+<?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 <div class="row">
-<?php foreach($model as $key=>$val):
+<?php foreach($dataProvider['model'] as $key=>$val):
     $albumUrl = Url::toRoute(['app-special-dating/view', 'id' => $val['zid']]);
     $src =$val->CoverPhoto;
     //$content = Html::encode($val['introduce']);
@@ -29,4 +30,4 @@ $this->title = "创建会员专属";
     </div>
 <?php endforeach;?>
 </div>
-<?= LinkPager::widget(['pagination' => $pages]); ?>
+<?= LinkPager::widget(['pagination' => $dataProvider['pages']]); ?>
