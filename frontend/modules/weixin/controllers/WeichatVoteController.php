@@ -207,8 +207,8 @@ class WeichatVoteController extends Controller
     }
 
     public function actionVoteClick($id,$type){
-
-        $query = VoteSignInfo::findOne($id);
+        echo "<script>alert('投票已经截至，管理员正在统计有效票数！')</script>";return;
+     /*   $query = VoteSignInfo::findOne($id);
         $voteUserInfo = new WeichatNoteUserinfo();
         if(empty($voteUserInfo::findOne(['openid'=>$this->user_wei_info['openid'],'participantid'=>$id]))){
 
@@ -245,7 +245,7 @@ class WeichatVoteController extends Controller
             if(confirm('您已经投过票了，现在分享给好友为ta拉票吧')){
                 location.href = 'sign-detail?id={$id}&show=1';
             }</script>";
-        }
+        }*/
 
     }
 
