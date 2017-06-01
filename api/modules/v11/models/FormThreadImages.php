@@ -2,7 +2,7 @@
 namespace api\modules\v11\models;
 
 use Yii;
-use app\components\db\ActiveRecord;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "pre_app_form_thread_images".
@@ -44,7 +44,24 @@ class FormThreadImages extends ActiveRecord
             'img_id','thread_id', 'img_path','img_width','img_height'
         ];
     }
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert)){
 
+            if($this->isNewRecord){
+                $this->created_at = time();
+                $this->updated_at = time();
+            }else{
+                $this->updated_at = time();
+            }
+
+            return true;
+        }
+        return false;
+    }
     /**
      * @inheritdoc
      */

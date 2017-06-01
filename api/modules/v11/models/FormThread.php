@@ -2,9 +2,10 @@
 namespace api\modules\v11\models;
 
 use api\modules\v2\models\Ufollow;
+use common\models\AppFormThread;
+use common\Qiniu\QiniuUploader;
 use Yii;
 use yii\db\ActiveRecord;
-
 
 /**
  * This is the model class for table "pre_app_form_thread".
@@ -34,6 +35,7 @@ class FormThread extends ActiveRecord
     private $_user_id;
     private $_comment;
     public $base64Images;
+    public $username;
     /**
      * @inheritdoc
      */
@@ -152,5 +154,20 @@ class FormThread extends ActiveRecord
             'base64Images' => 'Base64 Images',
         ];
     }
+    public function upload()
+    {
+        $pre = Yii::$app->params['appimages'];
+        $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.$this->wid;
+        $qiniu = $qn->upload('appimages',$mkdir);
 
+        $imgInfo = getimagesize($pre.$qiniu['key']);
+
+        $model = new FormThreadImages();
+        $model->img_path = $pre.$qiniu['key'];
+        $model->thread_id = $this->wid;
+        $model->img_width = $imgInfo[0];
+        $model->img_height = $imgInfo[1];
+        $model->save();
+    }
 }

@@ -41,6 +41,7 @@ class AccessToken
         } else {
             $access_token = $data;
         }
+
         return $access_token;
     }
 
@@ -119,7 +120,7 @@ class AccessToken
      * @return mixed
      * 获取用户信息
      */
-    public static function getUserInfo($openid){
+    public function getUserInfo($openid){
 
         $token = self::getAccessTokenKs();
         $url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$token&openid=$openid";
@@ -136,7 +137,7 @@ class AccessToken
      * @param $cookie_value
      * 添加cookie
      */
-    public static function addCookie($cookie_name,$cookie_value){
+    public function addCookie($cookie_name,$cookie_value){
 
         $cookies = \Yii::$app->response->cookies;
         $cookie = \Yii::$app->request->cookies;
@@ -149,7 +150,7 @@ class AccessToken
         }
     }
 
-    public static function getCookie($cookie_name){
+    public function getCookie($cookie_name){
         $cookie = \Yii::$app->request->cookies;
         return $cookie->getValue($cookie_name);
     }
