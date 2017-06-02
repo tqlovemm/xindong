@@ -11,7 +11,7 @@ class OneDayPaController extends Controller
 
         $data = explode('51payo',$id);
 
-        if(in_array($id,[10,20,30,50])){
+        if(in_array($data[0],[10,20,30,50])){
             $order_number = date('YmdHis').uniqid();
             $attach = array('oid'=>$data[1],'type'=>2,'total_fee'=>$data[0]);
             $wxpay = new WxpayComponents();
