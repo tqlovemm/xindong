@@ -38,6 +38,8 @@ class ArticleController extends Controller
                     //上传图片配置
                     'imageUrlPrefix' => $url, /* 图片访问路径前缀 */
                     'imagePathFormat' => "/uploads/{yyyy}{mm}{dd}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
+                    'videoUrlPrefix' => $url,
+                    'videoPathFormat' => "/uploads/{yyyy}{mm}{dd}/{time}{rand:6}",
                 ]
             ]
         ];
