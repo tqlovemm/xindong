@@ -14,7 +14,7 @@ $this->title = '会员升级收款记录';
     <?= $form->field($model, 'platform')->dropDownList($platform)->label('平台')  ?>
     <?= $form->field($model, 'vip')->textInput(['maxlength' => true])->label('会员升级等级')  ?>
     <?= $form->field($model, 'number')->textInput(['maxlength' => true])->label('会员编号')  ?>
-    <?= $form->field($model, 'channel')->dropDownList(['微信'=>'微信','支付宝'=>'支付宝','淘宝'=>'淘宝','公司银行卡转账'=>'公司银行卡转账','海外代充'=>'海外代充','PayPal'=>'PayPal'])->label('付款渠道')  ?>
+    <?= $form->field($model, 'channel')->dropDownList(['微信'=>'微信','支付宝'=>'支付宝','APP充值'=>'APP充值','淘宝'=>'淘宝','公司银行卡转账'=>'公司银行卡转账','海外代充'=>'海外代充','PayPal'=>'PayPal'])->label('付款渠道')  ?>
     <?= $form->field($model, 'payment_to')->dropDownList([1=>'收款专用号',2=>'微信客服号'])->label('付款到')  ?>
     <?= $form->field($model, 'payment_amount')->textInput()->label('付款金额')  ?>
     <?= $form->field($model, 'payment_screenshot')->fileInput() ?>
