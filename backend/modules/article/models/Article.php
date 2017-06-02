@@ -19,7 +19,7 @@ class Article extends \yii\db\ActiveRecord
     {
         return [
             [[ 'title', 'wimg', 'content', 'wtype', 'wclick', 'wdianzan', 'hot'], 'required'],
-            [['created_id', 'wtype', 'wclick', 'wdianzan', 'hot', 'created_at', 'updated_at', 'status'], 'integer'],
+            [['created_id', 'wtype','wlabel', 'wclick', 'wdianzan', 'hot', 'created_at', 'updated_at', 'status'], 'integer'],
             [['content'], 'string'],
             [['title','miaoshu'], 'string', 'max' => 100],
             [['wimg'], 'string', 'max' => 255],

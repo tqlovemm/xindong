@@ -82,9 +82,15 @@ class ArticleController extends Controller
             for($i=0;$i<count($typeres);$i++){
                 $typearr[$typeres[$i]['tid']] = $typeres[$i]['typename'];
             }
+            $labelres = (new Query())->select('lid,labelname')->from('{{%article_label}}')->all();
+            $labelarr[0] = "无";
+            for($k=0;$k<count($labelres);$k++){
+                $labelarr[$labelres[$k]['lid']] = $labelres[$k]['labelname'];
+            }
             return $this->render('create', [
                 'model' => $model,
                 'type' => $typearr,
+                'label' => $labelarr,
             ]);
         }
     }
@@ -103,7 +109,7 @@ class ArticleController extends Controller
                 $model->wimg = $wimg;
             }
             if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['index']);
             }else{
                 return "添加失败";
             }
@@ -112,9 +118,15 @@ class ArticleController extends Controller
             for($i=0;$i<count($typeres);$i++){
                 $typearr[$typeres[$i]['tid']] = $typeres[$i]['typename'];
             }
+            $labelres = (new Query())->select('lid,labelname')->from('{{%article_label}}')->all();
+            $labelarr[0] = "无";
+            for($k=0;$k<count($labelres);$k++){
+                $labelarr[$labelres[$k]['lid']] = $labelres[$k]['labelname'];
+            }
             return $this->render('update', [
                 'model' => $model,
                 'type' => $typearr,
+                'label' => $labelarr,
             ]);
         }
     }
