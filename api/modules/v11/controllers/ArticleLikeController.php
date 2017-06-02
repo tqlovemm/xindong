@@ -58,11 +58,11 @@ class ArticleLikeController extends ActiveController {
         }
         $model = new $this->modelClass();
         $aid = isset($_GET['aid'])?$_GET['aid']:'';
-        $Collection = $model::find()->where(['aid'=>$aid,'userid'=>$id])->one();
-        if(!$Collection){
+        $like = $model::find()->where(['aid'=>$aid,'userid'=>$id])->one();
+        if(!$like){
             Response::show('202','操作失败','该数据不存在');
         }
-        $res = $Collection->delete();
+        $res = $like->delete();
         $dz = Yii::$app->db->createCommand("update {{%article}} set wdianzan=wdianzan-1 where id=$aid")->execute();
         if(!$res){
             Response::show('201','操作失败','删除失败');
