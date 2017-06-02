@@ -7,12 +7,14 @@ use yii\web\Controller;
 class OneDayPaController extends Controller
 {
 
-    public function actionRecharge(){
+    public function actionRecharge($id){
 
-        $order_number = date('YmdHis').uniqid();
-        $attach = array('user_id'=>10000,'type'=>2,'groupid'=>2);
-        $wxpay = new WxpayComponents();
-        $wxpay->Wxpay("会员升级",$order_number,10000,json_encode($attach),'memberup');
+        if(in_array($id,[10,20,30,50])){
+            $order_number = date('YmdHis').uniqid();
+            $attach = array('user_id'=>10000,'type'=>2,'groupid'=>2);
+            $wxpay = new WxpayComponents();
+            $wxpay->Wxpay("会员升级",$order_number,$id,json_encode($attach),'memberup');
+        }
     }
 
     public function actionRecord(){
