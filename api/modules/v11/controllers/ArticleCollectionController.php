@@ -74,7 +74,7 @@ class ArticleCollectionController extends ActiveController {
         if($delall){
             $res = $model::deleteAll(['userid'=>$id]);
         }else{
-            $Collection = $model::find()->where(['id'=>$cid])->one();
+            $Collection = $model::find()->where(['aid'=>$cid,'userid'=>$id])->one();
             if(!$Collection){
                 Response::show('202','操作失败','该数据不存在');
             }
