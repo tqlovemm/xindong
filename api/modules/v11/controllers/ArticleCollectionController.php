@@ -71,11 +71,11 @@ class ArticleCollectionController extends ActiveController {
         $model = new $this->modelClass();
         $delall = isset($_GET['delall'])?$_GET['delall']:'';
         $cid = isset($_GET['cid'])?$_GET['cid']:'';
+        return $cid;
         if($delall){
             $res = $model::deleteAll(['userid'=>$id]);
         }else{
             $Collection = $model::find()->where(['id'=>$cid])->one();
-            return $model->getFirstErrors();
             if(!$Collection){
                 Response::show('202','操作失败','该数据不存在');
             }
