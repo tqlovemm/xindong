@@ -26,7 +26,7 @@ class OneDayPaController extends Controller
             $order_number = date('YmdHis').uniqid();
             $attach = array('oid'=>$data[1],'pa'=>200,'total_fee'=>$data[0],'up_score'=>$up_score);
             $wxpay = new WxpayComponents();
-            $wxpay->Wxpay("Vip加速",$order_number,$data[0]/10,json_encode($attach),'vip');
+            $wxpay->Wxpay("Vip加速",$order_number,$data[0]*100,json_encode($attach),'vip');
         }
     }
 }
