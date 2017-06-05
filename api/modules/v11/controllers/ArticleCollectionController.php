@@ -71,6 +71,7 @@ class ArticleCollectionController extends ActiveController {
         $model = new $this->modelClass();
         $delall = isset($_GET['delall'])?$_GET['delall']:'';
         $cid = isset($_GET['cid'])?$_GET['cid']:'';
+        return $cid;
         if($delall){
             $res = $model::deleteAll(['userid'=>$id]);
         }else{
