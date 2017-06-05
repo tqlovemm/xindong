@@ -199,7 +199,7 @@ class WeiXinController extends Controller
                 ),
                 array(
                     "type"=>"view",
-                    "name"=>urlencode("加入平台"),
+                    "name"=>urlencode("开始交友"),
                     "url"=>"http://www.13loveme.com/contact",
                     "sub_button"=>[],
                 ),
@@ -451,6 +451,10 @@ class WeiXinController extends Controller
                     break;
                 case "十三叔":
                     $content = "http://pan.baidu.com/s/1o8Bdg2e 密码：0bf2";
+                    $this->text($content);
+                    break;
+                case "资源":
+                    $content = " https://btso.pw/search/%E7%86%8A%E7%94%B0%E6%9B%9C%E5%AD%90";
                     $this->text($content);
                     break;
             }
