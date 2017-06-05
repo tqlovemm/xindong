@@ -28,7 +28,7 @@ class Article extends ActiveRecord
     {
         return [
             [['created_id', 'title', 'wimg', 'content', 'wtype', 'wclick', 'wdianzan', 'hot','status'], 'required'],
-            [['created_id', 'wtype','wlabel', 'wclick', 'wdianzan', 'hot', 'created_at', 'updated_at', 'status'], 'integer'],
+            [['created_id', 'wtype','wlabel','yuanchuang', 'wclick', 'wdianzan', 'hot', 'created_at', 'updated_at', 'status'], 'integer'],
             [['content'], 'string'],
             [['title','miaoshu'], 'string', 'max' => 100],
             [['wimg'], 'string', 'max' => 255]
@@ -43,7 +43,7 @@ class Article extends ActiveRecord
         $this->_islike = Yii::$app->db->createCommand("select status from {{%article_like}} where aid=$this->id and userid=$this->_uid")->queryOne();
         $this->_label = Yii::$app->db->createCommand("select labelname,thumb from {{%article_label}} where lid=$this->wlabel")->queryOne();
         return [
-            'article_id'=>'id','title', 'wimg', 'miaoshu','wclick','wdianzan','hot','wtype','level'=>function(){return $this->_user['groupid'];},'nickname'=>function(){return $this->_user['nickname'];},'avatar'=>function(){return $this->_user['avatar'];},'sex'=>function(){return $this->_user['sex'];},'created_at','url'=>function(){return "http://120.27.226.102:82/article/article/show?id=".$this->id."&uid=".$this->_uid;},'comment_count'=>function(){return count($this->_comment);},'iscollection'=>function(){return $this->_iscollection?1:0;},'islike'=>function(){return $this->_islike?1:0;},'labelname'=>function(){return $this->_label['labelname'];},'labelthumb'=>function(){return $this->_label['thumb'];},
+            'article_id'=>'id','title', 'wimg', 'miaoshu','wclick','wdianzan','hot','wtype','level'=>function(){return $this->_user['groupid'];},'nickname'=>function(){return $this->_user['nickname'];},'avatar'=>function(){return $this->_user['avatar'];},'sex'=>function(){return $this->_user['sex'];},'created_at','url'=>function(){return "http://120.27.226.102:82/article/article/show?id=".$this->id."&uid=".$this->_uid;},'comment_count'=>function(){return count($this->_comment);},'iscollection'=>function(){return $this->_iscollection?1:0;},'islike'=>function(){return $this->_islike?1:0;},'labelname'=>function(){return $this->_label['labelname'];},'labelthumb'=>function(){return $this->_label['thumb'];},'yuanchuang',
         ];
     }
 
