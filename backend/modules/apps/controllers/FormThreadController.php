@@ -8,6 +8,7 @@ use common\Qiniu\QiniuUploader;
 use Yii;
 use api\modules\v11\models\FormThread;
 use backend\modules\apps\models\FormThreadSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -65,7 +66,7 @@ class FormThreadController extends Controller
     public function actionCreate()
     {
         $model = new FormThread();
-        $tag = FormThreadTag::find()->select('tag_name')->column();
+        $tag = ArrayHelper::map(FormThreadTag::find()->select('tag_name')->asArray()->all(),'tag_name','tag_name');
         $model->user_id = Yii::$app->user->id;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if($model->type !=0){
@@ -109,7 +110,7 @@ class FormThreadController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $tag = FormThreadTag::find()->select('tag_name')->column();
+        $tag = ArrayHelper::map(FormThreadTag::find()->select('tag_name')->asArray()->all(),'tag_name','tag_name');
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if($model->type !=0){
                 $model->sex = 2;
