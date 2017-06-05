@@ -64,7 +64,7 @@ class FormThreadController extends ActiveController {
             if($getData['sex']==3){
                 return $this->threadData($query,$model,1);
             }else{
-                $sex_filter = [(integer)$getData['sex']];
+                $sex_filter = [(integer)$getData['sex'],2];
                 $query =  $query->andWhere(['sex'=>$sex_filter]);
             }
         }
