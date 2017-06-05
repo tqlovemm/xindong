@@ -11,48 +11,20 @@ use yii\widgets\ActiveForm;
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title>
-        十三说--<?= $cmodel->title; ?>
+        <?= $cmodel->title; ?>
     </title>
     <?=Html::cssFile('@web/css/article/article.css')?>
     <?=Html::cssFile('@web/css/article/dropload.css')?>
     <?=Html::jsFile('@web/css/article/jquery-2.1.4.js')?>
     <?=Html::jsFile('@web/css/article/dropload.min.js')?>
 </head>
-<style>
-    #nav { width:100%; background:#F7F7FA; position:fixed;left:0;bottom: 0px;height: 7%;z-index: 99999; }
-    .plinput{
-        float:left;
-        display: block;
-        width: 70%;
-        margin-top: 1.5%;
-        margin-left: 2%;
-        height: 75%;
-        font-size: 14px;
-        line-height: 1.42857143;
-        background-color: #E6E6E6;
-        border: 0px solid #ccc;
-    }
-    .pl{
-        float:left;
-        display: block;
-        margin-top: 1.5%;
-        margin-left: 3%;
-        height: 75%;
-    }
-    .sc{
-        float:right;
-        display: block;
-        margin-top: 1.5%;
-        margin-right: 2%;
-        height: 75%;
-    }
-</style>
 <body>
-<div id="nav" >
+<div id="nav" style="display: none">
         <?php $form = ActiveForm::begin(); ?>
-        <input type="text" name="content" class="plinput" placeholder="  写评论..." onfocus="this.placeholder=''" onblur="this.placeholder='  写评论...'"/>
+        <input type="text" name="content" class="plinput" value="" id="inputpl" placeholder="  写评论..." onfocus="this.placeholder=''" onblur="this.placeholder='  写评论...'"/>
         <input type="hidden" name="aid" value="<?= $cmodel->id;?>" />
-        <input type="image" src="/images/comment.png" class="pl" alt="submit"/>
+        <input type="hidden" name="uid" value="<?= $uid;?>" />
+        <input type="image" src="/images/comment.png" class="pl" alt="submit" id="submit_text"/>
         <img src="/images/like.png" class="sc" />
         <?php ActiveForm::end(); ?>
 </div>
@@ -72,6 +44,7 @@ use yii\widgets\ActiveForm;
     </div>
     <ul class="list">
         <?php foreach ($articlearr as $vo): ?>
+        <a style="color:#000;" href="<?= $url;?>/article/article/show?id=<?= $vo->id;?>&uid=<?= $uid;?>">
             <li>
                 <img src='<?= Html::encode("{$vo->wimg}") ?>'>
                 <div>
@@ -79,6 +52,7 @@ use yii\widgets\ActiveForm;
                     <p><img src='/images/time.png'><?= date('Y-m-d',$vo->created_at) ?><i></i><img src='/images/like.png'><?= $vo->wdianzan ?></p>
                 </div>
             </li>
+        </a>
         <?php endforeach; ?>
     </ul>
     <!--评论-->
@@ -90,23 +64,42 @@ use yii\widgets\ActiveForm;
     </div>
 </div>
 <div style="height:38px;"></div>
+<div class="weui_dialog_alert" id="dialog" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">警告</strong></div>
+        <div class="weui_dialog_bd notice_content">微信号不可为空</div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:;" class="weui_btn_dialog primary iknow">确定</a>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
-    function getUserId($userid) {
-        $('.xg').html($userid);
-    }
+    $('#submit_text').click(function () {
+        var res = $('.plinput').val();
+        if (res==null||res=="") {
+            $('.notice_content').html('评论不可为空！');
+            $('#dialog').show();
+            return false;
+        }
+    });
+    $('.iknow').click(function () {
+
+        $('#dialog,#dialog__delete').hide();
+    });
+    $('.sc').click(function () {
+        alert('1');
+    });
 $(function(){
-//    var title = $(".related").offset().top-150;
-//    var oDiv = document.getElementById("nav");
-//    $(window).scroll(function(){
-//        var this_scrollTop = $(this).scrollTop();
-//        if(this_scrollTop>title){
-//            oDiv.style = "display: inline;"
-//        }else {
-//            oDiv.style = "display: none;"
-//        }
-//    });
-    $(".sc").click(function(){
-        window.webkit.messageHandlers.abcdefg.postMessage('test');
+    var title = $(".related").offset().top-150;
+    var oDiv = document.getElementById("nav");
+    $(window).scroll(function(){
+        var this_scrollTop = $(this).scrollTop();
+        if(this_scrollTop>title){
+            oDiv.style = "display: inline;"
+        }else {
+            oDiv.style = "display: none;"
+        }
     });
 });
 </script>

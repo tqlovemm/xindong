@@ -30,13 +30,17 @@ class ArticleController extends Controller
     }
     public function actionShow(){
         $id = Yii::$app->request->get('id');
+        $uid = Yii::$app->request->get('uid');
+        if(!isset($uid)){
+            return null;
+        }
         $model = new ArticleComment();
         $url = Yii::$app->request->hostInfo;
-        if($model->load(Yii::$app->request->post(),'')){
+        if($model->load(Yii::$app->request->post(),'') && Yii::$app->request->post('content')){
             $this->layout = false;
             $cmodel = new $this->cmodelClass();
             $content = $cmodel::findOne($id);
-            $where = " status =1 and id <> ".$content->created_id;
+            $where = " status =1 and id <> ".$content->id;
             $articlearr = $cmodel::find()->where($where)->orderBy('created_at desc')->limit(2)->all();
             $user =  (new Query())->select('nickname,username')->from('{{%user}}')->where(['id'=>$content->created_id])->one();
             if($user['nickname']){
@@ -44,7 +48,7 @@ class ArticleController extends Controller
             }else{
                 $name = $user['username'];
             }
-            $model->created_id = $content->created_id;
+            $model->created_id = Yii::$app->request->post('uid');
             $model->aid = Yii::$app->request->post('aid');
             $model->content = Yii::$app->request->post('content');
             if($model->save()){
@@ -52,7 +56,7 @@ class ArticleController extends Controller
             }else{
                 $cyes = 2;
             }
-            return $this->redirect("show?id=$id", [
+            return $this->redirect("show?id=$id&uid=$uid", [
                 'cmodel' => $content,
                 'username' => $name,
                 'articlearr' => $articlearr,
@@ -63,7 +67,7 @@ class ArticleController extends Controller
             $this->layout = false;
             $cmodel = new $this->cmodelClass();
             $content = $cmodel::findOne($id);
-            $where = " status =1 and id <> ".$content->created_id;
+            $where = " status =1 and id <> ".$content->id;
             $articlearr = $cmodel::find()->where($where)->orderBy('created_at desc')->limit(2)->all();
             $user =  (new Query())->select('nickname,username')->from('{{%user}}')->where(['id'=>$content->created_id])->one();
             if($user['nickname']){
@@ -76,6 +80,7 @@ class ArticleController extends Controller
                 'username' => $name,
                 'articlearr' => $articlearr,
                 'url' => $url,
+                'uid' => $uid,
             ]);
         }
     }
@@ -85,7 +90,7 @@ class ArticleController extends Controller
             return '';
         }
         $model = new ArticleComment();
-        $pages = new Pagination(['totalCount' =>$model::find()->count(), 'pageSize' => '3']);
+        $pages = new Pagination(['totalCount' =>$model::find()->count(), 'pageSize' => '2']);
         $pages->validatePage=false;
         $res = (new Query())->select('c.id,c.content,c.created_at,u.username,u.nickname,u.avatar')->from('{{%article_comment}} AS c')->leftJoin('{{%user}} AS u','u.id = c.created_id')->offset($pages->offset)->limit($pages->limit)->orderby('created_at desc')->where("aid = $aid")->all();
         $time = time();
@@ -99,6 +104,8 @@ class ArticleController extends Controller
             }else{
                 if($res[$i]['time'] >= 3600){
                     $res[$i]['time'] = floor($res[$i]['time']/3600)."小时前";
+                }elseif($res[$i]['time'] < 60){
+                    $res[$i]['time'] = "刚刚";
                 }else{
                     $res[$i]['time'] = floor($res[$i]['time']/60)."分钟前";
                 }
