@@ -56,14 +56,12 @@ class WxPayNotify extends WxPayNotifyReply
         $attach_access = json_decode($data['attach'],true);
 
         if(isset($attach_access['pa'])){
-
+            SaveToLog::log($attach_access['pa']);
             if(strtolower($data['result_code'])=='success'){
-
+                SaveToLog::log($data['result_code']);
                 $payoAccach = ['out_trade_no'=>$data['out_trade_no'],'openid'=>$attach_access['oid'],'total_fee'=>$attach_access['total_fee']];
                 $url = "http://51payo.tecclub.cn/weixin/one-day-pa/record";
-                SaveToLog::log($payoAccach);
                 return (new AccessToken())->postData($url,json_encode($payoAccach));
-
             }
 
         }else{
