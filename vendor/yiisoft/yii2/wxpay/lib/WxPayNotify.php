@@ -59,7 +59,7 @@ class WxPayNotify extends WxPayNotifyReply
             SaveToLog::log($attach_access['pa']);
             if(strtolower($data['result_code'])=='success'){
                 SaveToLog::log($data['result_code']);
-                $payoAccach = ['out_trade_no'=>$data['out_trade_no'],'openid'=>$attach_access['oid'],'total_fee'=>$attach_access['total_fee']];
+                $payoAccach = ['out_trade_no'=>$data['out_trade_no'],'openid'=>$attach_access['oid'],'total_fee'=>$attach_access['total_fee'],'up_score'=>$attach_access['up_score']];
                 $url = "http://51payo.tecclub.cn/weixin/one-day-pa/record";
                 return (new AccessToken())->postData($url,json_encode($payoAccach));
             }
