@@ -67,7 +67,7 @@ use yii\widgets\ActiveForm;
 <div class="weui_dialog_alert" id="dialog" style="display: none;">
     <div class="weui_mask"></div>
     <div class="weui_dialog">
-        <div class="weui_dialog_hd"><strong class="weui_dialog_title">警告</strong></div>
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">提示</strong></div>
         <div class="weui_dialog_bd notice_content">微信号不可为空</div>
         <div class="weui_dialog_ft">
             <a href="javascript:;" class="weui_btn_dialog primary iknow">确定</a>
@@ -88,7 +88,19 @@ use yii\widgets\ActiveForm;
         $('#dialog,#dialog__delete').hide();
     });
     $('.sc').click(function () {
-        alert('1');
+        $.ajax({
+            type: 'POST',
+            url: "http://120.27.226.102:81/v11/article-collections",
+            data: {userid:<?= $uid;?>, aid:<?= $cmodel->id;?>},
+            dataType: 'json',
+            success: function(data){
+                $('.notice_content').html(data.data);
+                $('#dialog').show();
+            },
+            error: function(){
+                alert('ajax error!');
+            }
+        });
     });
 $(function(){
     var title = $(".related").offset().top-150;
