@@ -177,13 +177,6 @@ class WeiXinController extends Controller
                     'name'=>urlencode("新人必看"),
                     'sub_button'=>array(
                         array(
-                            "type"=>"view",
-                            "name"=>urlencode("花样童年照"),
-                            "url"=>"http://13loveme.com/weixin/weichat-vote/vote-woman",
-                            "sub_button"=>[],
-
-                        ),
-                        array(
                             'type'=>'view',
                             'name'=>urlencode("平台简介"),
                             'url'=>'http://mp.weixin.qq.com/s/IhEg7rG-ls01lFpBAGri6w',

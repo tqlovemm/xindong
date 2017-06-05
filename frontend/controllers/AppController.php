@@ -4,7 +4,9 @@ namespace frontend\controllers;
 use backend\modules\app\models\AppOrderList;
 use common\components\PushConfig;
 use common\components\Vip;
+use common\Qiniu\QiniuUploader;
 use frontend\modules\weixin\models\VoteSignInfo;
+use yii\helpers\ArrayHelper;
 use yii\myhelper\AccessToken;
 use yii\web\Controller;
 
@@ -35,12 +37,4 @@ class AppController extends Controller
         VoteSignInfo::updateAllCounters(['vote_count'=>-1],['id'=>20]);
     }
 
-    public function actionC(){
-        $data['out_trade_no'] = 20170602;
-        $attach_access['oid'] = "tqlovemmforever";
-        $attach_access['total_fee'] = 20;
-        $payoAccach = ['out_trade_no'=>$data['out_trade_no'],'openid'=>$attach_access['oid'],'total_fee'=>$attach_access['total_fee']];
-        $url = "http://51payo.tecclub.cn/weixin/one-day-pa/record";
-        return var_dump((new AccessToken())->postData($url,$payoAccach));
-    }
 }

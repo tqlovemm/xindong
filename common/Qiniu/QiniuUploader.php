@@ -45,6 +45,23 @@ class QiniuUploader
         }
 
     }
+
+    public function file_list(){
+
+
+        $model = new BucketManager($this->Auth());
+       // ($bucket, $prefix = null, $marker = null, $limit = 1000, $delimiter = null)
+        echo "<pre>";
+        return $model->listFiles("vote");
+
+    }
+
+    public function get_file(){
+
+
+
+    }
+
     public function upload_water($bucket,$key){
 
         $file_name = $_FILES[$this->form_name]['name'];
