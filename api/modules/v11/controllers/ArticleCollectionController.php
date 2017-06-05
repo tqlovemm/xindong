@@ -48,6 +48,7 @@ class ArticleCollectionController extends ActiveController {
 
     public function actionCreate()
     {
+        header("Access-Control-Allow-Origin:http://120.27.226.102:82/");
         $model = new $this->modelClass();
         $model->load(Yii::$app->request->getBodyParams(), '');
         $aid = Yii::$app->request->getBodyParam('aid');
