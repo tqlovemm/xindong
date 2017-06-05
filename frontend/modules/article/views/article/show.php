@@ -90,7 +90,7 @@ use yii\widgets\ActiveForm;
     $('.sc').click(function () {
         $.ajax({
             type: 'POST',
-            url: "http://api.13loveme.com:81/v11/article-collections",
+            url: "http://api.13loveme.com/v11/article-collections",
             data: {userid:<?= $uid;?>, aid:<?= $cmodel->id;?>},
             dataType: 'json',
             success: function(data){
