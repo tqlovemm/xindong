@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
     <?=Html::jsFile('@web/css/article/dropload.min.js')?>
 </head>
 <body>
-<div id="nav" style="display: none">
+<div id="nav">
         <?php $form = ActiveForm::begin(); ?>
         <input type="text" name="content" class="plinput" value="" id="inputpl" placeholder="  写评论..." onfocus="this.placeholder=''" onblur="this.placeholder='  写评论...'"/>
         <input type="hidden" name="aid" value="<?= $cmodel->id;?>" />
@@ -90,7 +90,7 @@ use yii\widgets\ActiveForm;
     $('.sc').click(function () {
         $.ajax({
             type: 'POST',
-            url: "http://api.13loveme.com/v11/article-collections",
+                url: "http://api.13loveme.com/v11/article-collections",
             data: {userid:<?= $uid;?>, aid:<?= $cmodel->id;?>},
             dataType: 'json',
             success: function(data){
