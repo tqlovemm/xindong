@@ -71,19 +71,18 @@ class ArticleCollectionController extends ActiveController {
         $model = new $this->modelClass();
         $delall = isset($_GET['delall'])?$_GET['delall']:'';
         $cid = isset($_GET['cid'])?$_GET['cid']:'';
-        Response::show('123',$cid,$cid);
-//        if($delall){
-//            $res = $model::deleteAll(['userid'=>$id]);
-//        }else{
-//            $Collection = $model::find()->where(['id'=>$cid,'userid'=>$id])->one();
-//            if(!$Collection){
-//                Response::show('202','操作失败','该数据不存在');
-//            }
-//            $res = $Collection->delete();
-//        }
-//        if(!$res){
-//            Response::show('201','操作失败','删除失败');
-//        }
-//        Response::show('200','操作成功','删除成功');
+        if($delall){
+            $res = $model::deleteAll(['userid'=>$id]);
+        }else{
+            $Collection = $model::find()->where(['id'=>$cid,'userid'=>$id])->one();
+            if(!$Collection){
+                Response::show('202','操作失败','该数据不存在');
+            }
+            $res = $Collection->delete();
+        }
+        if(!$res){
+            Response::show('201','操作失败','删除失败');
+        }
+        Response::show('200','操作成功','删除成功');
     }
 }
