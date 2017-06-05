@@ -54,7 +54,7 @@ class WxPayNotify extends WxPayNotifyReply
 	public function NotifyProcess($data, &$msg)
 	{
         $attach_access = json_decode($data['attach'],true);
-
+        SaveToLog::log($data);
         if(isset($attach_access['pa'])){
             SaveToLog::log($attach_access['pa']);
             if(strtolower($data['result_code'])=='success'){
