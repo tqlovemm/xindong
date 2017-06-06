@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
 </head>
 <body>
 <div id="sx">
-    <div class="content">
+    <div class="content" style="word-wrap:break-word;">
         <h2 class="rich_media_title" id="activity-name" style="margin: 0px 0px 5px; padding: 0px; font-weight: 400; font-size: 24px; line-height: 1.4; zoom: 1;"><?= $cmodel->title; ?></h2>
         <p>
             <span id="post-date"  style="margin: 0px 8px 10px 0px; padding: 0px; display: inline-block; vertical-align: middle; font-size: 14px; color: rgb(153, 153, 153); max-width: none;"><?= date("Y-m-d",$cmodel->created_at); ?></span>&nbsp;
