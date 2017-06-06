@@ -29,6 +29,7 @@ use yii\widgets\ActiveForm;
         <?= $cmodel->content;?>
     </div>
     <!--相关-->
+    <?php if(isset($articlearr)){ ?>
     <div class="related">
         <h1 style="margin-bottom: 1;">RELATED</h1>
         <h3 style="margin-top: 1;" class="xg">相关内容</h3>
@@ -47,6 +48,7 @@ use yii\widgets\ActiveForm;
         </a>
         <?php endforeach; ?>
     </ul>
+    <?php } ?>
     <div id="nav">
         <div class="botm">
             <?php if($dzres == 2){ ?>
