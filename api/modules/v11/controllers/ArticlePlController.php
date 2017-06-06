@@ -41,7 +41,7 @@ class ArticlePlController extends ActiveController {
         $content = Yii::$app->request->getBodyParam('content');
         $article = (new Query())->select('status')->from('{{%article_comment}}')->where(['aid'=>$aid,"created_id"=>$uid,"content"=>$content])->orderBy('created_at desc')->one();
         if($article){
-            Response::show('202','评论失败','不弄评论重复内容');
+            Response::show('202','评论失败','不能评论重复内容');
         }
         $model->status = 1;
         if($model->save()){
