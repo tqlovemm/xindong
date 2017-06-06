@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <title>
-        <?= $cmodel->title; ?>
+        <?= $type['typename']; ?>
     </title>
     <?=Html::cssFile('@web/css/article/article.css')?>
     <?=Html::cssFile('@web/css/article/dropload.css')?>
@@ -103,6 +103,12 @@ use yii\widgets\ActiveForm;
     function btnClick($id) {
         window.webkit.messageHandlers.dianzan.postMessage($id);
     }
+    function btnClick2($id) {
+        window.webkit.messageHandlers.pinglun.postMessage($id);
+    }
+    function btnClick3($id) {
+        window.webkit.messageHandlers.shoucang.postMessage($id);
+    }
     $('.pl').click(function () {
         $('#plk').show();
     });
@@ -137,6 +143,10 @@ use yii\widgets\ActiveForm;
             data: {userid:<?= $uid;?>, aid:<?= $cmodel->id;?>},
             dataType: 'json',
             success: function(data){
+                var code = data.code;
+                if(code == '200'){
+                    btnClick3(1);
+                }
                 $('.notice_content').html(data.data);
                 $('#dialog').show();
             },
@@ -152,10 +162,14 @@ use yii\widgets\ActiveForm;
             data: {userid:<?= $uid;?>, aid:<?= $cmodel->id;?>},
             dataType: 'json',
             success: function(data){
+                var code = data.code;
+                if(code == '200'){
+                    btnClick(1);
+                }
                 $('.imgdz').attr('src',"/images/zan2.png");
+                $('.imgdz').attr('class',"dz2 imgdz");
                 $('.notice_content').html(data.data);
                 $('#dialog').show();
-                btnClick(12);
             },
             error: function(){
                 alert('dzajax error!');

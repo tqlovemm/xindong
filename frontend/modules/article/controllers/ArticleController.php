@@ -41,6 +41,7 @@ class ArticleController extends Controller
         $content = $cmodel::findOne($id);
         $where = " status =1 and id <> ".$content->id." and wtype = ".$content->wtype;
         $articlearr = $cmodel::find()->where($where)->orderBy('created_at desc')->limit(2)->all();
+        $type = (new Query())->select('typename')->from('{{%article_type}}')->where(['tid'=>$content->wtype])->one();
         $user =  (new Query())->select('nickname,username')->from('{{%user}}')->where(['id'=>$content->created_id])->one();
         if($user['nickname']){
             $name = $user['nickname'];
@@ -69,6 +70,7 @@ class ArticleController extends Controller
                 'cyes' => $cyes,
                 'url' => $url,
                 'dzres' => $dzres,
+                'type' => $type,
             ]);
         }else{
             return $this->render('show', [
@@ -78,6 +80,7 @@ class ArticleController extends Controller
                 'url' => $url,
                 'uid' => $uid,
                 'dzres' => $dzres,
+                'type' => $type,
             ]);
         }
     }
