@@ -75,7 +75,7 @@ use yii\widgets\ActiveForm;
 <div style="height:38px;"></div>
 <div class="weui_dialog_alert" id="dialog" style="display: none;">
     <div class="weui_mask"></div>
-    <div class="weui_dialog">
+    <div class="weui_dialog" style="border: 1px solid #ccc;">
         <div class="weui_dialog_hd"><strong class="weui_dialog_title">提示</strong></div>
         <div class="weui_dialog_bd notice_content">微信号不可为空</div>
         <div class="weui_dialog_ft">
@@ -91,7 +91,7 @@ use yii\widgets\ActiveForm;
             <?php $form = ActiveForm::begin(['options' => ['id' => 'formpl']]); ?>
             <textarea name="content" onfocus="placeholder='';" onblur="this.placeholder='  写评论...';" class="plinput" value="" id="inputpl" placeholder="  写评论..."></textarea>
             <input type="hidden" name="aid" value="<?= $cmodel->id;?>" />
-            <input type="hidden" name="uid" value="<?= $uid;?>" />
+            <input type="hidden" name="created_id" value="<?= $uid;?>" />
             <?php ActiveForm::end(); ?>
         </div>
         <div class="weui_dialog_ft">
@@ -133,7 +133,24 @@ use yii\widgets\ActiveForm;
             $('#plk').hide();
             $('#dialog').show();
         }else {
-            $('#formpl').submit();
+            $.ajax({
+                type: 'POST',
+                url: "http://api.13loveme.com/v11/article-pls",
+                data: $('#formpl').serialize(),
+                dataType: 'json',
+                success: function(data){
+                    var code = data.code;
+                    if(code == '200'){
+                        btnClick2(1);
+                    }
+                    $('.notice_content').html(data.data);
+                    $('#plk').hide();
+                    $('#dialog').show();
+                },
+                error: function(){
+                    alert('ajax error!');
+                }
+            });
         }
     });
     $('.sc').click(function () {
