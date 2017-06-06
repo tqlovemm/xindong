@@ -48,7 +48,7 @@ class ArticleController extends Controller
             $name = $user['username'];
         }
         $dianzan = (new Query())->select('id')->from('{{%article_like}}')->where(['aid'=>$id,'userid'=>$uid])->one();
-        if(isset($dianzan)){
+        if($dianzan){
             $dzres = 1;
         }else{
             $dzres = 2;
