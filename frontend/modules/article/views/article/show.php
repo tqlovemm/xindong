@@ -172,6 +172,8 @@ use yii\widgets\ActiveForm;
                 if(code == '200'){
                     btnClick3(1);
                 }
+                $('.imgsc').attr('src',"/images/shoucang2.png");
+                $('.imgsc').attr('class',"sc2 imgsc");
                 $('.notice_content').html(data.data);
                 $('#dialog').show();
             },
