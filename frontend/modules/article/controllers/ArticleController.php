@@ -36,18 +36,24 @@ class ArticleController extends Controller
         }
         $model = new ArticleComment();
         $url = Yii::$app->request->hostInfo;
+        $this->layout = false;
+        $cmodel = new $this->cmodelClass();
+        $content = $cmodel::findOne($id);
+        $where = " status =1 and id <> ".$content->id;
+        $articlearr = $cmodel::find()->where($where)->orderBy('created_at desc')->limit(2)->all();
+        $user =  (new Query())->select('nickname,username')->from('{{%user}}')->where(['id'=>$content->created_id])->one();
+        if($user['nickname']){
+            $name = $user['nickname'];
+        }else{
+            $name = $user['username'];
+        }
+        $dianzan = (new Query())->select('id')->from('{{%article_like}}')->where(['aid'=>$id,'userid'=>$uid])->one();
+        if(isset($dianzan)){
+            $dzres = 1;
+        }else{
+            $dzres = 2;
+        }
         if($model->load(Yii::$app->request->post(),'') && Yii::$app->request->post('content')){
-            $this->layout = false;
-            $cmodel = new $this->cmodelClass();
-            $content = $cmodel::findOne($id);
-            $where = " status =1 and id <> ".$content->id;
-            $articlearr = $cmodel::find()->where($where)->orderBy('created_at desc')->limit(2)->all();
-            $user =  (new Query())->select('nickname,username')->from('{{%user}}')->where(['id'=>$content->created_id])->one();
-            if($user['nickname']){
-                $name = $user['nickname'];
-            }else{
-                $name = $user['username'];
-            }
             $model->created_id = Yii::$app->request->post('uid');
             $model->aid = Yii::$app->request->post('aid');
             $model->content = Yii::$app->request->post('content');
@@ -62,25 +68,16 @@ class ArticleController extends Controller
                 'articlearr' => $articlearr,
                 'cyes' => $cyes,
                 'url' => $url,
+                'dzres' => $dzres,
             ]);
         }else{
-            $this->layout = false;
-            $cmodel = new $this->cmodelClass();
-            $content = $cmodel::findOne($id);
-            $where = " status =1 and id <> ".$content->id;
-            $articlearr = $cmodel::find()->where($where)->orderBy('created_at desc')->limit(2)->all();
-            $user =  (new Query())->select('nickname,username')->from('{{%user}}')->where(['id'=>$content->created_id])->one();
-            if($user['nickname']){
-                $name = $user['nickname'];
-            }else{
-                $name = $user['username'];
-            }
             return $this->render('show', [
                 'cmodel' => $content,
                 'username' => $name,
                 'articlearr' => $articlearr,
                 'url' => $url,
                 'uid' => $uid,
+                'dzres' => $dzres,
             ]);
         }
     }
