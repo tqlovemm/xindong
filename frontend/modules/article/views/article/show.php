@@ -19,15 +19,6 @@ use yii\widgets\ActiveForm;
     <?=Html::jsFile('@web/css/article/dropload.min.js')?>
 </head>
 <body>
-<div id="nav">
-        <?php $form = ActiveForm::begin(); ?>
-        <input type="text" name="content" onfocus="placeholder='';" onblur="this.placeholder='  写评论...';" class="plinput" value="" id="inputpl" placeholder="  写评论..." />
-        <input type="hidden" name="aid" value="<?= $cmodel->id;?>" />
-        <input type="hidden" name="uid" value="<?= $uid;?>" />
-        <input type="image" src="/images/comment.png" class="pl" alt="submit" id="submit_text"/>
-        <img src="/images/like.png" class="sc" />
-        <?php ActiveForm::end(); ?>
-</div>
 <div id="sx">
     <div class="content">
         <h2 class="rich_media_title" id="activity-name" style="margin: 0px 0px 5px; padding: 0px; font-weight: 400; font-size: 24px; line-height: 1.4; zoom: 1;"><?= $cmodel->title; ?></h2>
@@ -49,13 +40,28 @@ use yii\widgets\ActiveForm;
                 <img src='<?= Html::encode("{$vo->wimg}") ?>'>
                 <div>
                     <h2 style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"><?= Html::encode("{$vo->title}") ?></h2>
-                    <span style="display: block;font-size: 10px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"><?= Html::encode("{$vo->miaoshu}") ?></span>
-                    <p><img src='/images/time.png'><?= date('Y-m-d',$vo->created_at) ?><i></i><img src='/images/like.png'><?= $vo->wdianzan ?></p>
+                    <span style="font-size: 10px;overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;  -webkit-box-orient: vertical;line-height: 14px;"><?= Html::encode("{$vo->miaoshu}") ?></span>
+                    <p><img src='/images/time.png'><?= date('Y-m-d',$vo->created_at) ?><i></i><img src='/images/zan1.png'><?= $vo->wdianzan ?></p>
                 </div>
             </li>
         </a>
         <?php endforeach; ?>
     </ul>
+    <div id="nav">
+        <div class="botm">
+            <?php if($dzres == 2){ ?>
+                <span class="spanimg"><img src="/images/zan1.png" class="dz imgdz" /></span>
+            <?php }else{ ?>
+                <span class="spanimg"><img src="/images/zan2.png" class="dz2 imgdz" /></span>
+            <?php } ?>
+        </div>
+        <div class="botm">
+            <span class="spanimg"><img src="/images/comment.png" class="pl" /></span>
+        </div>
+        <div class="botm">
+            <span class="spanimg"><img src="/images/shoucang1.png" class="sc" /></span>
+        </div>
+    </div>
     <!--评论-->
     <div class="title">
         <h2>评论</h2>
@@ -75,18 +81,49 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
 </div>
+<div class="weui_dialog_alert" id="plk" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog" style="border: 1px solid #ccc;">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">评论</strong><strong class="clo">X</strong></div>
+        <div class="weui_dialog_bd">
+            <?php $form = ActiveForm::begin(['options' => ['id' => 'formpl']]); ?>
+            <textarea name="content" onfocus="placeholder='';" onblur="this.placeholder='  写评论...';" class="plinput" value="" id="inputpl" placeholder="  写评论..."></textarea>
+            <input type="hidden" name="aid" value="<?= $cmodel->id;?>" />
+            <input type="hidden" name="uid" value="<?= $uid;?>" />
+            <?php ActiveForm::end(); ?>
+        </div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:;" class="weui_btn_dialog primary" id="sub">提交</a>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
-    $('#submit_text').click(function () {
+    $('.pl').click(function () {
+        $('#plk').show();
+    });
+    $('.clo').click(function () {
+        $('#plk').hide();
+    });
+    $('.dz2').click(function () {
+        $('.notice_content').html('已经点赞过了!');
+        $('#dialog').show();
+    });
+    $('.iknow').click(function () {
+        var res = $('.notice_content').html();
+        $('#dialog').hide();
+        if(res == '评论不可为空！'){
+            $('#plk').show();
+        }
+    });
+    $('#sub').click(function(){
         var res = $('.plinput').val();
         if (res==null||res=="") {
             $('.notice_content').html('评论不可为空！');
+            $('#plk').hide();
             $('#dialog').show();
-            return false;
+        }else {
+            $('#formpl').submit();
         }
-    });
-    $('.iknow').click(function () {
-
-        $('#dialog,#dialog__delete').hide();
     });
     $('.sc').click(function () {
         $.ajax({
@@ -100,6 +137,22 @@ use yii\widgets\ActiveForm;
             },
             error: function(){
                 alert('ajax error!');
+            }
+        });
+    });
+    $('.dz').click(function () {
+        $.ajax({
+            type: 'POST',
+            url: "http://api.13loveme.com/v11/article-likes",
+            data: {userid:<?= $uid;?>, aid:<?= $cmodel->id;?>},
+            dataType: 'json',
+            success: function(data){
+                $('.imgdz').attr('src',"/images/zan2.png");
+                $('.notice_content').html(data.data);
+                $('#dialog').show();
+            },
+            error: function(){
+                alert('dzajax error!');
             }
         });
     });
