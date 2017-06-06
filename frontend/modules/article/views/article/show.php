@@ -100,6 +100,9 @@ use yii\widgets\ActiveForm;
     </div>
 </div>
 <script type="text/javascript">
+    function btnClick($id) {
+        window.webkit.messageHandlers.dianzan.postMessage($id);
+    }
     $('.pl').click(function () {
         $('#plk').show();
     });
@@ -152,6 +155,7 @@ use yii\widgets\ActiveForm;
                 $('.imgdz').attr('src',"/images/zan2.png");
                 $('.notice_content').html(data.data);
                 $('#dialog').show();
+                btnClick(12);
             },
             error: function(){
                 alert('dzajax error!');
