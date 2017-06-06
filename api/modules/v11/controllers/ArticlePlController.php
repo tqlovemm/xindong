@@ -33,7 +33,7 @@ class ArticlePlController extends ActiveController {
 
     public function actionCreate()
     {
-        header("Access-Control-Allow-Origin:http://localhost:81");
+        header("Access-Control-Allow-Origin:http://api.13loveme.com:82");
         $model = new $this->modelClass();
         $model->load(Yii::$app->request->getBodyParams(),'');
         $aid = Yii::$app->request->getBodyParam('aid');
