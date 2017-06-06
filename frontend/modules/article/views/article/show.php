@@ -61,7 +61,11 @@ use yii\widgets\ActiveForm;
             <span class="spanimg"><img src="/images/comment.png" class="pl" /></span>
         </div>
         <div class="botm">
-            <span class="spanimg"><img src="/images/shoucang1.png" class="sc" /></span>
+            <?php if($scres == 2){ ?>
+                <span class="spanimg"><img src="/images/shoucang1.png" class="sc imgsc" /></span>
+            <?php }else{ ?>
+                <span class="spanimg"><img src="/images/shoucang2.png" class="sc2 imgsc" /></span>
+            <?php } ?>
         </div>
     </div>
     <!--评论-->
@@ -75,7 +79,7 @@ use yii\widgets\ActiveForm;
 <div style="height:38px;"></div>
 <div class="weui_dialog_alert" id="dialog" style="display: none;">
     <div class="weui_mask"></div>
-    <div class="weui_dialog" style="border: 1px solid #ccc;">
+    <div class="weui_dialog" style="border: 1px solid #585858;">
         <div class="weui_dialog_hd"><strong class="weui_dialog_title">提示</strong></div>
         <div class="weui_dialog_bd notice_content">微信号不可为空</div>
         <div class="weui_dialog_ft">
@@ -85,7 +89,7 @@ use yii\widgets\ActiveForm;
 </div>
 <div class="weui_dialog_alert" id="plk" style="display: none;">
     <div class="weui_mask"></div>
-    <div class="weui_dialog" style="border: 1px solid #ccc;">
+    <div class="weui_dialog" style="border: 1px solid #585858;">
         <div class="weui_dialog_hd"><strong class="weui_dialog_title">评论</strong><strong class="clo">X</strong></div>
         <div class="weui_dialog_bd">
             <?php $form = ActiveForm::begin(['options' => ['id' => 'formpl']]); ?>
@@ -117,6 +121,10 @@ use yii\widgets\ActiveForm;
     });
     $('.dz2').click(function () {
         $('.notice_content').html('已经点赞过了!');
+        $('#dialog').show();
+    });
+    $('.sc2').click(function () {
+        $('.notice_content').html('已经收藏过了!');
         $('#dialog').show();
     });
     $('.iknow').click(function () {

@@ -49,10 +49,16 @@ class ArticleController extends Controller
             $name = $user['username'];
         }
         $dianzan = (new Query())->select('id')->from('{{%article_like}}')->where(['aid'=>$id,'userid'=>$uid])->one();
+        $shoucang = (new Query())->select('id')->from('{{%article_collection}}')->where(['aid'=>$id,'userid'=>$uid])->one();
         if($dianzan){
             $dzres = 1;
         }else{
             $dzres = 2;
+        }
+        if($shoucang){
+            $scres = 1;
+        }else{
+            $scres = 2;
         }
         if($model->load(Yii::$app->request->post(),'') && Yii::$app->request->post('content')){
             $model->created_id = Yii::$app->request->post('uid');
@@ -71,6 +77,7 @@ class ArticleController extends Controller
                 'url' => $url,
                 'dzres' => $dzres,
                 'type' => $type,
+                'scres' => $scres,
             ]);
         }else{
             return $this->render('show', [
@@ -81,6 +88,7 @@ class ArticleController extends Controller
                 'uid' => $uid,
                 'dzres' => $dzres,
                 'type' => $type,
+                "scres" => $scres,
             ]);
         }
     }
