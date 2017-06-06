@@ -39,7 +39,7 @@ class ArticleController extends Controller
         $this->layout = false;
         $cmodel = new $this->cmodelClass();
         $content = $cmodel::findOne($id);
-        $where = " status =1 and id <> ".$content->id;
+        $where = " status =1 and id <> ".$content->id." and wtype = ".$content->wtype;
         $articlearr = $cmodel::find()->where($where)->orderBy('created_at desc')->limit(2)->all();
         $user =  (new Query())->select('nickname,username')->from('{{%user}}')->where(['id'=>$content->created_id])->one();
         if($user['nickname']){
