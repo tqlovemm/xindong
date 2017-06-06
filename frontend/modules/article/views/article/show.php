@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta content="initial-scale=1.0,maximum-scale=1.0, user-scalable=no, width=device-width" name="viewport">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 <body>
 <div id="nav">
         <?php $form = ActiveForm::begin(); ?>
-        <input type="text" name="content" class="plinput" value="" id="inputpl" placeholder="  写评论..." onfocus="this.placeholder=''" onblur="this.placeholder='  写评论...'"/>
+        <input type="text" name="content" onfocus="placeholder='';" onblur="this.placeholder='  写评论...';" class="plinput" value="" id="inputpl" placeholder="  写评论..." />
         <input type="hidden" name="aid" value="<?= $cmodel->id;?>" />
         <input type="hidden" name="uid" value="<?= $uid;?>" />
         <input type="image" src="/images/comment.png" class="pl" alt="submit" id="submit_text"/>
@@ -48,7 +48,8 @@ use yii\widgets\ActiveForm;
             <li>
                 <img src='<?= Html::encode("{$vo->wimg}") ?>'>
                 <div>
-                    <h2><?= Html::encode("{$vo->title}") ?></h2>
+                    <h2 style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"><?= Html::encode("{$vo->title}") ?></h2>
+                    <span style="display: block;font-size: 10px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"><?= Html::encode("{$vo->miaoshu}") ?></span>
                     <p><img src='/images/time.png'><?= date('Y-m-d',$vo->created_at) ?><i></i><img src='/images/like.png'><?= $vo->wdianzan ?></p>
                 </div>
             </li>
@@ -90,7 +91,7 @@ use yii\widgets\ActiveForm;
     $('.sc').click(function () {
         $.ajax({
             type: 'POST',
-                url: "http://api.13loveme.com/v11/article-collections",
+            url: "http://api.13loveme.com/v11/article-collections",
             data: {userid:<?= $uid;?>, aid:<?= $cmodel->id;?>},
             dataType: 'json',
             success: function(data){
@@ -102,18 +103,6 @@ use yii\widgets\ActiveForm;
             }
         });
     });
-$(function(){
-    var title = $(".related").offset().top-150;
-    var oDiv = document.getElementById("nav");
-    $(window).scroll(function(){
-        var this_scrollTop = $(this).scrollTop();
-        if(this_scrollTop>title){
-            oDiv.style = "display: inline;"
-        }else {
-            oDiv.style = "display: none;"
-        }
-    });
-});
 </script>
 <script>
     $(function(){
