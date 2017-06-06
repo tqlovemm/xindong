@@ -143,14 +143,11 @@ use yii\widgets\ActiveForm;
         }else {
             $.ajax({
                 type: 'POST',
-                url: "http://api.13loveme.com/v11/article-pls",
+                url: "http://localhost:84/v11/article-pls",
                 data: $('#formpl').serialize(),
                 dataType: 'json',
                 success: function(data){
-                    var code = data.code;
-                    if(code == '200'){
-                        btnClick2(1);
-                    }
+
                     $('.notice_content').html(data.data);
                     $('#plk').hide();
                     $('#dialog').show();
@@ -237,7 +234,6 @@ use yii\widgets\ActiveForm;
                                     +'</div></dt></dl>';
                             }
                         }else{
-                            me.lock();
                             me.noData();
                         }
                         setTimeout(function(){
