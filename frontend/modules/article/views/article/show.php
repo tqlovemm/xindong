@@ -143,7 +143,7 @@ use yii\widgets\ActiveForm;
         }else {
             $.ajax({
                 type: 'POST',
-                url: "http://localhost:84/v11/article-pls",
+                url: "http://api.13loveme.com/v11/article-pls",
                 data: $('#formpl').serialize(),
                 dataType: 'json',
                 success: function(data){
