@@ -31,7 +31,7 @@ class ArticleLikeController extends ActiveController {
     }
     public function actionCreate()
     {
-        header("Access-Control-Allow-Origin:http://api.13loveme.com:82");
+        header("Access-Control-Allow-Origin:".Yii::$app->params['hostname']);
         $model = new $this->modelClass();
         $model->load(Yii::$app->request->getBodyParams(), '');
         $aid = Yii::$app->request->getBodyParam('aid');
