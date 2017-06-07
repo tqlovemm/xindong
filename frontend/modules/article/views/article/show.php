@@ -140,6 +140,8 @@ use yii\widgets\ActiveForm;
         });
     }
     $('.pl').click(function () {
+        $('#inputpl').val("");
+        $('#inputpl').blur;
         $('#plk').show();
     });
     $('.clo').click(function () {
