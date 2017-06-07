@@ -8,6 +8,7 @@ use backend\modules\saveme\models\SavemeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\Query;
 
 class SavemeController extends Controller
 {
@@ -25,10 +26,17 @@ class SavemeController extends Controller
     public function actionIndex()
     {
         $searchModel = new SavemeSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $arr = $searchModel->search(Yii::$app->request->queryParams);
+        $bmcount = array();
+        for($i=0;$i<count($arr['data']);$i++){
+            $bm = (new Query())->select('saveme_id,id')->from('{{%saveme_apply}}')->where(['saveme_id'=>$arr['data'][$i]->id])->count();
+            $bmcount[$arr['data'][$i]->id] = $bm;
+        }
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $arr['data'],
+            'pages' => $arr['page'],
+            'bmcount' => $bmcount,
         ]);
     }
     public function actionView($id)
