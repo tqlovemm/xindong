@@ -19,6 +19,7 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?= $form->field($model, 'wtype')->textInput()->dropDownList($type) ?>
+    <?= $form->field($model, 'wlabel')->textInput()->dropDownList($label) ?>
     <?= $form->field($model,'content')->label("内容")->widget('common\widgets\ueditor\Ueditor',[
         'options'=>[
             'initialFrameHeight' => 300,
@@ -32,6 +33,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'wdianzan')->textInput()->label("点赞数") ?>
 
     <?= $form->field($model, 'hot')->textInput()->dropDownList([1=>'推荐',2=>'非推荐']) ?>
+    <?= $form->field($model, 'yuanchuang')->textInput()->dropDownList([1=>'原创',2=>'非原创']) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

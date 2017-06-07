@@ -38,6 +38,8 @@ class ArticleController extends Controller
                     //上传图片配置
                     'imageUrlPrefix' => $url, /* 图片访问路径前缀 */
                     'imagePathFormat' => "/uploads/{yyyy}{mm}{dd}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
+                    'videoUrlPrefix' => $url,
+                    'videoPathFormat' => "/uploads/{yyyy}{mm}{dd}/{time}{rand:6}",
                 ]
             ]
         ];
@@ -82,9 +84,15 @@ class ArticleController extends Controller
             for($i=0;$i<count($typeres);$i++){
                 $typearr[$typeres[$i]['tid']] = $typeres[$i]['typename'];
             }
+            $labelres = (new Query())->select('lid,labelname')->from('{{%article_label}}')->all();
+            $labelarr[0] = "无";
+            for($k=0;$k<count($labelres);$k++){
+                $labelarr[$labelres[$k]['lid']] = $labelres[$k]['labelname'];
+            }
             return $this->render('create', [
                 'model' => $model,
                 'type' => $typearr,
+                'label' => $labelarr,
             ]);
         }
     }
@@ -103,7 +111,7 @@ class ArticleController extends Controller
                 $model->wimg = $wimg;
             }
             if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['index']);
             }else{
                 return "添加失败";
             }
@@ -112,9 +120,15 @@ class ArticleController extends Controller
             for($i=0;$i<count($typeres);$i++){
                 $typearr[$typeres[$i]['tid']] = $typeres[$i]['typename'];
             }
+            $labelres = (new Query())->select('lid,labelname')->from('{{%article_label}}')->all();
+            $labelarr[0] = "无";
+            for($k=0;$k<count($labelres);$k++){
+                $labelarr[$labelres[$k]['lid']] = $labelres[$k]['labelname'];
+            }
             return $this->render('update', [
                 'model' => $model,
                 'type' => $typearr,
+                'label' => $labelarr,
             ]);
         }
     }

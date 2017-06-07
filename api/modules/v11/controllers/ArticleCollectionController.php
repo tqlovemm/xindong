@@ -48,6 +48,7 @@ class ArticleCollectionController extends ActiveController {
 
     public function actionCreate()
     {
+        header("Access-Control-Allow-Origin:http://api.13loveme.com:82");
         $model = new $this->modelClass();
         $model->load(Yii::$app->request->getBodyParams(), '');
         $aid = Yii::$app->request->getBodyParam('aid');
@@ -74,7 +75,7 @@ class ArticleCollectionController extends ActiveController {
         if($delall){
             $res = $model::deleteAll(['userid'=>$id]);
         }else{
-            $Collection = $model::find()->where(['id'=>$cid])->one();
+            $Collection = $model::find()->where(['id'=>$cid,'userid'=>$id])->one();
             if(!$Collection){
                 Response::show('202','操作失败','该数据不存在');
             }
