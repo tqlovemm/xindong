@@ -53,7 +53,7 @@ class ArticleCollection extends ActiveRecord
             }
         }
         return [
-            'id','article_id'=>function(){return $this->_article['id'];},'title'=>function(){return $this->_article['title'];},'miaoshu'=>function(){return $this->_article['miaoshu'];},'wimg'=>function(){return $this->_article['wimg'];},'article_created_at'=>function(){return $this->_article['created_at'];},"collection_created_at"=>"created_at",'url'=>function(){return "http://120.27.226.102:82/article/article/show?id=".$this->aid."&uid=".$this->userid;},'like_count'=>function(){return count($this->_like);},'islike'=>function(){return $this->_islike?1:0;},
+            'id','article_id'=>function(){return $this->_article['id'];},'title'=>function(){return $this->_article['title'];},'miaoshu'=>function(){return $this->_article['miaoshu'];},'wimg'=>function(){return $this->_article['wimg'];},'article_created_at'=>function(){return $this->_article['created_at'];},"collection_created_at"=>"created_at",'url'=>function(){return Yii::$app->params['hostname']."/article/article/show?id=".$this->aid."&uid=".$this->userid;},'like_count'=>function(){return count($this->_like);},'islike'=>function(){return $this->_islike?1:0;},
         ];
     }
 }
