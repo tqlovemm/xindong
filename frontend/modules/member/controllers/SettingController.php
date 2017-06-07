@@ -286,24 +286,7 @@ class SettingController extends BaseController
 
             //删除旧头像
 
-
-            if(!empty($model->file_1)){
-
-                $files = explode('/',$model->file_1);
-                $file = $files[count($files)-1];
-                if(file_exists("uploads/dangan/".$file))
-                    @unlink("uploads/dangan/".$file);
-            }
-
-
-            $model->file_1 = Yii::$app->request->getHostInfo().'/uploads/dangan/'.$fileName;
-
-            if($model->update()){
-
-                    $ex->file = $model->file_1;
-                    $ex->status = 5;
-                    $ex->update();
-            }
+            $model->update();
         }
         $ex = UserAvatarCheck::findOne(['user_id'=>Yii::$app->user->id]);
 
