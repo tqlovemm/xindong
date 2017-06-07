@@ -56,4 +56,11 @@ class Saveme extends \yii\db\ActiveRecord
             'status' => 'Status',
         ];
     }
+    public function getUser()
+    {
+        $arr = Yii::$app->db
+            ->createCommand("SELECT id,avatar,username,nickname FROM {{%user}}  WHERE id={$this->created_id}")
+            ->queryOne();
+        return $arr;
+    }
 }

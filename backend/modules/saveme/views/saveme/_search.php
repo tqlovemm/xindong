@@ -2,7 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+$this->registerCss("
+    .saveme-search:after{content:'.';height: 0;visibility: hidden;clear:both;display: block;}
+    .saveme-search .form-group{width:15%;float:left;margin-left: 3px;}
+");
 /* @var $this yii\web\View */
 /* @var $model backend\modules\saveme\models\SavemeSearch */
 /* @var $form yii\widgets\ActiveForm */
@@ -15,27 +18,14 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
-
     <?= $form->field($model, 'created_id') ?>
 
     <?= $form->field($model, 'address') ?>
 
     <?= $form->field($model, 'content') ?>
 
-    <?= $form->field($model, 'price') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'updated_at') ?>
-
-    <?php // echo $form->field($model, 'end_time') ?>
-
-    <?php // echo $form->field($model, 'status') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+    <div class="form-group" style="line-height: 80px;">
+        <?= Html::submitButton('查找', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

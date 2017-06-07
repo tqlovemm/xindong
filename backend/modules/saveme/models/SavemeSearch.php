@@ -5,6 +5,7 @@ namespace backend\modules\saveme\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\data\Pagination;
 use backend\modules\saveme\models\Saveme;
 
 /**
@@ -43,17 +44,7 @@ class SavemeSearch extends Saveme
     {
         $query = Saveme::find();
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
         $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
 
         $query->andFilterWhere([
             'id' => $this->id,
@@ -69,6 +60,14 @@ class SavemeSearch extends Saveme
             ->andFilterWhere(['like', 'content', $this->content])
             ->orderBy('created_at desc');
 
-        return $dataProvider;
+        $pagination = new Pagination([
+            'defaultPageSize' => 6,
+            'totalCount' => $query->count(),
+        ]);
+        $dataProvider = $query->offset($pagination->offset)->limit($pagination->limit)->all();
+
+        $arr['page'] = $pagination;
+        $arr['data'] = $dataProvider;
+        return $arr;
     }
 }
