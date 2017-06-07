@@ -39,6 +39,9 @@ class ArticleController extends Controller
         $this->layout = false;
         $cmodel = new $this->cmodelClass();
         $content = $cmodel::findOne($id);
+        if(!$content){
+            return null;
+        }
         $where = " status =1 and id <> ".$content->id." and wtype = ".$content->wtype;
         $articlearr = $cmodel::find()->where($where)->orderBy('created_at desc')->limit(2)->all();
         $type = (new Query())->select('typename')->from('{{%article_type}}')->where(['tid'=>$content->wtype])->one();
