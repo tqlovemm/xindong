@@ -58,7 +58,7 @@ use yii\widgets\ActiveForm;
             <?php } ?>
         </div>
         <div class="botm">
-            <span class="spanimg"><img src="/images/comment.png" class="pl" /></span>
+            <span class="spanimg"><img src="/images/comment.png" class="pl"/></span>
         </div>
         <div class="botm">
             <?php if($scres == 2){ ?>
@@ -113,6 +113,32 @@ use yii\widgets\ActiveForm;
     function btnClick3($id) {
         window.webkit.messageHandlers.shoucang.postMessage($id);
     }
+    function getnew(){
+        var result = '';
+        $.ajax({
+            type: 'GET',
+            url: "http://api.13loveme.com/v11/article-pls?aid="+<?= $cmodel->id;?>,
+            dataType: 'json',
+            success: function(data){
+                var code = data.code;
+                if(code == '200'){
+                    result +=   '<dl class="reply-list">'
+                        +'<dd class="operations-user"><div class="user-avatar">'
+                        +'<img src="'+data.data[0].avatar+'">'
+                        +'<span class="mod-mask mask"></span></div><div class="user-info">'
+                        +'<div class="user-name">'+data.data[0].nickname+'</div>'
+                        +'<div class="user-other">'
+                        +'<span class="times">'+data.data[0].time+'</span>'
+                        +'</div></div><div class="operations">'
+//                                    +'<a href="javascript:" class="button-light">赞(56)</a>'
+                        +'</div></dd><dt class="reply-content" style="font-size:16px;"><div class="current-content J_contentParent J_currentContent">'
+                        +'<span class="short-content">'+data.data[0].content+'</span>'
+                        +'</div></dt></dl>';
+                    $('.reply-inner').prepend(result);
+                }
+            }
+        });
+    }
     $('.pl').click(function () {
         $('#plk').show();
     });
@@ -147,7 +173,10 @@ use yii\widgets\ActiveForm;
                 data: $('#formpl').serialize(),
                 dataType: 'json',
                 success: function(data){
-
+                    var code = data.code;
+                    if(code == '200'){
+                        getnew();
+                    }
                     $('.notice_content').html(data.data);
                     $('#plk').hide();
                     $('#dialog').show();
