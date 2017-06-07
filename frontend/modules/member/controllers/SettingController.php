@@ -258,20 +258,12 @@ class SettingController extends BaseController
 
         $id = Yii::$app->user->id;
         $model = Profile::findOne(['user_id'=>$id]);
-        $ex = UserAvatarCheck::findOne(['user_id'=>Yii::$app->user->id]);
 
-        if(empty($ex)){
-
-            $user_avatar = new UserAvatarCheck();
-            $user_avatar->save();
-        }
         if(empty($model)){
 
             $user_profile = new Profile();
             $user_profile->save();
         }
-
-        Yii::setAlias('@upload', '@webroot/uploads/dangan/');
 
         if (Yii::$app->request->isPost && !empty($_FILES)) {
 
@@ -288,9 +280,8 @@ class SettingController extends BaseController
 
             $model->update();
         }
-        $ex = UserAvatarCheck::findOne(['user_id'=>Yii::$app->user->id]);
 
-        return $this->render('avatar-update',['model'=>$model,'status'=>$ex->status]);
+        return $this->render('avatar-update',['model'=>$model]);
     }
 
 
