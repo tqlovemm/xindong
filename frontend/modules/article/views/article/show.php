@@ -117,7 +117,7 @@ use yii\widgets\ActiveForm;
         var result = '';
         $.ajax({
             type: 'GET',
-            url: "http://app.13loveme.com/v11/article-pls?aid="+<?= $cmodel->id;?>,
+            url: "https://app.13loveme.com/v11/article-pls?aid="+<?= $cmodel->id;?>,
             dataType: 'json',
             success: function(data){
                 var code = data.code;
@@ -171,7 +171,7 @@ use yii\widgets\ActiveForm;
         }else {
             $.ajax({
                 type: 'POST',
-                url: "http://app.13loveme.com/v11/article-pls",
+                url: "https://app.13loveme.com/v11/article-pls",
                 data: $('#formpl').serialize(),
                 dataType: 'json',
                 success: function(data){
@@ -192,7 +192,7 @@ use yii\widgets\ActiveForm;
     $('.sc').click(function () {
         $.ajax({
             type: 'POST',
-            url: "http://app.13loveme.com/v11/article-collections",
+            url: "https://app.13loveme.com/v11/article-collections",
             data: {userid:<?= $uid;?>, aid:<?= $cmodel->id;?>},
             dataType: 'json',
             success: function(data){
@@ -213,7 +213,7 @@ use yii\widgets\ActiveForm;
     $('.dz').click(function () {
         $.ajax({
             type: 'POST',
-            url: "http://app.13loveme.com/v11/article-likes",
+            url: "https://app.13loveme.com/v11/article-likes",
             data: {userid:<?= $uid;?>, aid:<?= $cmodel->id;?>},
             dataType: 'json',
             success: function(data){
