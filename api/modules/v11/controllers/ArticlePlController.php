@@ -32,7 +32,7 @@ class ArticlePlController extends ActiveController {
 
     public function actionIndex()
     {
-        header("Access-Control-Allow-Origin:http://api.13loveme.com:82");
+        header("Access-Control-Allow-Origin:".Yii::$app->params['hostname']);
         $aid = intval($_GET['aid']);
         if(empty($aid)){
             Response::show('202','not','not data!');
@@ -61,7 +61,7 @@ class ArticlePlController extends ActiveController {
 
     public function actionCreate()
     {
-        header("Access-Control-Allow-Origin:http://api.13loveme.com:82");
+        header("Access-Control-Allow-Origin:".Yii::$app->params['hostname']);
         $model = new $this->modelClass();
         $model->load(Yii::$app->request->getBodyParams(),'');
         $aid = Yii::$app->request->getBodyParam('aid');
