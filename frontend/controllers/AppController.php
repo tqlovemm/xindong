@@ -3,8 +3,12 @@ namespace frontend\controllers;
 
 use backend\modules\app\models\AppOrderList;
 use common\components\PushConfig;
+use common\components\SaveToLog;
 use common\components\Vip;
+use common\Qiniu\QiniuUploader;
 use frontend\modules\weixin\models\VoteSignInfo;
+use yii\helpers\ArrayHelper;
+use yii\myhelper\AccessToken;
 use yii\web\Controller;
 
 class AppController extends Controller
@@ -29,8 +33,9 @@ class AppController extends Controller
         Vip::sort();
     }
 
-    public function actionT(){
+    public function actionRecord(){
 
-        VoteSignInfo::updateAllCounters(['vote_count'=>-1],['id'=>20]);
+        SaveToLog::log("tqtqtqttqtqt");
     }
+
 }

@@ -55,7 +55,7 @@ $this->registerCss('
     }
 </script>
 <?php endif;?>
-<?php if ($this->beginCache($id=2217, ['duration' => 86400])) :?>
+<?php if ($this->beginCache($id=2218, ['duration' => 86400])) :?>
 <div class="home">
         <div id="focus" class="focus visible-md visible-lg">
             <div class="hd">
@@ -64,10 +64,10 @@ $this->registerCss('
             <div class="bd">
                 <ul>
                     <li>
-                        <img class="img-responsive" src="http://omldemh2u.bkt.clouddn.com/images/home/slide_01.jpg">
+                        <img class="img-responsive" src="http://omldemh2u.bkt.clouddn.com/images/home/home_20170605155446.jpg">
                     </li>
                     <li>
-                        <img class="img-responsive" src="http://omldemh2u.bkt.clouddn.com/images/home/shisan-3pc.jpg">
+                        <img class="img-responsive" src="http://omldemh2u.bkt.clouddn.com/images/home/home_20170605155454.jpg">
                     </li>
                 </ul>
             </div>

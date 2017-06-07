@@ -42,7 +42,9 @@ class AppSpecialDatingSignUpController extends ActiveController
     public function actionIndex() {
 
         $model = $this->modelClass;
-        $query =  $model::find();
+        $user_id = !empty($_GET['user_id'])?$_GET['user_id']:10001;
+
+        $query =  $model::find()->where(['user_id'=>$user_id]);
 
         $area = Yii::$app->request->get('area');
         if(!empty($area)&&$area==1){

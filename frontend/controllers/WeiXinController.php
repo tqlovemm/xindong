@@ -177,13 +177,6 @@ class WeiXinController extends Controller
                     'name'=>urlencode("新人必看"),
                     'sub_button'=>array(
                         array(
-                            "type"=>"view",
-                            "name"=>urlencode("花样童年照"),
-                            "url"=>"http://13loveme.com/weixin/weichat-vote/vote-woman",
-                            "sub_button"=>[],
-
-                        ),
-                        array(
                             'type'=>'view',
                             'name'=>urlencode("平台简介"),
                             'url'=>'http://mp.weixin.qq.com/s/IhEg7rG-ls01lFpBAGri6w',
@@ -206,7 +199,7 @@ class WeiXinController extends Controller
                 ),
                 array(
                     "type"=>"view",
-                    "name"=>urlencode("加入平台"),
+                    "name"=>urlencode("开始交友"),
                     "url"=>"http://www.13loveme.com/contact",
                     "sub_button"=>[],
                 ),
@@ -337,14 +330,15 @@ class WeiXinController extends Controller
                         $this->news($data);
                     }else{
                         $content = "欢迎来到有节操有内涵有故事的十三平台！\n
+<a href='http://www.13loveme.com/contact'>☞PAO圈.·入口☜</a>
+撩起来！约一啪！\n
 <a href='http://mp.weixin.qq.com/s/IhEg7rG-ls01lFpBAGri6w'>☞如何.·玩转☜</a>
 十三在手！天下我有！\n
 <a href='http://13loveme.com/date-past?title=%E6%B1%9F%E8%8B%8F&company=13pt'>☞那些.·觅约☜</a>
 速效配对！有求必硬！\n
 <a href='http://mp.weixin.qq.com/mp/homepage?__biz=MzAxMDIwMDIxMw==&hid=4&sn=422bb1b056dd63f8c212eb9fedcfbb05#wechat_redirect'>☞玩点.·神马☜</a>
-真实互动，展开自我！\n
-<a href='http://www.13loveme.com/contact'>☞PAO圈.·入口☜</a>
-撩起来！约一啪！";
+真实互动，展开自我！
+";
                         $this->text($content);
                     }
                 }
@@ -458,6 +452,10 @@ class WeiXinController extends Controller
                     break;
                 case "十三叔":
                     $content = "http://pan.baidu.com/s/1o8Bdg2e 密码：0bf2";
+                    $this->text($content);
+                    break;
+                case "资源":
+                    $content = " https://btso.pw/search/%E7%86%8A%E7%94%B0%E6%9B%9C%E5%AD%90";
                     $this->text($content);
                     break;
             }
