@@ -30,16 +30,15 @@ class ArticleController extends Controller
     }
     public function actions()
     {
-        $url = Yii::$app->request->hostInfo;
         return [
             'ueditor' => [
                 'class' => 'common\widgets\ueditor\UeditorAction',
                 'config'=>[
                     //上传图片配置
-                    'imageUrlPrefix' => $url, /* 图片访问路径前缀 */
-                    'imagePathFormat' => "/uploads/{yyyy}{mm}{dd}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
-                    'videoUrlPrefix' => $url,
-                    'videoPathFormat' => "/uploads/{yyyy}{mm}{dd}/{time}{rand:6}",
+                    'imageUrlPrefix' => Yii::$app->params['appimages'], /* 图片访问路径前缀 */
+                    'imagePathFormat' => "uploads/qinhua/{yyyy}{mm}{dd}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
+                    'videoUrlPrefix' => Yii::$app->params['appimages'],
+                    'videoPathFormat' => "uploads/qinhua/{yyyy}{mm}{dd}/{time}{rand:6}",
                 ]
             ]
         ];
@@ -105,8 +104,9 @@ class ArticleController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if($_FILES['wimg']['name']){
                 $qn = new QiniuUploader('wimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+                $path = 'uploads/qinhua/';
                 $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.uniqid().substr($_FILES['wimg']['name'], strrpos($_FILES['wimg']['name'], '.'));
-                $qiniu = $qn->upload_water('appimages',"uploads/qinhua/$mkdir");
+                $qiniu = $qn->upload_app('appimages',$path.$mkdir,$_FILES['wimg']['tmp_name']);
                 $wimg =  Yii::$app->params['appimages'].$qiniu['key'];
                 $model->wimg = $wimg;
             }
