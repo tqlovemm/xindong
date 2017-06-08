@@ -101,7 +101,7 @@ class SavemeController extends ActiveController {
     	if($img){
     		$img = array_unique(array_filter(explode(";",Yii::$app->request->getBodyParam('img'))));
         }
-    	$model->status = 3;
+    	$model->status = 1;
         $model->price = 98;
 		if(!$model->save()){
 			// return $model->getFirstErrors();
