@@ -30,15 +30,16 @@ class ArticleController extends Controller
     }
     public function actions()
     {
+        $url = Yii::$app->request->hostInfo;
         return [
             'ueditor' => [
                 'class' => 'common\widgets\ueditor\UeditorAction',
                 'config'=>[
                     //上传图片配置
-                    'imageUrlPrefix' => Yii::$app->params['appimages'], /* 图片访问路径前缀 */
-                    'imagePathFormat' => "uploads/qinhua/{yyyy}{mm}{dd}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
-                    'videoUrlPrefix' => Yii::$app->params['appimages'],
-                    'videoPathFormat' => "uploads/qinhua/{yyyy}{mm}{dd}/{time}{rand:6}",
+                    'imageUrlPrefix' => $url, /* 图片访问路径前缀 */
+                    'imagePathFormat' => "/uploads/qinhua/{yyyy}{mm}{dd}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
+                    'videoUrlPrefix' => $url,
+                    'videoPathFormat' => "/uploads/qinhua/{yyyy}{mm}{dd}/{time}{rand:6}",
                 ]
             ]
         ];
