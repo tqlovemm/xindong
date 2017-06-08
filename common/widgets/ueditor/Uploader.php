@@ -1,6 +1,9 @@
 <?php
 namespace common\widgets\ueditor;
 
+use Yii;
+use common\Qiniu\QiniuUploader;
+
 class Uploader
 {
     private $fileField; //文件域名
@@ -101,12 +104,22 @@ class Uploader
             $this->stateInfo = $this->getStateInfo("ERROR_DIR_NOT_WRITEABLE");
             return;
         }
-        //移动文件
-        if (!(move_uploaded_file($file["tmp_name"], $this->filePath) && file_exists($this->filePath))) { //移动失败
-            $this->stateInfo = $this->getStateInfo("ERROR_FILE_MOVE");
-        } else { //移动成功
+        //七牛
+        $qn = new QiniuUploader($this->fileField,Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
+        $qiniu = $qn->upload_app('appimages',$this->fullName,$file['tmp_name']);
+        $wimg =  Yii::$app->params['appimages'].$qiniu['key'];
+        if($wimg){
             $this->stateInfo = $this->stateMap[0];
+        }else{
+            $this->stateInfo = $this->getStateInfo("ERROR_FILE_MOVE");
         }
+
+        //移动文件
+//        if (!(move_uploaded_file($file["tmp_name"], $this->filePath) && file_exists($this->filePath))) { //移动失败
+//            $this->stateInfo = $this->getStateInfo("ERROR_FILE_MOVE");
+//        } else { //移动成功
+//            $this->stateInfo = $this->stateMap[0];
+//        }
     }
     /**
      * 处理base64编码的图片上传
