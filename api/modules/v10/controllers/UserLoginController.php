@@ -66,8 +66,7 @@ class UserLoginController extends Controller
             Response::show(401,"请使用第三方登陆","当前账号为第三方登陆账号");
         }
 
-        if($user){
-
+        if(!empty($user)){
             $hash = Yii::$app->security->validatePassword($password,$user['password_hash']);
             if($hash){
                 if(!empty($cid)&&strlen($cid)>=32){
