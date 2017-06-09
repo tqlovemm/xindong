@@ -470,7 +470,7 @@ function IGtTransmissionTemplateDemo($badge, $title, $msg, $payload){
     $apn->badge=$badge;
     $apn->sound="";
     $apn->add_customMsg("payload",$payload);
-    $apn->contentAvailable=0;
+    $apn->contentAvailable=1;
    // $apn->category="ACTIONABLE";
     $apn->category=null;
     $template->set_apnInfo($apn);
