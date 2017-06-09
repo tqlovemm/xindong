@@ -98,7 +98,7 @@ use yii\widgets\ActiveForm;
             max_file_size: '1000mb',
             flash_swf_url: 'bower_components/plupload/js/Moxie.swf',
             dragdrop: true,
-            chunk_size: '4mb',
+            chunk_size: '0mb',
             multi_selection: !(mOxie.Env.OS.toLowerCase()==="ios"),
             uptoken_url: '/article/article/gettoken',
             // uptoken_func: function(){
