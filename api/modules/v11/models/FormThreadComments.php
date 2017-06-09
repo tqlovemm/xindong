@@ -86,13 +86,10 @@ class FormThreadComments extends ActiveRecord
 
         if(!empty($model)){
             $cuid = ArrayHelper::map($model,'first_id','first_id');
+        }
 
-            foreach ($model as $item){
-                if(!empty($item['second_id'])){
-                    array_push($tsuid,$item['first_id']);
-                }
-            }
-
+        if(!empty($this->second_id)){
+            array_push($tsuid,$this->second_id);
         }
 
         $uids = array_unique(array_merge($cuid, $tuid));
