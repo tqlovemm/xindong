@@ -11,6 +11,7 @@ namespace api\modules\v10\controllers;
 use api\modules\v4\models\PredefinedJiecaoCoin;
 use api\modules\v4\models\User;
 use api\modules\v9\models\MemberSort;
+use frontend\models\UserData;
 use Yii;
 use yii\db\Query;
 use yii\myhelper\Decode;
@@ -39,12 +40,21 @@ class MemberSortSecondController extends Controller
             Response::show(210,'参数不正确');
         }
         $res = (new PredefinedJiecaoCoin())->find()->where(['type'=>1,'member_type'=>0,'status'=>10])->orderBy('money asc')->all();
-        $res2 = (new Query())->select('jiecao_coin')->from('{{%user_data}}')->where(['user_id'=>$id])->one();
+        $userData = new UserData();
+
+        if(($res2=$userData::findOne($id))==null){
+            $userData->user_id = $id;
+            $userData->jiecao_coin = 0;
+            $userData->save();
+            $coin = $userData->jiecao_coin;
+        }else{
+            $coin = $res2['jiecao_coin'];
+        }
         $data = array();
-        $data['jiecao_coin'] = $res2['jiecao_coin'];
-        array_fill_keys($data,$res2['jiecao_coin']);
+        $data['jiecao_coin'] = $coin;
+        array_fill_keys($data,$coin);
         $data['member'] = $res;
-        $data['is_status'] = 0; //1审核环境；0生产环境
+        $data['is_status'] = 1; //1审核环境；0生产环境
         return $data;
 
     }
@@ -60,17 +70,17 @@ class MemberSortSecondController extends Controller
         $lunbo = (new Query())->from('{{%app_lunbo}}')->where('')->all();
 
         //审核状态 1 ，生产状态 0
-        $status = 0;
+        $status = 1;
 
         if($status == 1){
 
-            $result = MemberSort::find()->where(['flag'=>[1]])->orderby(' groupid DESC ')->all();
+            $result = MemberSort::find()->where(['flag'=>[1]])->andWhere('groupid!=2')->orderby(' groupid DESC ')->all();
 
             for($i = 0 ; $i < count($result); $i ++){
                 if($i == 0){
                     $result[0]['price_1'] = 4998;
                     $result[0]['giveaway'] = 1880;
-                }else if($i == 1){
+                }else{
                     $result[1]['price_1'] = 1998;
                     $result[1]['giveaway'] = 990;
                 }
