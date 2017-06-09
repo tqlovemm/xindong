@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\Qiniu\QiniuUploader;
+use common\Qiniu\Auth;
 use yii\db\Query;
 
 
@@ -164,5 +165,11 @@ class ArticleController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionGettoken(){
+        $auth = new Auth(Yii::$app->params['qnak1'], Yii::$app->params['qnsk1']);
+        $arr['uptoken'] = $auth->uploadToken('appimages');
+        return json_encode($arr);
     }
 }
