@@ -258,20 +258,12 @@ class SettingController extends BaseController
 
         $id = Yii::$app->user->id;
         $model = Profile::findOne(['user_id'=>$id]);
-        $ex = UserAvatarCheck::findOne(['user_id'=>Yii::$app->user->id]);
 
-        if(empty($ex)){
-
-            $user_avatar = new UserAvatarCheck();
-            $user_avatar->save();
-        }
         if(empty($model)){
 
             $user_profile = new Profile();
             $user_profile->save();
         }
-
-        Yii::setAlias('@upload', '@webroot/uploads/dangan/');
 
         if (Yii::$app->request->isPost && !empty($_FILES)) {
 
@@ -286,28 +278,10 @@ class SettingController extends BaseController
 
             //删除旧头像
 
-
-            if(!empty($model->file_1)){
-
-                $files = explode('/',$model->file_1);
-                $file = $files[count($files)-1];
-                if(file_exists("uploads/dangan/".$file))
-                    @unlink("uploads/dangan/".$file);
-            }
-
-
-            $model->file_1 = Yii::$app->request->getHostInfo().'/uploads/dangan/'.$fileName;
-
-            if($model->update()){
-
-                    $ex->file = $model->file_1;
-                    $ex->status = 5;
-                    $ex->update();
-            }
+            $model->update();
         }
-        $ex = UserAvatarCheck::findOne(['user_id'=>Yii::$app->user->id]);
 
-        return $this->render('avatar-update',['model'=>$model,'status'=>$ex->status]);
+        return $this->render('avatar-update',['model'=>$model]);
     }
 
 

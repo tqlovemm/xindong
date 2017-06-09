@@ -10,7 +10,6 @@ use Yii;
  * @property integer $user_id
  * @property integer $gender
  * @property integer $weight
- * @property string $file_1
  * @property integer $height
  * @property string $birthdate
  * @property string $signature
@@ -39,7 +38,7 @@ class Profile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['mark','make_friend','hobby','file_1','address', 'description'], 'string'],
+            [['mark','make_friend','hobby','address', 'description'], 'string'],
             [['user_id','height','weight'], 'integer'],
             [['birthdate'], 'safe'],
             [['signature'], 'string', 'max' => 120],
@@ -58,7 +57,6 @@ class Profile extends \yii\db\ActiveRecord
             'user_id' => Yii::t('app', 'User ID'),
             'gender' => Yii::t('app', 'Gender'),
             'birthdate' => '生日',
-            'file_1'=>'档案照1',
             'signature' => '签名',
             'address' =>'地址',
             'address_1' =>'地址一',
