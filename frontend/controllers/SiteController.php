@@ -526,10 +526,6 @@ class SiteController extends BaseController
 
         $this->layout = 'basic';
 
-        $session = Yii::$app->session;
-        if(!$session->isActive){
-            $session->open();
-        }
         $model = WebsiteContent::find();
         $boy_1 = $model->where(['website_id'=>2,'status'=>10])->asArray()->all();
         $now = date('H',time());
@@ -537,23 +533,11 @@ class SiteController extends BaseController
         $girls =  $model->where(['website_id'=>3,'status'=>10])->asArray()->all();
         $boys = array_merge($boy_1,$boy_2);
 
-        if(!empty($session->get('contact_session_boy'))){
-            $boy_rand = $session->get('contact_session_boy');
-            $girl_rand = $session->get('contact_session_girl');
-        }else{
-            $session->set('contact_session_boy',mt_rand(0,count($boys)-1));
-            $session->set('contact_session_girl',mt_rand(0,count($girls)-1));
-            $boy_rand = $session->get('contact_session_boy');
-            $girl_rand = $session->get('contact_session_girl');
-        }
+        $boy_rand = mt_rand(0,count($boys)-1);
+        $girl_rand = mt_rand(0,count($girls)-1);
 
-        if(empty($boys[$boy_rand])||empty($girls[$girl_rand])){
-            $session->destroy();
-            return $this->redirect('contact');
-        }
+
         return $this->render('contact',['boy'=>$boys[$boy_rand],'girl'=>$girls[$girl_rand]]);
-
-
     }
 
     /**
