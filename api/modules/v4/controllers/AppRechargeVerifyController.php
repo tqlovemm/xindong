@@ -61,19 +61,9 @@ class AppRechargeVerifyController extends ActiveController
 
         }elseif($model->level>1&&$model->level<5){
 
-            $member_price = (new Query())->select('price_1')->from('pre_member_sorts')->where(['flag'=>1])->all();
-            $price = ArrayHelper::map($member_price,'price_1','price_1');
-            if(!in_array($model->number,$price)){
-
-                throw new ForbiddenHttpException('非法操作');
-
-            }else{
-
-                $model->subject = 2;
-                $model->type="会员升级";
-                Yii::$app->db->createCommand("update pre_user set groupid = {$model->level} where id={$model->user_id}")->execute();
-            }
-
+            $model->subject = 2;
+            $model->type="会员升级";
+            Yii::$app->db->createCommand("update pre_user set groupid = {$model->level} where id={$model->user_id}")->execute();
 
         }else{
             Response::show(2501,'失败','level参数错误');
