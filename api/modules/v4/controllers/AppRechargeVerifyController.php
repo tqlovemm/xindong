@@ -59,19 +59,20 @@ class AppRechargeVerifyController extends ActiveController
             $model->type="节操币充值";
             Yii::$app->db->createCommand("update pre_user_data set jiecao_coin = jiecao_coin+{$total} where user_id={$model->user_id}")->execute();
 
+            return $model;
         }elseif($model->level>1&&$model->level<5){
 
             $model->subject = 2;
             $model->type="会员升级";
             Yii::$app->db->createCommand("update pre_user set groupid = {$model->level} where id={$model->user_id}")->execute();
 
+            $data = array('groupid'=>$model->level);
+            Response::show(200,$data,$data);
         }else{
             Response::show(2501,'失败','level参数错误');
         }
 
-        $data = array('groupid'=>$model->level);
 
-        Response::show(200,$data,$data);
     }
 
     public function actionCreate2()
