@@ -69,8 +69,7 @@ class AppRechargeVerifyController extends ActiveController
             Response::show(2501,'失败','level参数错误');
         }
 
-
-        return $model;
+        return $model->level;
     }
 
     public function actionCreate2()
