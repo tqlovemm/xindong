@@ -544,12 +544,12 @@ class SiteController extends BaseController
         $cache = Yii::$app->cache;
         if(($count = $cache->get($name))!==false){
             if($count>=$data){
-                $cache->set($name,0);
+                $cache->set($name,0,86400);
             }else{
-                $cache->set($name,++$count);
+                $cache->set($name,++$count,86400);
             }
         }else{
-            $cache->set($name,0);
+            $cache->set($name,0,86400);
         }
         return $cache->get($name);
     }
