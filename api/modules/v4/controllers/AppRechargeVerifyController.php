@@ -69,9 +69,9 @@ class AppRechargeVerifyController extends ActiveController
             Response::show(2501,'失败','level参数错误');
         }
 
-        $data = ['groupid'=>$model->level];
+        $data = array('groupid'=>$model->level);
 
-        return json_encode($data);
+        Response::show(200,$data,$data);
     }
 
     public function actionCreate2()
