@@ -533,11 +533,25 @@ class SiteController extends BaseController
         $girls =  $model->where(['website_id'=>3,'status'=>10])->asArray()->all();
         $boys = array_merge($boy_1,$boy_2);
 
-        $boy_rand = mt_rand(0,count($boys)-1);
-        $girl_rand = mt_rand(0,count($girls)-1);
-
+        $boy_rand = $this->rand_cache(count($boys)-1,'boy_rand');
+        $girl_rand = $this->rand_cache(count($girls)-1,'girl_rand');
 
         return $this->render('contact',['boy'=>$boys[$boy_rand],'girl'=>$girls[$girl_rand]]);
+    }
+
+
+    protected function rand_cache($data,$name){
+        $cache = Yii::$app->cache;
+        if(($count = $cache->get($name))!==false){
+            if($count>=$data){
+                $cache->set($name,0);
+            }else{
+                $cache->set($name,++$count);
+            }
+        }else{
+            $cache->set($name,0);
+        }
+        return $cache->get($name);
     }
 
     /**
