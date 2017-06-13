@@ -54,7 +54,11 @@ class SavemeInfoController extends ActiveController {
             'totalCount' => $save_query->count(),
         ]);
         $saveme_comment = (new Query())->select('saveme_id,to_userid')->from('{{%saveme_comment}}')->where(['saveme_id'=>$sids,"created_id"=>$id])->orderBy('created_at desc')->all();
-        $saveme_record = (new Query())->select('boy_id')->from('{{%saveme_record}}')->where(['saveme_id'=>$sids,"boy_id"=>$id])->one();
+        $saveme_record = (new Query())->select('girl_id')->from('{{%saveme_record}}')->where(["created_id"=>$id])->all();
+        $records = array();
+        for($o=0;$o<count($saveme_record);$o++){
+            $records[] = $saveme_record[$o]['girl_id'];
+        }
         $maxpage = ceil($pagination->totalCount/$pagination->defaultPageSize);
         $res = $save_query->orderBy('created_at desc')->offset($pagination->offset)->limit($pagination->limit)->all();
         for ($k=0; $k < count($res); $k++) { 
@@ -64,7 +68,7 @@ class SavemeInfoController extends ActiveController {
                     $res[$k]['is_pl'] = 1;
                 }
             }
-            if($res[$k]['status'] == 1){
+            if(in_array($res[$k]['created_id'],$records)){
                 $res[$k]['is_dh'] = 1;
             }
         }

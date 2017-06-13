@@ -33,8 +33,8 @@ class SavemeRecord extends ActiveRecord
     public function rules()
     {
         return [
-            [['saveme_id', 'boy_id', 'girl_id', 'content', 'status'], 'required'],
-            [['saveme_id', 'boy_id', 'girl_id', 'created_at', 'updated_at', 'status'], 'integer'],
+            [['saveme_id', 'boy_id', 'girl_id','created_id', 'content', 'status'], 'required'],
+            [['saveme_id', 'boy_id', 'girl_id','created_id', 'created_at', 'updated_at', 'status'], 'integer'],
             [['content'], 'string', 'max' => 255]
         ];
     }
@@ -48,7 +48,8 @@ class SavemeRecord extends ActiveRecord
             'id' => 'ID',
             'saveme_id' => 'Saveme ID',
             'created_id' => 'Created ID',
-            'to_userid' => 'To Userid',
+            'boy_id' => 'boy_id',
+            'girl_id' => 'girl_id',
             'content' => 'Content',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
