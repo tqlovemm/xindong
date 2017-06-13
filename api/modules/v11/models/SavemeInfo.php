@@ -19,6 +19,8 @@ class SavemeInfo extends ActiveRecord
 {
     public $_user;
     public $is_overdue;
+    public $is_pl = 0;
+    public $is_dh = 0;
     /**
      * @inheritdoc
      */
@@ -47,7 +49,7 @@ class SavemeInfo extends ActiveRecord
             $this->is_overdue = 2;
         }
         return [
-            'apply_id'=>'id','saveme_id', 'apply_uid', 'created_at','updated_at', 'status','nickname'=>function(){return $this->_user['nickname'];},'level'=>function(){return $this->_user['groupid'];},'avatar'=>function(){return $this->_user['avatar'];},'is_overdue'=>function(){return $this->is_overdue;},'sex'=>function(){return $this->_user['sex'];},'address',
+            'apply_id'=>'id','saveme_id', 'apply_uid', 'created_at','updated_at', 'status','nickname'=>function(){return $this->_user['nickname'];},'level'=>function(){return $this->_user['groupid'];},'avatar'=>function(){return $this->_user['avatar'];},'is_overdue'=>function(){return $this->is_overdue;},'sex'=>function(){return $this->_user['sex'];},'address','is_pl','is_dh'
         ];
     }
 

@@ -126,11 +126,15 @@ class SavemeController extends ActiveController {
         }
         $saveme_id = $query['id'];
         $saveme_comment = (new Query())->select('to_userid')->from('{{%saveme_comment}}')->where(['saveme_id'=>$saveme_id,"created_id"=>$id])->orderBy('created_at desc')->one();
+        $saveme_record = (new Query())->select('boy_id')->from('{{%saveme_record}}')->where(['saveme_id'=>$saveme_id,"girl_id"=>$id])->one();
         $model2 = new SavemeInfo;
         $saveme_apply = $model2::find()->where(['and',['=','saveme_id',$saveme_id],['<>','type',2]])->orderBy('created_at desc')->all();
         for($i=0;$i<count($saveme_apply);$i++){
             if($saveme_apply[$i]['apply_uid'] == $saveme_comment['to_userid']){
-                $saveme_apply[$i]['status'] = 3;
+                $saveme_apply[$i]['is_pl'] = 1;
+            }
+            if($saveme_apply[$i]['apply_uid'] == $saveme_record['boy_id']){
+                $saveme_apply[$i]['is_dh'] = 1;
             }
         }
         if(!$saveme_apply){
