@@ -64,6 +64,7 @@ class SavemeRecordController extends ActiveController {
         if($recordres && (($time-$recordres['created_at'])<=(7*3600*24)) && $recordres['created_id'] != $created_user['id']){
             $res = Yii::$app->db->createCommand("update pre_saveme_apply set status = 1 where apply_uid = {$boy_id} AND saveme_id = {$saveme_id}")->execute();
         }
+        
         $model->saveme_id = $saveme_id;
         $model->girl_id = $girl_id;
         $model->boy_id = $boy_id;
