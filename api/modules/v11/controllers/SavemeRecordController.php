@@ -32,11 +32,10 @@ class SavemeRecordController extends ActiveController {
     public function actionCreate(){
         $model = new $this->modelClass();
         $model->load(Yii::$app->request->getBodyParams(), '');
-//        $created_id = Yii::$app->request->getBodyParam('created_id');
-//        $decode = new yii\myhelper\Decode();
-//        if(!$decode->decodeDigit($created_id)){
-//            Response::show(210,'参数不正确');
-//        }
+        $decode = new yii\myhelper\Decode();
+        if(!$decode->decodeDigit($model->created_id)){
+            Response::show(210,'参数不正确');
+        }
         $saveme_id = $model->saveme_id;
         $boy_id = $model->boy_id;
         $girl_id = $model->girl_id;
