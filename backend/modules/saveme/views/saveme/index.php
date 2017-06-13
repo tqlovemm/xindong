@@ -30,7 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <ul class="list">
         <?php foreach ($dataProvider as $vo): ?>
             <li>
-                <img src='<?= Html::encode("{$vo->User['avatar']}") ?>'>
+                <span>
+                <img src='<?= Html::encode("{$vo->Photo['path']}") ?>' height="254px">
+                </span>
                 <div>
                     <h2>发布人ID：<?= $vo->User['id']; ?></h2>
                     <p>发布人：<?= $vo->User['nickname']?$vo->User['nickname']:$vo->User['username']; ?><p/>
