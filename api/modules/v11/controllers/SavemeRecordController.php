@@ -42,10 +42,10 @@ class SavemeRecordController extends ActiveController {
         }
         $model = new $this->modelClass();
         $model->load(Yii::$app->request->getBodyParams(), '');
-//        $decode = new yii\myhelper\Decode();
-//        if(!$decode->decodeDigit($created_user['id'])){
-//            Response::show(210,'参数不正确');
-//        }
+        $decode = new yii\myhelper\Decode();
+        if(!$decode->decodeDigit($created_user['id'])){
+            Response::show(210,'参数不正确');
+        }
         if($created_user['sex'] == 1){
             $girl_id = $created_user['id'];
             $boy_id = $to_user['id'];
@@ -64,7 +64,7 @@ class SavemeRecordController extends ActiveController {
         if($recordres && (($time-$recordres['created_at'])<=(7*3600*24)) && $recordres['created_id'] != $created_user['id']){
             $res = Yii::$app->db->createCommand("update pre_saveme_apply set status = 1 where apply_uid = {$boy_id} AND saveme_id = {$saveme_id}")->execute();
         }
-        
+
         $model->saveme_id = $saveme_id;
         $model->girl_id = $girl_id;
         $model->boy_id = $boy_id;
