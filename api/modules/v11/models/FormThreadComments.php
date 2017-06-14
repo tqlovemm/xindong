@@ -1,9 +1,7 @@
 <?php
 namespace api\modules\v11\models;
 
-use app\components\db\ActiveRecord;
 use common\components\PushConfig;
-use common\components\SaveToLog;
 use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "pre_app_form_thread_comments".
@@ -17,7 +15,7 @@ use yii\helpers\ArrayHelper;
  * @property integer $first_id
  * @property integer $second_id
  */
-class FormThreadComments extends ActiveRecord
+class FormThreadComments extends \yii\db\ActiveRecord
 {
     private $_first;
     private $_second;
@@ -132,7 +130,21 @@ class FormThreadComments extends ActiveRecord
             \Yii::$app->db->createCommand()->batchInsert('pre_app_form_thread_push_msg', ['wid','user_id','writer_id','content','created_at','updated_at'],$data)->execute();
         }
     }
+    public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert)){
 
+            if($this->isNewRecord){
+                $this->created_at = time();
+                $this->updated_at = time();
+            }else{
+                $this->updated_at = time();
+            }
+
+            return true;
+        }
+        return false;
+    }
     /**
      * @inheritdoc
      */
