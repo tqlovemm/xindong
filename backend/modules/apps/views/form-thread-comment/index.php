@@ -25,14 +25,61 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'comment_id',
-            'thread_id',
-            'first_id',
-            'second_id',
-            'comment:ntext',
-            // 'flag',
-            // 'created_at',
-            // 'updated_at',
+            [
+                'attribute' => 'comment',
+                'format'=>'raw',
+                'label' => '评价内容',
+                'value' => function ($data) {
+                    return $data->comment;
+
+                }
+            ],
+
+            [
+                'attribute' => '评价人',
+                'format'=>'raw',
+                'label' => '评价人',
+                'value' => function ($data) {
+                    $user = \api\modules\v11\models\User::findOne($data->first_id);
+                    if(!empty($user)){
+                        return !empty($user->nickname)?$user->nickname:$user->username;
+                    }else{
+                        return "评价人已被删除";
+                    }
+
+                }
+            ],
+            [
+                'attribute' => '被评人',
+                'format'=>'raw',
+                'label' => '被评人',
+                'value' => function ($data) {
+                    $user = \api\modules\v11\models\User::findOne($data->second_id);
+                    if(!empty($user)){
+                        return !empty($user->nickname)?$user->nickname:$user->username;
+                    }else{
+                        return "";
+                    }
+
+                }
+            ],
+            [
+                'attribute' => '帖子内容',
+                'format'=>'raw',
+                'label' => '帖子内容',
+                'value' => function ($data) {
+                    $thread = \api\modules\v11\models\FormThread::findOne($data->thread_id);
+                    return !empty($thread->content)?\yii\myhelper\Helper::truncate_utf8_string($thread->content,25):"图片贴";
+                }
+            ],
+            [
+                'attribute' => '评价时间',
+                'format'=>'raw',
+                'label' => '评价时间',
+                'value' => function ($data) {
+                    return date('Y/m/d H:i:s',$data->created_at);
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
