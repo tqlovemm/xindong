@@ -49,7 +49,7 @@ class UserWeichat extends \yii\db\ActiveRecord
         if($this->isNewRecord) {
             if (empty($member)) {
                 $this->addError('number', '该会员编号不存在，如有疑问请咨询客服查询');
-            }elseif(trim(User::getNumber(Yii::$app->user->id))!=$this->number){
+            }elseif(trim(User::getNumber(Yii::$app->user->id))!=trim($this->number)){
                 $this->addError('number', '您认证的会员编号和您网站账号绑定的会员编号不一致，请联系客服核实');
                 SaveToLog::log(User::getNumber(Yii::$app->user->id),"log.log");
                 SaveToLog::log($this->number,"log.log");
