@@ -43,7 +43,7 @@ class SavemeRecordController extends ActiveController {
         $model = new $this->modelClass();
         $model->load(Yii::$app->request->getBodyParams(), '');
         $decode = new yii\myhelper\Decode();
-        if(!$decode->decodeDigit($created_user['id'])){
+        if(!$decode->decodeDigit($created_name)){
             Response::show(210,'参数不正确');
         }
         if($created_user['sex'] == 1){
