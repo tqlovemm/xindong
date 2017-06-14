@@ -18,6 +18,10 @@ use yii\widgets\ActiveForm;
     <?=Html::jsFile('@web/css/article/jquery-2.1.4.js')?>
     <?=Html::jsFile('@web/css/article/dropload.min.js')?>
 </head>
+<style>
+    .botm{margin-top: 2%;}
+    .botm img{width: 16pt;}
+</style>
 <body>
 <div id="sx">
     <div class="content" style="word-wrap:break-word;">
