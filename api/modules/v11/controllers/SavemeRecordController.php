@@ -55,10 +55,10 @@ class SavemeRecordController extends ActiveController {
         }
         $saveme = (new Query())->select('id')->from('{{%saveme}}')->where(['created_id'=>$girl_id])->orderBy('created_at desc')->one();
         $saveme_id = $saveme['id'];
-        $saveme_info = (new Query())->select('id')->from('{{%saveme_apply}}')->where(['saveme_id'=>$saveme_id,'apply_uid'=>$boy_id])->one();
-        if(!$saveme_info){
-            Response::show(203,'男生没有报名');
-        }
+//        $saveme_info = (new Query())->select('id')->from('{{%saveme_apply}}')->where(['saveme_id'=>$saveme_id,'apply_uid'=>$boy_id])->one();
+//        if(!$saveme_info){
+//            Response::show(203,'男生没有报名');
+//        }
         $recordres = (new Query())->select('id,created_id,created_at')->from('{{%saveme_record}}')->where(['boy_id'=>$boy_id,'girl_id'=>$girl_id,'saveme_id'=>$saveme_id])->one();
         $time = time();
         if($recordres && (($time-$recordres['created_at'])<=(7*3600*24)) && $recordres['created_id'] != $created_user['id']){
