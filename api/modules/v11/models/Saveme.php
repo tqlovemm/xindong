@@ -19,8 +19,6 @@ class Saveme extends ActiveRecord
 {
     public $_user;
     public $is_overdue;
-    public $is_pl = 0;
-    public $is_dh = 0;
     /**
      * @inheritdoc
      */
@@ -42,7 +40,7 @@ class Saveme extends ActiveRecord
     }
 
     public function fields(){
-        $this->_user = Yii::$app->db->createCommand("select nickname,avatar,sex,groupid from {{%user}} where id=$this->created_id")->queryOne();
+        $this->_user = Yii::$app->db->createCommand("select username,avatar,sex,groupid from {{%user}} where id=$this->created_id")->queryOne();
         $saveme = Yii::$app->db->createCommand("select end_time from {{%saveme}} where id=$this->id")->queryOne();
         if($saveme['end_time'] < time()){
             $this->is_overdue = 1;
@@ -50,7 +48,7 @@ class Saveme extends ActiveRecord
             $this->is_overdue = 2;
         }
         return [
-            'saveme_id'=>'id','created_id', 'address', 'content', 'price', 'created_at','end_time','level'=>function(){return $this->_user['groupid'];},'nickname'=>function(){return $this->_user['nickname'];},'avatar'=>function(){return $this->_user['avatar'];},'is_overdue'=>function(){return $this->is_overdue;},'sex'=>function(){return $this->_user['sex'];}, 'status', 'photos','is_pl','is_dh'
+            'saveme_id'=>'id','created_id', 'address', 'content', 'price', 'created_at','end_time','level'=>function(){return $this->_user['groupid'];},'username'=>function(){return $this->_user['username'];},'avatar'=>function(){return $this->_user['avatar'];},'is_overdue'=>function(){return $this->is_overdue;},'sex'=>function(){return $this->_user['sex'];}, 'status', 'photos',
         ];
     }
 
