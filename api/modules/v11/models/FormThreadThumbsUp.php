@@ -115,12 +115,12 @@ class FormThreadThumbsUp extends ActiveRecord
             $data = [[$this->thread_id,$thread_uid->user_id,$this->user_id,"",time(),time()]];
         }
 
-        foreach ($uids as $uid){
+    /*    foreach ($uids as $uid){
             if($uid!=$thread_uid->user_id){
                 $da = [$this->thread_id,$uid,$this->user_id,"",time(),time()];
                 array_push($data,$da);
             }
-        }
+        }*/
 
         if(!empty($data)){
             \Yii::$app->db->createCommand()->batchInsert('pre_app_form_thread_push_msg', ['wid','user_id','writer_id','content','created_at','updated_at'],$data)->execute();
