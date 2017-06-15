@@ -54,22 +54,14 @@ class SavemeInfoController extends ActiveController {
             'totalCount' => $save_query->count(),
         ]);
         $saveme_comment = (new Query())->select('saveme_id,to_userid')->from('{{%saveme_comment}}')->where(['saveme_id'=>$sids,"created_id"=>$id])->orderBy('created_at desc')->all();
-        $saveme_record = (new Query())->select('girl_id')->from('{{%saveme_record}}')->where(["created_id"=>$id])->all();
-        $records = array();
-        for($o=0;$o<count($saveme_record);$o++){
-            $records[] = $saveme_record[$o]['girl_id'];
-        }
         $maxpage = ceil($pagination->totalCount/$pagination->defaultPageSize);
         $res = $save_query->orderBy('created_at desc')->offset($pagination->offset)->limit($pagination->limit)->all();
         for ($k=0; $k < count($res); $k++) { 
             $res[$k]['status'] = $statuss[$res[$k]['id']];
             for($q=0;$q<count($saveme_comment);$q++){
                 if($res[$k]['created_id'] == $saveme_comment[$q]['to_userid'] && $res[$k]['id'] == $saveme_comment[$q]['saveme_id']){
-                    $res[$k]['is_pl'] = 1;
+                    $res[$k]['status'] = 3;
                 }
-            }
-            if(in_array($res[$k]['created_id'],$records)){
-                $res[$k]['is_dh'] = 1;
             }
         }
         if (!$res) {
@@ -144,87 +136,87 @@ class SavemeInfoController extends ActiveController {
         }
         Response::show('200','操作成功',"申请成功");
     }
-//    public function actionUpdate($id) {
-//        $decode = new Decode();
-//        if(!$decode->decodeDigit($id)){
-//            Response::show(210,'参数不正确');
-//        }
-//        PushConfig::config();
-//        $model = new $this->modelClass();
-//        $cid = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$id)->queryOne();
-//        $apply_uid = Yii::$app->request->getBodyParam('apply_uid');
-//        $savemeres = (new Query())->select('id,created_id,price,end_time')->from('{{%saveme}}')->where(['created_id'=>$id,'status'=>1])->orderBy('created_at desc')->one();
-//        if (!$savemeres) {
-//            Response::show('201','操作失败',"参数不对");
-//        }
-//        if ($savemeres['end_time'] < time()) {
-//            Response::show('201','操作失败',"本次救火已经过期");
-//        }
-//        $saveme_id = $savemeres['id'];
-//        $myapply = $model::find()->select('saveme_id,apply_uid,status')->where(['apply_uid'=>$apply_uid,'saveme_id'=>$saveme_id])->one();
-//        if (!$myapply) {
-//            Response::show('201','操作失败',"参数不正确3");
-//        }
-//        if ($myapply['status'] > 0) {
-//            Response::show('201','操作失败',"已经审核过了");
-//        }
-//        $res1 = Yii::$app->db->createCommand("update pre_saveme_apply set status = 2 where saveme_id = {$saveme_id}")->execute();
-//        $applyres = $model::find()->select('saveme_id,apply_uid')->where(['saveme_id'=>$saveme_id])->all();
-//        $uids = '';
-//        for ($i=0; $i < count($applyres); $i++) {
-//            if ($applyres[$i]['apply_uid'] != $apply_uid) {
-//                $uids .= $applyres[$i]['apply_uid'].",";
-//            }
-//        }
-//        if ($uids) {
-//            $uids = "(".substr($uids, 0,-1).")";
-//            Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin=jiecao_coin+{$savemeres['price']} where user_id in $uids")->execute();
-//            $uids = explode(",",substr($uids,1,-1));
-//            foreach ($uids as $v) {
-//                try{
-//                    SaveToLog::userBgRecord("救我被拒绝退回{$savemeres['price']}节操币",$v);
-//                }catch (Exception $e){
-//                    throw new ErrorException($e->getMessage());
-//                }
-//                //拒绝推送
-//                if(!empty($cid['cid'])){
-//                    if(empty($cid['nickname'])){
-//                        $cid['nickname'] = $cid['username'];
-//                    }
-//
-//                    $title = $cid['nickname'].'拒绝了您的救我申请';
-//                    $msg = $cid['nickname'].'拒绝了您的救我申请';
-//                    $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$id",'push_type'=>'SSCOMM_SAVEME');
-//                    $extras = json_encode($data);
-//                    $user_cid[] = User::findOne($v)->cid;
-//                }
-//            }
-//            pushMessageToList(1, $title, $msg, $extras , $user_cid);
-//        }
-//        if (!$res1) {
-//            Response::show('201','操作失败',"审核失败1");
-//        }
-//        $res2 = Yii::$app->db->createCommand("update pre_saveme_apply set status = 1 where saveme_id = {$saveme_id} and apply_uid = {$apply_uid}")->execute();
-//        if (!$res2) {
-//            Response::show('201','操作成功',"审核失败2");
-//        }
-//        //接收推送
-//        if(!empty($cid['cid'])){
-//            if(empty($cid['nickname'])){
-//                $cid['nickname'] = $cid['username'];
-//            }
-//            $title = $cid['nickname'].'通过了您的救我申请';
-//            $msg = $cid['nickname'].'通过了您的救我申请';
-//            $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$id",'push_type'=>'SSCOMM_SAVEME');
-//            $extras = json_encode($data);
-//            pushMessageToList(1, $title, $msg, $extras , [User::findOne($apply_uid)->cid]);
-//        }
-//        $res3 = Yii::$app->db->createCommand("update pre_saveme set status = 2 where id = {$saveme_id}")->execute();
-//        if ($res3) {
-//            Response::show('200','操作成功',"审核成功");
-//        }
-//        Response::show('201','操作成功',"审核失败3");
-//    }
+    public function actionUpdate($id) {
+        $decode = new Decode();
+        if(!$decode->decodeDigit($id)){
+            Response::show(210,'参数不正确');
+        }
+        PushConfig::config();
+        $model = new $this->modelClass();
+        $cid = Yii::$app->db->createCommand('select cid,username,nickname from {{%user}} where id='.$id)->queryOne();
+        $apply_uid = Yii::$app->request->getBodyParam('apply_uid');
+        $savemeres = (new Query())->select('id,created_id,price,end_time')->from('{{%saveme}}')->where(['created_id'=>$id,'status'=>1])->orderBy('created_at desc')->one();
+        if (!$savemeres) {
+            Response::show('201','操作失败',"参数不对");
+        }
+        if ($savemeres['end_time'] < time()) {
+            Response::show('201','操作失败',"本次救火已经过期");
+        }
+        $saveme_id = $savemeres['id'];
+        $myapply = $model::find()->select('saveme_id,apply_uid,status')->where(['apply_uid'=>$apply_uid,'saveme_id'=>$saveme_id])->one();
+        if (!$myapply) {
+            Response::show('201','操作失败',"参数不正确3");
+        }
+        if ($myapply['status'] > 0) {
+            Response::show('201','操作失败',"已经审核过了");
+        }
+        $res1 = Yii::$app->db->createCommand("update pre_saveme_apply set status = 2 where saveme_id = {$saveme_id}")->execute();
+        $applyres = $model::find()->select('saveme_id,apply_uid')->where(['saveme_id'=>$saveme_id])->all();
+        $uids = '';
+        for ($i=0; $i < count($applyres); $i++) {
+            if ($applyres[$i]['apply_uid'] != $apply_uid) {
+                $uids .= $applyres[$i]['apply_uid'].",";
+            }
+        }
+        if ($uids) {
+            $uids = "(".substr($uids, 0,-1).")";
+            Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin=jiecao_coin+{$savemeres['price']} where user_id in $uids")->execute();
+            $uids = explode(",",substr($uids,1,-1));
+            foreach ($uids as $v) {
+                try{
+                    SaveToLog::userBgRecord("救我被拒绝退回{$savemeres['price']}节操币",$v);
+                }catch (Exception $e){
+                    throw new ErrorException($e->getMessage());
+                }
+                //拒绝推送
+                if(!empty($cid['cid'])){
+                    if(empty($cid['nickname'])){
+                        $cid['nickname'] = $cid['username'];
+                    }
+
+                    $title = $cid['nickname'].'拒绝了您的救我申请';
+                    $msg = $cid['nickname'].'拒绝了您的救我申请';
+                    $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$id",'push_type'=>'SSCOMM_SAVEME');
+                    $extras = json_encode($data);
+                    $user_cid[] = User::findOne($v)->cid;
+                }
+            }
+            pushMessageToList(1, $title, $msg, $extras , $user_cid);
+        }
+        if (!$res1) {
+            Response::show('201','操作失败',"审核失败1");
+        }
+        $res2 = Yii::$app->db->createCommand("update pre_saveme_apply set status = 1 where saveme_id = {$saveme_id} and apply_uid = {$apply_uid}")->execute();
+        if (!$res2) {
+            Response::show('201','操作成功',"审核失败2");
+        }
+        //接收推送
+        if(!empty($cid['cid'])){
+            if(empty($cid['nickname'])){
+                $cid['nickname'] = $cid['username'];
+            }
+            $title = $cid['nickname'].'通过了您的救我申请';
+            $msg = $cid['nickname'].'通过了您的救我申请';
+            $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$id",'push_type'=>'SSCOMM_SAVEME');
+            $extras = json_encode($data);
+            pushMessageToList(1, $title, $msg, $extras , [User::findOne($apply_uid)->cid]);
+        }
+        $res3 = Yii::$app->db->createCommand("update pre_saveme set status = 2 where id = {$saveme_id}")->execute();
+        if ($res3) {
+            Response::show('200','操作成功',"审核成功");
+        }
+        Response::show('201','操作成功',"审核失败3");
+    }
     public function actionDelete($id) {
         $decode = new Decode();
         if(!$decode->decodeDigit($id)){
