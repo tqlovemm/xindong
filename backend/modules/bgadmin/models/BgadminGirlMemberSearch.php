@@ -18,7 +18,7 @@ class BgadminGirlMemberSearch extends BgadminGirlMember
     public function rules()
     {
         return [
-            [['member_id', 'sex', 'vip', 'status','age', 'created_by','foreign'], 'integer'],
+            [['member_id', 'sex', 'vip', 'status','age', 'created_by','foreign','show'], 'integer'],
             [['number', 'weicaht', 'weibo', 'cellphone', 'address_a', 'address_b', 'time', 'updated_at', 'created_at','coin'], 'safe'],
         ];
     }
@@ -64,6 +64,7 @@ class BgadminGirlMemberSearch extends BgadminGirlMember
             'created_by' => $this->created_by,
             'coin' => $this->coin,
             'foreign' => $this->foreign,
+            'show' => $this->show,
         ]);
 
         $query->andFilterWhere(['like', 'number', $this->number])

@@ -2,10 +2,8 @@
 
 namespace backend\modules\bgadmin\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\modules\bgadmin\models\BgadminMember;
 
 /**
  * BgadminMemberSearch represents the model behind the search form about `backend\modules\bgadmin\models\BgadminMember`.
@@ -18,7 +16,7 @@ class BgadminMemberSearch extends BgadminMember
     public function rules()
     {
         return [
-            [['member_id', 'sex', 'vip', 'status', 'created_by'], 'integer'],
+            [['member_id', 'sex', 'vip', 'status', 'created_by','show'], 'integer'],
             [['number', 'weicaht', 'weibo', 'cellphone', 'address_a', 'address_b', 'time', 'updated_at', 'created_at','coin'], 'safe'],
         ];
     }
@@ -62,6 +60,7 @@ class BgadminMemberSearch extends BgadminMember
             'status' => $this->status,
             'created_by' => $this->created_by,
             'coin' => $this->coin,
+            'show' => $this->show,
         ]);
 
         $query->andFilterWhere(['like', 'number', $this->number])

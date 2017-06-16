@@ -40,6 +40,24 @@ $this->params['breadcrumbs'][] = $this->title;
             //'updated_at:datetime',
             'created_at:datetime',
             'created_by',
+            [
+                'attribute' => 'show',
+                'format'=>'html',
+                'value' => function ($data) {
+                    if($data->show==0){
+                        return "<span style='color:red;font-weight: bold;'>完全退出</span>";
+                    }elseif($data->show==10){
+                        return "<span style='color:#06c232;font-weight: bold;'>正常</span>";
+                    }else{
+                        return "<span style='color:#0a6eff;font-weight: bold;'>删档但接受推送</span>";
+                    }
+                },
+                'filter' => [
+                    0 => '完全退出',
+                    10 => '正常',
+                    5 => '删档但接受推送',
+                ]
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
