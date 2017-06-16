@@ -82,31 +82,6 @@ class UserLoginController extends Controller
         exit(Response::show(402,"用户名不存在"));
     }
 
-    public function actionView(){
-
-        $id = Yii::$app->request->get('id');
-        $user = self::findByUsername($id);
-        $password = Yii::$app->request->get('password');
-        $cid = Yii::$app->request->get('cid');
-        if($user->password_hash==null){
-            Response::show(401,"请使用第三方登陆","当前账号为第三方登陆账号");
-        }
-
-        if(!empty($user)){
-            $hash = Yii::$app->security->validatePassword($password,$user['password_hash']);
-            if($hash){
-                if(!empty($cid)&&strlen($cid)>=32){
-                    Yii::$app->db->createCommand("update {{%user}} set cid='$cid' where username='$id'")->execute();
-                }
-                $data = $this->getInfo($user['id']);
-                exit(Response::show(202,"登陆成功",$data));
-            }
-            exit(Response::show(403,"密码错误"));
-        }
-        exit(Response::show(402,"用户名不存在"));
-
-    }
-
     public function getInfo($id){
 
         $model = Yii::$app->db->createCommand("select * from pre_user where id = {$id}")->queryOne();
