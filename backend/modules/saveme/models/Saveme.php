@@ -63,4 +63,11 @@ class Saveme extends \yii\db\ActiveRecord
             ->queryOne();
         return $arr;
     }
+    public function getPhoto()
+    {
+        $arr = Yii::$app->db
+            ->createCommand("SELECT path FROM {{%saveme_img}}  WHERE saveme_id={$this->id}")
+            ->queryOne();
+        return $arr;
+    }
 }

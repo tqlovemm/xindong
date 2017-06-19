@@ -163,7 +163,7 @@ class SavemeInfoController extends ActiveController {
         $res1 = Yii::$app->db->createCommand("update pre_saveme_apply set status = 2 where saveme_id = {$saveme_id}")->execute();
         $applyres = $model::find()->select('saveme_id,apply_uid')->where(['saveme_id'=>$saveme_id])->all();
         $uids = '';
-        for ($i=0; $i < count($applyres); $i++) { 
+        for ($i=0; $i < count($applyres); $i++) {
             if ($applyres[$i]['apply_uid'] != $apply_uid) {
                 $uids .= $applyres[$i]['apply_uid'].",";
             }
