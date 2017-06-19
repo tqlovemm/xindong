@@ -67,7 +67,7 @@ class ArticleAdverController extends Controller
             if($_FILES['thumb']['name']){
                 $qn = new QiniuUploader('thumb',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
                 $path = 'uploads/qinhua/';
-                $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.uniqid().substr($_FILES['wimg']['name'], strrpos($_FILES['wimg']['name'], '.'));
+                $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.uniqid().substr($_FILES['thumb']['name'], strrpos($_FILES['thumb']['name'], '.'));
                 $qiniu = $qn->upload_app('appimages',$path.$mkdir,$_FILES['thumb']['tmp_name']);
                 $wimg =  Yii::$app->params['appimages'].$qiniu['key'];
                 $model->thumb = $wimg;
@@ -98,7 +98,7 @@ class ArticleAdverController extends Controller
             if($_FILES['thumb']['name']){
                 $qn = new QiniuUploader('thumb',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
                 $path = 'uploads/qinhua/';
-                $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.uniqid().substr($_FILES['wimg']['name'], strrpos($_FILES['wimg']['name'], '.'));
+                $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.uniqid().substr($_FILES['thumb']['name'], strrpos($_FILES['thumb']['name'], '.'));
                 $qiniu = $qn->upload_app('appimages',$path.$mkdir,$_FILES['thumb']['tmp_name']);
                 $wimg =  Yii::$app->params['appimages'].$qiniu['key'];
                 $model->thumb = $wimg;
