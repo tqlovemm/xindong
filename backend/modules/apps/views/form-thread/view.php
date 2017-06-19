@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <ul class="list-group">
     <?php foreach ($model->comment as $com):?>
     <li class="list-group-item">
-        <?=$com->comment?>
+        <?=$com->comment?><?=date('Y-m-d H:i:s',$com->created_at)?>
         <?= Html::a('删除', ['delete-comment', 'cid' => $com->comment_id], [
             'class' => 'btn-sm btn-warning',
             'data' => [
@@ -80,5 +80,29 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </li>
+    <?php endforeach;?>
+</ul>
+<h4>点赞区</h4>
+<ul class="list-group">
+    <?php foreach ($model->thumbs as $thumb):
+        $user = \api\modules\v11\models\User::findOne($thumb->user_id);
+        if(!empty($user)){
+
+            $username = (empty($user->nickname))?$user->username:$user->nickname;
+        }else{
+            $username = '该会员已经被删除';
+        }
+
+        ?>
+        <li class="list-group-item">
+            <?=$username?>：<?=date('Y-m-d H:i:s',$thumb->created_at)?>
+            <?= Html::a('删除', ['delete-thumbs', 'tid' => $thumb->thumbs_id], [
+                'class' => 'btn-sm btn-warning',
+                'data' => [
+                    'confirm' => 'Are you sure you want to delete this item?',
+                    'method' => 'post',
+                ],
+            ]) ?>
+        </li>
     <?php endforeach;?>
 </ul>

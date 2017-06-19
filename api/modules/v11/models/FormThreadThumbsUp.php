@@ -2,8 +2,9 @@
 namespace api\modules\v11\models;
 use api\modules\v9\models\UserProfile;
 use Yii;
-use app\components\db\ActiveRecord;
+
 use common\components\PushConfig;
+use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "pre_app_form_thread_thumbs_up".
@@ -140,6 +141,25 @@ class FormThreadThumbsUp extends ActiveRecord
             'updated_at' => 'Updated At',
             'created_at' => 'Created At',
         ];
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert)){
+
+            if($this->isNewRecord){
+                $this->created_at = time();
+                $this->updated_at = time();
+            }else{
+                $this->updated_at = time();
+            }
+            return true;
+        }
+        return false;
     }
 
 }

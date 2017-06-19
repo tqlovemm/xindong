@@ -5,6 +5,7 @@ namespace backend\modules\apps\controllers;
 use api\modules\v11\models\FormThreadComments;
 use api\modules\v11\models\FormThreadImages;
 use api\modules\v11\models\FormThreadTag;
+use api\modules\v11\models\FormThreadThumbsUp;
 use common\Qiniu\QiniuUploader;
 use Yii;
 use api\modules\v11\models\FormThread;
@@ -96,6 +97,16 @@ class FormThreadController extends Controller
         }
 
     }
+    public function actionDeleteThumbs($tid){
+
+        $model = FormThreadThumbsUp::findOne($tid);
+        if($model->delete()){
+           return $this->redirect(Yii::$app->request->referrer);
+        }
+
+    }
+
+
 
     /**
      * @param $id
