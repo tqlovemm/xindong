@@ -97,7 +97,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <li class="list-group-item">
                     <?=$username?>：<?=date('Y-m-d H:i:s',$thumb->created_at)?>
                     <?= Html::a('删除', ['delete-thumbs', 'tid' => $thumb->thumbs_id], [
-                        'class' => 'btn-sm btn-warning',
+                        'class' => 'btn-sm btn-primary',
                         'data' => [
                             'confirm' => 'Are you sure you want to delete this item?',
                             'method' => 'post',
