@@ -66,3 +66,19 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <?php endforeach;?>
 </div>
+<hr>
+<h4>评价区</h4>
+<ul class="list-group">
+    <?php foreach ($model->comment as $com):?>
+    <li class="list-group-item">
+        <?=$com->comment?>
+        <?= Html::a('删除', ['delete-comment', 'cid' => $com->comment_id], [
+            'class' => 'btn-sm btn-warning',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this item?',
+                'method' => 'post',
+            ],
+        ]) ?>
+    </li>
+    <?php endforeach;?>
+</ul>

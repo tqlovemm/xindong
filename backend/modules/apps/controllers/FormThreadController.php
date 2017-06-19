@@ -2,6 +2,7 @@
 
 namespace backend\modules\apps\controllers;
 
+use api\modules\v11\models\FormThreadComments;
 use api\modules\v11\models\FormThreadImages;
 use api\modules\v11\models\FormThreadTag;
 use common\Qiniu\QiniuUploader;
@@ -84,6 +85,16 @@ class FormThreadController extends Controller
                 'model' => $model,'tagList'=>$tag
             ]);
         }
+    }
+
+    public function actionDeleteComment($cid){
+
+        $model = FormThreadComments::findOne($cid);
+        if($model->delete()){
+
+           return $this->redirect(Yii::$app->request->referrer);
+        }
+
     }
 
     /**
