@@ -38,8 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'sex',
             'lat_long',
             'address',
-            'updated_at',
-            'created_at',
+            'updated_at:datetime',
             'is_top',
             'type',
             'read_count',
@@ -53,6 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
 <div class="row">
+    <h4>图片区</h4>
     <?php foreach ($model->cover as $img):?>
     <div class="col-md-2">
         <img class="img-responsive" src="<?=$img->img_path?>">
