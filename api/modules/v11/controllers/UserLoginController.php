@@ -72,7 +72,7 @@ class UserLoginController extends Controller
             $hash = Yii::$app->security->validatePassword($password,$user->password_hash);
             if($hash){
                 if(!empty($cid)&&strlen($cid)>=32){
-                    Yii::$app->db->createCommand("update {{%user}} set cid='$cid' where username='{$user->username}'")->execute();
+                    Yii::$app->db->createCommand("update {{%user}} set cid='$cid' where id={$user->id}")->execute();
                 }
                 $data = $this->getInfo($user->id);
                 exit(Response::show(202,"登陆成功",$data));
