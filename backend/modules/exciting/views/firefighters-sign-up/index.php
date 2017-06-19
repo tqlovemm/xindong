@@ -83,7 +83,7 @@ $pre =  Yii::$app->params['shisangirl'];
 
                             if(!empty($file['memberFiles'])){
                                 $weima_girl = $pre.$file['memberFiles'][0]['path'];
-                                echo "<a href=$weima_girl}  data-lightbox='s' data-title='s'><img class='img-responsive img-thumbnail' style='width: 100px;height: 100px;' src={$weima_girl}></a>";
+                                echo "<a href=$weima_girl data-lightbox='s' data-title='s'><img class='img-responsive img-thumbnail' style='width: 100px;height: 100px;' src={$weima_girl}></a>";
                                 $weiuser = \frontend\modules\weixin\models\UserWeichat::findOne(['number'=>$number]);
                                 if(!empty($weiuser)&&in_array($val['status'],[0,1])):
                                     echo '<button onclick="pushweixin(this)" data-openid="'.$weiuser->openid.'" data-number="'.$val['sign']['number'].'" class="btn btn-success">推送联系方式</button>';
