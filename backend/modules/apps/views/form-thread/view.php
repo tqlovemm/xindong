@@ -11,9 +11,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Form Threads', 'url' => ['index']]
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="form-thread-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->wid], ['class' => 'btn btn-primary']) ?>
         <a href="<?= Url::toRoute(['upload', 'id' => $model->wid]) ?>" class="btn btn-primary">
@@ -27,7 +24,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
