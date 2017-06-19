@@ -28,7 +28,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'tag_py',
             'created_at:datetime',
             'sort',
-
+            [
+                'attribute' => 'status',
+                'value' => function($model) {
+                    return $model->status == 0 ? '仅管理员可用' : '会员可用';
+                },
+                'filter' => [
+                    0 => '仅管理员可用',
+                    10 => '会员可用'
+                ]
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
