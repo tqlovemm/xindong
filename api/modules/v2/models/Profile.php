@@ -2,7 +2,7 @@
 
 namespace api\modules\v2\models;
 
-use api\modules\v4\models\User;
+use api\modules\v11\models\User;
 use Yii;
 use app\components\db\ActiveRecord;
 
