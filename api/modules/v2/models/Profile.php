@@ -2,7 +2,6 @@
 
 namespace api\modules\v2\models;
 
-use api\modules\v11\models\User;
 use Yii;
 use app\components\db\ActiveRecord;
 
@@ -73,7 +72,7 @@ class Profile extends ActiveRecord
 
         ];
     }
-    public function getUser()
+ /*   public function getUser()
     {
         $model = User::find()->select("id,username,nickname,groupid,sex,email,avatar,cellphone")->where('id=:uid',[':uid'=>$this->user_id])->orderBy('created_at DESC');
 
@@ -83,7 +82,7 @@ class Profile extends ActiveRecord
     public function getAvatar(){
         $avatar = $this->hasOne(User::className(),['id'=>'user_id']);
         return $avatar;
-    }
+    }*/
 
     public function extraFields()
     {
