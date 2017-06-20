@@ -473,6 +473,8 @@ class GirlDefaultController extends Controller
 
                 }
 
+            }else{
+                return var_dump($model->errors);
             }
             return $this->redirect(['view', 'id' => $model->member_id]);
         } else {
