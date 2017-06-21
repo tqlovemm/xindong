@@ -8,7 +8,9 @@
 
 namespace api\modules\v10\controllers;
 
+use common\components\CoinHandle;
 use Yii;
+use yii\base\Exception;
 use yii\db\Query;
 use yii\myhelper\Decode;
 use yii\myhelper\Response;
@@ -142,6 +144,11 @@ class DatingSignupController extends Controller
 
             ])->execute();
             Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin = jiecao_coin-$need_coin[worth] where user_id=$model->user_id")->execute();
+            try{
+                (new CoinHandle())->adjustment($model->user_id,-$need_coin['worth'],'觅约');
+            }catch (Exception $e){
+                throw new Exception($e->getMessage());
+            }
             Response::show('200','您已支付成功，客服稍后将会与您联系，如客服较忙请耐心等待哟','您已支付成功，客服稍后将会与您联系，如客服较忙请耐心等待哟');
         }
 
