@@ -49,10 +49,10 @@ class Saveme extends ActiveRecord
         }
         return [
             'saveme_id'=>'id','created_id', 'address', 'content', 'price', 'created_at','end_time',
-            'level'=>function(){return $this->_user['groupid'];},
+            'level'=>function(){return $this->_user->groupid;},
             'nickname'=>function(){return !empty($this->_user->nickname)?$this->_user->nickname:$this->_user->username;},
-            'avatar'=>function(){return $this->_user['avatar'];},'is_overdue'=>function(){return $this->is_overdue;},
-            'sex'=>function(){return $this->_user['sex'];}, 'status', 'photos',
+            'avatar'=>function(){return $this->_user->avatar;},'is_overdue'=>function(){return $this->is_overdue;},
+            'sex'=>function(){return $this->_user->sex;}, 'status', 'photos',
         ];
     }
 
