@@ -70,8 +70,9 @@ class ArticleController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if($_FILES['wimg']['name']){
                 $qn = new QiniuUploader('wimg',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
-                $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.uniqid();
-                $qiniu = $qn->upload_water('appimages',"uploads/qinhua/$mkdir");
+                $path = 'uploads/qinhua/';
+                $mkdir = date('Y').'/'.date('m').'/'.date('d').'/'.uniqid().substr($_FILES['wimg']['name'], strrpos($_FILES['wimg']['name'], '.'));
+                $qiniu = $qn->upload_app('appimages',$path.$mkdir,$_FILES['wimg']['tmp_name']);
                 $wimg =  Yii::$app->params['appimages'].$qiniu['key'];
                 $model->wimg = $wimg;
             }
