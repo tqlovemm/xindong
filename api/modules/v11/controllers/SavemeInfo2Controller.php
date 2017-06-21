@@ -198,7 +198,7 @@ class SavemeInfo2Controller extends ActiveController {
         }
         $res2 = Yii::$app->db->createCommand("update pre_saveme_apply set status = 1 where saveme_id = {$saveme_id} and apply_uid = {$apply_uid}")->execute();
         if (!$res2) {
-            Response::show('201','操作成功',"审核失败2");
+            Response::show('201','操作失败',"审核失败2");
         }
         //环信
         $huanx = $this->Easemob();
@@ -222,7 +222,7 @@ class SavemeInfo2Controller extends ActiveController {
         $text['target'] = [$exceptname[$apply_uid]];
         $text['msg'] = [
             'type' => 'txt',
-            'msg' => "我已经接受了你的救我申请，我们开始聊天吧~",
+            'msg' => "我已经接受了你的‘救我’申请，我们开始聊天吧~",
         ];
         $text['from'] = $cid['username'];
         $this->setMsg()->sendText($text);
@@ -237,11 +237,7 @@ class SavemeInfo2Controller extends ActiveController {
             $extras = json_encode($data);
             pushMessageToList(1, $title, $msg, $extras , [User::findOne($apply_uid)->cid]);
         }
-        $res3 = Yii::$app->db->createCommand("update pre_saveme set status = 2 where id = {$saveme_id}")->execute();
-        if ($res3) {
-            Response::show('200','操作成功',"审核成功");
-        }
-        Response::show('201','操作失败',"审核失败3");
+        Response::show('200','操作成功',"审核成功");
     }
     public function actionDelete($id) {
         $decode = new Decode();

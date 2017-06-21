@@ -57,7 +57,7 @@ class Saveme2Controller extends ActiveController {
         $query = $model::find();
         $pagination = new Pagination([
             'defaultPageSize' => 10,
-            'totalCount' => $query->count(),
+            'totalCount' => $query->where($where)->count(),
         ]);
         $maxpage = ceil($pagination->totalCount/$pagination->defaultPageSize);
         $applyres = (new Query())->select('saveme_id')->from('{{%saveme_apply}}')->where(['apply_uid'=>$uid])->orderBy('created_at desc')->all();
