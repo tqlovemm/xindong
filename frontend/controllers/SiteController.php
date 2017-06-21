@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 use backend\modules\exciting\models\WebsiteContent;
+use common\components\CoinHandle;
 use common\components\SaveToLog;
 use frontend\models\CollectingSeventeenFilesText;
 use frontend\models\ContactIpLimits;
@@ -467,6 +468,7 @@ class SiteController extends BaseController
                 Yii::$app->session->setFlash('success','报名成功');
                 try{
                     SaveToLog::userBgRecord("觅约报名{$number}，扣除节操币{$recharge->number}");
+                    (new CoinHandle())->adjustment($user_id,$recharge->number,'觅约');
                 }catch (Exception $e){
                     throw new ErrorException($e->getMessage());
                 }

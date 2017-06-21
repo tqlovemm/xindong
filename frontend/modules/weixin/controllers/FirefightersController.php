@@ -7,6 +7,7 @@ use backend\modules\bgadmin\models\BgadminMember;
 use backend\modules\dating\models\Dating;
 use backend\modules\dating\models\UserWeichatPush;
 use backend\modules\exciting\models\OtherTextPic;
+use common\components\CoinHandle;
 use common\components\SaveToLog;
 use frontend\models\DatingSignup;
 use frontend\modules\weixin\models\FirefightersSignUp;
@@ -420,6 +421,7 @@ class FirefightersController extends Controller
                                     $result = '报名成功';
                                     try{
                                         SaveToLog::userBgRecord("救火福利报名{$model->number},扣除节操币{$model->coin}");
+                                        (new CoinHandle())->adjustment($user_id,$model->coin,'救火福利');
                                     }catch (Exception $e){
                                         throw new ErrorException($e->getMessage());
                                     }

@@ -1,13 +1,12 @@
 <?php
 namespace yii\wxpay\lib;
+
+use backend\models\WeipayRecord;
+use common\components\CoinHandle;
 use common\components\SaveToLog;
-use frontend\modules\member\models\UserVipTempAdjust;
 use yii\base\ErrorException;
 use yii\base\Exception;
-use yii\db\Query;
 use Yii;
-use yii\myhelper\AccessToken;
-use yii\web\User;
 
 /**
  * 
@@ -61,66 +60,47 @@ class WxPayNotify extends WxPayNotifyReply
 	{
         $attach_access = json_decode($data['attach'],true);
         SaveToLog::log($data);
-        if(!empty($attach_access['pa'])){
-            SaveToLog::log($attach_access['pa']);
-            if(strtolower($data['result_code'])=='success'){
-                SaveToLog::log($data['result_code']);
-                $payoAccach = ['out_trade_no'=>$data['out_trade_no'],'openid'=>$attach_access['oid'],'total_fee'=>$attach_access['total_fee'],'up_score'=>$attach_access['up_score']];
-                $url = "http://51payo.tecclub.cn/weixin/one-day-pa/record";
-                 if((new AccessToken())->postData($url,$payoAccach)){
-                    return "SUCCESS";
-                }else{
-                    return false;
-                 }
-            }
-
-        }else{
 
             $user_id  = $attach_access['user_id'];
             $groupid  = $attach_access['groupid'];
             $type  = $attach_access['type'];
+
             if($groupid==2){
                 $vip_text = "普通会员";
             }elseif($groupid==3){
                 $vip_text = "高端会员";
             }elseif($groupid==4){
                 $vip_text = "至尊会员";
-            }elseif($groupid==5){
-                $vip_text = "私人定制";
-            }elseif($groupid==1){
-                $vip_text = "网站会员";
             }else{
-                $vip_text = "未知会员";
+                $vip_text = "网站会员";
             }
+
             if(strtolower($data['result_code'])=='success'){
 
-                $query = (new Query())->select("*")->from("{{%weipay_record}}")->where(['out_trade_no'=>$data['out_trade_no']])->all();
+                $query = new WeipayRecord();
 
-                if(empty($query)){
+                if(empty($query::findOne(['out_trade_no'=>$data['out_trade_no']]))){
 
                     if($type==1) {
 
-                        $insert = \Yii::$app->db->createCommand()->insert('{{%weipay_record}}',[
+                        $query->user_id = $user_id;
+                        $query->type = 2;
+                        $query->giveaway = $groupid;
+                        $query->out_trade_no = $data['out_trade_no'];
+                        $query->total_fee = $data['total_fee']/100;
+                        $query->transaction_id = $data['transaction_id'];
+                        $query->extra = json_encode($data);
 
-                            "user_id"=>$user_id,
-                            "type"=>2,
-                            "giveaway"=>$groupid,
-                            "out_trade_no"=>$data['out_trade_no'],
-                            "total_fee"=>$data['total_fee']/100,
-                            "transaction_id"=>$data['transaction_id'],
-                            "extra"=>json_encode($data),
-                            "created_at"=>time(),
-                            "updated_at"=>time(),
+                        if($query->save()) {
 
-                        ])->execute();
-
-                        if($insert) {
-
-                            $giveaway = (integer)$groupid;
-                            \Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin=jiecao_coin+($data[total_fee]/100)+$giveaway where user_id=$user_id")->execute();
+                            \Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin=jiecao_coin+$query->total_fee+$query->giveaway where user_id={$query->user_id}")->execute();
 
                             try{
-                                SaveToLog::userBgRecord("微信充值节操币".($data['total_fee']/100).",赠送节操币$giveaway",$user_id);
+
+                                SaveToLog::userBgRecord("微信充值节操币".$query->total_fee.",赠送节操币$query->giveaway",$query->user_id);
+                                (new CoinHandle())->adjustment($query->user_id,$query->total_fee,'充值');
+                                (new CoinHandle())->adjustment($query->user_id,$query->giveaway,'充值赠送');
+
                             }catch (Exception $e){
                                 throw new ErrorException($e->getMessage());
                             }
@@ -129,147 +109,28 @@ class WxPayNotify extends WxPayNotifyReply
 
                     }elseif($type==2){
 
+                        $query->user_id = $user_id;
+                        $query->type = 3;
+                        $query->out_trade_no = $data['out_trade_no'];
+                        $query->total_fee = $data['total_fee']/100;
+                        $query->transaction_id = $data['transaction_id'];
+                        $query->extra = json_encode($data);
 
-                        $insert = \Yii::$app->db->createCommand()->insert('{{%weipay_record}}',[
+                        if($query->save()){
 
-                            "user_id"=>$user_id,
-                            "type"=>3,
-                            "out_trade_no"=>$data['out_trade_no'],
-                            "total_fee"=>$data['total_fee']/100,
-                            "transaction_id"=>$data['transaction_id'],
-                            "extra"=>json_encode($data),
-                            "created_at"=>time(),
-                            "updated_at"=>time(),
-
-                        ])->execute();
-
-                        if($insert){
-
-                            \Yii::$app->db->createCommand("update {{%user}} set groupid = $groupid where id=$user_id")->execute();
-                            \Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin = jiecao_coin+($data[total_fee]/250) where user_id={$user_id}")->execute();
-
+                            \Yii::$app->db->createCommand("update {{%user}} set groupid = $groupid where id={$query->user_id}")->execute();
+                            \Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin = jiecao_coin+$query->total_fee where user_id={$query->user_id}")->execute();
 
                             try{
-                                SaveToLog::userBgRecord("微信升级为$vip_text，赠送节操币".$data['total_fee']/250,$user_id);
+                                SaveToLog::userBgRecord("微信升级为$vip_text，赠送节操币".$data['total_fee']/250,$query->user_id);
+                                (new CoinHandle())->adjustment($query->user_id,$data['total_fee']/250,'升级赠送');
                             }catch (Exception $e){
                                 throw new ErrorException($e->getMessage());
-                            }
-                        }
-
-                    }elseif($type==3){
-
-                        $insert = \Yii::$app->db->createCommand()->insert('{{%weipay_record}}',[
-
-                            "user_id"=>$user_id,
-                            "type"=>3,
-                            "out_trade_no"=>$data['out_trade_no'],
-                            "total_fee"=>$data['total_fee']/100,
-                            "transaction_id"=>$data['transaction_id'],
-                            "extra"=>json_encode($data),
-                            "created_at"=>time(),
-                            "updated_at"=>time(),
-
-                        ])->execute();
-
-                        if($insert){
-
-                            $vipAdjust = new UserVipTempAdjust();
-                            $vipAdjust->user_id = $user_id;
-                            $vipAdjust->vip = $groupid;
-                            $vipAdjust->save();
-
-                            \Yii::$app->db->createCommand("update {{%user}} set groupid = $groupid where id=$user_id")->execute();
-                            \Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin = jiecao_coin+($data[total_fee]/200) where user_id={$user_id}")->execute();
-
-                            try{
-                                SaveToLog::userBgRecord("微信升级为试用$vip_text，赠送节操币".$data['total_fee']/200,$user_id);
-                            }catch (Exception $e){
-                                throw new ErrorException($e->getMessage());
-                            }
-                        }
-
-                    }elseif(substr($data['out_trade_no'],0,1)==4){
-
-                        $area = json_decode($data['attach'],true)['area'];
-                        $insert = \Yii::$app->db->createCommand()->insert('{{%weipay_record}}',[
-
-                            "user_id"=>0,
-                            "type"=>4,
-                            "out_trade_no"=>$data['out_trade_no'],
-                            "total_fee"=>$data['total_fee']/100,
-                            "transaction_id"=>$data['transaction_id'],
-                            "extra"=>json_encode($data),
-                            "created_at"=>time(),
-                            "updated_at"=>time(),
-
-                        ])->execute();
-
-                        if($insert){
-
-                            $areas = array_unique(array_filter(explode(',',urldecode($area))));
-                            $areamd = (new Query())->select('address_province')->from('pre_collecting_17_files_text')->where(['id'=>$areas])->column();
-                            $a = implode('，',$areamd);
-                            $ar = $a.'，';
-
-                            \Yii::$app->db->createCommand("update {{%collecting_17_wei_user}} set address=CONCAT(address,'$ar') where openid='$groupid'")->execute();
-
-                        }
-
-                    }elseif(substr($data['out_trade_no'],0,1)==5){
-
-                        $body = json_decode($data['attach'],true);
-
-                        $sort = $body['sort'];
-                        $area = $body['area'];
-                        $recharge = $body['recharge'];
-                        $cellphone = $body['cellphone'];
-                        $flag = $body['flag'];
-                        SaveToLog::log($body);
-                        $insert = \Yii::$app->db->createCommand()->insert('{{%weipay_record}}',[
-
-                            "user_id"=>0,
-                            "type"=>5,
-                            "out_trade_no"=>$data['out_trade_no'],
-                            "total_fee"=>$data['total_fee']/100,
-                            "transaction_id"=>$data['transaction_id'],
-                            "extra"=>json_encode($data),
-                            "created_at"=>time(),
-                            "updated_at"=>time(),
-
-                        ])->execute();
-
-                        if($insert){
-
-                            $get_cookie = Yii::$app->request->cookies;
-                            $autoJoinRecord = new \frontend\modules\member\models\AutoJoinRecord();
-                            $autoJoinRecord->cellphone = $cellphone;
-                            $autoJoinRecord->member_sort = $sort;
-                            $autoJoinRecord->member_area = $area;
-                            $autoJoinRecord->recharge_type = $recharge;
-                            $autoJoinRecord->extra = $get_cookie->getValue('cookie_member_extra');
-                            $autoJoinRecord->origin = $flag;
-                            $autoJoinRecord->price = $data['total_fee'];
-
-                            if($autoJoinRecord->save()){
-
-                                $autoJoinFilesText = new \frontend\models\CollectingFilesText();
-                                $autoJoinFilesText->link_flag = $flag;
-                                $autoJoinFilesText->flag = 'auto_w_'.$cellphone.mt_rand(1000,9999);
-                                if(!$autoJoinFilesText->save()){
-
-                                    SaveToLog::log($autoJoinFilesText->errors);
-
-                                }
                             }
                         }
                     }
                 }
-
             }
-
-        }
-
-
 
 	}
 
