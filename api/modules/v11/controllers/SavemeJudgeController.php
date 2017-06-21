@@ -27,7 +27,7 @@ class SavemeJudgeController extends ActiveController {
     {
         $query = (new Query())->select('address')->from('{{%saveme}}')->where(['status'=>1])->orderBy('created_at desc')->groupBy('address')->all();
         $new = '';
-        for($i=1;$i<count($query);$i++){
+        for($i=0;$i<count($query);$i++){
             $arr = explode(" ",$query[$i]['address']);
             $addressarr[] = $arr[0];
         }
