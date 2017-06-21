@@ -99,10 +99,8 @@ class WxPayNotify extends WxPayNotifyReply
 
                                 SaveToLog::userBgRecord("微信充值节操币".$query->total_fee.",赠送节操币$query->giveaway",$query->user_id);
                                 (new CoinHandle())->adjustment($query->user_id,$query->total_fee,'充值');
-                                if($query->giveaway>0){
-                                    (new CoinHandle())->adjustment($query->user_id,$query->giveaway,'充值赠送');
-                                }
 
+                                (new CoinHandle())->adjustment($query->user_id,$query->giveaway,'充值赠送');
 
                             }catch (Exception $e){
                                 throw new ErrorException($e->getMessage());

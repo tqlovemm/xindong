@@ -674,9 +674,8 @@ class SiteController extends BaseController
 
                 $invite->status = 0;$invite->update();
                 try{
-                    if($invite->coin>0){
-                        (new CoinHandle())->adjustment($user->id,$invite->coin,'注册赠送');
-                    }
+
+                    (new CoinHandle())->adjustment($user->id,$invite->coin,'注册赠送');
 
                     if($invite->groupid==2){
                         $vip_text = "普通会员";
@@ -834,9 +833,7 @@ class SiteController extends BaseController
                     'jiecao_coin'=>$invite->coin,
                 ])->execute();
 
-                if($invite->coin>0){
-                    (new CoinHandle())->adjustment($user->id,$invite->coin,'注册赠送');
-                }
+                (new CoinHandle())->adjustment($user->id,$invite->coin,'注册赠送');
 
                 $invite->status = 0;$invite->update();
 
