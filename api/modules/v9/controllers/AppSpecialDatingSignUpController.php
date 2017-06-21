@@ -5,6 +5,7 @@ namespace api\modules\v9\controllers;
 use api\components\CsvDataProvider;
 use api\modules\v9\models\AppSpecialDating;
 use backend\models\User;
+use common\components\CoinHandle;
 use common\components\Vip;
 use frontend\models\UserData;
 use yii\myhelper\Response;
@@ -121,6 +122,8 @@ class AppSpecialDatingSignUpController extends ActiveController
         if($specialModel->limit_count<=$specialModel->sign_up_count){
             Response::show(201,'报名人数已满，请等待开放','报名人数已满，请等待开放');
         }
+
+        (new CoinHandle())->adjustment($model->user_id,-$specialModel->coin,'专属');
 
         if(!$model->save()) {
             Response::show(201,array_values($model->getFirstErrors())[0], $model->getFirstErrors());
