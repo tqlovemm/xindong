@@ -55,6 +55,13 @@ class UserProfile extends \yii\db\ActiveRecord
         ];
     }
 
+    public function validateFCN()
+    {
+        $number = self::findOne(['number'=>$this->number]);
+        if (!empty($number)) {
+            $this->addError('number', '会员编号已经存在');
+        }
+    }
     /**
      * @inheritdoc
      */
