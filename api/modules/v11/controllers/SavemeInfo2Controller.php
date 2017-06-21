@@ -170,7 +170,7 @@ class SavemeInfo2Controller extends ActiveController {
                 'msg' => "我报名了你发布的‘救我’，快接受我的申请吧~",
             ];
             $text['from'] = $cid['username'];
-            $this->setMsg()->sendText($text);
+            $huanx->sendText($text);
         }
         Response::show('200','操作成功',"申请成功");
     }
@@ -227,7 +227,7 @@ class SavemeInfo2Controller extends ActiveController {
             'msg' => "我已经接受了你的‘救我’申请，我们开始聊天吧~",
         ];
         $text['from'] = $cid['username'];
-        $this->setMsg()->sendText($text);
+        $huanx->sendText($text);
         //接收推送
         if(!empty($cid['cid'])){
             if(empty($cid['nickname'])){
