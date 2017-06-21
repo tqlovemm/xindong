@@ -4,8 +4,10 @@ namespace frontend\modules\forum\controllers;
 use backend\models\AdminCheck;
 use backend\models\User;
 use backend\modules\setting\models\AuthAssignment;
+use common\components\CoinHandle;
 use frontend\models\UserData;
 use frontend\models\UserProfile;
+use yii\base\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
@@ -47,6 +49,13 @@ class AdminCheckController extends Controller
                 if($status==2){
                     $userData = UserData::findOne($model->user_id);
                     $userData->jiecao_coin+=$model->coin;
+
+                    try{
+                        (new CoinHandle())->adjustment($model->user_id,$model->coin,'系统添加');
+                    }catch (Exception $e){
+                        throw new Exception($e->getMessage());
+                    }
+
                     if(!$userData->update()){
                         $model->status = 1;
                         return var_dump($userData->errors);

@@ -218,7 +218,6 @@ class JiecaoController extends Controller
                     if($amodel->save()){
                         try{
                             SaveToLog::userBgRecord("管理员{$admin}为其添加{$model->jiecao}节操币",$user_id);
-                            (new CoinHandle())->adjustment($user_id,$model->jiecao,'系统添加');
                         }catch (Exception $e){
                             throw new ErrorException($e->getMessage());
                         }
