@@ -421,7 +421,7 @@ class FirefightersController extends Controller
                                     $result = '报名成功';
                                     try{
                                         SaveToLog::userBgRecord("救火福利报名{$model->number},扣除节操币{$model->coin}");
-                                        (new CoinHandle())->adjustment($user_id,$model->coin,'救火福利');
+                                        (new CoinHandle())->adjustment($user_id,-$model->coin,'救火福利');
                                     }catch (Exception $e){
                                         throw new ErrorException($e->getMessage());
                                     }
