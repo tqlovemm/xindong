@@ -1,6 +1,7 @@
 <?php
 namespace api\modules\v8\controllers;
 use api\modules\v8\models\Order;
+use common\components\CoinHandle;
 use frontend\models\ActivityRechargeRecord;
 use api\modules\v4\models\PredefinedJiecaoCoin;
 use api\modules\v9\models\MemberSort;
@@ -188,6 +189,11 @@ class OrderController extends ActiveController
                 $model->giveaway = $jiecaoModel['giveaway'];
                 if($model->save()){
                     $recharge = Yii::$app->db->createCommand("update pre_user_data set jiecao_coin = jiecao_coin+{$total} where user_id={$model->user_id}")->execute();
+                    try{
+                        (new CoinHandle())->adjustment($model->user_id,$total,'充值');
+                    }catch (Exception $e){
+                        throw new Exception($e->getMessage());
+                    }
                     if($recharge){
                         $activity = new ActivityRechargeRecord();
                         $activity->user_id = $model->user_id;
