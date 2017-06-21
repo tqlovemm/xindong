@@ -216,12 +216,12 @@ class SavemeInfo2Controller extends ActiveController {
             $exceptId[] = $item['id'];
             $exceptname[$item['id']] = $item['username'];
         }
+        $boyusername = User::findOne($apply_uid)->username;
         if(!in_array($apply_uid,$exceptId)){
-            $boyusername = User::findOne($apply_uid)->username;
             $huanx->addFriend($cid['username'],$boyusername);
         }
         $text['target_type'] = "users";
-        $text['target'] = [$exceptname[$apply_uid]];
+        $text['target'] = [$boyusername];
         $text['msg'] = [
             'type' => 'txt',
             'msg' => "我已经接受了你的‘救我’申请，我们开始聊天吧~",
