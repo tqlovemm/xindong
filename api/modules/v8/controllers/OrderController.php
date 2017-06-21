@@ -190,7 +190,8 @@ class OrderController extends ActiveController
                 if($model->save()){
                     $recharge = Yii::$app->db->createCommand("update pre_user_data set jiecao_coin = jiecao_coin+{$total} where user_id={$model->user_id}")->execute();
                     try{
-                        (new CoinHandle())->adjustment($model->user_id,$total,'充值');
+                        (new CoinHandle())->adjustment($model->user_id,$model->total_fee,'充值');
+                        (new CoinHandle())->adjustment($model->user_id,$model->giveaway,'充值赠送');
                     }catch (Exception $e){
                         throw new Exception($e->getMessage());
                     }
@@ -253,7 +254,14 @@ class OrderController extends ActiveController
                     $realGiveaway = $self_data["realGiveaway"];
                     Yii::$app->db->createCommand("update pre_user set groupid = {$groupid} where id={$model->user_id}")->execute();
                     Yii::$app->db->createCommand("update pre_user_data set jiecao_coin = jiecao_coin+{$realGiveaway} where user_id={$model->user_id}")->execute();
+
                     Yii::$app->db->createCommand("update pre_app_order_list set giveaway = {$realGiveaway} where id={$listId}")->execute();
+
+                    try{
+                        (new CoinHandle())->adjustment($model->user_id,$realGiveaway,'升级赠送');
+                    }catch (Exception $e){
+                        throw new Exception($e->getMessage());
+                    }
                 }
             }
 
