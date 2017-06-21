@@ -35,7 +35,7 @@ class WeipayRecord extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'out_trade_no', 'total_fee', 'transaction_id', 'extra', 'detail', 'created_at', 'updated_at'], 'required'],
+            [['user_id', 'out_trade_no', 'total_fee'], 'required'],
             [['user_id', 'total_fee','type','giveaway', 'created_at', 'updated_at'], 'integer'],
             [['extra', 'detail'], 'string'],
             [['out_trade_no'], 'string', 'max' => 50],
@@ -61,5 +61,22 @@ class WeipayRecord extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert)){
+            if($this->isNewRecord){
+                $this->created_at = time();
+                $this->updated_at = time();
+            }else{
+                $this->updated_at = time();
+            }
+            return true;
+        }
+        return false;
     }
 }

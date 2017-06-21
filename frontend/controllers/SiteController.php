@@ -1,11 +1,9 @@
 <?php
 namespace frontend\controllers;
 use backend\modules\exciting\models\WebsiteContent;
+use common\components\CoinHandle;
 use common\components\SaveToLog;
-use frontend\models\CollectingSeventeenFilesText;
-use frontend\models\ContactIpLimits;
 use frontend\modules\male\models\MaleInfoText;
-use frontend\modules\weixin\models\FirefightersSignUp;
 use frontend\modules\weixin\models\UserWeichat;
 use Yii;
 use app\components\SendTemplateSMS;
@@ -13,7 +11,6 @@ use backend\modules\exciting\models\Exciting;
 use backend\modules\dating\models\Dating;
 use backend\modules\exciting\models\OtherTextPic;
 use backend\modules\exciting\models\Website;
-use backend\modules\setting\models\AuthAssignment;
 use common\models\User;
 use frontend\models\DatingSignup;
 use frontend\models\PasswordResetMobileForm;
@@ -467,6 +464,7 @@ class SiteController extends BaseController
                 Yii::$app->session->setFlash('success','报名成功');
                 try{
                     SaveToLog::userBgRecord("觅约报名{$number}，扣除节操币{$recharge->number}");
+                    (new CoinHandle())->adjustment($user_id,-$recharge->number,'觅约');
                 }catch (Exception $e){
                     throw new ErrorException($e->getMessage());
                 }

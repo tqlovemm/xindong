@@ -430,49 +430,52 @@ class GirlDefaultController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $newNumber = $model->number.$model->fantasies.$model->credit;
             if($model->update()){
-                $weekly = Weekly::findOne(['flag'=>$model->flag]);
+                if($model->show==10){
 
-                if(!empty($weekly)){
+                    $weekly = Weekly::findOne(['flag'=>$model->flag]);
+                    if(!empty($weekly)){
 
-                    if(empty($weekly->number)){
+                        if(empty($weekly->number)){
 
-                        $girlNumberRecord = new GirlNumberRecord();
-                        if(empty($girlNumberRecord::findOne(['number'=>$newNumber]))){
-                            $girlNumberRecord->number = $newNumber;
-                            $girlNumberRecord->save();
-                        }
-                        $weekly->number = $newNumber;
-                        $weekly->worth = $model->coin;
-                        $weekly->title = $model->address_a;
-                        $weekly->platform = $model->foreign;
-                        if($weekly->update()){
-                            $textModel = new BgadminGirlMemberText();
-                            $textModel->member_id =$id;
-                            $textModel->type =0;
-                            if($textModel->save()){
-                                $fileModel = new BgadminGirlMemberFiles();
-                                $fileModel->member_id = $id;
-                                $fileModel->text_id = $textModel->text_id;
-                                $fileModel->path = WeeklyContent::findOne(['album_id'=>$weekly->id,'status'=>2])->path;
-                                if(!$fileModel->save()){
-                                    return var_dump($fileModel->errors);
+                            $girlNumberRecord = new GirlNumberRecord();
+                            if(empty($girlNumberRecord::findOne(['number'=>$newNumber]))){
+                                $girlNumberRecord->number = $newNumber;
+                                $girlNumberRecord->save();
+                            }
+                            $weekly->number = $newNumber;
+                            $weekly->worth = $model->coin;
+                            $weekly->title = $model->address_a;
+                            $weekly->platform = $model->foreign;
+                            if($weekly->update()){
+                                $textModel = new BgadminGirlMemberText();
+                                $textModel->member_id =$id;
+                                $textModel->type =0;
+                                if($textModel->save()){
+                                    $fileModel = new BgadminGirlMemberFiles();
+                                    $fileModel->member_id = $id;
+                                    $fileModel->text_id = $textModel->text_id;
+                                    $fileModel->path = WeeklyContent::findOne(['album_id'=>$weekly->id,'status'=>2])->path;
+                                    if(!$fileModel->save()){
+                                        return var_dump($fileModel->errors);
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    if(($weekly->number != $newNumber)||($weekly->title != $model->address_a)||($weekly->platform != $model->foreign)){
-                        $weekly->number = $newNumber;
-                        $weekly->worth = $model->coin;
-                        $weekly->title = $model->address_a;
-                        $weekly->platform = $model->foreign;
-                        if(!$weekly->update()){
-                            return var_dump($weekly->errors);
+                        if(($weekly->number != $newNumber)||($weekly->title != $model->address_a)||($weekly->platform != $model->foreign)){
+                            $weekly->number = $newNumber;
+                            $weekly->worth = $model->coin;
+                            $weekly->title = $model->address_a;
+                            $weekly->platform = $model->foreign;
+                            if(!$weekly->update()){
+                                return var_dump($weekly->errors);
+                            }
                         }
+
                     }
-
                 }
-
+            }else{
+                return var_dump($model->errors);
             }
             return $this->redirect(['view', 'id' => $model->member_id]);
         } else {

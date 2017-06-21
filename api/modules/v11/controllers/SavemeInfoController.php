@@ -2,6 +2,7 @@
 namespace api\modules\v11\controllers;
 
 use api\modules\v11\models\User;
+use common\components\CoinHandle;
 use yii;
 use yii\db\Query;
 use yii\helpers\Response;
@@ -108,6 +109,7 @@ class SavemeInfoController extends ActiveController {
             $jc = Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin=jiecao_coin-{$saveme['price']} where user_id=$aid")->execute();
             try{
                 SaveToLog::userBgRecord("报名救我花费{$saveme['price']}心动币",$aid);
+                (new CoinHandle())->adjustment($aid,-$saveme['price'],'救我扣除');
             }catch (yii\base\Exception $e){
                 throw new yii\base\ErrorException($e->getMessage());
             }
@@ -175,6 +177,7 @@ class SavemeInfoController extends ActiveController {
             foreach ($uids as $v) {
                 try{
                     SaveToLog::userBgRecord("救我被拒绝退回{$savemeres['price']}节操币",$v);
+                    (new CoinHandle())->adjustment($v,$savemeres['price'],'救我退还');
                 }catch (Exception $e){
                     throw new ErrorException($e->getMessage());
                 }
