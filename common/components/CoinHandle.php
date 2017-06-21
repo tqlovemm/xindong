@@ -10,20 +10,23 @@ class CoinHandle
 
     public function adjustment($user_id,$coin,$type,$extra=null){
 
-        $model = new CoinConsumptionDetails();
-        $user = UserData::findOne($user_id);
+        if($coin>0){
 
-        $model->user_id = $user_id;
-        $model->coin = $coin;
-        $model->transaction = date('Y').date('m').date('d').time().uniqid();
-        $model->type = $type;
-        $model->extra = $extra;
-        $model->balance = $user->jiecao_coin;
+            $model = new CoinConsumptionDetails();
+            $user = UserData::findOne($user_id);
 
-        if($model->save()){
-            return $model;
-        }else{
-            return $model->errors;
+            $model->user_id = $user_id;
+            $model->coin = $coin;
+            $model->transaction = date('Y').date('m').date('d').time().uniqid();
+            $model->type = $type;
+            $model->extra = $extra;
+            $model->balance = $user->jiecao_coin;
+
+            if($model->save()){
+                return $model;
+            }else{
+                return $model->errors;
+            }
         }
 
     }
