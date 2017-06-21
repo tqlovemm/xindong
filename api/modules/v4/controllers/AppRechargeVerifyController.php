@@ -59,28 +59,20 @@ class AppRechargeVerifyController extends ActiveController
             $model->type="节操币充值";
             Yii::$app->db->createCommand("update pre_user_data set jiecao_coin = jiecao_coin+{$total} where user_id={$model->user_id}")->execute();
 
+            return $model;
         }elseif($model->level>1&&$model->level<5){
 
-            $member_price = (new Query())->select('price_1')->from('pre_member_sorts')->where(['flag'=>1])->all();
-            $price = ArrayHelper::map($member_price,'price_1','price_1');
-            if(!in_array($model->number,$price)){
+            $model->subject = 2;
+            $model->type="会员升级";
+            Yii::$app->db->createCommand("update pre_user set groupid = {$model->level} where id={$model->user_id}")->execute();
 
-                throw new ForbiddenHttpException('非法操作');
-
-            }else{
-
-                $model->subject = 2;
-                $model->type="会员升级";
-                Yii::$app->db->createCommand("update pre_user set groupid = {$model->level} where id={$model->user_id}")->execute();
-            }
-
-
+            $data = array('groupid'=>$model->level);
+            Response::show(200,$data,$data);
         }else{
             Response::show(2501,'失败','level参数错误');
         }
 
 
-        return $model;
     }
 
     public function actionCreate2()

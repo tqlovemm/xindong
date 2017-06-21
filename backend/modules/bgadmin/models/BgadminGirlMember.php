@@ -34,6 +34,7 @@ use Yii;
  * @property string $credit
  * @property string $flag
  * @property integer $foreign
+ * @property integer $show
  *
  * @property BgadminGirlMemberText $memberGirlText
  */
@@ -55,7 +56,7 @@ class BgadminGirlMember extends \yii\db\ActiveRecord
     {
         return [
             [['sex','address_a'], 'required'],
-            [['sex', 'vip', 'status', 'record_type', 'coin','age','height','weight','foreign'], 'integer'],
+            [['sex', 'vip', 'status', 'record_type', 'coin','age','height','weight','foreign','show'], 'integer'],
             [['cellphone'], 'string', 'max' => 64],
             [['weicaht', 'weibo', 'address_a', 'flag', 'cup', 'job', 'hobby', 'like_type'], 'string', 'max' => 32],
             [['address_b'], 'string', 'max' => 128],
@@ -117,6 +118,7 @@ class BgadminGirlMember extends \yii\db\ActiveRecord
             'height' => '身高',
             'weight' => '体重',
             'foreign' => '是否保密',
+            'show' => '是否删档',
         ];
     }
     /**

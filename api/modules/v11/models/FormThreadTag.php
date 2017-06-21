@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  * @property integer $updated_at
  * @property integer $created_at
  * @property integer $sort
+ * @property integer $status
  */
 class FormThreadTag extends ActiveRecord
 {
@@ -29,7 +30,7 @@ class FormThreadTag extends ActiveRecord
     {
         return [
             [['tag_name', 'tag_py'], 'required','message'=>"{attribute}不可为空"],
-            [['updated_at', 'created_at', 'sort'], 'integer'],
+            [['updated_at', 'created_at', 'sort', 'status'], 'integer'],
             [['tag_name','tag_py'], 'string','max'=>64],
         ];
     }
@@ -53,6 +54,7 @@ class FormThreadTag extends ActiveRecord
             'updated_at' => 'Updated At',
             'created_at' => 'Created At',
             'sort' => 'Sort',
+            'status' => 'Status',
         ];
     }
 

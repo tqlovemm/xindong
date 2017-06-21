@@ -19,6 +19,7 @@ use Yii;
  * @property integer $vip
  * @property integer $status
  * @property integer $coin
+ * @property integer $show
  * @property string $time
  * @property string $updated_at
  * @property string $created_at
@@ -45,7 +46,7 @@ class BgadminMember extends \yii\db\ActiveRecord
     {
         return [
             [['sex','address_a'], 'required'],
-            [['sex', 'vip', 'status', 'record_type', 'coin'], 'integer'],
+            [['sex', 'vip', 'status', 'record_type', 'coin','show'], 'integer'],
             [['cellphone'], 'string', 'max' => 64],
             [['weicaht', 'weibo', 'address_a'], 'string', 'max' => 32],
             [['address_b'], 'string', 'max' => 128],
@@ -95,6 +96,7 @@ class BgadminMember extends \yii\db\ActiveRecord
             'updated_at' => '更新时间',
             'created_at' => '创建时间',
             'created_by' => '创建人',
+            'show' => '删档情况',
         ];
     }
     /**

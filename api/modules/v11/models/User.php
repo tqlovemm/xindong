@@ -2,7 +2,7 @@
 
 namespace api\modules\v11\models;
 
-use app\components\db\ActiveRecord;
+use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 /**
@@ -15,7 +15,7 @@ use yii\web\IdentityInterface;
  * @property string $avatar
  * @property string $auth_key
  */
-class User extends ActiveRecord implements IdentityInterface
+class User extends ActiveRecord  implements IdentityInterface
 {
     /**
      * @inheritdoc

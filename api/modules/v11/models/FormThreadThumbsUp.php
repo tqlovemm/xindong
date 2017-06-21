@@ -2,8 +2,9 @@
 namespace api\modules\v11\models;
 use api\modules\v9\models\UserProfile;
 use Yii;
-use app\components\db\ActiveRecord;
+
 use common\components\PushConfig;
+use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "pre_app_form_thread_thumbs_up".
@@ -115,12 +116,12 @@ class FormThreadThumbsUp extends ActiveRecord
             $data = [[$this->thread_id,$thread_uid->user_id,$this->user_id,"",time(),time()]];
         }
 
-        foreach ($uids as $uid){
+    /*    foreach ($uids as $uid){
             if($uid!=$thread_uid->user_id){
                 $da = [$this->thread_id,$uid,$this->user_id,"",time(),time()];
                 array_push($data,$da);
             }
-        }
+        }*/
 
         if(!empty($data)){
             \Yii::$app->db->createCommand()->batchInsert('pre_app_form_thread_push_msg', ['wid','user_id','writer_id','content','created_at','updated_at'],$data)->execute();
@@ -140,6 +141,25 @@ class FormThreadThumbsUp extends ActiveRecord
             'updated_at' => 'Updated At',
             'created_at' => 'Created At',
         ];
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert)){
+
+            if($this->isNewRecord){
+                $this->created_at = time();
+                $this->updated_at = time();
+            }else{
+                $this->updated_at = time();
+            }
+            return true;
+        }
+        return false;
     }
 
 }

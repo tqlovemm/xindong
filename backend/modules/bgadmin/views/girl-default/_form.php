@@ -9,6 +9,8 @@
 
     <?php $form = ActiveForm::begin();?>
 
+    <?= $form->field($model, 'show')->dropDownList([10=>'正常不删档',5=>'删档但接受推送',0=>'完全退出']) ?>
+
     <?= $form->field($model, 'sex')->dropDownList([1=>'女生']) ?>
 
     <?= $form->field($model, 'number')->textInput()->label('会员编号') ?>

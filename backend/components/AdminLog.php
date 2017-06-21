@@ -30,10 +30,9 @@ class AdminLog
         }
         $userName = Yii::$app->user->identity->username;
         $tableName = $event->sender->tableSchema->name;
-        $description = sprintf($description, $userName, $tableName, $event->sender->primaryKey()[0], $event->sender->getPrimaryKey(), $desc);
+        $description = sprintf($description, $userName, $tableName, $event->sender->primaryKey()[0], json_encode($event->sender->getPrimaryKey()), $desc);
         $route = Url::to();
         $userId = Yii::$app->user->id;
-        $ip = ip2long(Yii::$app->request->userIP);
         $data = [
             'route' => $route,
             'description' => $description,

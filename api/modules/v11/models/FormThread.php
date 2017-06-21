@@ -170,4 +170,15 @@ class FormThread extends ActiveRecord
         $model->img_height = $imgInfo[1];
         $model->save();
     }
+
+    public function getComment(){
+
+        return $this->hasMany(FormThreadComments::className(), ['thread_id' => 'wid']);
+
+    }
+
+    public function getThumbs(){
+
+        return $this->hasMany(FormThreadThumbsUp::className(), ['thread_id' => 'wid']);
+    }
 }

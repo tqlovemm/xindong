@@ -170,7 +170,7 @@ return [
                         'v10/like','v10/cellphone','v10/dating-signup','v10/user2','v10/user3','v10/user4','v10/dating','v10/member','v10/recharge-record',
                         'v10/change-user-info','v10/match','v10/judge','v10/message','v10/message2','v10/judge','v10/member2',
                         'v10/user-info','v10/accusation','v10/order','v10/reply','v10/user-info','v10/user5','v10/get-info','v10/user-login',
-                        'v10/register','v10/third-party','v10/member-sort-second','v10/get-info-second','v10/get-info-from-username',
+                        'v10/register','v10/third-party','v10/member-sort-second','v10/member-sort-third','v10/get-info-second','v10/get-info-from-username',
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\w+>',
@@ -182,6 +182,9 @@ return [
                     'controller' => [
                         'v11/saveme','v11/saveme-comment','v11/saveme-info','v11/saveme-judge','v11/form-thread','v11/form','v11/form-thread-comments','v11/form-thread-thumbs-up','v11/form-thread-tag',
                         'v11/form-thread-report-choice', 'v11/form-thread-report','v11/form-thread-push-msg','v11/we-chat-customer-service','v11/open-before-adv','v11/wechat-push','v11/article','v11/article-type','v11/article-collection','v11/article-like','v11/article-adver','v11/article-pl','v11/saveme-record',
+                        'v11/form-thread-report-choice', 'v11/form-thread-report','v11/form-thread-push-msg','v11/we-chat-customer-service','v11/open-before-adv',
+                        'v11/wechat-push','v11/article','v11/article-type','v11/article-collection','v11/article-like','v11/article-adver','v11/article-pl',
+                        'v11/user-login',
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\w+>',

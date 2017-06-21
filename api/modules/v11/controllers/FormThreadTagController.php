@@ -46,7 +46,7 @@ class FormThreadTagController extends ActiveController {
     public function actionIndex() {
 
     	$model = $this->modelClass;
-        $query =  $model::find();
+        $query =  $model::find()->where(['status'=>10]);
 
         return new CsvDataProvider([
             'query' =>  $query,

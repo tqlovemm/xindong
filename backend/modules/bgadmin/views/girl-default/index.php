@@ -31,12 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
             //'member_id',
             'number',
             'weicaht',
-            'weibo',
             'cellphone',
             'address_a',
             'address_b',
-            'sex',
-            'vip',
             'coin',
             'age',
             //'updated_at:datetime',
@@ -51,15 +48,36 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_by',
             [
                 'attribute' => 'foreign',
-                'label' => '是否保密',
                 'format'=>'html',
                 'value' => function ($data) {
                     if($data->foreign==0){
-                        return "照片公开";
+                        return "<span style='color:red;font-weight: bold;'>照片公开</span>";
                     }else{
-                        return "<span style='color:red;'>照片打码</span>";
+                        return "<span style='color:#0a6eff;font-weight: bold;'>照片打码</span>";
                     }
-                }
+                },
+                'filter' => [
+                    0 => '照片公开',
+                    1 => '照片打码',
+                ]
+            ],
+            [
+                'attribute' => 'show',
+                'format'=>'html',
+                'value' => function ($data) {
+                    if($data->show==0){
+                        return "<span style='color:red;font-weight: bold;'>完全退出</span>";
+                    }elseif($data->show==10){
+                        return "<span style='color:#06c232;font-weight: bold;'>正常</span>";
+                    }else{
+                        return "<span style='color:#0a6eff;font-weight: bold;'>删档但接受推送</span>";
+                    }
+                },
+                'filter' => [
+                    0 => '完全退出',
+                    10 => '正常',
+                    5 => '删档但接受推送',
+                ]
             ],
 
             ['class' => 'yii\grid\ActionColumn'],
