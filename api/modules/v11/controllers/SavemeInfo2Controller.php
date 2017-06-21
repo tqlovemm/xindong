@@ -13,6 +13,7 @@ use yii\filters\RateLimiter;
 use yii\data\Pagination;
 use common\components\SaveToLog;
 use yii\myhelper\Easemob;
+use common\components\CoinHandle;
 use yii\base\Exception;
 use yii\base\ErrorException;
 class SavemeInfo2Controller extends ActiveController {
@@ -120,6 +121,7 @@ class SavemeInfo2Controller extends ActiveController {
             $jc = Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin=jiecao_coin-{$saveme['price']} where user_id=$aid")->execute();
             try{
                 SaveToLog::userBgRecord("报名救我花费{$saveme['price']}心动币",$aid);
+                (new CoinHandle())->adjustment($aid,-$saveme['price'],'救我扣除');
             }catch (yii\base\Exception $e){
                 throw new yii\base\ErrorException($e->getMessage());
             }
