@@ -674,6 +674,7 @@ class SiteController extends BaseController
 
                 $invite->status = 0;$invite->update();
                 try{
+                    (new CoinHandle())->adjustment($user->id,$invite->coin,'注册赠送');
                     if($invite->groupid==2){
                         $vip_text = "普通会员";
                     }elseif($invite->groupid==3){
@@ -829,7 +830,7 @@ class SiteController extends BaseController
                     'user_id'=>$user->id,
                     'jiecao_coin'=>$invite->coin,
                 ])->execute();
-
+                (new CoinHandle())->adjustment($user->id,$invite->coin,'注册赠送');
                 $invite->status = 0;$invite->update();
 
                 if (Yii::$app->getUser()->login($user)) {
