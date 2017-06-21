@@ -16,6 +16,7 @@ use backend\models\JiecaoCoinOperation;
 use backend\models\User;
 use backend\models\Vip;
 use backend\models\WeipayRecord;
+use common\components\CoinHandle;
 use common\components\SaveToLog;
 use frontend\models\RechargeRecord;
 use frontend\models\UserData;
@@ -217,11 +218,13 @@ class JiecaoController extends Controller
                     if($amodel->save()){
                         try{
                             SaveToLog::userBgRecord("管理员{$admin}为其添加{$model->jiecao}节操币",$user_id);
+                            (new CoinHandle())->adjustment($user_id,$model->jiecao,'系统添加');
                         }catch (Exception $e){
                             throw new ErrorException($e->getMessage());
                         }
                         Yii::$app->session->setFlash('result','操作成功！！等待管理员审核！！');
                         $this->temp($amodel->id,"olQJss-4VDufNDF5LuCG538pkS4k",1,$model->number);
+
                         return $this->refresh();
                     }
 
@@ -409,6 +412,7 @@ class JiecaoController extends Controller
                                 $model->save();
                                 try{
                                     SaveToLog::userBgRecord("管理员{$admin}为其扣除{$model->value}节操币",$model->user_id);
+                                    (new CoinHandle())->adjustment($model->user_id,-$model->value,'系统扣除');
                                 }catch (Exception $e){
                                     throw new ErrorException($e->getMessage());
                                 }
