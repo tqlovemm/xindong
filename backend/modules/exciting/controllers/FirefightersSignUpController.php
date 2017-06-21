@@ -6,6 +6,7 @@ use backend\models\User;
 use backend\modules\app\models\UserData;
 use backend\modules\dating\models\UserWeichatPush;
 use backend\modules\exciting\models\OtherTextPic;
+use common\components\CoinHandle;
 use common\components\SaveToLog;
 use frontend\modules\weixin\models\UserWeichat;
 use Yii;
@@ -119,6 +120,7 @@ class FirefightersSignUpController extends Controller
                     $userData = UserData::findOne(['user_id'=>$model->user_id]);
                     $userData->jiecao_coin += $sign->coin;
                     if($userData->update()){
+                        (new CoinHandle())->adjustment($model->user_id,$sign->coin,'救火福利返还');
                         SaveToLog::userBgRecord("管理员{$model->handler}撤销{$sign->number}福利救火$result,返还节操币:$sign->coin",$model->user_id);
                     }
 
