@@ -45,6 +45,7 @@ class UserProfile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            ['number','validateFCN'],
             [['user_id', 'height', 'weight', 'updated_at', 'created_at'], 'integer'],
             [['birthdate'], 'safe'],
             [['address', 'description'], 'string'],
