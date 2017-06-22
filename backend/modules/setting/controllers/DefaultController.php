@@ -187,10 +187,10 @@ class DefaultController extends BaseController
                 $vipType->vip = $model->vip;
                 $vipType->type = $model->vip_type;
                 if($model->vip_type==10){
-                    $yearTime = date('Y-m-d H:i:s',strtotime('+1 years'));
+                    $yearTime = date('Y-m-d',strtotime('+1 years'));
                     $vipType->expire = $yearTime;
                 }else{
-                    $halfYearTime = date('Y-m-d H:i:s',strtotime('+6 month', time()));
+                    $halfYearTime = date('Y-m-d',strtotime('+6 month', time()));
                     $vipType->expire = $halfYearTime;
                 }
                 $vipType->save();
