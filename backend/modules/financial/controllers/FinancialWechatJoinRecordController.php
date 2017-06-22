@@ -2,10 +2,9 @@
 
 namespace backend\modules\financial\controllers;
 
-use backend\models\CollectingFilesText;
-use backend\modules\financial\models\FinancialWechatMemberIncrease;
+
 use backend\modules\financial\models\FinancialWechatPlatform;
-use backend\modules\sm\models\Province;
+use common\models\Province;
 use Yii;
 use backend\modules\financial\models\FinancialWechatJoinRecord;
 use backend\modules\financial\models\FinancialWechatJoinRecordSearch;
