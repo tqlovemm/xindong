@@ -66,7 +66,18 @@ $this->registerCss("
                     <li><a href="#">会员等级 <span class="pull-right badge bg-blue"><?=Vip::vip($val->vip)?></span></a></li>
                     <li><a href="#">备注 <span class="pull-right badge bg-green"><?=$val->extra?></span></a></li>
                     <li><a href="delete?id=<?=$val->vid?>" data-confirm="确认删除吗？删除将无法恢复！！！">创建人 <span class="pull-right badge bg-aqua"><?=$val->admin?></span></a></li>
-                </ul>
+
+                    <li>
+                        <?php if($expire<86400*60&&$expire>0):?>
+                            <a onclick="window.open('renew-page?id=<?=$val->vid?>','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-700)/2+',left='+(window.screen.availWidth-600)/2+',height=700,width=600')" style="cursor: pointer;">点击续费 <span class="pull-right badge bg-black">是否</span></a>
+                        <?php elseif($expire<=0):?>
+                            <a onclick="window.open('renew-page?id=<?=$val->vid?>&reopen=1','','toolbar=no,status=0,location=no,resizable=yes,menubar=no,scrollbars=yes,top='+(window.screen.availHeight-700)/2+',left='+(window.screen.availWidth-600)/2+',height=700,width=600')" style="cursor: pointer;">重新开通 <span class="pull-right badge bg-red">是否</span></a>
+                        <?php else:?>
+                            <a href="#">正常使用中 <span class="pull-right badge bg-green">良好</span></a>
+                        <?php endif;?>
+                    </li>
+
+        </ul>
                 <?=Vip::vip_type($val->type,1)?>
             </div>
         </div>

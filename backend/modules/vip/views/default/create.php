@@ -1,6 +1,10 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+$yearTime = date('Y-m-d',strtotime('+1 years'));
+$halfYearTime = date('Y-m-d',strtotime('+6 month', time()));
+$mouthTime = date('Y-m-d',strtotime('+1 month', time()));
+$jiTime = date('Y-m-d',strtotime('+4 month', time()));
 ?>
 <div class="create">
     <div class="row">
@@ -20,3 +24,20 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
 </div>
+<?php
+$this->registerJs("
+    var type = $('#uservipexpiredate-type');
+    var expire = document.getElementById('uservipexpiredate-expire');
+    type.change(function () {
+        if(type.val()==10){
+            expire.value = '$yearTime';
+        }else if(type.val()==5){
+            expire.value = '$halfYearTime';
+        }else if(type.val()==1){
+            expire.value = '$mouthTime';
+        }else{
+            expire.value = '$jiTime';
+        }
+    });
+");
+?>
