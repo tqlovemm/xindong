@@ -3,7 +3,7 @@
 namespace backend\modules\exciting\controllers;
 
 use backend\modules\bgadmin\models\BgadminGirlMember;
-use backend\modules\sm\models\Province;
+use common\models\Province;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;

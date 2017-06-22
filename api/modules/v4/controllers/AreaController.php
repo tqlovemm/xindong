@@ -2,10 +2,8 @@
 
 namespace api\modules\v4\controllers;
 
-use backend\modules\sm\models\Province;
-use yii\helpers\ArrayHelper;
+use common\models\Province;
 use yii\rest\ActiveController;
-use yii\data\ActiveDataProvider;
 
 class AreaController extends ActiveController
 {

@@ -37,6 +37,9 @@ return [
                 '@financial' => '@backend/modules/financial',
             ],
         ],
+        'vip' => [
+            'class' => 'backend\modules\vip\vip',
+        ],
         'seek' => [
             'class' => 'backend\modules\seek\SeekModule',
         ],

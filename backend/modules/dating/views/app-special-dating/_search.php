@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-$province = \yii\helpers\ArrayHelper::map(\backend\modules\sm\models\Province::find()->asArray()->all(),'prov_name','prov_name');
+$province = \yii\helpers\ArrayHelper::map(common\models\Province::find()->asArray()->all(),'prov_name','prov_name');
 ?>
 
 <div class="thirth-files-search row">

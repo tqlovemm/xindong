@@ -6,7 +6,7 @@ use api\modules\v9\models\AppSpecialDatingImages;
 use Yii;
 use backend\modules\dating\models\AppSpecialDatingSearch;
 use backend\modules\dating\models\AppSpecialDating;
-use backend\modules\sm\models\Province;
+use common\models\Province;
 use common\Qiniu\QiniuUploader;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;

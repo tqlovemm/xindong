@@ -3,18 +3,14 @@
 namespace frontend\modules\bgadmin\controllers;
 
 use backend\modules\bgadmin\models\BgadminGirlMember;
-use backend\modules\bgadmin\models\BgadminGirlMemberFiles;
-use backend\modules\bgadmin\models\BgadminGirlMemberText;
-use backend\modules\local\models\LocalCollectionCount;
 use backend\modules\setting\models\AuthAssignment;
-use backend\modules\sm\models\Province;
+use common\models\Province;
 use backend\modules\weekly\models\Weekly;
 use backend\modules\weekly\models\WeeklyContent;
 use common\Qiniu\QiniuUploader;
 use frontend\modules\bgadmin\models\UserMark;
 use Yii;
 use yii\db\Query;
-use backend\modules\local\models\LocalCollectionFilesText;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -163,51 +159,6 @@ class DefaultController extends Controller
         return $this->render('index');
     }
 
-    public function actionSendCollectionUrl(){
-
-        $this->layout = "/main";
-        if(!in_array(Yii::$app->user->id,AuthAssignment::find()->select('user_id')->column())){
-
-            throw new ForbiddenHttpException('非法访问');
-        }
-        $model = new LocalCollectionFilesText();
-        $localCountModel = new LocalCollectionCount();
-        $localCount = $localCountModel::find()->where(['not in','number',1])->asArray()->all();
-        $local = ArrayHelper::map($localCount,'number','number_name');
-        $vip = array();
-        $area = ArrayHelper::map(Province::find()->orderBy('prov_py asc')->asArray()->all(),'prov_name','prov_name');
-
-        if($model->load(Yii::$app->request->post())){
-
-            $countModel = new LocalCollectionCount();
-            $countModel = $countModel::findOne(['type'=>$model->vip]);
-            $count = $countModel->count;
-
-            $a = $model->vip;
-            if($count<100&&$count>9){
-                $b = "0"."$count";
-            }elseif($count<10){
-                $b = "00"."$count";
-            }else{
-                $b = $count;
-            }
-
-            $model->member_id = $a.$b;
-            $model->flag = md5(time().md5(rand(10000,99999)));
-
-            if($model->save()){
-                $countModel->count += 1;
-                if($countModel->update()){
-                    $url = "http://13loveme.com/local?id=";
-                    return $this->render('send-collecting-url',['model'=>$model,'url'=>$url]);
-                }else{
-                    $model::findOne($model->member_id)->delete();
-                }
-            }
-        }
-        return $this->render('_collecting_url',['model'=>$model,'areas'=>$area,'local'=>$local,'vip'=>$vip]);
-
-    }
 
     public function actionSuccess(){
 
@@ -262,62 +213,6 @@ defo;
         echo $id;
     }
 
-    public function actionSendCollectingUrl(){
-
-        if(Yii::$app->user->id!=13921){
-            throw new ForbiddenHttpException('非法访问');
-        }
-        $model = new LocalCollectionFilesText();
-
-        $query = (new Query())->select('flop_id,area')->from('pre_flop_content')->where(['not in','area',['精选汉子','优质','女生档案']])->all();
-        $area = ArrayHelper::map($query,'flop_id','area');
-
-        if($model->load(Yii::$app->request->post())){
-
-            $model->flag = md5(time().md5(rand(10000,99999)));
-            $model->flop_id = $model->address;
-            $model->address = $area[$model->address];
-            if($model->save()){
-
-                $url = "http://13loveme.com/files/";
-                return $this->render('send-collecting-url',['model'=>$model,'url'=>$url]);
-            }
-        }
-        return $this->render('_collecting_url',['model'=>$model,'areas'=>$area]);
-    }
-
-    public function actionInfo($number=''){
-
-        if(Yii::$app->user->id!=13921){
-            throw new ForbiddenHttpException('非法访问');
-        }
-
-        if(!empty($number)){
-
-            return $this->redirect('info-detail?id='.$number);
-        }
-
-        $data1 = LocalCollectionFilesText::find()->andWhere(['status'=>1]);
-        $pages1 = new Pagination(['totalCount' =>$data1->count(), 'pageSize' => '10']);
-        $model1 = $data1->offset($pages1->offset)->limit($pages1->limit)->all();
-
-        $data2 = LocalCollectionFilesText::find()->andWhere(['status'=>2]);
-        $pages2 = new Pagination(['totalCount' =>$data2->count(), 'pageSize' => '10']);
-        $model2 = $data2->offset($pages2->offset)->limit($pages2->limit)->all();
-
-        $data3 = LocalCollectionFilesText::find()->andWhere(['status'=>0]);
-        $pages3 = new Pagination(['totalCount' =>$data3->count(), 'pageSize' => '10']);
-        $model3 = $data3->offset($pages3->offset)->limit($pages3->limit)->all();
-
-        return $this->render('info',[
-            'model1' => $model1,
-            'pages1' => $pages1,
-            'model2' => $model2,
-            'pages2' => $pages2,
-            'model3' => $model3,
-            'pages3' => $pages3,
-        ]);
-    }
 
     public function actionPass($id){
 
@@ -344,23 +239,6 @@ defo;
             return $this->redirect(['info']);
         }else{
             return var_dump($model->errors);
-        }
-    }
-
-    public function actionLists($id)
-    {
-        $localCount = LocalCollectionCount::find()
-            ->where(['number' => [$id,1]])
-            ->count();
-        $branches = LocalCollectionCount::find()
-            ->where(['number' => [$id,1]])
-            ->all();
-        if ($localCount > 0) {
-            foreach ($branches as $branche) {
-                echo "<option value='" . $branche->type . "'>" . $branche->name . "</option>";
-            }
-        } else {
-            echo "<option>-</option>";
         }
     }
 

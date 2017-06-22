@@ -3,7 +3,7 @@
 namespace backend\modules\male\controllers;
 
 use backend\modules\male\models\MaleInfoText;
-use backend\modules\sm\models\Province;
+use common\models\Province;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use Yii;
