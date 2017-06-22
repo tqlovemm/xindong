@@ -5,6 +5,7 @@ namespace backend\modules\setting\controllers;
 use backend\components\AddRecord;
 use backend\models\User;
 use backend\modules\seventeen\models\SeventeenWeiUser;
+use backend\modules\vip\models\UserVipExpireDate;
 use frontend\models\CollectingSeventeenFilesText;
 use frontend\models\CollectingFilesText;
 use frontend\modules\member\models\UserVipTempAdjust;
@@ -171,12 +172,31 @@ class DefaultController extends BaseController
     public function actionSendCollectingUrl(){
 
         $model = new CollectingFilesText();
+
         $query = (new Query())->select('flop_id,area')->from('pre_flop_content')->where(['not in','area',['精选汉子','优质','女生档案']])->all();
         $area = ArrayHelper::map($query,'flop_id','area');
         if($model->load(Yii::$app->request->post())){
+
             if(empty($model->address)){
                 return '地区不可为空';
             }
+
+            if($model->vip>2){
+                $vipType = new UserVipExpireDate();
+                $vipType->number = $model->id;
+                $vipType->vip = $model->vip;
+                $vipType->type = $model->vip_type;
+                if($model->vip_type==10){
+                    $yearTime = date('Y-m-d H:i:s',strtotime('+1 years'));
+                    $vipType->expire = $yearTime;
+                }else{
+                    $halfYearTime = date('Y-m-d H:i:s',strtotime('+6 month', time()));
+                    $vipType->expire = $halfYearTime;
+                }
+                $vipType->save();
+            }
+
+
             $model->flag = md5(time().md5(rand(10000,99999)));
             $model->flop_id = $model->address;
             $model->address = $area[$model->address];
@@ -185,8 +205,6 @@ class DefaultController extends BaseController
             }
 
             if($model->save()){
-                $data_arr = array('description'=>"生成一个十三普通会员信息收集链接",'data'=>json_encode($model->attributes),'old_data'=>'','new_data'=>'','type'=>1);
-                AddRecord::record($data_arr);
                 $url = "http://13loveme.com/files/";
                 return $this->render('send-collecting-url',['model'=>$model,'url'=>$url]);
             }
@@ -195,46 +213,6 @@ class DefaultController extends BaseController
 
     }
 
-
-    public function actionSendCollectingSeventeenUrl(){
-
-        $model = new CollectingSeventeenFilesText();
-
-        if($model->load(Yii::$app->request->post())){
-
-            $model->flag = md5(time().md5(rand(100000,999999)));
-            if($model->save()){
-
-                $data_arr = array('description'=>"生成一个十七平台女生会员信息收集链接",'data'=>json_encode($model->attributes),'old_data'=>'','new_data'=>'','type'=>1);
-                AddRecord::record($data_arr);
-
-                $url = "http://13loveme.com/17-files/";
-                return $this->render('send-collecting-seventeen-url',['model'=>$model,'url'=>$url]);
-            }
-        }
-        return $this->render('_collecting_seventeen_url',['model'=>$model]);
-    }
-
-    public function actionSendSeventeenManUrl(){
-
-        $model = new SeventeenWeiUser();
-
-        if($model->load(Yii::$app->request->post())){
-
-            $model->flag = md5(time().md5(rand(100000,999999)));
-            if($model->save()){
-
-                $data_arr = array('description'=>"生成一个十七平台男生会员链接",'data'=>json_encode($model->attributes),'old_data'=>'','new_data'=>'','type'=>1);
-                AddRecord::record($data_arr);
-                $url = "http://13loveme.com/wei-xin/seventeen-code";
-                return $this->render('send-seventeen-man-url',['model'=>$model,'url'=>$url]);
-            }else{
-
-                return var_dump($model->errors);
-            }
-        }
-        return $this->render('_seventeen_man_url',['model'=>$model]);
-    }
 
     public function actionVipTemp(){
 
