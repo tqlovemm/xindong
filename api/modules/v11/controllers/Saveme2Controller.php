@@ -88,7 +88,7 @@ class Saveme2Controller extends ActiveController {
         $img = Yii::$app->request->getBodyParam('img');
     	$saveme = (new Query())->select('created_id,end_time,status')->from('{{%saveme}}')->where(['created_id'=>$cid])->orderBy('created_at desc')->one();
     	$time = time();
-        if($saveme['status'] == 3){
+        if($saveme['status'] == 3 && $saveme['end_time'] > $time){
             Response::show('201','操作失败',"上一个救我还未审核通过");
         }
     	if ($saveme['status'] != 2 && $saveme['end_time'] > $time && $saveme['status'] != 0) {
