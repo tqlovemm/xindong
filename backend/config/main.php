@@ -16,23 +16,14 @@ return [
         'bgadmin' => [
             'class' => 'backend\modules\bgadmin\BgAdmin',
         ],
-        'sm' => [
-            'class' => 'backend\modules\sm\Sm',
-        ],
         'apps' => [
             'class' => 'backend\modules\apps\apps',
         ],
         'male' => [
             'class' => 'backend\modules\male\male',
         ],
-        'local' => [
-            'class' => 'backend\modules\local\Local',
-        ],
         'app' => [
             'class' => 'backend\modules\app\App',
-        ],
-        'seventeen' => [
-            'class' => 'backend\modules\seventeen\Seventeen',
         ],
         'setting' => [
             'class' => 'backend\modules\setting\SettingModule',
