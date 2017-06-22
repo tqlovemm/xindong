@@ -50,15 +50,14 @@ class AdminCheckController extends Controller
                     $userData = UserData::findOne($model->user_id);
                     $userData->jiecao_coin+=$model->coin;
 
+                    if(!$userData->update()){
+                        $model->status = 1;
+                        return var_dump($userData->errors);
+                    }
                     try{
                         (new CoinHandle())->adjustment($model->user_id,$model->coin,'系统添加');
                     }catch (Exception $e){
                         throw new Exception($e->getMessage());
-                    }
-
-                    if(!$userData->update()){
-                        $model->status = 1;
-                        return var_dump($userData->errors);
                     }
                 }
             }else{
