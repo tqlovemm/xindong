@@ -71,6 +71,11 @@ class Saveme2Controller extends ActiveController {
                 }
             }
         }
+        for ($l=0; $l < count($savemeres); $l++) {
+            if($savemeres[$l]['end_time'] < $time) {
+                $savemeres[$l]['status'] = 3;//已过期
+            }
+        }
         if ($applyres) {
             for ($i=0; $i < count($applyres); $i++) {
                 $savemeids[] = $applyres[$i]['saveme_id'];
