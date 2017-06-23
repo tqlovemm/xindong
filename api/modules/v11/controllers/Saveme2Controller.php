@@ -62,9 +62,13 @@ class Saveme2Controller extends ActiveController {
         $maxpage = ceil($pagination->totalCount/$pagination->defaultPageSize);
         $applyres = (new Query())->select('saveme_id')->from('{{%saveme_apply}}')->where(['apply_uid'=>$uid])->orderBy('created_at desc')->all();
         $savemeres = $query->orderBy('created_at desc')->where($where)->offset($pagination->offset)->limit($pagination->limit)->all();
-        for ($i=0; $i < count($savemeres); $i++) {
-            if ($savemeres[$i]['end_time'] < $time) {
-                $savemeres[$i]['status'] = 3;//已过期
+        for ($i=1; $i < count($savemeres); $i++) {
+            for ($k=0; $k < count($savemeres)-$i; $k++) {
+                if($savemeres[$k]['end_time'] < $time) {
+                    $tmp=$savemeres[$k+1];
+                    $savemeres[$k+1]=$savemeres[$k];
+                    $savemeres[$k]=$tmp;
+                }
             }
         }
         if ($applyres) {
