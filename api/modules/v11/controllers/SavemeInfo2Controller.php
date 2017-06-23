@@ -56,18 +56,10 @@ class SavemeInfo2Controller extends ActiveController {
             'totalCount' => $save_query->count(),
         ]);
         $saveme_comment = (new Query())->select('saveme_id,to_userid')->from('{{%saveme_comment}}')->where(['saveme_id'=>$sids,"created_id"=>$id])->orderBy('created_at desc')->all();
-        $saveme_record = (new Query())->select('girl_id')->from('{{%saveme_record}}')->where(["created_id"=>$id])->all();
-        $records = array();
-        for($o=0;$o<count($saveme_record);$o++){
-            $records[] = $saveme_record[$o]['girl_id'];
-        }
         $maxpage = ceil($pagination->totalCount/$pagination->defaultPageSize);
         $res = $save_query->orderBy('created_at desc')->offset($pagination->offset)->limit($pagination->limit)->all();
         for ($k=0; $k < count($res); $k++) {
             $res[$k]['status'] = $statuss[$res[$k]['id']];
-            if(in_array($res[$k]['created_id'],$records)){
-                $res[$k]['status'] = 2;
-            }
             for($q=0;$q<count($saveme_comment);$q++){
                 if($res[$k]['created_id'] == $saveme_comment[$q]['to_userid'] && $res[$k]['id'] == $saveme_comment[$q]['saveme_id']){
                     $res[$k]['status'] = 3;
@@ -170,7 +162,7 @@ class SavemeInfo2Controller extends ActiveController {
                 'msg' => "我报名了你发布的‘救我’，快接受我的申请吧~",
             ];
             $text['from'] = $cid['username'];
-            $this->setMsg()->sendText($text);
+            $huanx->sendText($text);
         }
         Response::show('200','操作成功',"申请成功");
     }
@@ -216,18 +208,18 @@ class SavemeInfo2Controller extends ActiveController {
             $exceptId[] = $item['id'];
             $exceptname[$item['id']] = $item['username'];
         }
+        $boyusername = User::findOne($apply_uid)->username;
         if(!in_array($apply_uid,$exceptId)){
-            $boyusername = User::findOne($apply_uid)->username;
             $huanx->addFriend($cid['username'],$boyusername);
         }
         $text['target_type'] = "users";
-        $text['target'] = [$exceptname[$apply_uid]];
+        $text['target'] = [$boyusername];
         $text['msg'] = [
             'type' => 'txt',
             'msg' => "我已经接受了你的‘救我’申请，我们开始聊天吧~",
         ];
         $text['from'] = $cid['username'];
-        $this->setMsg()->sendText($text);
+        $huanx->sendText($text);
         //接收推送
         if(!empty($cid['cid'])){
             if(empty($cid['nickname'])){

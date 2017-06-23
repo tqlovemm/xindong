@@ -62,16 +62,25 @@ class Saveme2Controller extends ActiveController {
         $maxpage = ceil($pagination->totalCount/$pagination->defaultPageSize);
         $applyres = (new Query())->select('saveme_id')->from('{{%saveme_apply}}')->where(['apply_uid'=>$uid])->orderBy('created_at desc')->all();
         $savemeres = $query->orderBy('created_at desc')->where($where)->offset($pagination->offset)->limit($pagination->limit)->all();
-        for ($i=0; $i < count($savemeres); $i++) { 
-            if ($savemeres[$i]['end_time'] < $time) {
-                $savemeres[$i]['status'] = 3;//已过期
+        for ($i=1; $i < count($savemeres); $i++) {
+            for ($k=0; $k < count($savemeres)-$i; $k++) {
+                if($savemeres[$k]['end_time'] < $time) {
+                    $tmp=$savemeres[$k+1];
+                    $savemeres[$k+1]=$savemeres[$k];
+                    $savemeres[$k]=$tmp;
+                }
+            }
+        }
+        for ($l=0; $l < count($savemeres); $l++) {
+            if($savemeres[$l]['end_time'] < $time) {
+                $savemeres[$l]['status'] = 3;//已过期
             }
         }
         if ($applyres) {
-            for ($i=0; $i < count($applyres); $i++) { 
+            for ($i=0; $i < count($applyres); $i++) {
                 $savemeids[] = $applyres[$i]['saveme_id'];
             }
-            for ($i=0; $i < count($savemeres); $i++) { 
+            for ($i=0; $i < count($savemeres); $i++) {
                 if (in_array($savemeres[$i]['id'],$savemeids)) {
                     $savemeres[$i]['status'] = 2;//已报名
                 }
@@ -88,7 +97,7 @@ class Saveme2Controller extends ActiveController {
         $img = Yii::$app->request->getBodyParam('img');
     	$saveme = (new Query())->select('created_id,end_time,status')->from('{{%saveme}}')->where(['created_id'=>$cid])->orderBy('created_at desc')->one();
     	$time = time();
-        if($saveme['status'] == 3){
+        if($saveme['status'] == 3 && $saveme['end_time'] > $time){
             Response::show('201','操作失败',"上一个救我还未审核通过");
         }
     	if ($saveme['status'] != 2 && $saveme['end_time'] > $time && $saveme['status'] != 0) {
@@ -128,17 +137,9 @@ class Saveme2Controller extends ActiveController {
         $saveme_id = $query['id'];
         $end_time = $query['end_time'];
         $saveme_comment = (new Query())->select('to_userid')->from('{{%saveme_comment}}')->where(['saveme_id'=>$saveme_id,"created_id"=>$id])->orderBy('created_at desc')->one();
-        $saveme_record = (new Query())->select('boy_id')->from('{{%saveme_record}}')->where(['saveme_id'=>$saveme_id,"created_id"=>$id])->all();
-        $records = array();
-        for($k=0;$k<count($saveme_record);$k++){
-            $records[] = $saveme_record[$k]['boy_id'];
-        }
         $model2 = new SavemeInfo;
         $saveme_apply = $model2::find()->where(['and',['=','saveme_id',$saveme_id],['<>','type',2]])->orderBy('created_at desc')->all();
         for($i=0;$i<count($saveme_apply);$i++){
-            if(in_array($saveme_apply[$i]['apply_uid'],$records)){
-                $saveme_apply[$i]['status'] = 2;
-            }
             if($saveme_apply[$i]['apply_uid'] == $saveme_comment['to_userid']){
                 $saveme_apply[$i]['status'] = 3;
             }

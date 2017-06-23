@@ -55,11 +55,7 @@ class SavemeRecordController extends ActiveController {
         }
         $saveme = (new Query())->select('id,end_time')->from('{{%saveme}}')->where(['created_id'=>$girl_id])->orderBy('created_at desc')->one();
         $saveme_id = $saveme['id'];
-        $recordres = (new Query())->select('id,created_id,created_at')->from('{{%saveme_record}}')->where(['boy_id'=>$boy_id,'girl_id'=>$girl_id,'saveme_id'=>$saveme_id])->one();
         $time = time();
-        if($recordres && $recordres['created_id'] == $girl_id && $saveme['end_time'] > $time){
-            $res = Yii::$app->db->createCommand("update pre_saveme_apply set status = 1 where apply_uid = {$boy_id} AND saveme_id = {$saveme_id}")->execute();
-        }
         $model->saveme_id = $saveme_id;
         $model->girl_id = $girl_id;
         $model->boy_id = $boy_id;
@@ -67,6 +63,10 @@ class SavemeRecordController extends ActiveController {
         $model->status = 1;
         if (!$model->save()) {
             Response::show('201',array_values($model->getFirstErrors())[0], $model->getFirstErrors());
+        }
+        $recordres = (new Query())->select('id,created_id,created_at')->from('{{%saveme_record}}')->where(['boy_id'=>$boy_id,'girl_id'=>$girl_id,'saveme_id'=>$saveme_id])->orderBy('created_at desc')->one();
+        if($recordres && $recordres['created_id'] == $girl_id && $saveme['end_time'] > $time){
+            $res = Yii::$app->db->createCommand("update pre_saveme_apply set status = 2 where apply_uid = {$boy_id} AND saveme_id = {$saveme_id}")->execute();
         }
         Response::show(200,'添加成功','添加成功');
     }
