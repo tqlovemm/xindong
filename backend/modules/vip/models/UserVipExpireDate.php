@@ -36,7 +36,7 @@ class UserVipExpireDate extends \yii\db\ActiveRecord
         return [
             ['number', 'unique', 'targetClass' => 'backend\modules\vip\models\UserVipExpireDate','message'=>"该会员编号已经存在"],
             [['user_id', 'vip', 'created_at', 'type'], 'integer'],
-            [['number', 'vip'], 'required'],
+            [['number', 'vip', 'type'], 'required'],
             [['number'], 'string', 'max' => 16],
             [['admin', 'expire'], 'string', 'max' => 64],
             [['extra'], 'string', 'max' => 256]
