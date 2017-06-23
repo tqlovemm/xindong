@@ -65,9 +65,6 @@ class Saveme2Controller extends ActiveController {
         for ($i=0; $i < count($savemeres); $i++) {
             if ($savemeres[$i]['end_time'] < $time) {
                 $savemeres[$i]['status'] = 3;//已过期
-                $num = $i+count($savemeres)+1;
-                $savemeres[$num] = $savemeres[$i];
-                unset($savemeres[$i]);
             }
         }
         if ($applyres) {
