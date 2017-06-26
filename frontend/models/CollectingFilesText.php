@@ -38,6 +38,7 @@ use Yii;
  * @property string $link_flag
  * @property string $weima
  * @property integer $jiecao_coin
+ * @property integer $vip_type
  *
  * @property CollectingFilesImg $Imgs
  */
@@ -58,7 +59,7 @@ class CollectingFilesText extends \yii\db\ActiveRecord
     {
         return [
            // [['address'],'required'],
-            [[ 'age', 'sex', 'height', 'weight', 'status', 'created_at', 'updated_at','marry','id','flop_id','vip','jiecao_coin'], 'integer'],
+            [[ 'age', 'sex', 'height', 'weight', 'status', 'created_at', 'updated_at','marry','id','flop_id','vip','jiecao_coin','vip_type'], 'integer'],
             [['cellphone','weichat', 'weibo','car_type','often_go','qq'], 'string', 'max' => 30],
             [['flag','link_flag','email'], 'string', 'max' => 32],
             [['address','job','annual_salary'], 'string', 'max' => 128],
@@ -102,6 +103,7 @@ class CollectingFilesText extends \yii\db\ActiveRecord
             'job'=> 'Job',
             'weima'=> 'Weima',
             'jiecao_coin'=> 'Jiecao Coin',
+            'vip_type'=> 'Vip Type',
         ];
     }
 

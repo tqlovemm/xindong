@@ -25,15 +25,9 @@ return [
         'male' => [
             'class' => 'frontend\modules\male\male',
         ],
-        'sm' => [
-            'class' => 'frontend\modules\sm\Sm',
-        ],
         'bgadmin' => [
 
             'class' => 'frontend\modules\bgadmin\BgAdmin',
-        ],
-        'local' => [
-            'class' => 'frontend\modules\local\Local',
         ],
         'weixin' => [
 

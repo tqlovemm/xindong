@@ -1,10 +1,30 @@
 <?php
 
 namespace common\components;
-use common\models\AppFormThread;
 
 class Vip
 {
+
+    public static function vip_expire($expire){
+
+        $day = floor($expire/86400);
+        $hour = floor(($expire%86400)/3600);
+        $min = floor((($expire%86400)%3600)/60);
+        $second = floor(((($expire%86400)%3600)%60)%60);
+
+        if($day>0){
+            $time = $day.'天'.$hour.'时'.$min.'分'.$second.'秒';
+        }elseif($hour>0){
+            $time = $hour.'时'.$min.'分'.$second.'秒';
+        }elseif($min>0){
+            $time = $min.'分'.$second.'秒';
+        }else{
+            $time = $second.'秒';
+        }
+
+        return $time;
+
+    }
 
     public static function vip($vipNumber){
 
@@ -20,6 +40,32 @@ class Vip
             $vip = "网站会员";
         }
         return $vip;
+    }
+    public static function vip_type($typeNumber,$shorthand=0){
+
+        if($shorthand!=0){
+            if($typeNumber==1){
+                $type = "<span class='vip-type' style='background-color:rgba(255, 176, 174, 0.3);'>月</span>";
+            }elseif($typeNumber==2){
+                $type = "<span class='vip-type' style='background-color:rgba(102, 144, 255, 0.3);'>季</span>";
+            }elseif($typeNumber==5){
+                $type = "<span class='vip-type' style='background-color:rgba(255, 135, 248, 0.3);'>半</span>";
+            }else{
+                $type = "<span class='vip-type' style='background-color:rgba(139, 250, 255, 0.3);'>年</span>";
+            }
+        }else{
+            if($typeNumber==1){
+                $type = "包月会员";
+            }elseif($typeNumber==2){
+                $type = "季度会员";
+            }elseif($typeNumber==5){
+                $type = "半年费会员";
+            }else{
+                $type = "年费会员";
+            }
+        }
+
+        return $type;
     }
 
     public static function specialVip($vipNumber){

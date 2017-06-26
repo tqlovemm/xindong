@@ -12,6 +12,7 @@ $model->jiecao_coin = 0;
     <?= $form->field($model, 'jiecao_coin')->textInput(['type'=>'number'])->label('节操币数量');?>
     <?= $form->field($model, 'sex')->dropDownList([0=>'男生',1=>'女生'])->label('性别') ?>
     <?= $form->field($model, 'vip')->dropDownList([2=>'普通会员',3=>'高端会员',4=>'至尊会员',5=>'私人定制'])->label('会员等级') ?>
+    <?= $form->field($model, 'vip_type')->dropDownList([10=>'年费会员',5=>'半年费会员'], ['prompt'=>'==请选择会员类型=='])->label('会员等级') ?>
     <?= $form->field($model, 'address')->dropDownList($areas, ['prompt'=>'---请选择地区---'])->label('地区') ?>
 
     <div class="form-group">

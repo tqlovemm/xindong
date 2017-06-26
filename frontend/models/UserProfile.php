@@ -45,6 +45,8 @@ class UserProfile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+
+            ['number', 'unique', 'targetClass' => 'frontend\models\UserProfile'],
             [['user_id', 'height', 'weight', 'updated_at', 'created_at'], 'integer'],
             [['birthdate'], 'safe'],
             [['address', 'description'], 'string'],

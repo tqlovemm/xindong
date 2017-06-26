@@ -8,6 +8,7 @@ use backend\modules\dating\models\DatingContent;
 use backend\modules\dating\models\RechargeRecord;
 use backend\modules\dating\models\UserWeichatPush;
 use backend\modules\setting\models\SystemMsg;
+use common\components\CoinHandle;
 use common\components\SaveToLog;
 use frontend\modules\member\models\UserVipTempAdjust;
 use Yii;
@@ -139,6 +140,7 @@ class DatingContentController extends BaseController
         if($status==12){
             $back = Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin = jiecao_coin+$return where user_id=$user_id")->execute();
             if($back){
+                (new CoinHandle())->adjustment($user_id,$return,'觅约返还');
                 $query->refund = $return;
                 $query->number = $query->number-$return;
             }

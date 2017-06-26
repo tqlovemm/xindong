@@ -2,6 +2,7 @@
 
 namespace backend\modules\dating\controllers;
 
+use common\components\CoinHandle;
 use frontend\models\UserData;
 use Yii;
 use api\modules\v9\models\AppSpecialDatingSignUp;
@@ -40,7 +41,9 @@ class AppSpecialDatingSignupController extends \yii\web\Controller
             if($send){
                 $userData = UserData::findOne($model->user_id);
                 $userData->jiecao_coin+=$zinfo->coin;
+
                 if($userData->update()){
+                    (new CoinHandle())->adjustment($model->user_id,$zinfo->coin,'专属返还');
                     $model->update();
                 }
             }
