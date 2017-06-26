@@ -241,7 +241,7 @@ class ThirdPartyController extends Controller
             $model2->updated_at = time();
             $model2->save();
         }
-        unset($model['invitation'],$model['openId'],$model['weibo_num'],$profile['description'],$model['auth_key'],$model['password_reset_token'],$model['id'],$model['role'],$model['identity']);
+        unset($model['invitation'],$model['weibo_num'],$profile['description'],$model['auth_key'],$model['password_reset_token'],$model['id'],$model['role'],$model['identity']);
         $profile['mark']=json_decode($profile['mark']);
         $profile['make_friend']=json_decode($profile['make_friend']);
         $profile['hobby']=json_decode($profile['hobby']);
