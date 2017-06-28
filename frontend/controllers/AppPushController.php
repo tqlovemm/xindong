@@ -8,6 +8,8 @@ use yii\myhelper\AccessToken;
 use yii\web\Controller;
 use common\components\PushConfig;
 use backend\modules\setting\models\AppPush;
+use yii\db\Query;
+use common\components\CoinHandle;
 
 class AppPushController extends Controller
 {
@@ -19,6 +21,7 @@ class AppPushController extends Controller
         }
 
         self::rechargePush();
+        self::savemeData();
 
         PushConfig::config();
         $query = new AppPush();
@@ -146,6 +149,32 @@ class AppPushController extends Controller
     public function actionServer(){
         $this->layout = false;
         return $this->render('server');
+    }
+    public function savemeData(){
+        $time = time();
+        $where = " end_time < {$time}";
+        $saveme = (new Query())->select('id,price')->from('{{%saveme}}')->where($where)->all();
+        $sid = array();
+        $prices = array();
+        for($i=0;$i<count($saveme);$i++){
+            $sid[] = $saveme[$i]['id'];
+            $prices[$saveme[$i]['id']] = $saveme[$i]['price'];
+        }
+        $sids = implode("','" , $sid);
+        $where2 = "saveme_id in ('{$sids}') AND status < 2";
+        $apply = (new Query())->select('id,saveme_id,apply_uid,status')->from('{{%saveme_apply}}')->where($where2)->all();
+        if($apply){
+            for($k=0;$k<count($apply);$k++){
+                try{
+                    Yii::$app->db->createCommand("update {{%saveme_apply}} set status=4 where id = {$apply[$k]['id']}")->execute();
+                    Yii::$app->db->createCommand("update {{%user_data}} set jiecao_coin=jiecao_coin+{$prices[$apply[$k]['saveme_id']]} where user_id = {$apply[$k]['apply_uid']}")->execute();
+                    SaveToLog::userBgRecord("救我被拒绝退回{$prices[$apply[$k]['saveme_id']]}节操币",$apply[$k]['apply_uid']);
+                    (new CoinHandle())->adjustment($apply[$k]['apply_uid'],$prices[$apply[$k]['saveme_id']],'救我退还');
+                }catch (Exception $e){
+                    throw new ErrorException($e->getMessage());
+                }
+            }
+        }
     }
 
 
