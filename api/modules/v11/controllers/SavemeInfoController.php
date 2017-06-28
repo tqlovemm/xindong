@@ -89,14 +89,8 @@ class SavemeInfoController extends ActiveController {
         $address = (new Query())->select('address')->from('{{%user_profile}}')->where(['user_id'=>$aid])->one();
         $user_address = explode(" ",$address['address']);
         $saveme_address = explode(" ",$saveme['address']);
-        if (in_array($saveme_address[0],$this->wcity)) {
-            if ($saveme_address[0] != $user_address[0]) {
-                Response::show('202','2',"用户城市与目标城市不符合");
-            }
-        }else {
-            if ($saveme['address'] != $address['address']) {
-               Response::show('202','2',"用户城市与目标城市不符");
-            }
+        if ($saveme_address[0] != $user_address[0]) {
+            Response::show('202','2',"与目标城市不匹配");
         }
         $applyres = (new Query())->select('saveme_id,apply_uid,status')->from('{{%saveme_apply}}')->where(['saveme_id'=>$sid,'apply_uid'=>$aid])->orderBy('created_at desc')->one();
         if ($applyres) {
