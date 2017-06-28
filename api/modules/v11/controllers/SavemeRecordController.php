@@ -65,7 +65,8 @@ class SavemeRecordController extends ActiveController {
             Response::show('201',array_values($model->getFirstErrors())[0], $model->getFirstErrors());
         }
         $recordres = (new Query())->select('id,created_id,created_at')->from('{{%saveme_record}}')->where(['boy_id'=>$boy_id,'girl_id'=>$girl_id,'saveme_id'=>$saveme_id])->orderBy('created_at desc')->one();
-        if($recordres && $recordres['created_id'] == $girl_id && $saveme['end_time'] > $time){
+        $apply = (new Query())->select('status')->from('{{%saveme_apply}}')->where(['saveme_id'=>$saveme_id,'apply_uid'=>$boy_id])->orderBy('created_at desc')->one();
+        if($recordres && $recordres['created_id'] == $girl_id && $saveme['end_time'] > $time && $apply['status'] == 1){
             $res = Yii::$app->db->createCommand("update pre_saveme_apply set status = 2 where apply_uid = {$boy_id} AND saveme_id = {$saveme_id}")->execute();
         }
         Response::show(200,'添加成功','添加成功');
