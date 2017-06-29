@@ -56,7 +56,7 @@ class SavemeInfoController extends ActiveController {
         ]);
         $saveme_comment = (new Query())->select('saveme_id,to_userid')->from('{{%saveme_comment}}')->where(['saveme_id'=>$sids,"created_id"=>$id])->orderBy('created_at desc')->all();
         $maxpage = ceil($pagination->totalCount/$pagination->defaultPageSize);
-        $res = $save_query->orderBy('created_at desc')->offset($pagination->offset)->limit($pagination->limit)->all();
+        $res = $save_query->offset($pagination->offset)->limit($pagination->limit)->all();
         for ($k=0; $k < count($res); $k++) { 
             $res[$k]['status'] = $statuss[$res[$k]['id']];
             for($q=0;$q<count($saveme_comment);$q++){
