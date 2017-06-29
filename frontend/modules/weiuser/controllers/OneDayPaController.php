@@ -41,7 +41,7 @@ class OneDayPaController extends Controller
             $access_token = $result['access_token'];
             $user_info = $this->getUserInfo($openid,$access_token);
             $u = json_decode($user_info,true);
-
+            var_dump($u);
             $model = new WeiUserInfo();
             if(($wei_user = $model::findOne($openid))==null){
                 $model->openid = $u['openid'];
