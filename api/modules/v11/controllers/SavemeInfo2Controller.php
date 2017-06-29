@@ -46,7 +46,6 @@ class SavemeInfo2Controller extends ActiveController {
             $sids[] = $query[$i]['saveme_id'];
             $statuss[$query[$i]['saveme_id']] = $query[$i]['status'];
         }
-        return $sids;
         $model2 = new Saveme;
         if(!$sids){
             return $this->datares(201,0,'not data!','not data!');
