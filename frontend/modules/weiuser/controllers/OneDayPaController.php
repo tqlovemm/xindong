@@ -42,7 +42,7 @@ class OneDayPaController extends Controller
     {
         $callback = "http://13loveme.com/weiuser/one-day-pa/wei-user";
         $callback = urlencode($callback);
-        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" . Yii::$app->params['app_id_ks'] . "&redirect_uri={$callback}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" . Yii::$app->params['zs_app_id'] . "&redirect_uri={$callback}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
         return $this->redirect($url);
     }
 
@@ -50,7 +50,7 @@ class OneDayPaController extends Controller
         $data['code'] = Yii::$app->request->get('code');
         $data['state'] = Yii::$app->request->get('state');
         if(!empty($data['code'])){
-            $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . Yii::$app->params['app_id_ks'] . "&secret=" . Yii::$app->params['app_secret_ks'] . "&code={$data['code']}&grant_type=authorization_code";
+            $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . Yii::$app->params['zs_app_id'] . "&secret=" . Yii::$app->params['zs_app_secret'] . "&code={$data['code']}&grant_type=authorization_code";
             $access = file_get_contents($url);
             $result = json_decode($access,true);
             $openid = $result['openid'];
