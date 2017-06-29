@@ -2,27 +2,10 @@
 
 namespace frontend\modules\weiuser\controllers;
 
-use app\components\WxpayComponents;
-use backend\modules\weixin\models\OneDayPaArticle;
-use common\components\SaveToLog;
-use common\components\Vip;
-use frontend\modules\weixin\models\OneDayPaRechargeUpscore;
-use frontend\modules\weixin\models\OneDayPaSignIn;
+use frontend\modules\weiuser\models\WeiUserInfo;
 use Yii;
 use common\components\WeiChat;
-use common\models\City;
-use common\models\Province;
-use common\Qiniu\QiniuUploader;
-use frontend\components\Jssdk;
-use frontend\modules\weixin\models\OneDayPaArticleComment;
-use frontend\modules\weixin\models\OneDayPaCommentThumbsRecord;
-use frontend\modules\weixin\models\OneDayPaCpsuccess;
-use frontend\modules\weixin\models\OneDayPaJoinInfo;
-use frontend\modules\weixin\models\OneDayPaShareClick;
-use frontend\modules\weixin\models\OneDayPaUserInfo;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
-use yii\web\ForbiddenHttpException;
 
 class OneDayPaController extends Controller
 {
@@ -47,6 +30,7 @@ class OneDayPaController extends Controller
     }
 
     public function actionWeiUser(){
+
         $data['code'] = Yii::$app->request->get('code');
         $data['state'] = Yii::$app->request->get('state');
         if(!empty($data['code'])){
@@ -58,283 +42,25 @@ class OneDayPaController extends Controller
             $user_info = $this->getUserInfo($openid,$access_token);
             $u = json_decode($user_info,true);
 
-            return var_dump($u);
-        }
-    }
-
-    public function actionArticle(){
-        $openid= $this->accessToken->getCookie('openid_ks_one_day_pa');
-        if(empty($openid)){
-            return $this->redirect('index');
-        }
-        $jsdk = new Jssdk();
-        $signPackage = $jsdk->getSignPackage();
-        $comments = OneDayPaArticleComment::find()->with('avatar')->with('thumbs')->where(['status'=>1])->orderBy('created_at desc')->asArray()->all();
-        return $this->render('article',['signPackage'=>$signPackage,'comments'=>$comments,'openid'=>$openid]);
-    }
-
-    public function actionShareArticle($from_user){
-
-        $openid= $this->accessToken->getCookie('openid_ks_one_day_pa');
-        if(empty($openid)){
-            return $this->redirect(['indexes','from_user'=>$from_user]);
-        }
-
-        $model = OneDayPaJoinInfo::findOne(['openid'=>$from_user]);
-        $shareClickModel = new OneDayPaShareClick();
-        if(!empty($model)){
-            $shareClick = $shareClickModel::findOne(['click_openid'=>$openid,'periods'=>$model->periods]);
-        }
-
-        if(!empty($model)&&$openid!=$from_user&&empty($shareClick)){
-            $shareClickModel->click_openid = $openid;
-            $shareClickModel->openid = $from_user;
-            $shareClickModel->periods = $model->periods;
-            if($shareClickModel->save()){
-                $model->score += 5;
-                if(!$model->save(false)){
+            $model = new WeiUserInfo();
+            if(($wei_user = $model::findOne($openid))==null){
+                $model->openid = $u['openid'];
+                $model->headimgurl = $u['headimgurl'];
+                $model->nickname = $u['nickname'];
+                if(!$model->save()){
                     return var_dump($model->errors);
                 }
-
             }else{
-                return var_dump($shareClickModel->errors);
-            }
-        }
 
-        $jsdk = new Jssdk();
-        $signPackage = $jsdk->getSignPackage();
-        $comments = OneDayPaArticleComment::find()->with('avatar')->with('thumbs')->where(['status'=>1])->orderBy('created_at desc')->asArray()->all();
-        return $this->render('share-article',['signPackage'=>$signPackage,'comments'=>$comments]);
-    }
-
-    public function actionDeleteImg($openid){
-        $cookie_openid = $this->accessToken->getCookie('openid_ks_one_day_pa');
-        $model = OneDayPaJoinInfo::findOne($openid);
-        $img_path = $model->img_path;
-        if($openid==$cookie_openid){
-            $model->img_path = null;
-            if($model->save(false)){
-                $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
-                $qn->delete('localbang',$img_path);
-            }
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-    }
-
-    public function actionRegisterCp(){
-
-        $model = new OneDayPaJoinInfo();
-        $setting = Vip::periods();
-        $time = strtotime($setting['detailTime']);
-        $city = [];
-        $model->openid = $this->accessToken->getCookie('openid_ks_one_day_pa');
-
-        if(empty($model->openid)){
-            return $this->redirect(['indexs','dd'=>2]);
-        }
-
-        if(!empty($model::findOne($model->openid))){
-            $model = $model::findOne($model->openid);
-            $city = ArrayHelper::map(City::find()->where(['fatherID'=>$model->province])->asArray()->all(),'cityID','city');
-        }
-
-        if ($model->load(Yii::$app->request->post())) {
-            $model->updated_at = time();
-            if($model->isNewRecord){
-                $model->openid = $this->accessToken->getCookie('openid_ks_one_day_pa');
-            }
-            if($model->isNewRecord || $model->img_path == null){
-                $model->img_path = $model->upload();
-            }
-            if($model->periods<$setting['id']){//
-                if(time()>=$time){
-                    $model->periods = $setting['id']+1;
-                    if($model->sex==0){
-                        $model->score = 10;
-                    }else{
-                        $model->score = 40;
-                    }
-                }else{
-                    $model->periods = $setting['id'];
-                    if($model->sex==0){
-                        $model->score = 10;
-                    }else{
-                        $model->score = 40;
-                    }
+                if(($wei_user->headimgurl!=$u['headimgurl']) || ($wei_user->nickname!=$u['nickname'])){
+                    $wei_user->headimgurl = $u['headimgurl'];
+                    $wei_user->nickname = $u['nickname'];
+                    $wei_user->update();
                 }
             }
 
+            $this->accessToken->addCookie('openid',$openid);
 
-            if($model->periods=$setting['id']){
-                if(time()>=$time){
-                    $model->periods = $setting['id']+1;
-                    if($model->sex==0){
-                        $model->score = 10;
-                    }else{
-                        $model->score = 40;
-                    }
-                }
-            }
-
-            if(!$model->save(false)){
-                return var_dump($model->errors);
-            }
-
-            $already = (new WeiChat())->getCookie('already_share01');
-            if(!empty($already)){
-                return $this->redirect('join-success');
-            }else{
-                return $this->redirect('article');
-            }
-
-        }
-
-        return $this->render('register-cp',[
-            'model'=>$model,
-            'province'=>ArrayHelper::map(Province::find()->select('provinceID,province')->asArray()->all(),'provinceID','province'),
-            'city'=>$city
-        ]);
-    }
-
-    public function actionJoinSuccess(){
-
-        $openid = (new WeiChat())->getCookie('openid_ks_one_day_pa');
-
-        if(empty($openid)){
-            return $this->redirect('indexs');
-        }
-
-        $model = OneDayPaJoinInfo::findOne($openid);
-        $setting = Vip::periods();
-        if(!empty($model)){
-
-            $time = strtotime($setting['detailTime']);
-            $one_day_pa_hour_time = $setting['oneDayPaTime'];
-            $today= strtotime("today");//当日开始时间
-            $friday = strtotime($setting['oneDayPaWeek']);//本周五开始时间
-            $to_rank = ($this->rank($openid)>20)?($this->rank($openid)-20):0;
-
-            if($model->updated_at>=$time){
-                return $this->render('join-success',['model'=>$model,'openid'=>$openid,'to_rank'=>$to_rank]);
-            }
-
-            if($today==$friday){
-                $show_start_time = $friday+$one_day_pa_hour_time*3600;
-                $show_end_time = $show_start_time+86400;
-                if(time()>=$show_start_time && time()<$show_end_time){
-
-                    $cpModel = OneDayPaCpsuccess::findOne(['copenid'=>$openid,'periods'=>$model->periods]);
-                    if(!empty($cpModel)){
-                        $to = $this->toWhere($openid);
-                        if($to==200){
-                            return $this->render('cp-qun',['openid'=>$openid,'cpModel'=>$cpModel,'model'=>$model]);
-                        }else{
-                            return $this->render('cp-s-to-s',['openid'=>$openid,'cpModel'=>$cpModel,'model'=>$model]);
-                        }
-                    }else{
-                        return $this->render('cp-fail',['model'=>$model]);
-                    }
-                }
-            }
-
-            if($setting['id']!=$model->periods){
-                return $this->redirect('register-cp');
-            }
-
-            return $this->render('join-success',['model'=>$model,'openid'=>$openid,'to_rank'=>$to_rank]);
-        }
-       return $this->redirect('register-cp');
-    }
-
-/*    public function actionCcp(){
-
-        $openid = 'oPrxZwjzK3yf2lK061Z0Zl-dtITk';
-        $to_rank = ($this->rank($openid)>20)?($this->rank($openid)-20):0;
-        $model = OneDayPaJoinInfo::findOne($openid);
-        $cpModel = OneDayPaCpsuccess::findOne(['copenid'=>$openid,'periods'=>$model->periods]);
-        return $this->render('cp-s-to-s',['openid'=>$openid,'cpModel'=>$cpModel,'model'=>$model,'to_rank'=>$to_rank]);
-    }*/
-
-    public function actionSignIn(){
-
-        $model = new OneDayPaSignIn();
-        $openid = (new WeiChat())->getCookie('openid_ks_one_day_pa');
-        $joinModel = OneDayPaJoinInfo::findOne($openid);
-
-        if(!empty($model::findOne(['openid'=>$openid,'periods'=>$joinModel->periods]))){
-
-            $cpSuccess = OneDayPaCpsuccess::findOne(['copenid'=>$openid,'periods'=>$joinModel->periods]);
-            if(!empty($model::findOne(['openid'=>$cpSuccess->popenid,'periods'=>$joinModel->periods]))){
-                $to = $this->toWhere($openid);
-                if($to==200){
-                    return $this->render('scan-weima',['openid'=>$openid]);
-                }else{
-                    return $this->render('no-scan');
-                }
-            }else{
-                return $this->render('cp-no-sign',['cpSuccess'=>$cpSuccess]);
-            }
-
-        }else{
-
-            if ($model->load(Yii::$app->request->post())) {
-
-                $model->openid = $openid;
-                $model->periods = $joinModel->periods;
-
-                if ($model->validate()) {
-                    if($model->save()){
-                        return $this->refresh();
-                    }
-                }
-            }
-            return $this->render('sign-in', [
-                'model' => $model,
-            ]);
-        }
-
-    }
-
-
-    public function actionDeleteComment($id){
-
-        $model = OneDayPaArticleComment::findOne($id);
-        $openid = (new WeiChat())->getCookie('openid_ks_one_day_pa');
-        if($model->openid==$openid){
-            $model->delete();
-            return $this->redirect(Yii::$app->request->referrer);
-        }else{
-            throw new ForbiddenHttpException('禁止操作');
-        }
-    }
-
-    public function actionRule(){
-        return $this->render('rule');
-    }
-
-    protected function rank($openid){
-
-        $model = OneDayPaJoinInfo::findOne($openid);
-        $gbModel = OneDayPaJoinInfo::find()->select('openid')->where(['sex'=>$model->sex,'periods'=>$model->periods])->asArray()->orderBy('score desc')->all();
-        foreach ($gbModel as $key=>$rank){
-            if($rank['openid']==$openid){
-                return $key+1;
-            }
-            continue;
-        }
-        return false;
-    }
-
-    protected function toWhere($openid){
-
-        $setting = Vip::periods();
-        $model = OneDayPaJoinInfo::findOne(['openid'=>$openid]);
-        $limit_join_qun = $setting['limitJoinQun'];
-        $gbModel = OneDayPaJoinInfo::find()->select('openid')->where(['sex'=>$model->sex])->asArray()->orderBy('score desc')->limit($limit_join_qun)->column();
-        if(in_array($openid,$gbModel)){
-            return 200;
-        }else{
-            return 201;
         }
     }
 
@@ -344,141 +70,4 @@ class OneDayPaController extends Controller
         return $res;
     }
 
-    public function actionThumbs($id){
-
-        $openid = (new WeiChat())->getCookie('openid_ks_one_day_pa');
-        $commentsRecord = new OneDayPaCommentThumbsRecord();
-        $comment = OneDayPaArticleComment::findOne($id);
-        if(($model = $commentsRecord::findOne(['openid'=>$openid,'comment_id'=>$id,'status'=>0]))!=null){
-            if($model->delete()){
-                $comment->thumbs_count -= 1;
-            }
-        }else{
-            $commentsRecord->openid = $openid;
-            $commentsRecord->comment_id = $id;
-            if($commentsRecord->save()){
-                $comment->thumbs_count += 1;
-            }else{
-                var_dump(json_encode($comment->errors));return;
-            }
-        }
-        $comment->update();
-        echo $comment->thumbs_count;
-    }
-
-    public function actionArticleThumbs($id){
-
-        $openid = (new WeiChat())->getCookie('openid_ks_one_day_pa');
-        $commentsRecord = new OneDayPaCommentThumbsRecord();
-        $comment = OneDayPaArticle::findOne($id);
-        if(($model = $commentsRecord::findOne(['openid'=>$openid,'comment_id'=>$id,'status'=>1]))!=null){
-            if($model->delete()){
-                $comment->thumbs_count -= 1;
-            }
-        }else{
-            $commentsRecord->openid = $openid;
-            $commentsRecord->comment_id = $id;
-            $commentsRecord->status = 1;
-            if($commentsRecord->save()){
-                $comment->thumbs_count += 1;
-            }else{
-                var_dump(json_encode($comment->errors));return;
-            }
-        }
-        $comment->update();
-        echo $comment->thumbs_count;
-    }
-
-    public function actionComment(){
-
-        $model= new OneDayPaArticleComment();
-        $model->openid = (new WeiChat())->getCookie('openid_ks_one_day_pa');
-        $comment = $model::find()->with('avatar')->where(['openid'=>$model->openid])->andWhere(['status'=>0])->orderBy('created_at desc')->asArray()->all();
-        if($model->load(Yii::$app->request->post())){
-            if($model->save()){
-               return $this->refresh();
-            }else{
-                return var_dump($model->errors);
-            }
-        }
-        return $this->render('comment',['model'=>$model,'comment'=>$comment]);
-    }
-
-    public function actionLists($id)
-    {
-        $localCount = City::find()
-            ->where(['fatherId' => [$id]])
-            ->count();
-        $branches = City::find()
-            ->where(['fatherId' => [$id]])
-            ->all();
-        if ($localCount > 0) {
-            foreach ($branches as $branche) {
-                echo "<option value='" . $branche->cityID . "'>" . $branche->city . "</option>";
-            }
-        } else {
-            echo "<option>-</option>";
-        }
-    }
-
-    public function actionRechargeType(){
-        $openid = (new WeiChat())->getCookie('openid_ks_one_day_pa');
-        return $this->render('recharge-type',['openid'=>$openid]);
-    }
-
-    public function actionRecharge($id){
-
-        $data = explode('51payo',$id);
-        if(in_array($data[0],[10,20,30,50])){
-
-            if($data[0]==10){
-                $up_score = 10;
-            }elseif($data[0]==20){
-                $up_score = 25;
-            }elseif($data[0]==30){
-                $up_score = 40;
-            }else{
-                $up_score = 70;
-            }
-
-            $order_number = date('YmdHis').uniqid();
-            $attach = array('oid'=>$data[1],'pa'=>200,'total_fee'=>$data[0],'up_score'=>$up_score);
-            $wxpay = new WxpayComponents();
-            $wxpay->Wxpay("Vip加速",$order_number,$data[0]*100,json_encode($attach),'vip');
-
-            return $this->render('recharge-type',['openid'=>$data[1]]);
-        }
-    }
-
-    public function actionRecord(){
-        $post = Yii::$app->request->post();
-        $model = new OneDayPaRechargeUpscore();
-        $up = OneDayPaJoinInfo::findOne([$post['openid']]);
-        if(($query=$model::findOne(['order_number'=>$post['out_trade_no']]))==null){
-            $model->order_number = $post['out_trade_no'];
-            $model->openid = $post['openid'];
-            $model->total_fee = $post['total_fee'];
-            $model->up_score =$post['up_score'];
-            $model->periods = $up->periods;
-            if($model->save()){
-                $up->score+=$model->up_score;
-                if($up->save(false)){
-                    return true;
-                }else{
-                    SaveToLog::log($up->errors);
-                }
-            }else{
-                SaveToLog::log($model->errors);
-                return false;
-            }
-        }else{
-            return true;
-        }
-    }
-
-    public function actionNoScan(){
-
-
-
-    }
 }

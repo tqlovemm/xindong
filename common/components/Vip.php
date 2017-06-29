@@ -2,6 +2,10 @@
 
 namespace common\components;
 
+use frontend\modules\weiuser\models\City;
+use frontend\modules\weiuser\models\Country;
+use frontend\modules\weiuser\models\Province;
+
 class Vip
 {
 
@@ -132,6 +136,35 @@ class Vip
 
         return $arr[$key];
     }
+
+    //新代码使用
+    public static function area($type,$id){
+        if($type==1){
+            $model = Country::findOne(['countryID'=>$id]);
+            return !empty($model)?$model->country:'';
+        }elseif($type==2){
+            $model = Province::findOne(['provinceID'=>$id]);
+            return !empty($model)?$model->province:'';
+        }else{
+            $model = City::findOne(['cityID'=>$id]);
+            return !empty($model)?$model->city:'';
+        }
+    }
+
+    public function actionLists($id)
+    {
+        $option = "";
+        $branches = City::find()->where(['fatherId' => [$id]])->asArray()->all();
+        if (count($branches) > 0) {
+            foreach ($branches as $branch) {
+                $option .= "<option value='" . $branch['cityID'] . "'>" . $branch['city'] . "</option>";
+            }
+        } else {
+            $option .= "<option>-</option>";
+        }
+        echo $option;
+    }
+
 
     public static function sort(){
         //帖子热度 = (总赞数*0.2+总评论数*0.3+管理员参数*0.4+总阅读数*0.1)*1000/(发布时间距离当前时间的小时差+2)^1.2
