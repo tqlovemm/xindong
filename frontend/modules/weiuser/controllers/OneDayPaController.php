@@ -50,8 +50,6 @@ class OneDayPaController extends Controller
                 if(!$model->save()){
                     return var_dump($model->errors);
                 }
-
-                var_dump($model);
             }else{
                 if(($wei_user->headimgurl!=$u['headimgurl']) || ($wei_user->nickname!=$u['nickname'])){
                     $wei_user->headimgurl = $u['headimgurl'];
@@ -61,6 +59,8 @@ class OneDayPaController extends Controller
             }
             $this->accessToken->addCookie('openid',$openid);
         }
+
+        return $this->redirect('/weiuser/');
 
     }
 
