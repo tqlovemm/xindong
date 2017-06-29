@@ -17,12 +17,11 @@ class WeiUserInfoController extends Controller
 
     public function init()
     {
-        if(parent::init()){
-            $this->accessToken = new WeiChat();
-            if(empty($this->accessToken->getCookie('openid'))){
-                return $this->redirect('/weiuser/one-day-pa/index');
-            }
+        $this->accessToken = new WeiChat();
+        if(empty($this->accessToken->getCookie('openid'))){
+            return $this->redirect('/weiuser/one-day-pa/index');
         }
+        parent::init();
     }
 
     public function actionIndex()
