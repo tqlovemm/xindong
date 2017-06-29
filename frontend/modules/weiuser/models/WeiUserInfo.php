@@ -87,6 +87,8 @@ class WeiUserInfo extends \yii\db\ActiveRecord
                 $this->updated_at = time();
             }
             $this->updated_at = time();
+
+            return true;
         }
     }
 }
