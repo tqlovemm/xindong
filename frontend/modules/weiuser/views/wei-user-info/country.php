@@ -1,4 +1,5 @@
 <?php
+use common\components\Vip;
     $this->title = "";
     $this->registerCss("
     .weui-cells{font-size:14px;}
@@ -9,7 +10,7 @@
 <div class="weui-cells">
     <div class="weui-cell">
       <div class="weui-cell__bd">
-            <p><?=\common\components\Vip::locationArea()?></p>
+            <p><?=var_dump(Vip::locationArea())?></p>
         </div>
         <div class="weui-cell__ft" style="font-size: 12px;"></div>
     </div>
@@ -20,7 +21,7 @@
     <a class="weui-cell" href="province?code=<?=$userModel->area->country?>">
       <div class="weui-cell__bd">
             <p>
-                <?=\common\components\Vip::cnArea($userModel->area->country,$userModel->area->province,$userModel->area->city)?>
+                <?=Vip::cnArea($userModel->area->country,$userModel->area->province,$userModel->area->city)?>
             </p>
         </div>
         <div class="weui-cell__ft" style="font-size: 12px;">已选地区</div>
