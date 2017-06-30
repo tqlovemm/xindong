@@ -73,23 +73,30 @@ class WeiUserInfoController extends Controller
 
     public function actionA($ip='47.90.23.171'){
 
-        var_dump($this->getaddress($ip));
+        $current_Ip_Info = $this->getIpInfo($ip);
+        var_dump($current_Ip_Info);
     }
-    function getaddress($queryIP){
-        $url = 'http://ip.qq.com/cgi-bin/searchip?searchip1='.$queryIP;
-        $ch = curl_init($url);
+    function getIpInfo($ip,$timeout=15) {
 
-        curl_setopt($ch,CURLOPT_ENCODING ,'gb2312');
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true) ; // 获取数据返回
-        $result = curl_exec($ch);
-        $result = mb_convert_encoding($result, "utf-8", "gb2312"); // 编码转换，否则乱码
+        if(!function_exists('curl_init') or !function_exists('simplexml_load_string')) return false;
+        $ch = curl_init("http://ipinfodb.com/ip_query2.php?ip={$ip}&timezone=true");
+        $options = array(
+            CURLOPT_RETURNTRANSFER => true,
+        );
+        curl_setopt_array($ch,$options);
+        $res = curl_exec($ch);
         curl_close($ch);
-        preg_match("@<span>(.*)</span></p>@iU",$result,$ipArray);
-        var_dump($ipArray);
-        $loc = $ipArray[1];
-        var_dump($loc);
-        return $loc;
+
+        if($xml = simplexml_load_string($res)) {
+            $return = array();
+            foreach ($xml->Location->children() as $key=>$item)  {
+                $return[$key] = strtolower($item);
+            }
+            return $return;
+        } else {
+            return false;
+        }
     }
+
 
 }
