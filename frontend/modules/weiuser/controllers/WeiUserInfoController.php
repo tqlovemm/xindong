@@ -17,7 +17,7 @@ class WeiUserInfoController extends Controller
    public function init()
     {
         $this->accessToken = new WeiChat();
-        $this->openid = !empty($this->accessToken->getCookie('openid'))?$this->accessToken->getCookie('openid'):"oLdyrv6Xai3EC-nJgH-MZ5Fn3UpY";
+        $this->openid = !empty($this->accessToken->getCookie('zs_openid'))?$this->accessToken->getCookie('zs_openid'):"oLdyrv6Xai3EC-nJgH-MZ5Fn3UpY";
         if(empty($this->openid)){
             return $this->redirect('/weiuser/one-day-pa/index');
         }
@@ -31,7 +31,7 @@ class WeiUserInfoController extends Controller
     }
 
     public function actionUser(){
-        return var_dump($this->accessToken->getCookie('openid'));
+        return var_dump($this->accessToken->getCookie('zs_openid'));
         $model = WeiUserInfo::findOne($this->openid);
         return $this->render('user',['model'=>$model]);
 

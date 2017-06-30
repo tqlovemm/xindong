@@ -57,7 +57,7 @@ class OneDayPaController extends Controller
                     $wei_user->update();
                 }
             }
-            $this->accessToken->addCookie('openid',$openid);
+            $this->accessToken->addCookie('zs_openid',$openid);
         }
 
         return $this->redirect('/weiuser/wei-user-info/user');
