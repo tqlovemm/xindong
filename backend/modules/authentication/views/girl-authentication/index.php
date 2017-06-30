@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         }elseif($res == 2){
                             return "<font color='red'>认证失败</font>";
                         }elseif($res == 3){
-                            return "<font color='green'>未认证</font>";
+                            return "<font color='green'>审核中</font>";
                         }
                     },
                 'format' => 'raw',
