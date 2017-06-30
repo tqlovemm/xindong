@@ -175,11 +175,11 @@ class Vip
     }
 
     public static function locationArea(){
-       // $ip = isset($_SERVER["HTTP_X_REAL_IP"])?$_SERVER["HTTP_X_REAL_IP"]:$_SERVER["REMOTE_ADDR"];
-        return self::GetIpLookup();
+        $ip = isset($_SERVER["HTTP_X_REAL_IP"])?$_SERVER["HTTP_X_REAL_IP"]:$_SERVER["REMOTE_ADDR"];
+        return self::GetIpLookup($ip);
     }
 
-    public static function GetIpLookup($ip = '47.90.23.171'){
+    public static function GetIpLookup($ip='180.108.229.16'){
         $res = @file_get_contents('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=' . $ip);
         if(empty($res)){ return false; }
         $jsonMatches = array();

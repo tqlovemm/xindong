@@ -1,19 +1,20 @@
 <?php
 use common\components\Vip;
+    $country = Vip::locationArea()['country'];
+    $area = \frontend\modules\weiuser\models\AddressList::find()->where(['like','region_name_c',$country])->asArray()->one();
     $this->title = "";
     $this->registerCss("
-    .weui-cells{font-size:14px;}
-    
+        .weui-cells{font-size:14px;}
     ");
 ?>
 <div class="weui-cells__title">当前位置</div>
 <div class="weui-cells">
-    <div class="weui-cell">
+    <a class="weui-cell" href="province?code=<?=$area['code']?>">
       <div class="weui-cell__bd">
-            <p><?=var_dump(Vip::locationArea())?></p>
+            <p><?=$country?></p>
         </div>
         <div class="weui-cell__ft" style="font-size: 12px;"></div>
-    </div>
+    </a>
 </div>
 
 <div class="weui-cells__title">全部地区</div>

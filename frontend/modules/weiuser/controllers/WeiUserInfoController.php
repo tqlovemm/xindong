@@ -71,32 +71,4 @@ class WeiUserInfoController extends Controller
         return $this->render('province',['model'=>$areaList]);
     }
 
-    public function actionA($ip='47.90.23.171'){
-
-        $current_Ip_Info = $this->getIpInfo($ip);
-        var_dump($current_Ip_Info);
-    }
-    function getIpInfo($ip,$timeout=15) {
-
-        if(!function_exists('curl_init') or !function_exists('simplexml_load_string')) return false;
-        $ch = curl_init("http://ipinfodb.com/ip_query2.php?ip={$ip}&timezone=true");
-        $options = array(
-            CURLOPT_RETURNTRANSFER => true,
-        );
-        curl_setopt_array($ch,$options);
-        $res = curl_exec($ch);
-        curl_close($ch);
-
-        if($xml = simplexml_load_string($res)) {
-            $return = array();
-            foreach ($xml->Location->children() as $key=>$item)  {
-                $return[$key] = strtolower($item);
-            }
-            return $return;
-        } else {
-            return false;
-        }
-    }
-
-
 }
