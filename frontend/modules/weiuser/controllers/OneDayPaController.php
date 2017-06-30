@@ -60,7 +60,7 @@ class OneDayPaController extends Controller
             $this->accessToken->addCookie('openid',$openid);
         }
 
-        return $this->redirect('/weiuser/wei-user-info/index');
+        return $this->redirect('/weiuser/wei-user-info/user');
 
     }
 
