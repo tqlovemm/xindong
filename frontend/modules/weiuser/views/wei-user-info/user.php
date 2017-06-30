@@ -1004,8 +1004,9 @@ $this->title = "个人中心";
                             </div>
                         </div>
                     </div>
-                    <?php if($model->sex==0):?>
+
                     <div class="weui-cells">
+                        <?php if($model->sex==0):?>
                         <div class="weui-cell weui-cell_access">
                             <div class="weui-cell__hd">
                                 <i class="home__icon-nearby___3PPpY home__icon___2XgfG"></i>
@@ -1022,9 +1023,7 @@ $this->title = "个人中心";
                                 福利救火
                             </div>
                         </div>
-                    </div>
-                    <?php else:?>
-                        <div class="weui-cells">
+                        <?php else:?>
                             <div class="weui-cell weui-cell_access">
                                 <div class="weui-cell__hd">
                                     <i class="home__icon-box___3tn0U home__icon___2XgfG"></i>
@@ -1033,9 +1032,7 @@ $this->title = "个人中心";
                                     翻牌
                                 </div>
                             </div>
-                        </div>
-                    <?php endif;?>
-                    <div class="weui-cells">
+                        <?php endif;?>
                         <a href="#" class="weui-cell weui-cell_access">
                             <div class="weui-cell__hd">
                                 <i class="home__icon-shop___28EIX home__icon___2XgfG"></i>
