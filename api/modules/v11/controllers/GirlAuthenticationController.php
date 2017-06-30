@@ -58,6 +58,22 @@ class GirlAuthenticationController extends ActiveController {
         }
         Response::show('200','上传成功',"上传成功");
     }
+    public function actionView($id){
+//        $decode = new Decode();
+//        if(!$decode->decodeDigit($id)){
+//            Response::show(210,'参数不正确');
+//        }
+        $data = array();
+        $res = (new yii\db\Query())->select('content')->from('{{%girl_flop_prompt}}')->one();
+        $model = new $this->modelClass();
+        $authentication = $model->find()->where(['user_id'=>$id])->orderBy("created_at desc")->one();
+        if(!$authentication){
+            Response::show('201','还没上传认证~',"没有数据");
+        }
+        $data['content'] = $res['content'];
+        $data['is_renzheng'] = $authentication['status'];
+        return array('code'=>200,'message'=>"ok",'data'=>$data);
+    }
     protected function UploadVideo($date,$user_id){
         $pre_url = Yii::$app->params['appimages'];
         $qn = new QiniuUploader('file',Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);

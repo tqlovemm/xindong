@@ -22,6 +22,7 @@ class User2 extends ActiveRecord  implements IdentityInterface
 {
     public $address;
     public $birthdate;
+    public $img_url;
     /**
      * @inheritdoc
      */
@@ -70,7 +71,7 @@ class User2 extends ActiveRecord  implements IdentityInterface
     {
         return [
             'user_id'=>'id','username','avatar','nickname','sex','groupid',
-            'address','birthdate','avatar'
+            'address','birthdate','avatar'=>'img_url',
         ];
     }
 

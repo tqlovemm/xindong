@@ -14,6 +14,7 @@ use api\modules\v11\models\GirlFlopBoy;
 use yii\myhelper\Easemob;
 use yii\data\ActiveDataProvider;
 use common\components\PushConfig;
+use yii\data\Pagination;
 
 class GirlFlopController extends ActiveController {
 
@@ -81,12 +82,12 @@ class GirlFlopController extends ActiveController {
             $exceptId2 .= $flopid2;
         }
         $query = User2::find()
-            ->select('username,nickname,identify,pre_user.id,sex,address,birthdate,avatar,groupid')
+            ->select('username,nickname,identify,pre_user.id,sex,address,birthdate,img_url,groupid')
             ->JoinWith('image')->JoinWith('profile');
         if($morelike){
             $query->JoinWith('boylike')->orderBy("is_like desc");
         }
-        $where = "sex = {$sex}";
+        $where = "sex = {$sex} AND img_url is not null";
         if($address){
             $where .= "AND address like '%".$address."%'";
         }
@@ -163,33 +164,68 @@ class GirlFlopController extends ActiveController {
             $extras = json_encode($data);
             PushConfig::config();
             pushMessageToList(1, $title, $msg, $extras , [$user['cid']]);
+            Response::show('200','翻牌成功',"翻牌成功");
+        }else{
+            Response::show('203','翻牌成功',"翻牌成功");
         }
-        Response::show('200','翻牌成功',"翻牌成功");
     }
     public function actionView($id){
-        $decode = new Decode();
-        if(!$decode->decodeDigit($id)){
-            Response::show(210,'参数不正确');
-        }
+//        $decode = new Decode();
+//        if(!$decode->decodeDigit($id)){
+//            Response::show(210,'参数不正确');
+//        }
         $model = new $this->modelClass();
-        $res = $model::find()->where(['user_id'=>$id])->orderBy("created_at desc")->all();
+        $res = $model::find()->where(['user_id'=>$id,'flop_type'=>1])->orderBy("created_at desc")->all();
         $ids = array();
         foreach($res as $v){
             $ids[] = $v['flop_userid'];
         }
         if($ids){
+            //环信好友
+            $userInfo = User2::findOne($id);
+            $friends = $this->Easemob()->findFriend($userInfo['username']);
+            if(!isset($friends['action'])){
+                Response::show('201','该用户不在环信中');
+            }
+            $userIds = User2::find()->select('id')->where(['username'=>$friends['data']])->all();
+            $exceptId = array();
+            foreach($userIds as $item){
+                $exceptId[] = $item['id'];
+            }
             $ids2 = implode(',',$ids);
-            $boysres = User2::find()->where("pre_user.id in({$ids2}) ORDER BY field(pre_user.id,{$ids2})")->select('username,nickname,identify,pre_user.id,sex,address,avatar,groupid,birthdate')
-                ->JoinWith('image')->JoinWith('profile');
-            return new ActiveDataProvider([
-                'query' =>  $boysres,
-                'pagination' => [
-                    'pageSize' => 20,
-                ],
+            $pagination = new Pagination([
+                'defaultPageSize' => 10,
+                'totalCount' => User2::find()->where("pre_user.id in({$ids2}) ORDER BY field(pre_user.id,{$ids2})")->count(),
             ]);
+            $pagination->validatePage = false;
+            $maxpage = ceil($pagination->totalCount/$pagination->defaultPageSize);
+            $boysres = User2::find()->where("pre_user.id in({$ids2}) ORDER BY field(pre_user.id,{$ids2})")->select('username,nickname,pre_user.id,sex,address,avatar,groupid,birthdate,img_url')
+                ->offset($pagination->offset)->limit($pagination->limit)
+                ->JoinWith('image')->JoinWith('profile')->all();
+            $newarr = array();
+            for($i=0;$i<count($boysres);$i++){
+                if(in_array($boysres[$i]['id'],$exceptId)){
+                    $newarr[$i]['is_friend'] = 1;
+                }else{
+                    $newarr[$i]['is_friend'] = 2;
+                }
+                $newarr[$i]['info']['user_id'] = $boysres[$i]['id'];
+                $newarr[$i]['info']['username'] = $boysres[$i]['username'];
+                $newarr[$i]['info']['nickname'] = $boysres[$i]['nickname'];
+                $newarr[$i]['info']['sex'] = $boysres[$i]['sex'];
+                $newarr[$i]['info']['address'] = $boysres[$i]['address'];
+                $newarr[$i]['info']['groupid'] = $boysres[$i]['groupid'];
+                $newarr[$i]['info']['birthdate'] = $boysres[$i]['birthdate'];
+                $newarr[$i]['info']['avatar'] = $boysres[$i]['img_url'];
+            }
+            return $this->datares(200,$maxpage,$newarr);
         }else{
             Response::show('200','',[]);
         }
+    }
+    protected function datares($code,$maxpage,$data,$message='ok'){
+        $mess = $message;
+        return array('code'=>$code,'message'=>$mess,'maxpage'=>$maxpage,'data'=>$data);
     }
     public function Easemob(){
 
