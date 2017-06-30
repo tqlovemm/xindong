@@ -80,6 +80,9 @@ return [
         'saveme' => [
             'class' => 'backend\modules\saveme\Saveme',
         ],
+        'authentication' => [
+            'class' => 'backend\modules\authentication\GirlAuthentication',
+        ],
 
     ],
     'components' => [
