@@ -59,10 +59,10 @@ class GirlAuthenticationController extends ActiveController {
         Response::show('200','上传成功',"上传成功");
     }
     public function actionView($id){
-//        $decode = new Decode();
-//        if(!$decode->decodeDigit($id)){
-//            Response::show(210,'参数不正确');
-//        }
+        $decode = new Decode();
+        if(!$decode->decodeDigit($id)){
+            Response::show(210,'参数不正确');
+        }
         $data = array();
         $res = (new yii\db\Query())->select('content')->from('{{%girl_flop_prompt}}')->one();
         $model = new $this->modelClass();
