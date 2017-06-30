@@ -70,4 +70,26 @@ class WeiUserInfoController extends Controller
         }
         return $this->render('province',['model'=>$areaList]);
     }
+
+    public function actionA($ip='47.90.23.171'){
+
+        var_dump($this->getaddress($ip));
+    }
+    function getaddress($queryIP){
+        $url = 'http://ip.qq.com/cgi-bin/searchip?searchip1='.$queryIP;
+        $ch = curl_init($url);
+
+        curl_setopt($ch,CURLOPT_ENCODING ,'gb2312');
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true) ; // 获取数据返回
+        $result = curl_exec($ch);
+        $result = mb_convert_encoding($result, "utf-8", "gb2312"); // 编码转换，否则乱码
+        curl_close($ch);
+        preg_match("@<span>(.*)</span></p>@iU",$result,$ipArray);
+        var_dump($ipArray);
+        $loc = $ipArray[1];
+        var_dump($loc);
+        return $loc;
+    }
+
 }
