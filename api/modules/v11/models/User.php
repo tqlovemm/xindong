@@ -4,6 +4,9 @@ namespace api\modules\v11\models;
 
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use backend\modules\app\models\UserImage;
+use api\modules\v9\models\UserProfile;
+use api\modules\v11\models\GirlFlopBoy;
 
 /**
  * This is the model class for table "pre_user".
@@ -17,6 +20,8 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord  implements IdentityInterface
 {
+    public $address;
+    public $birthdate;
     /**
      * @inheritdoc
      */
@@ -64,7 +69,8 @@ class User extends ActiveRecord  implements IdentityInterface
     public function fields()
     {
         return [
-            'id','username','avatar','nickname','cid',
+            'id','username','avatar','nickname','sex','cid','groupid',
+            'address','birthdate','avatar'
         ];
     }
 
@@ -80,5 +86,29 @@ class User extends ActiveRecord  implements IdentityInterface
             'cid' => 'Cid',
             'avatar' => 'Avatar',
         ];
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImage()
+    {
+        return $this->hasOne(UserImage::className(), ['user_id' => 'id']);
+    }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProfile()
+    {
+        return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBoylike()
+    {
+        return $this->hasOne(GirlFlopBoy::className(), ['user_id' => 'id']);
     }
 }
