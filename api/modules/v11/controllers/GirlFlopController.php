@@ -104,10 +104,10 @@ class GirlFlopController extends ActiveController {
     }
     public function actionCreate(){
         $id = Yii::$app->request->getBodyParam('user_id');
-//        $decode = new Decode();
-//        if(!$decode->decodeDigit($id)){
-//            Response::show(210,'参数不正确');
-//        }
+        $decode = new Decode();
+        if(!$decode->decodeDigit($id)){
+            Response::show(210,'参数不正确');
+        }
         $model = new $this->modelClass();
         $model->load(Yii::$app->request->getBodyParams(), '');
         $flop_userid = $model->flop_userid;
@@ -125,10 +125,15 @@ class GirlFlopController extends ActiveController {
         if($recordcount >= $maxflop){
             Response::show('202','翻牌失败',"超过每日翻牌限制！");
         }
-        $model->status = 1;
-        if(!$model->save()){
-            // return $model->getFirstErrors();
-            Response::show('201','操作失败',"翻牌失败");
+        $flop = $model->find()->where(['user_id'=>$id,'flop_userid'=>$flop_userid])->one();
+        if($flop){
+            Yii::$app->db->createCommand("update {{%girl_flop}} set flop_type=$flop_type where user_id={$id} and flop_userid={$flop_userid}")->execute();
+        }else{
+            $model->status = 1;
+            if(!$model->save()){
+                // return $model->getFirstErrors();
+                Response::show('201','操作失败',"翻牌失败");
+            }
         }
         //记录翻牌
         $record = new GirlFlopRecord();
