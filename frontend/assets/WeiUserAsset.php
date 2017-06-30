@@ -18,7 +18,8 @@ class WeiUserAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'weui/dist/style/weui.min.css',
+        'weui02/dist/style/weui.min.css',
+/*        'weui02/dist/example/example.css',*/
     ];
 
    public $depends = [
@@ -27,6 +28,7 @@ class WeiUserAsset extends AssetBundle
     ];
 
     public $js = [
-        'weui/dist/example/zepto.min.js',
+        'weui02/dist/example/zepto.min.js',
+/*        'weui02/dist/example/example.js',*/
     ];
 }
