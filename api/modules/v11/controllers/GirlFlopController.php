@@ -179,8 +179,13 @@ class GirlFlopController extends ActiveController {
         }
         $ids2 = implode(',',$ids);
         $boysres = User::find()->where("pre_user.id in({$ids2})")->select('username,nickname,identify,pre_user.id,sex,address,avatar')
-            ->JoinWith('image')->JoinWith('profile')->all();
-        return $boysres;
+            ->JoinWith('image')->JoinWith('profile');
+        return new CsvDataProvider([
+            'query' =>  $boysres,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
     }
     public function Easemob(){
 
