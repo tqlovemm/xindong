@@ -4,8 +4,6 @@ namespace common\components;
 
 use frontend\modules\weiuser\models\AddressList;
 use frontend\modules\weiuser\models\City;
-use frontend\modules\weiuser\models\Country;
-use frontend\modules\weiuser\models\Province;
 
 class Vip
 {
@@ -177,11 +175,11 @@ class Vip
     }
 
     public static function locationArea(){
-        $ip = isset($_SERVER["HTTP_X_REAL_IP"])?$_SERVER["HTTP_X_REAL_IP"]:$_SERVER["REMOTE_ADDR"];
-        return self::GetIpLookup($ip);
+       // $ip = isset($_SERVER["HTTP_X_REAL_IP"])?$_SERVER["HTTP_X_REAL_IP"]:$_SERVER["REMOTE_ADDR"];
+        return self::GetIpLookup();
     }
 
-    public static function GetIpLookup($ip = ''){
+    public static function GetIpLookup($ip = '47.90.23.171'){
         $res = @file_get_contents('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=' . $ip);
         if(empty($res)){ return false; }
         $jsonMatches = array();
