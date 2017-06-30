@@ -10,31 +10,28 @@ use yii\web\Controller;
 class WeiUserInfoController extends Controller
 {
     public $enableCsrfValidation = false;
-
     public $layout = 'weiuser';
-
     public $accessToken;
+    public $openid;
 
-/*    public function init()
+   public function init()
     {
         $this->accessToken = new WeiChat();
-        if(empty($this->accessToken->getCookie('openid'))){
+        $this->openid = !empty($this->accessToken->getCookie('openid'))?$this->accessToken->getCookie('openid'):"oLdyrv6Xai3EC-nJgH-MZ5Fn3UpY";
+        if(empty($this->openid)){
             return $this->redirect('/weiuser/one-day-pa/index');
         }
         parent::init();
-    }*/
+    }
 
-    public function actionIndex()
+    public function actionProfile()
     {
-        $openid = "oLdyrv6Xai3EC-nJgH-MZ5Fn3UpY";
-        $model = WeiUserInfo::findOne($openid);
-        return $this->render('index',['model'=>$model]);
+        $model = WeiUserInfo::findOne($this->openid);
+        return $this->render('profile',['model'=>$model]);
     }
 
     public function actionUser(){
-
-        $openid = "oLdyrv6Xai3EC-nJgH-MZ5Fn3UpY";
-        $model = WeiUserInfo::findOne($openid);
+        $model = WeiUserInfo::findOne($this->openid);
         return $this->render('user',['model'=>$model]);
 
     }
