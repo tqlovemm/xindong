@@ -93,16 +93,11 @@ class GirlFlopController extends ActiveController {
         if($exceptId2){
             $where .= " AND pre_user.id not in({$exceptId2})";
         }
-        $info = $query->where($where);
+        $info = $query->where($where)->orderBy("rand()");
         return new CsvDataProvider([
             'query' =>  $info,
             'pagination' => [
                 'pageSize' => 20,
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
             ],
         ]);
     }
