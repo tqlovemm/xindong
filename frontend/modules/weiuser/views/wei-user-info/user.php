@@ -1012,7 +1012,7 @@ $this->title = "个人中心";
                                 <i class="home__icon-nearby___3PPpY home__icon___2XgfG"></i>
                             </div>
                             <div class="weui-cell__bd">
-                                觅约
+                                今日觅约
                             </div>
                         </div>
                         <div class="weui-cell weui-cell_access">
