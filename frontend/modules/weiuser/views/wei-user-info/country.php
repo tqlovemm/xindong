@@ -1,7 +1,7 @@
 <?php
 use common\components\Vip;
-    $country = Vip::locationArea()['country'];
-    $area = \frontend\modules\weiuser\models\AddressList::find()->where(['like','region_name_c',$country])->asArray()->one();
+    $location = Vip::locationArea();
+    $area = \frontend\modules\weiuser\models\AddressList::find()->where(['like','region_name_c',$location['country']])->asArray()->one();
     $this->title = "";
     $this->registerCss("
         .weui-cells{font-size:14px;}
@@ -11,7 +11,7 @@ use common\components\Vip;
 <div class="weui-cells">
     <a class="weui-cell" href="province?code=<?=$area['code']?>">
       <div class="weui-cell__bd">
-            <p><?=$country?></p>
+            <p><?=$location['country']?><?=$location['province']?><?=$location['city']?></p>
         </div>
         <div class="weui-cell__ft" style="font-size: 12px;"></div>
     </a>
