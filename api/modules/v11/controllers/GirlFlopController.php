@@ -7,12 +7,12 @@ use yii\rest\ActiveController;
 use yii\myhelper\Decode;
 use yii\filters\RateLimiter;
 use yii\myhelper\Response;
-use api\modules\v11\models\User;
+use api\modules\v11\models\User2;
 use api\modules\v11\models\GirlFlopRecord;
 use api\modules\v11\models\GirlAuthentication;
 use api\modules\v11\models\GirlFlopBoy;
 use yii\myhelper\Easemob;
-use api\components\CsvDataProvider;
+use yii\data\ActiveDataProvider;
 use common\components\PushConfig;
 
 class GirlFlopController extends ActiveController {
@@ -46,7 +46,7 @@ class GirlFlopController extends ActiveController {
         if(!$decode->decodeDigit($id)){
             Response::show(210,'参数不正确');
         }
-        $userInfo = User::findOne($id);
+        $userInfo = User2::findOne($id);
         if(!$userInfo){
             Response::show('201','用户不存在');
         }
@@ -60,7 +60,7 @@ class GirlFlopController extends ActiveController {
         if(!isset($friends['action'])){
             Response::show('201','该用户不在环信中');
         }
-        $userIds = User::find()->select('id')->where(['username'=>$friends['data']])->all();
+        $userIds = User2::find()->select('id')->where(['username'=>$friends['data']])->all();
         $exceptId = array();
         foreach($userIds as $item){
             $exceptId[] = $item['id'];
@@ -80,8 +80,8 @@ class GirlFlopController extends ActiveController {
         if($flopid2){
             $exceptId2 .= $flopid2;
         }
-        $query = User::find()
-            ->select('username,nickname,identify,pre_user.id,sex,address,birthdate,avatar')
+        $query = User2::find()
+            ->select('username,nickname,identify,pre_user.id,sex,address,birthdate,avatar,groupid')
             ->JoinWith('image')->JoinWith('profile');
         if($morelike){
             $query->JoinWith('boylike')->orderBy("is_like desc");
@@ -94,7 +94,7 @@ class GirlFlopController extends ActiveController {
             $where .= " AND pre_user.id not in({$exceptId2})";
         }
         $info = $query->where($where)->orderBy("rand()");
-        return new CsvDataProvider([
+        return new ActiveDataProvider([
             'query' =>  $info,
             'pagination' => [
                 'pageSize' => 20,
@@ -155,7 +155,7 @@ class GirlFlopController extends ActiveController {
             $boylike->save();
         }
         //推送
-        $user = user::find()->where(['id'=>$flop_userid])->one();
+        $user = User2::find()->where(['id'=>$flop_userid])->one();
         if($user['groupid'] == 1){
             $title = "有女生喜欢你，成为会员可以收到好友通知哦。";
             $msg = "有女生喜欢你，成为会员可以收到好友通知哦。";
@@ -178,9 +178,9 @@ class GirlFlopController extends ActiveController {
             $ids[] = $v['flop_userid'];
         }
         $ids2 = implode(',',$ids);
-        $boysres = User::find()->where("pre_user.id in({$ids2})")->select('username,nickname,identify,pre_user.id,sex,address,avatar')
+        $boysres = User2::find()->where("pre_user.id in({$ids2})")->select('username,nickname,identify,pre_user.id,sex,address,avatar')
             ->JoinWith('image')->JoinWith('profile');
-        return new CsvDataProvider([
+        return new ActiveDataProvider([
             'query' =>  $boysres,
             'pagination' => [
                 'pageSize' => 20,
