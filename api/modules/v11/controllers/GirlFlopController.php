@@ -188,7 +188,7 @@ class GirlFlopController extends ActiveController {
                 ],
             ]);
         }else{
-            Response::show('202','not data!',"not data!");
+            Response::show('202','','');
         }
     }
     public function Easemob(){
