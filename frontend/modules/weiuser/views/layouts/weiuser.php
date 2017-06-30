@@ -4,7 +4,7 @@
     WeiUserAsset::register($this);
     $this->registerCss("
         body{background-color:#fbf9fe;font-family: 微软雅黑;}
-        a:hover,a:visit{color:#000;}
+        a:link,a:visited,a:hover,a:active{color:#000;}
     ");
 ?>
 <?php $this->beginPage() ?>
