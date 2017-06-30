@@ -15,6 +15,7 @@ use yii\myhelper\Easemob;
 use yii\data\ActiveDataProvider;
 use common\components\PushConfig;
 use yii\data\Pagination;
+use api\modules\v3\models\AppPush;
 
 class GirlFlopController extends ActiveController {
 
@@ -163,12 +164,18 @@ class GirlFlopController extends ActiveController {
         //推送
         $user = User2::find()->where(['id'=>$flop_userid])->one();
         if($user['groupid'] == 1){
+//            $title = "有女生喜欢你，成为会员可以收到好友通知哦。";
+//            $msg = "有女生喜欢你，成为会员可以收到好友通知哦。";
+//            $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$id",'push_type'=>'SSCOMM_LIKE_FLOP');
+//            $extras = json_encode($data);
+//            PushConfig::config();
+//            pushMessageToList(1, $title, $msg, $extras , [$user['cid']]);
             $title = "有女生喜欢你，成为会员可以收到好友通知哦。";
             $msg = "有女生喜欢你，成为会员可以收到好友通知哦。";
-            $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$id",'push_type'=>'SSCOMM_LIKE_FLOP');
-            $extras = json_encode($data);
-            PushConfig::config();
-            pushMessageToList(1, $title, $msg, $extras , [$user['cid']]);
+            $date = time();
+            $icon = Yii::$app->params['icon'].'/images/app_push/u=3453872033,2552982116&fm=21&gp=0.png';
+            $extras = json_encode(array('push_title'=>urlencode($title),'push_content'=>urlencode($msg),'push_type'=>'SSCOMM_SAVEME'));
+            Yii::$app->db->createCommand("insert into {{%app_push}} (type,status,cid,title,msg,extras,platform,response,icon,created_at,updated_at) values('SSCOMM_SAVEME',2,'$user[cid]','$title','$msg','$extras','all','NULL','$icon',$date,$date)")->execute();
             Response::show('200','翻牌成功',"翻牌成功");
         }else{
             Response::show('203','翻牌成功',"翻牌成功");

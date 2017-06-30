@@ -72,7 +72,10 @@ class GirlAuthenticationController extends ActiveController {
         }
         $data['content'] = $res['content'];
         $data['is_renzheng'] = $authentication['status'];
-        return array('code'=>200,'message'=>"ok",'data'=>$data);
+        if($authentication['status'] == 1){
+            return array('code'=>200,'message'=>"已经认证通过了！",'data'=>$data);
+        }
+        return array('code'=>200,'message'=>"正在审核中!",'data'=>$data);
     }
     protected function UploadVideo($date,$user_id){
         $pre_url = Yii::$app->params['appimages'];
