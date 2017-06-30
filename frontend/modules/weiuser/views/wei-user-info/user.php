@@ -1004,7 +1004,7 @@ $this->title = "个人中心";
                             </div>
                         </div>
                     </div>
-                    <?php if($model->sex ==0 ):?>
+                    <?php if($model->sex==0):?>
                     <div class="weui-cells">
                         <div class="weui-cell weui-cell_access">
                             <div class="weui-cell__hd">
