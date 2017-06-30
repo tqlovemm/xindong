@@ -11,7 +11,7 @@ use common\components\Vip;
 <div class="weui-cells">
     <a class="weui-cell" href="province?code=<?=$area['code']?>">
       <div class="weui-cell__bd">
-            <p><?=$location['country']?><?=$location['province']?><?=$location['city']?></p>
+            <p><?=$location['country']?> <?=$location['province']?></p>
         </div>
         <div class="weui-cell__ft" style="font-size: 12px;"></div>
     </a>
