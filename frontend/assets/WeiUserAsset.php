@@ -28,11 +28,8 @@ class WeiUserAsset extends AssetBundle
     ];
 
     public $js = [
-/*       'weui02/dist/js/jweixin-1.0.0.js',
-        'weui02/dist/js/vendor.js',*/
- /*       'weui02/dist/js/app.js',*/
-    /* 'js/jquery-1.11.3.js',*/
-     'weui02/dist/example/zepto.min.js',
+        'weui02/dist/example/zepto.min.js',
+
     ];
 
     public $jsOptions = ['position' => View::POS_HEAD];

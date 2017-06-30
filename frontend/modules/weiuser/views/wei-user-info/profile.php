@@ -1,7 +1,11 @@
 <?php
-$this->title = "档案";
+    $this->title = "档案";
+    $this->registerCss("
+        .weui-cells{font-size:14px;}
+    ");
 ?>
-<div class="profile"><div class="weui-cells">
+<div class="profile">
+    <div class="weui-cells">
         <div class="weui-cell" id="avatarCell">
             <div class="weui-cell__bd">
                 <p>头像</p>
@@ -53,14 +57,14 @@ $this->title = "档案";
                 男
             </div>
         </div>
-        <div class="weui-cell">
+        <a class="weui-cell" id="cascadePickerBtn" href="country">
             <div class="weui-cell__bd">
                 <p>地区</p>
             </div>
             <div class="weui-cell__ft">
-                奥地利 维也纳
+                <?=\common\components\Vip::cnArea($model->area->country,$model->area->province,$model->area->city)?>
             </div>
-        </div>
+        </a>
         <div class="weui-cell">
             <div class="weui-cell__bd">
                 <p>个性签名</p>

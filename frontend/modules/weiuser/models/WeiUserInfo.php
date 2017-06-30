@@ -78,6 +78,7 @@ class WeiUserInfo extends \yii\db\ActiveRecord
         return static::findOne(['openid' => $openid, 'status' => self::STATUS_ACTIVE]);
     }
 
+
     public function beforeSave($insert)
     {
         if(parent::beforeSave($insert)){
@@ -91,4 +92,11 @@ class WeiUserInfo extends \yii\db\ActiveRecord
             return true;
         }
     }
+
+    public function getArea()
+    {
+        return $this->hasOne(WeiUserAddress::className(), ['thirteen_platform_number' => 'thirteen_platform_number']);
+    }
+
+
 }

@@ -2,6 +2,7 @@
 
 namespace common\components;
 
+use frontend\modules\weiuser\models\AddressList;
 use frontend\modules\weiuser\models\City;
 use frontend\modules\weiuser\models\Country;
 use frontend\modules\weiuser\models\Province;
@@ -138,17 +139,62 @@ class Vip
     }
 
     //新代码使用
-    public static function area($type,$id){
-        if($type==1){
-            $model = Country::findOne(['countryID'=>$id]);
-            return !empty($model)?$model->country:'';
-        }elseif($type==2){
-            $model = Province::findOne(['provinceID'=>$id]);
-            return !empty($model)?$model->province:'';
+    public static function area($code){
+        $model = AddressList::findOne($code);
+        return !empty($model)?$model->region_name_c:null;
+    }
+
+    public static function cnArea($country=null,$province=null,$city=null){
+
+       if($country=="CN"){
+           return self::area($province).' '.self::area($city);
+       }else{
+           if($city!=null){
+               return self::area($country).' '.self::area($city);
+           }else{
+               return self::area($country).' '.self::area($province);
+           }
+       }
+    }
+
+    public static function wholeArea($code){
+
+        $province = "";
+        $city = "";
+        $model = AddressList::findOne($code);
+        if($model->level==0){
+            $country = $model->code;
+        }elseif($model->level==1){
+            $country = $model->country_code;
+            $province = $model->code;
         }else{
-            $model = City::findOne(['cityID'=>$id]);
-            return !empty($model)?$model->city:'';
+            $country = $model->country_code;
+            $province = $model->upper_region;
+            $city = $model->code;
         }
+        $area = array('country'=>$country,'province'=>$province,'city'=>$city);
+        return $area;
+    }
+
+    public static function locationArea(){
+        $ip = isset($_SERVER["HTTP_X_REAL_IP"])?$_SERVER["HTTP_X_REAL_IP"]:$_SERVER["REMOTE_ADDR"];
+        return self::GetIpLookup($ip);
+    }
+
+    public static function GetIpLookup($ip = ''){
+        $res = @file_get_contents('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=' . $ip);
+        if(empty($res)){ return false; }
+        $jsonMatches = array();
+        preg_match('#\{.+?\}#', $res, $jsonMatches);
+        if(!isset($jsonMatches[0])){ return false; }
+        $json = json_decode($jsonMatches[0], true);
+        if(isset($json['ret']) && $json['ret'] == 1){
+            $json['ip'] = $ip;
+            unset($json['ret']);
+        }else{
+            return false;
+        }
+        return $json;
     }
 
     public function actionLists($id)

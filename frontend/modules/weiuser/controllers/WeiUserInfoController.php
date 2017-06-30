@@ -2,9 +2,13 @@
 
 namespace frontend\modules\weiuser\controllers;
 
+use common\components\Vip;
+use frontend\modules\weiuser\models\AddressList;
+use frontend\modules\weiuser\models\WeiUserAddress;
 use frontend\modules\weiuser\models\WeiUserInfo;
 use Yii;
 use common\components\WeiChat;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 
 class WeiUserInfoController extends Controller
@@ -33,6 +37,37 @@ class WeiUserInfoController extends Controller
     public function actionUser(){
         $model = WeiUserInfo::findOne($this->openid);
         return $this->render('user',['model'=>$model]);
+    }
 
+    public function actionCountry(){
+        $userModel = WeiUserInfo::findOne($this->openid);
+        $model = ArrayHelper::map(AddressList::find()->where(['level'=>0])->asArray()->all(),'code','region_name_c');
+        return $this->render('country',['model'=>$model,'userModel'=>$userModel]);
+    }
+
+    public function actionProvince($code){
+        $areaList = ArrayHelper::map(AddressList::find()->where(['upper_region'=>$code])->asArray()->all(),'code','region_name_c');
+        if(empty($areaList)){
+            $userModel = WeiUserInfo::findOne($this->openid);
+            $areaModel = new WeiUserAddress();
+            $area = Vip::wholeArea($code);
+
+            if(($model = $areaModel::findOne($userModel->thirteen_platform_number))==null){
+                $areaModel->thirteen_platform_number = $userModel->thirteen_platform_number;
+                $areaModel->country = $area['country'];
+                $areaModel->province = $area['province'];
+                $areaModel->city = $area['city'];
+                $areaModel->save();
+            }else{
+                $model->country = $area['country'];
+                $model->province = $area['province'];
+                $model->city = $area['city'];
+                $model->update();
+            }
+
+            return $this->redirect('profile');
+
+        }
+        return $this->render('province',['model'=>$areaList]);
     }
 }
