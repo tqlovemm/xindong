@@ -71,7 +71,7 @@ class User2 extends ActiveRecord  implements IdentityInterface
     {
         return [
             'user_id'=>'id','username','avatar','nickname','sex','groupid',
-            'address','birthdate','avatar'=>'img_url',
+            'address','birthdate','avatar'=>'img_url','cid'
         ];
     }
 
