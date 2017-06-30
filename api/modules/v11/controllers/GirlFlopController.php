@@ -123,7 +123,7 @@ class GirlFlopController extends ActiveController {
         }
         //翻牌限制
         if($recordcount >= $maxflop){
-            Response::show('202','翻牌失败',"超过每日翻牌限制！");
+            Response::show('202','超过每日翻牌限制！',"翻牌错误");
         }
         $flop = $model->find()->where(['user_id'=>$id,'flop_userid'=>$flop_userid])->one();
         if($flop){
