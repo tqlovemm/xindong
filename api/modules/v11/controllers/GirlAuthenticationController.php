@@ -39,16 +39,18 @@ class GirlAuthenticationController extends ActiveController {
         }
         $date = Yii::$app->request->getBodyParam('date');
         $model = new $this->modelClass();
-        $authentication = $model->find()->where(['user_id'=>$id])->one();
-        if($authentication){
+        $authentication = $model->find()->where(['user_id'=>$id])->orderBy("created_at desc")->one();
+        if($authentication['status'] == 3){
             Response::show('202','提交失败',"已经提交过了");
+        }elseif($authentication['status'] == 1){
+            Response::show('202','提交失败',"已经认证成功了");
         }
         $res = $this->UploadVideo($date,$id);
         if(!$res){
             Response::show('201','上传失败',"视频上传失败");
         }
         $model->load(Yii::$app->request->getBodyParams(), '');
-        $model->status = 1;
+        $model->status = 3;
         $model->video_url = $res;
         if(!$model->save()){
             // return $model->getFirstErrors();

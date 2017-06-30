@@ -172,14 +172,14 @@ class GirlFlopController extends ActiveController {
             Response::show(210,'参数不正确');
         }
         $model = new $this->modelClass();
-        $res = $model::find()->where(['user_id'=>$id])->all();
+        $res = $model::find()->where(['user_id'=>$id])->orderBy("created_at desc")->all();
         $ids = array();
         foreach($res as $v){
             $ids[] = $v['flop_userid'];
         }
         if($ids){
             $ids2 = implode(',',$ids);
-            $boysres = User2::find()->where("pre_user.id in({$ids2})")->select('username,nickname,identify,pre_user.id,sex,address,avatar')
+            $boysres = User2::find()->where("pre_user.id in({$ids2}) ORDER BY field(pre_user.id,{$ids2})")->select('username,nickname,identify,pre_user.id,sex,address,avatar,groupid,birthdate')
                 ->JoinWith('image')->JoinWith('profile');
             return new ActiveDataProvider([
                 'query' =>  $boysres,
