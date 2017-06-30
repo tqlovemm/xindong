@@ -31,6 +31,7 @@ class WeiUserInfoController extends Controller
     }
 
     public function actionUser(){
+        return var_dump($this->accessToken->getCookie('openid'));
         $model = WeiUserInfo::findOne($this->openid);
         return $this->render('user',['model'=>$model]);
 
