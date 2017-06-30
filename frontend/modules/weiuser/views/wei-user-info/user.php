@@ -1145,7 +1145,7 @@
         var item = $('.weui-tabbar__item');
         var content = $(".weui-tab__content");
 
-        item.on('click',function () {
+        item.on('touchstart',function () {
 
             var index = $(this).index();
             item.removeClass('weui-bar__item_on');
