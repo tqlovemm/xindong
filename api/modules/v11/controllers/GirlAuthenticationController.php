@@ -68,7 +68,7 @@ class GirlAuthenticationController extends ActiveController {
         $model = new $this->modelClass();
         $authentication = $model->find()->where(['user_id'=>$id])->orderBy("created_at desc")->one();
         if(!$authentication){
-            Response::show('201','还没上传认证~',"没有数据");
+            return array('code'=>201,'message'=>"ok",'data'=>$res);
         }
         $data['content'] = $res['content'];
         $data['is_renzheng'] = $authentication['status'];
