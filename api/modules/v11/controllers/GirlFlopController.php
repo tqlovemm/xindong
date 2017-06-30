@@ -177,15 +177,19 @@ class GirlFlopController extends ActiveController {
         foreach($res as $v){
             $ids[] = $v['flop_userid'];
         }
-        $ids2 = implode(',',$ids);
-        $boysres = User2::find()->where("pre_user.id in({$ids2})")->select('username,nickname,identify,pre_user.id,sex,address,avatar')
-            ->JoinWith('image')->JoinWith('profile');
-        return new ActiveDataProvider([
-            'query' =>  $boysres,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
+        if($ids){
+            $ids2 = implode(',',$ids);
+            $boysres = User2::find()->where("pre_user.id in({$ids2})")->select('username,nickname,identify,pre_user.id,sex,address,avatar')
+                ->JoinWith('image')->JoinWith('profile');
+            return new ActiveDataProvider([
+                'query' =>  $boysres,
+                'pagination' => [
+                    'pageSize' => 20,
+                ],
+            ]);
+        }else{
+            Response::show('202','not data!',"not data!");
+        }
     }
     public function Easemob(){
 
