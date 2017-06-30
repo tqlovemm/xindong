@@ -31,4 +31,11 @@ class WeiUserInfoController extends Controller
         return $this->render('index',['model'=>$model]);
     }
 
+    public function actionUser(){
+
+        $openid = "oLdyrv6Xai3EC-nJgH-MZ5Fn3UpY";
+        $model = WeiUserInfo::findOne($openid);
+        return $this->render('user',['model'=>$model]);
+
+    }
 }

@@ -7,7 +7,7 @@
         .container{padding:0;}
         .weui_tabbar{position: fixed;}
         body{background-color:#fbf9fe;font-family: 微软雅黑;}
-        body,html,.container,.weui_panel{height:100%;-webkit-tap-highlight-color:transparent}
+        body,html,.container{height:100%;-webkit-tap-highlight-color:transparent}
     ");
 ?>
 <?php $this->beginPage() ?>
@@ -34,34 +34,30 @@
 <?php $this->beginBody() ?>
     <?= $content ?>
 <?php $this->endBody() ?>
-
-    <div class="weui_tabbar" style="background-color: #fff;">
-        <a href="javascript:;" class="weui_tabbar_item weui_bar_item_on">
-            <div class="weui_tabbar_icon">
-                <img src="/images/weiuser/icon_nav_button.png" alt="">
-            </div>
-            <p class="weui_tabbar_label">翻牌</p>
+    <div class="weui-tabbar" style="background-color: #fff;">
+        <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
+                    <span style="display: inline-block;position: relative;">
+                        <img src="/images/weiuser/icon_nav_button.png" alt="" class="weui-tabbar__icon">
+                        <span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>
+                    </span>
+            <p class="weui-tabbar__label">翻牌</p>
         </a>
-        <a href="javascript:;" class="weui_tabbar_item">
-            <div class="weui_tabbar_icon">
-                <img src="/images/weiuser/icon_nav_msg.png" alt="">
-            </div>
-            <p class="weui_tabbar_label">福救</p>
+        <a href="javascript:;" class="weui-tabbar__item">
+            <img src="/images/weiuser/icon_nav_msg.png" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">福救</p>
         </a>
-        <a href="javascript:;" class="weui_tabbar_item">
-            <div class="weui_tabbar_icon">
-                <img src="/images/weiuser/icon_nav_article.png" alt="">
-            </div>
-            <p class="weui_tabbar_label">觅约</p>
+        <a href="javascript:;" class="weui-tabbar__item">
+                    <span style="display: inline-block;position: relative;">
+                        <img src="/images/weiuser/icon_nav_article.png" alt="" class="weui-tabbar__icon">
+                        <span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>
+                    </span>
+            <p class="weui-tabbar__label">觅约</p>
         </a>
-        <a href="javascript:;" class="weui_tabbar_item">
-            <div class="weui_tabbar_icon">
-                <img src="/images/weiuser/icon_nav_cell.png" alt="">
-            </div>
-            <p class="weui_tabbar_label">我</p>
+        <a href="javascript:;" class="weui-tabbar__item">
+            <img src="/images/weiuser/icon_nav_cell.png" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">我</p>
         </a>
     </div>
-
 </div>
 </body>
 </html>
