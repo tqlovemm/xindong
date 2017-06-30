@@ -45,11 +45,11 @@ class SavemeInfoController extends ActiveController {
             $sids[] = $query[$i]['saveme_id'];
             $statuss[$query[$i]['saveme_id']] = $query[$i]['status'];
         }
-        $sidss = implode(',',$sids);
         $model2 = new Saveme;
         if(!$sids){
             return $this->datares(201,0,'not data!','not data!');
         }
+        $sidss = implode(',',$sids);
         $where = "id in ({$sidss}) ORDER BY field(id,{$sidss})";
         $save_query = $model2::find()->where($where);
         $pagination = new Pagination([
