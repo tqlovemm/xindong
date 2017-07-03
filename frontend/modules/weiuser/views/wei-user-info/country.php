@@ -1,12 +1,14 @@
 <?php
 use common\components\Vip;
     $location = Vip::locationArea();
-    $area = \frontend\modules\weiuser\models\AddressList::find()->where(['like','region_name_c',$location['country']])->asArray()->one();
+    //$area = \frontend\modules\weiuser\models\AddressList::find()->where(['like','region_name_c',$location['country']])->asArray()->one();
+    $area['code'] = "CN";
     $this->title = "";
     $this->registerCss("
         .weui-cells{font-size:14px;}
     ");
 ?>
+
 <div class="weui-cells__title">当前位置</div>
 <div class="weui-cells">
     <a class="weui-cell" href="province?code=<?=$area['code']?>">
@@ -38,3 +40,32 @@ use common\components\Vip;
     </a>
     <?php endforeach;?>
 </div>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript"></script>
+<div  id="aaa" style="border:#ccc solid 1px width:697px height:500px"></div>
+
+<script type="text/javascript">
+    wx.config({
+        debug: false,
+        appId: '<?= $signPackage["appId"];?>',
+        timestamp: '<?= $signPackage["timestamp"];?>',
+        nonceStr: '<?= $signPackage["nonceStr"];?>',
+        signature: '<?= $signPackage["signature"];?>',
+        jsApiList: ['getLocation'
+            // 所有要调用的 API 都要加到这个列表中
+        ]
+    });
+
+    wx.ready(function () {
+        wx.getLocation({
+            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            success: function (res) {
+                var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                var speed = res.speed; // 速度，以米/每秒计
+                var accuracy = res.accuracy; // 位置精度
+                alert(latitude);
+            }
+        });
+    });
+
+</script>

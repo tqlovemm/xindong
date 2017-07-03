@@ -9,6 +9,7 @@ use frontend\modules\weiuser\models\WeiUserInfo;
 use Yii;
 use common\components\WeiChat;
 use yii\helpers\ArrayHelper;
+use yii\myhelper\Jssdk;
 use yii\web\Controller;
 
 class WeiUserInfoController extends Controller
@@ -46,6 +47,8 @@ class WeiUserInfoController extends Controller
     }
 
     public function actionProvince($code){
+        $jsdk = new Jssdk(Yii::$app->params['zs_app_id'],Yii::$app->params['zs_app_secret']);
+        $signPackage = $jsdk->getSignPackage();
         $areaList = ArrayHelper::map(AddressList::find()->where(['upper_region'=>$code])->asArray()->all(),'code','region_name_c');
         if(empty($areaList)){
             $userModel = WeiUserInfo::findOne($this->openid);
@@ -68,7 +71,7 @@ class WeiUserInfoController extends Controller
             return $this->redirect('profile');
 
         }
-        return $this->render('province',['model'=>$areaList]);
+        return $this->render('province',['model'=>$areaList,'signPackage'=>$signPackage]);
     }
 
 }
