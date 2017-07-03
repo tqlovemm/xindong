@@ -13,7 +13,7 @@ use common\components\Vip;
 <div class="weui-cells">
     <a class="weui-cell" href="province?code=<?=$area['code']?>">
       <div class="weui-cell__bd">
-            <p id="location"></p>
+            <p id="location"><i class="weui-loading"></i></p>
         </div>
         <div class="weui-cell__ft" style="font-size: 12px;"></div>
     </a>
