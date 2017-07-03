@@ -209,6 +209,9 @@ class Vip
         echo $option;
     }
 
+    public static function sex($sex){
+        return ($sex==0)?'男':'女';
+    }
 
     public static function sort(){
         //帖子热度 = (总赞数*0.2+总评论数*0.3+管理员参数*0.4+总阅读数*0.1)*1000/(发布时间距离当前时间的小时差+2)^1.2

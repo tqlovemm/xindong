@@ -1,4 +1,5 @@
 <?php
+use common\components\Vip;
     $this->title = "档案";
     $this->registerCss("
         .weui-cells{font-size:14px;}
@@ -54,7 +55,7 @@
                 <p>性别</p>
             </div>
             <div id="sex" class="weui-cell__ft">
-                男
+                <?=Vip::sex($model->sex)?>
             </div>
         </a>
         <a class="weui-cell" id="cascadePickerBtn" href="country">
@@ -62,7 +63,7 @@
                 <p>地区</p>
             </div>
             <div class="weui-cell__ft">
-                <?=\common\components\Vip::cnArea($model->area->country,$model->area->province,$model->area->city)?>
+                <?=Vip::cnArea($model->area->country,$model->area->province,$model->area->city)?>
             </div>
         </a>
         <div class="weui-cell">
