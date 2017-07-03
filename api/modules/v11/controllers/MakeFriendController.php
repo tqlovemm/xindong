@@ -13,6 +13,7 @@ use yii\rest\Controller;
 use yii\myhelper\Easemob;
 use api\modules\v11\models\User;
 use yii\myhelper\Response;
+use yii\myhelper\Decode;
 
 class MakeFriendController extends Controller
 {
