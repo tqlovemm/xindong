@@ -65,6 +65,8 @@ class WeiUserInfoController extends Controller
                 if(!empty($area)){
                     $code = "province?code=$area[code]";
                 }
+            }else{
+                $province = "未知地区";
             }
             echo json_encode(['province'=>$province,'city'=>$city,'code'=>$code]);
         }
