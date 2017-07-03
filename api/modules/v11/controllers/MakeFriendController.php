@@ -36,10 +36,10 @@ class MakeFriendController extends Controller
     }
     public function actionCreate(){
         $id = Yii::$app->request->getBodyParam('user_id');
-        $decode = new Decode();
-        if(!$decode->decodeDigit($id)){
-            Response::show(210,'参数不正确');
-        }
+//        $decode = new Decode();
+//        if(!$decode->decodeDigit($id)){
+//            Response::show(210,'参数不正确');
+//        }
         $id2 = Yii::$app->request->getBodyParam('user_id2');
         $where = "id in(".$id.",".$id2.")";
         $res = User::find()->where($where)->all();
