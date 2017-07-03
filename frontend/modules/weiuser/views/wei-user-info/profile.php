@@ -105,12 +105,8 @@ use common\components\Vip;
         $('#sex').html(c.html());
         $('#iosMask').css({'opacity':0,'display':'none'});
         $('#iosActionsheet').fadeOut(200,function () {
-            $.get('save-sex?sex='+sex,function (data) {
-                alert(data);
-            })
+            $.get('save-sex?sex='+sex,function (data) {})
         });
-
-
     }
 
 </script>
