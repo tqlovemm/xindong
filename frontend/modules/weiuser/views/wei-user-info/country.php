@@ -1,6 +1,6 @@
 <?php
 use common\components\Vip;
-    $location = Vip::locationArea();
+
     //$area = \frontend\modules\weiuser\models\AddressList::find()->where(['like','region_name_c',$location['country']])->asArray()->one();
     $area['code'] = "CN";
     $this->title = "";
@@ -13,7 +13,7 @@ use common\components\Vip;
 <div class="weui-cells">
     <a class="weui-cell" href="province?code=<?=$area['code']?>">
       <div class="weui-cell__bd">
-            <p><?=$location['country']?> <?=$location['province']?></p>
+            <p id="location"></p>
         </div>
         <div class="weui-cell__ft" style="font-size: 12px;"></div>
     </a>
@@ -62,7 +62,7 @@ use common\components\Vip;
 
                 $.get('get-location?lat='+latitude+'&lon='+longitude,function (data) {
                     var res = $.parseJSON(data);
-                    console.log(res);
+                    $('#location').html(res.province+' '+res.city);
                 });
 
  /*
