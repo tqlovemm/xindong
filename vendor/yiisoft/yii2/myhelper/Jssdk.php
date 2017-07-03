@@ -8,16 +8,10 @@ class Jssdk
     public $appSecret;
     public $cache;
 
-    public function __construct($appid=null,$appsecret=null)
+    public function __construct()
     {
-        $this->appId = $appid;
-        $this->appSecret = $appsecret;
-        if($appid==null){
-            $this->appId = Yii::$app->params['appid'];
-        }
-        if($appsecret==null){
-            $this->appSecret = Yii::$app->params['appsecret'];
-        }
+        $this->appId = Yii::$app->params['zs_app_id'];
+        $this->appSecret = Yii::$app->params['zs_app_secret'];
         $this->cache = Yii::$app->cache;
     }
 
