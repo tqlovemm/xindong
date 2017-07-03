@@ -40,7 +40,7 @@ use common\components\Vip;
     </a>
     <?php endforeach;?>
 </div>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript"></script>
+<script src="http://13loveme.com/js/jweixin-1.0.0.js"></script>
 <div  id="aaa" style="border:#ccc solid 1px width:697px height:500px"></div>
 
 <script type="text/javascript">
