@@ -54,8 +54,9 @@ class WeiUserInfoController extends Controller
         $userModel = WeiUserInfo::findOne($this->openid);
         $userModel->sex = $sex;
         if(!$userModel->update()){
-            echo json_encode($userModel->errors);
+            echo 404;
         }
+        echo 200;
 
     }
 
