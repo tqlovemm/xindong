@@ -41,11 +41,9 @@ use common\components\Vip;
     <?php endforeach;?>
 </div>
 <script src="http://13loveme.com/js/jweixin-1.0.0.js"></script>
-<div  id="aaa" style="border:#ccc solid 1px width:697px height:500px"></div>
-
 <script type="text/javascript">
     wx.config({
-        debug: false,
+        debug: true,
         appId: '<?= $signPackage["appId"];?>',
         timestamp: '<?= $signPackage["timestamp"];?>',
         nonceStr: '<?= $signPackage["nonceStr"];?>',
