@@ -184,7 +184,7 @@ return [
                         'v11/form-thread-report-choice', 'v11/form-thread-report','v11/form-thread-push-msg','v11/we-chat-customer-service','v11/open-before-adv','v11/wechat-push','v11/article','v11/article-type','v11/article-collection','v11/article-like','v11/article-adver','v11/article-pl','v11/saveme-record',
                         'v11/form-thread-report-choice', 'v11/form-thread-report','v11/form-thread-push-msg','v11/we-chat-customer-service','v11/open-before-adv',
                         'v11/wechat-push','v11/article','v11/article-type','v11/article-collection','v11/article-like','v11/article-adver','v11/article-pl',
-                        'v11/user-login','v11/saveme2','v11/saveme-info2','v11/girl-flop','v11/girl-authentication',
+                        'v11/user-login','v11/saveme2','v11/saveme-info2','v11/girl-flop','v11/girl-authentication','v11/make-friend',
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\w+>',
