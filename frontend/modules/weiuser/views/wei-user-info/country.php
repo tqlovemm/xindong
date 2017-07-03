@@ -1,8 +1,5 @@
 <?php
 use common\components\Vip;
-
-    //$area = \frontend\modules\weiuser\models\AddressList::find()->where(['like','region_name_c',$location['country']])->asArray()->one();
-    $area['code'] = "CN";
     $this->title = "";
     $this->registerCss("
         .weui-cells{font-size:14px;}
@@ -11,7 +8,7 @@ use common\components\Vip;
 
 <div class="weui-cells__title">当前位置</div>
 <div class="weui-cells">
-    <a id="next_url" class="weui-cell" href="province?code=<?=$area['code']?>">
+    <a id="next_url" class="weui-cell" href="">
       <div class="weui-cell__bd">
             <p id="location"><i class="weui-loading"></i></p>
         </div>
