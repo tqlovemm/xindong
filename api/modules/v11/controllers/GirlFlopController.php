@@ -105,10 +105,10 @@ class GirlFlopController extends ActiveController {
     }
     public function actionCreate(){
         $id = Yii::$app->request->getBodyParam('user_id');
-//        $decode = new Decode();
-//        if(!$decode->decodeDigit($id)){
-//            Response::show(210,'参数不正确');
-//        }
+        $decode = new Decode();
+        if(!$decode->decodeDigit($id)){
+            Response::show(210,'参数不正确');
+        }
         $model = new $this->modelClass();
         $model->load(Yii::$app->request->getBodyParams(), '');
         $flop_userid = $model->flop_userid;
@@ -164,12 +164,6 @@ class GirlFlopController extends ActiveController {
         //推送
         $user = User2::find()->where(['id'=>$flop_userid])->one();
         if($user['groupid'] == 1 && $user['cid'] && $flop_type == 1){
-//            $title = "有女生喜欢你，成为会员可以收到好友通知哦。";
-//            $msg = "有女生喜欢你，成为会员可以收到好友通知哦。";
-//            $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$id",'push_type'=>'SSCOMM_LIKE_FLOP');
-//            $extras = json_encode($data);
-//            PushConfig::config();
-//            pushMessageToList(1, $title, $msg, $extras , [$user['cid']]);
             $cid = $user['cid'];
             $title = "有女生喜欢你，成为会员可以收到好友通知哦。";
             $msg = "有女生喜欢你，成为会员可以收到好友通知哦。";
