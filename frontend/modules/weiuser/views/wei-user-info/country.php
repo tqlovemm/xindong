@@ -43,7 +43,7 @@ use common\components\Vip;
 <script src="http://13loveme.com/js/jweixin-1.0.0.js"></script>
 <script type="text/javascript">
     wx.config({
-        debug: true,
+        debug: false,
         appId: '<?= $signPackage["appId"];?>',
         timestamp: '<?= $signPackage["timestamp"];?>',
         nonceStr: '<?= $signPackage["nonceStr"];?>',
