@@ -253,7 +253,15 @@ class ThirdPartyController extends Controller
             $row[] = $list['img_url'];
         }
         $ims['photos'] = $row;
+        //认证
+        $gres = (new Query())->select('status')->from('pre_girl_authentication')->where(['user_id'=>$id])->one();
+        $grz = array();
+        if($gres){
+            $grz['is_renzheng'] = $gres['status'];
+        }else{
+            $grz['is_renzheng'] = '';
+        }
 
-        return $model+$data+$profile+$follow+$ims;
+        return $model+$data+$profile+$follow+$ims+$grz;
     }
 }
