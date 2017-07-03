@@ -36,17 +36,16 @@ class MakeFriendController extends Controller
     }
     public function actionCreate(){
         $id = Yii::$app->request->getBodyParam('user_id');
-//        $decode = new Decode();
-//        if(!$decode->decodeDigit($id)){
-//            Response::show(210,'参数不正确');
-//        }
+        $decode = new Decode();
+        if(!$decode->decodeDigit($id)){
+            Response::show(210,'参数不正确');
+        }
         $id2 = Yii::$app->request->getBodyParam('user_id2');
         $where = "id in(".$id.",".$id2.")";
         $res = User::find()->where($where)->all();
         $huanx = $this->Easemob();
         $fres = $huanx->addFriend($res[0]['username'],$res[1]['username']);
-        return $fres;
-        if($fres['entities']['activated']){
+        if($fres['entities'][0]['activated']){
             Response::show('200','ok');
         }else{
             Response::show('201','失败');
