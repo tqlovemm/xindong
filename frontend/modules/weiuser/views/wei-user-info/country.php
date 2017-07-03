@@ -10,7 +10,7 @@ use common\components\Vip;
 <div class="weui-cells">
     <a id="next_url" class="weui-cell" href="">
       <div class="weui-cell__bd">
-            <p><img style="width: 20px;float: left;margin-right: 10px;" src="/images/flag.jpg"><span id="location"><i class="weui-loading"></i></span></p>
+            <p><img style="width: 18px;float: left;margin-right: 10px;" src="/images/flag.jpg"><span id="location"><i class="weui-loading"></i></span></p>
         </div>
         <div class="weui-cell__ft" style="font-size: 12px;"></div>
     </a>
