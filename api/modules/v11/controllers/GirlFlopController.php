@@ -105,10 +105,10 @@ class GirlFlopController extends ActiveController {
     }
     public function actionCreate(){
         $id = Yii::$app->request->getBodyParam('user_id');
-        $decode = new Decode();
-        if(!$decode->decodeDigit($id)){
-            Response::show(210,'参数不正确');
-        }
+//        $decode = new Decode();
+//        if(!$decode->decodeDigit($id)){
+//            Response::show(210,'参数不正确');
+//        }
         $model = new $this->modelClass();
         $model->load(Yii::$app->request->getBodyParams(), '');
         $flop_userid = $model->flop_userid;
