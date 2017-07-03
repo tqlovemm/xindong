@@ -11,12 +11,6 @@ use Yii;
  * @property string $nickname
  * @property string $headimgurl
  * @property integer $sex
- * @property integer $province
- * @property integer $city
- * @property integer $province_second
- * @property integer $city_second
- * @property integer $province_third
- * @property integer $city_third
  * @property string $thirteen_platform_number
  * @property integer $created_at
  * @property integer $updated_at
@@ -41,7 +35,7 @@ class WeiUserInfo extends \yii\db\ActiveRecord
     {
         return [
             [['openid'], 'required'],
-            [['sex', 'province', 'city', 'province_second', 'city_second', 'province_third', 'city_third', 'created_at', 'updated_at', 'status'], 'integer'],
+            [['sex', 'created_at', 'updated_at', 'status'], 'integer'],
             [['openid'], 'string', 'max' => 64],
             [['nickname', 'thirteen_platform_number'], 'string', 'max' => 32],
             [['headimgurl'], 'string', 'max' => 256],
@@ -60,12 +54,6 @@ class WeiUserInfo extends \yii\db\ActiveRecord
             'nickname' => 'Nickname',
             'headimgurl' => 'Headimgurl',
             'sex' => 'Sex',
-            'province' => 'Province',
-            'city' => 'City',
-            'province_second' => 'Province Second',
-            'city_second' => 'City Second',
-            'province_third' => 'Province Third',
-            'city_third' => 'City Third',
             'thirteen_platform_number' => 'Thirteen Platform Number',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
