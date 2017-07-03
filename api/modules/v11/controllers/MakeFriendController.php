@@ -45,6 +45,7 @@ class MakeFriendController extends Controller
         $res = User::find()->where($where)->all();
         $huanx = $this->Easemob();
         $fres = $huanx->addFriend($res[0]['username'],$res[1]['username']);
+        return $fres;
         if($fres['entities']['activated']){
             Response::show('200','ok');
         }else{
