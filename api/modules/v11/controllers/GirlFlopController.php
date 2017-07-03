@@ -88,7 +88,7 @@ class GirlFlopController extends ActiveController {
         if($morelike){
             $query->JoinWith('boylike')->orderBy("is_like desc");
         }
-        $where = "sex = {$sex} AND img_url is not null";
+        $where = "sex = {$sex} AND img_url is not null AND id in(20888,21010,22061,24574,24582)";
         if($address){
             $where .= "AND address like '%".$address."%'";
         }
