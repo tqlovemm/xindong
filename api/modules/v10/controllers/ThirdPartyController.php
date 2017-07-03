@@ -259,7 +259,7 @@ class ThirdPartyController extends Controller
         if($gres){
             $grz['is_renzheng'] = $gres['status'];
         }else{
-            $grz['is_renzheng'] = '';
+            $grz['is_renzheng'] = 0;
         }
 
         return $model+$data+$profile+$follow+$ims+$grz;
