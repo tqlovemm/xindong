@@ -163,7 +163,7 @@ class GirlFlopController extends ActiveController {
         }
         //推送
         $user = User2::find()->where(['id'=>$flop_userid])->one();
-        if($user['groupid'] == 1 && $user['cid']){
+        if($user['groupid'] == 1 && $user['cid'] && $flop_type == 1){
 //            $title = "有女生喜欢你，成为会员可以收到好友通知哦。";
 //            $msg = "有女生喜欢你，成为会员可以收到好友通知哦。";
 //            $data = array('push_title'=>$title,'push_content'=>$msg,'push_post_id'=>"$id",'push_type'=>'SSCOMM_LIKE_FLOP');
