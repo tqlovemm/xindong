@@ -41,14 +41,15 @@ class WeiUserInfoController extends Controller
     }
 
     public function actionCountry(){
+        $jsdk = new Jssdk(Yii::$app->params['zs_app_id'],Yii::$app->params['zs_app_secret']);
+        $signPackage = $jsdk->getSignPackage();
         $userModel = WeiUserInfo::findOne($this->openid);
         $model = ArrayHelper::map(AddressList::find()->where(['level'=>0])->asArray()->all(),'code','region_name_c');
-        return $this->render('country',['model'=>$model,'userModel'=>$userModel]);
+        return $this->render('country',['model'=>$model,'userModel'=>$userModel,'signPackage'=>$signPackage]);
     }
 
     public function actionProvince($code){
-        $jsdk = new Jssdk(Yii::$app->params['zs_app_id'],Yii::$app->params['zs_app_secret']);
-        $signPackage = $jsdk->getSignPackage();
+
         $areaList = ArrayHelper::map(AddressList::find()->where(['upper_region'=>$code])->asArray()->all(),'code','region_name_c');
         if(empty($areaList)){
             $userModel = WeiUserInfo::findOne($this->openid);
@@ -71,7 +72,7 @@ class WeiUserInfoController extends Controller
             return $this->redirect('profile');
 
         }
-        return $this->render('province',['model'=>$areaList,'signPackage'=>$signPackage]);
+        return $this->render('province',['model'=>$areaList]);
     }
 
 }
