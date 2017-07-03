@@ -53,14 +53,14 @@ class Jssdk
 
     private function getJsApiTicket() {
 
-        $data = $this->cache->get('jsapi_ticket');
+        $data = $this->cache->get('jsapi_tickets');
         if (empty($data)) {
             $accessToken = (new WeiChat())->getAccessToken();
             $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$accessToken";
             $res = json_decode((new WeiChat())->getData($url));
             $ticket = $res->ticket;
             if ($ticket) {
-                $this->cache->set('jsapi_ticket',$ticket,7000);
+                $this->cache->set('jsapi_tickets',$ticket,7000);
             }
         } else {
             $ticket = $data;
