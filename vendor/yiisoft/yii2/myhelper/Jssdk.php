@@ -1,5 +1,6 @@
 <?php
 namespace yii\myhelper;
+use common\components\WeiChat;
 use Yii;
 
 class Jssdk
@@ -54,9 +55,9 @@ class Jssdk
 
         $data = $this->cache->get('jsapi_ticket');
         if (empty($data)) {
-            $accessToken = $this->getAccessToken();
+            $accessToken = (new WeiChat())->getAccessToken();
             $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$accessToken";
-            $res = json_decode($this->httpGet($url));
+            $res = json_decode((new WeiChat())->getData($url));
             $ticket = $res->ticket;
             if ($ticket) {
                 $this->cache->set('jsapi_ticket',$ticket,7000);
@@ -67,36 +68,5 @@ class Jssdk
         return $ticket;
     }
 
-    private function getAccessToken() {
-
-        $data = $this->cache->get('access_token_js');
-        if (empty($data)) {
-            $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret";
-            $res = json_decode($this->httpGet($url));
-            $access_token = $res->access_token;
-            if ($access_token) {
-                $this->cache->set('access_token_js',$access_token,7000);
-            }
-        } else {
-            $access_token = $data;
-        }
-        return $access_token;
-    }
-
-    private function httpGet($url) {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 500);
-        // 为保证第三方服务器与微信服务器之间数据传输的安全性，所有微信接口采用https方式调用，必须使用下面2行代码打开ssl安全校验。
-        // 如果在部署过程中代码在此处验证失败，请到 http://curl.haxx.se/ca/cacert.pem 下载新的证书判别文件。
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
-        curl_setopt($curl, CURLOPT_URL, $url);
-
-        $res = curl_exec($curl);
-        curl_close($curl);
-
-        return $res;
-    }
 
 }
