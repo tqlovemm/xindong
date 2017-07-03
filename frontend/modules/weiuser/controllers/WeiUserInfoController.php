@@ -9,7 +9,9 @@ use frontend\modules\weiuser\models\WeiUserInfo;
 use Yii;
 use common\components\WeiChat;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\myhelper\Jssdk;
+use yii\rest\ViewAction;
 use yii\web\Controller;
 
 class WeiUserInfoController extends Controller
@@ -46,6 +48,19 @@ class WeiUserInfoController extends Controller
         $userModel = WeiUserInfo::findOne($this->openid);
         $model = ArrayHelper::map(AddressList::find()->where(['level'=>0])->asArray()->all(),'code','region_name_c');
         return $this->render('country',['model'=>$model,'userModel'=>$userModel,'signPackage'=>$signPackage]);
+    }
+
+
+    public function actionGetLocation($lat,$lon){
+        $url = "http://api.map.baidu.com/geocoder?location=$lat,$lon&output=json";
+        $result = (new WeiChat())->getData($url);
+        $data = json_decode($result,true);
+        if($data['status']=='OK'){
+            $province = $data['result']['addressComponent'];
+        }else{
+            $province = "";
+        }
+        echo json_encode(['province'=>$province['province'],'city'=>$province['city']]);
     }
 
     public function actionProvince($code){

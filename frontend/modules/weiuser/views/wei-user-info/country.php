@@ -59,9 +59,16 @@ use common\components\Vip;
             success: function (res) {
                 var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
                 var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+
+                $.get('get-location?lat='+latitude+'&lon='+longitude,function (data) {
+                    var res = $.parseJSON(data);
+                    console.log(res);
+                });
+
+ /*
                 var speed = res.speed; // 速度，以米/每秒计
                 var accuracy = res.accuracy; // 位置精度
-                alert(latitude);
+                alert(latitude);*/
             }
         });
     });
