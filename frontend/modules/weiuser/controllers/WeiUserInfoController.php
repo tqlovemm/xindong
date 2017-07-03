@@ -50,6 +50,15 @@ class WeiUserInfoController extends Controller
         return $this->render('country',['model'=>$model,'userModel'=>$userModel,'signPackage'=>$signPackage]);
     }
 
+    public function actionSaveSex($sex){
+        $userModel = WeiUserInfo::findOne($this->openid);
+        $userModel->sex = $sex;
+        if(!$userModel->update()){
+            echo json_encode($userModel->errors);
+        }
+
+    }
+
 
     public function actionGetLocation($lat,$lon){
         $url = "http://api.map.baidu.com/geocoder?location=$lat,$lon&output=json";

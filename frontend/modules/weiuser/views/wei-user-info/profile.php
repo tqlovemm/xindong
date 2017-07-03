@@ -49,14 +49,14 @@
     </div>
 
     <div class="weui-cells">
-        <div class="weui-cell">
+        <a href="javascript:;" class="weui-cell" id="showIOSActionSheet">
             <div class="weui-cell__bd">
                 <p>性别</p>
             </div>
-            <div class="weui-cell__ft">
+            <div id="sex" class="weui-cell__ft">
                 男
             </div>
-        </div>
+        </a>
         <a class="weui-cell" id="cascadePickerBtn" href="country">
             <div class="weui-cell__bd">
                 <p>地区</p>
@@ -85,5 +85,47 @@
             </div>
         </div>
     </div>
+</div>
 
+<script>
+    $('#showIOSActionSheet').on('click',function () {
+        $('#iosMask').css({'opacity':1,'display':'block'});
+        $('#iosActionsheet').show();
+    });
+    $(function () {
+        $('#iosActionsheetCancel').on('click',function () {
+             $('#iosMask').css({'opacity':0,'display':'none'});
+             $('#iosActionsheet').hide();
+        });
+    });
+
+    function saveSex(sex,con) {
+        var c = $(con);
+        $('#sex').html(c.html());
+        $('#iosMask').css({'opacity':0,'display':'none'});
+        $('#iosActionsheet').fadeOut(200,function () {
+            $.get('save-sex?sex='+sex,function (data) {
+                alert(data);
+            })
+        });
+
+
+    }
+
+</script>
+
+<div>
+    <div class="weui-mask" id="iosMask" style="opacity: 0; display: none;"></div>
+    <div class="weui-actionsheet" id="iosActionsheet">
+        <div class="weui-actionsheet__title">
+            <p class="weui-actionsheet__title-text">性别</p>
+        </div>
+        <div class="weui-actionsheet__menu">
+            <div class="weui-actionsheet__cell" onclick="saveSex(0,this)">男</div>
+            <div class="weui-actionsheet__cell" onclick="saveSex(1,this)">女</div>
+        </div>
+        <div class="weui-actionsheet__action">
+            <div class="weui-actionsheet__cell" id="iosActionsheetCancel">取消</div>
+        </div>
+    </div>
 </div>
