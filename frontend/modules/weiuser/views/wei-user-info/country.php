@@ -11,7 +11,7 @@ use common\components\Vip;
 
 <div class="weui-cells__title">当前位置</div>
 <div class="weui-cells">
-    <a class="weui-cell" href="province?code=<?=$area['code']?>">
+    <a id="next_url" class="weui-cell" href="province?code=<?=$area['code']?>">
       <div class="weui-cell__bd">
             <p id="location"><i class="weui-loading"></i></p>
         </div>
@@ -55,7 +55,7 @@ use common\components\Vip;
 
     wx.ready(function () {
         wx.getLocation({
-            type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
             success: function (res) {
                 var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
                 var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
@@ -63,6 +63,7 @@ use common\components\Vip;
                 $.get('get-location?lat='+latitude+'&lon='+longitude,function (data) {
                     var res = $.parseJSON(data);
                     $('#location').html(res.province+' '+res.city);
+                    $('#next_url').attr('href',res.code);
                 });
 
  /*

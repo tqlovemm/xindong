@@ -55,12 +55,20 @@ class WeiUserInfoController extends Controller
         $url = "http://api.map.baidu.com/geocoder?location=$lat,$lon&output=json";
         $result = (new WeiChat())->getData($url);
         $data = json_decode($result,true);
+        $code = "#";
         if($data['status']=='OK'){
-            $province = $data['result']['addressComponent'];
-        }else{
-            $province = "";
+            $dataArray = $data['result']['addressComponent'];
+            $province = $dataArray['province'];
+            $city = $dataArray['city'];
+            if(!empty($province)){
+                $area = AddressList::find()->where(['like','region_name_c',$province])->asArray()->one();
+                if(!empty($area)){
+                    $code = "province?code=$area[code]";
+                }
+            }
+            echo json_encode(['province'=>$province,'city'=>$city,'code'=>$code]);
         }
-        echo json_encode(['province'=>$province['province'],'city'=>$province['city']]);
+
     }
 
     public function actionProvince($code){
