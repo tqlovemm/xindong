@@ -86,6 +86,9 @@ class SavemeInfoController extends ActiveController {
         if ($saveme && $time > $saveme['end_time']) {
             Response::show('201','1',"该救火已过期");
         }
+        if($saveme['status'] == 2){
+            Response::show('201','1',"该救火已结束");
+        }
         $girlid = $saveme['created_id'];
 
         $address = (new Query())->select('address')->from('{{%user_profile}}')->where(['user_id'=>$aid])->one();
