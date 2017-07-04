@@ -7,6 +7,7 @@ use yii\myhelper\Decode;
 use yii\filters\RateLimiter;
 use yii\myhelper\Response;
 use api\modules\v11\models\User2;
+use api\modules\v11\models\User;
 use api\modules\v11\models\GirlFlopRecord;
 use api\modules\v11\models\GirlAuthentication;
 use api\modules\v11\models\GirlFlopBoy;
@@ -165,7 +166,7 @@ class GirlFlopController extends ActiveController {
         //推送
         $user = User2::find()->where(['id'=>$flop_userid])->one();
         if($user['groupid'] == 1 && $user['cid'] && $flop_type == 1){
-            $girluser = User2::find()->where(['id'=>$id])->one();
+            $girluser = User::find()->where(['id'=>$id])->one();
             $cid = $user['cid'];
             $title = "有女生喜欢你，成为会员可以收到好友通知哦。";
             $msg = "有女生喜欢你，成为会员可以收到好友通知哦。";
