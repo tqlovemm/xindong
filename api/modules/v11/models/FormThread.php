@@ -36,6 +36,7 @@ class FormThread extends ActiveRecord
     private $_comment;
     public $base64Images;
     public $username;
+    public $is_renzheng;
     /**
      * @inheritdoc
      */
@@ -78,7 +79,13 @@ class FormThread extends ActiveRecord
             $this->_comment = FormThreadComments::find()->where(['thread_id'=>$this->wid])->limit(5)->all();
             $this->_thumbs_up = FormThreadThumbsUp::find()->where(['thread_id'=>$this->wid])->limit(5)->all();
         }
-
+        //认证
+        $gres = GirlAuthentication::find()->select('status')->where(['user_id'=>$this->user_id])->one();
+        if($gres){
+            $this->is_renzheng = $gres['status'];
+        }else{
+            $this->is_renzheng = 0;
+        }
         return [
             "wid",'user_id', 'content','sex','tag','is_top','type','created_at','groupid'=>function(){
                 return $this->_user->groupid;
@@ -105,6 +112,7 @@ class FormThread extends ActiveRecord
             'commentCount'=>function(){return (integer)FormThreadComments::find()->where(['thread_id'=>$this->wid])->count();},
 
             'commentItemsArray'=>function(){return $this->_comment;},
+            'is_renzheng'=>function(){return $this->is_renzheng;},
         ];
     }
 
