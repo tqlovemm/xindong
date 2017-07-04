@@ -80,7 +80,7 @@ class FormThread extends ActiveRecord
             $this->_thumbs_up = FormThreadThumbsUp::find()->where(['thread_id'=>$this->wid])->limit(5)->all();
         }
         //认证
-        $gres = GirlAuthentication::find()->select('status')->where(['user_id'=>$this->user_id])->one();
+        $gres = GirlAuthentication::find()->select('status')->orderBy("created_at desc")->where(['user_id'=>$this->user_id])->one();
         if($gres){
             $this->is_renzheng = $gres['status'];
         }else{
