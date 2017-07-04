@@ -5,6 +5,7 @@ namespace backend\modules\authentication\controllers;
 use Yii;
 use backend\modules\authentication\models\GirlAuthentication;
 use backend\modules\authentication\models\GirlAuthenticationSearch;
+use yii\db\Query;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -58,18 +59,18 @@ class GirlAuthenticationController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new GirlAuthentication();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
+//    public function actionCreate()
+//    {
+//        $model = new GirlAuthentication();
+//
+//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//            return $this->redirect(['view', 'id' => $model->id]);
+//        } else {
+//            return $this->render('create', [
+//                'model' => $model,
+//            ]);
+//        }
+//    }
 
     /**
      * Updates an existing GirlAuthentication model.
@@ -82,6 +83,24 @@ class GirlAuthenticationController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $status = $model->status;
+            $userid = $model->user_id;
+            $user = (new Query())->where(['id'=>$userid])->select('cid')->from('pre_user')->one();
+            $cid = $user['cid'];
+            if($cid){
+                if($status == 1){
+                    $content = "恭喜您！您的视频认证已通过了~";
+                }elseif($status == 2){
+                    $content = "很抱歉！您的视频认证未通过，请重新认证！";
+                }
+                $title = $content;
+                $msg = $content;
+                $date = time();
+                //$icon = Yii::$app->params['icon'].'/images/app_push/u=2285230243,2436417019&fm=21&gp=0.png';
+                $icon = "";
+                $extras = json_encode(array('push_title'=>urlencode($title),'push_content'=>urlencode($msg),'push_type'=>'SSCOMM_NOTICE'));
+                Yii::$app->db->createCommand("insert into {{%app_push}} (type,status,cid,title,msg,extras,platform,response,icon,created_at,updated_at) values('SSCOMM_NOTICE',2,'$cid','$title','$msg','$extras','all','NULL','$icon',$date,$date)")->execute();
+            }
             return $this->redirect(['index', 'id' => $model->id]);
         } else {
             return $this->render('update', [
