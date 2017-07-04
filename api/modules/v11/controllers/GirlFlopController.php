@@ -2,7 +2,6 @@
 namespace api\modules\v11\controllers;
 
 use yii;
-use yii\db\Query;
 use yii\rest\ActiveController;
 use yii\myhelper\Decode;
 use yii\filters\RateLimiter;
@@ -13,9 +12,7 @@ use api\modules\v11\models\GirlAuthentication;
 use api\modules\v11\models\GirlFlopBoy;
 use yii\myhelper\Easemob;
 use yii\data\ActiveDataProvider;
-use common\components\PushConfig;
 use yii\data\Pagination;
-use api\modules\v3\models\AppPush;
 
 class GirlFlopController extends ActiveController {
 
@@ -86,7 +83,11 @@ class GirlFlopController extends ActiveController {
             ->select('username,nickname,identify,pre_user.id,sex,address,birthdate,img_url,groupid')
             ->JoinWith('image')->JoinWith('profile');
         if($morelike){
-            $query->JoinWith('boylike')->orderBy("is_like desc");
+            if($morelike == 1){
+                $query->JoinWith('boylike')->orderBy("is_like desc");
+            }elseif($morelike == 2){
+                $query->JoinWith('boylike')->orderBy("is_like asc");
+            }
         }
         $where = "sex = {$sex} AND img_url is not null AND pre_user.id in(20888,21010,22061,24574,24582)";
         if($address){
