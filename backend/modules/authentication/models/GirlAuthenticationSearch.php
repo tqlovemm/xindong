@@ -41,7 +41,7 @@ class GirlAuthenticationSearch extends GirlAuthentication
      */
     public function search($params)
     {
-        $query = GirlAuthentication::find();
+        $query = GirlAuthentication::find()->orderBy("created_at desc");
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
