@@ -136,7 +136,7 @@ class UserLoginController extends Controller
         $gres = (new Query())->select('status')->from('pre_girl_authentication')->where(['user_id'=>$id])->one();
         $grz = array();
         if($gres){
-            $grz['is_renzheng'] = $gres['status'];
+            $grz['is_renzheng'] = intval($gres['status']);
         }else{
             $grz['is_renzheng'] = 0;
         }
