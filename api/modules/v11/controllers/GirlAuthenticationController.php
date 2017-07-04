@@ -67,15 +67,19 @@ class GirlAuthenticationController extends ActiveController {
         $res = (new yii\db\Query())->select('content')->from('{{%girl_flop_prompt}}')->one();
         $model = new $this->modelClass();
         $authentication = $model->find()->where(['user_id'=>$id])->orderBy("created_at desc")->one();
-        if(!$authentication){
-            return array('code'=>201,'message'=>"ok",'data'=>$res);
-        }
         $data['content'] = $res['content'];
+        if(!$authentication){
+            return array('code'=>201,'message'=>"ok",'data'=>$data);
+        }
         $data['is_renzheng'] = $authentication['status'];
         if($authentication['status'] == 1){
             return array('code'=>200,'message'=>"已经认证通过了！",'data'=>$data);
+        }elseif($authentication['status'] == 2){
+            return array('code'=>201,'message'=>"认证失败！",'data'=>$data);
+        }elseif($authentication['status'] == 3){
+            return array('code'=>200,'message'=>"正在审核中!",'data'=>$data);
         }
-        return array('code'=>200,'message'=>"正在审核中!",'data'=>$data);
+
     }
     protected function UploadVideo($date,$user_id){
         $pre_url = Yii::$app->params['appimages'];
