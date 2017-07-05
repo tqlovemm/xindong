@@ -30,10 +30,10 @@ class GirlFlopChoiceController extends ActiveController {
 
     public function actionView($id)
     {
-//        $decode = new Decode();
-//        if(!$decode->decodeDigit($id)){
-//            Response::show(210,'参数不正确');
-//        }
+        $decode = new Decode();
+        if(!$decode->decodeDigit($id)){
+            Response::show(210,'参数不正确');
+        }
         $userInfo = User::findOne($id);
         if(!$userInfo){
             Response::show('201','用户不存在');
@@ -63,7 +63,10 @@ class GirlFlopChoiceController extends ActiveController {
         if($flopid2){
             $exceptId2 .= $flopid2;
         }
-        $where = "sex = 0 AND img_url is not null  AND pre_user.id not in({$exceptId2})";
+        $where = "sex = 0 AND img_url is not null";
+        if($exceptId2){
+            $where .= "  AND pre_user.id not in({$exceptId2})";
+        }
         $userres = User2::find()
             ->select('pre_user.id')
             ->JoinWith('image')->JoinWith('profile')->where($where)->all();
