@@ -92,7 +92,14 @@ class GirlFlopController extends ActiveController {
         }
         $where = "sex = {$sex} AND img_url is not null AND pre_user.id in(20888,21010,22061,24574,24582)";
         if($address){
-            $where .= "AND address like '%".$address."%'";
+            if($address == "海外"){
+                $sxhw = (new Query())->select('shortname')->from('{{%member_address_link}}')->where(['parentid'=>0])->all();
+                for($i=0;$i<count($sxhw);$i++){
+                    $where .= "AND address not like '%".$sxhw[$i]['shortname']."%'";
+                }
+            }else{
+                $where .= "AND address like '%".$address."%'";
+            }
         }
         if($exceptId2){
             $where .= " AND pre_user.id not in({$exceptId2})";

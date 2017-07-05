@@ -36,6 +36,7 @@ class GirlFlopChoiceController extends ActiveController {
         for($i=0;$i<count($query);$i++){
             $new[] = $query[$i]['shortname'];
         }
+        $new[] = "海外";
         return array('code'=>'200','message'=>'ok','data'=>$new);
     }
 }
