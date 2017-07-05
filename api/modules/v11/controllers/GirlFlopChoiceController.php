@@ -9,6 +9,7 @@ use yii\myhelper\Decode;
 use api\modules\v11\models\User;
 use api\modules\v11\models\User2;
 use yii\myhelper\Easemob;
+use yii\myhelper\Response;
 
 class GirlFlopChoiceController extends ActiveController {
     public $modelClass = 'api\modules\v11\models\GirlFlop';
@@ -29,10 +30,10 @@ class GirlFlopChoiceController extends ActiveController {
 
     public function actionView($id)
     {
-        $decode = new Decode();
-        if(!$decode->decodeDigit($id)){
-            Response::show(210,'参数不正确');
-        }
+//        $decode = new Decode();
+//        if(!$decode->decodeDigit($id)){
+//            Response::show(210,'参数不正确');
+//        }
         $userInfo = User::findOne($id);
         if(!$userInfo){
             Response::show('201','用户不存在');
@@ -80,7 +81,7 @@ class GirlFlopChoiceController extends ActiveController {
         foreach($addressarr as $v){
             $new[] =  $v;
         }
-        return $new;
+        return array('code'=>'200','message'=>'ok','data'=>$new);;
     }
     public function Easemob(){
 
