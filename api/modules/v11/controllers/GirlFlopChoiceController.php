@@ -30,10 +30,10 @@ class GirlFlopChoiceController extends ActiveController {
 
     public function actionView($id)
     {
-//        $decode = new Decode();
-//        if(!$decode->decodeDigit($id)){
-//            Response::show(210,'参数不正确');
-//        }
+        $decode = new Decode();
+        if(!$decode->decodeDigit($id)){
+            Response::show(210,'参数不正确');
+        }
         $userInfo = User::findOne($id);
         if(!$userInfo){
             Response::show('201','用户不存在');
