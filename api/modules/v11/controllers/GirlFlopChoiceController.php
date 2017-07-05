@@ -81,7 +81,7 @@ class GirlFlopChoiceController extends ActiveController {
         foreach($addressarr as $v){
             $new[] =  $v;
         }
-        return array('code'=>'200','message'=>'ok','data'=>$new);;
+        return array('code'=>'200','message'=>'ok','data'=>$new);
     }
     public function Easemob(){
 
