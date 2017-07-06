@@ -36,7 +36,7 @@ use common\components\Vip;
                 <p>我的二维码</p>
             </div>
             <div class="weui-cell__ft">
-                <i class="profile__icon-qrcode___2uQl2 profile__icon___2eco1"></i>
+                <i class="home__icon-qrcode___OF6bm home__icon___2XgfG" style="margin-right: -4px;"></i>
             </div>
         </div>
         <div class="weui-cell">
