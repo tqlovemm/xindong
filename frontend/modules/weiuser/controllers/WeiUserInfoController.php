@@ -78,7 +78,8 @@ class WeiUserInfoController extends Controller
             }else{
                 $province = "未知地区";
             }
-            echo json_encode(['callback'=> $_GET['callback'],'province'=>$province,'city'=>$city,'code'=>$code]);
+            $callback = Yii::$app->request->get('callback');
+            echo  $callback."(".json_encode(['province'=>$province,'city'=>$city,'code'=>$code]).")";
         }
 
     }
