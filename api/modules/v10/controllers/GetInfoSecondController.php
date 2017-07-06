@@ -88,8 +88,16 @@ class GetInfoSecondController extends Controller
             $row[] = $list['img_url'];
         }
         $ims['photos'] = $row;
+        //认证
+        $gres = (new Query())->select('status')->from('pre_girl_authentication')->where(['user_id'=>$id])->orderBy("created_at desc")->one();
+        $grz = array();
+        if($gres){
+            $grz['is_renzheng'] = intval($gres['status']);
+        }else{
+            $grz['is_renzheng'] = 0;
+        }
 
-        return $model+$data+$profile+$follow+$ims;
+        return $model+$data+$profile+$follow+$ims+$grz;
     }
 
     public function actionDelete($id){

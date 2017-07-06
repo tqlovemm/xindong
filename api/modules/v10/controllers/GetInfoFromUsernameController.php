@@ -94,8 +94,16 @@ class GetInfoFromUsernameController extends Controller
         foreach($img_url as $list){
             $row[] = $list['img_url'];
         }*/
+        //认证
+        $gres = (new Query())->select('status')->from('pre_girl_authentication')->orderBy("created_at desc")->where(['user_id'=>$model['id']])->one();
+        $grz = array();
+        if($gres){
+            $grz['is_renzheng'] = intval($gres['status']);
+        }else{
+            $grz['is_renzheng'] = 0;
+        }
 
-        return $model+$data+$profile+$follow+$ims;
+        return $model+$data+$profile+$follow+$ims+$grz;
 
     }
 

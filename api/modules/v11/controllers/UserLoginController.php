@@ -132,7 +132,15 @@ class UserLoginController extends Controller
             $row[] = $list['img_url'];
         }
         $ims['photos'] = $row;
+        //认证
+        $gres = (new Query())->select('status')->from('pre_girl_authentication')->orderBy("created_at desc")->where(['user_id'=>$id])->one();
+        $grz = array();
+        if($gres){
+            $grz['is_renzheng'] = intval($gres['status']);
+        }else{
+            $grz['is_renzheng'] = 0;
+        }
 
-        return $model+$data+$profile+$follow+$ims;
+        return $model+$data+$profile+$follow+$ims+$grz;
     }
 }

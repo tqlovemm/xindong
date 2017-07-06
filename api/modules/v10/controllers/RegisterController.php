@@ -104,8 +104,14 @@ class RegisterController extends Controller
             'message'   =>  '注册成功',
             'data'  =>  $data0,
         );
-
-        Yii::$app->db->createCommand()->insert('pre_user_profile',['user_id'=>$user_id,'birthdate'=>$model->birthdate])->execute();
+        //2017.7.6修改
+        $address = Yii::$app->request->getBodyParam('address');
+        if($address){
+            Yii::$app->db->createCommand()->insert('pre_user_profile',['user_id'=>$user_id,'birthdate'=>$model->birthdate,'address'=>$address])->execute();
+        }else{
+            Yii::$app->db->createCommand()->insert('pre_user_profile',['user_id'=>$user_id,'birthdate'=>$model->birthdate])->execute();
+        }
+        //Yii::$app->db->createCommand()->insert('pre_user_profile',['user_id'=>$user_id,'birthdate'=>$model->birthdate])->execute();
         Yii::$app->db->createCommand()->insert('pre_user_data',['user_id'=>$user_id])->execute();
 
         //引导注册用户联系客服
@@ -182,8 +188,16 @@ class RegisterController extends Controller
             $row[] = $list['img_url'];
         }
         $ims['photos'] = $row;
+        //认证
+        $gres = (new Query())->select('status')->from('pre_girl_authentication')->orderBy("created_at desc")->where(['user_id'=>$id])->one();
+        $grz = array();
+        if($gres){
+            $grz['is_renzheng'] = intval($gres['status']);
+        }else{
+            $grz['is_renzheng'] = 0;
+        }
 
-        return $model+$data+$profile+$follow+$ims;
+        return $model+$data+$profile+$follow+$ims+$grz;
     }
 
 }
