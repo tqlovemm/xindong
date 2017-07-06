@@ -78,7 +78,7 @@ class WeiUserInfoController extends Controller
             }else{
                 $province = "未知地区";
             }
-            echo $_GET['callback']."(".json_encode(['province'=>$province,'city'=>$city,'code'=>$code]).")";
+            echo json_encode(['callback'=> $_GET['callback'],'province'=>$province,'city'=>$city,'code'=>$code]);
         }
 
     }
