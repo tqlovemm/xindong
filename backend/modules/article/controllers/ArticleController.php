@@ -18,6 +18,7 @@ use yii\db\Query;
  */
 class ArticleController extends Controller
 {
+    public $enableCsrfValidation = false;
     public function behaviors()
     {
         return [
