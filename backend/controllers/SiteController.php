@@ -28,7 +28,7 @@ class SiteController extends BaseController
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'cache','test'],
+                        'actions' => ['logout', 'index', 'cache','test','tt'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -50,19 +50,13 @@ class SiteController extends BaseController
     }
 
     public function actionTest(){
+        return $this->render('test');
+    }
 
-        $msg = '你终于来了~我等你很久了💕
-
-想要约个好看的ta，快来玩转我们吧，我们有应接不暇的小活动，如小黑屋，周末勾搭群等等尺度大到你想不到️㊙️
-
-快把你想了解的话题告诉我们的知心客服小姐姐吧，app客服没有及时回复的话，你也可以在微信添加shisan-32进行咨询哦🎈';
-
-        $ids[] = "xdd";
-        $data['target_type']= 'users';
-        $data['target'] = $ids;
-        $data['msg'] = ['type'=>'txt','msg'=>$msg];
-        $data['from'] = 'shisan-kefu';//shisan-kefu
-        $this->setMes()->sendText($data);
+    public function actionTt(){
+        //header("Content-Type: application/json");
+        header('Content-Type: text/html; charset=utf-8');
+        echo json_encode("ddd");
     }
 
     //环信信息

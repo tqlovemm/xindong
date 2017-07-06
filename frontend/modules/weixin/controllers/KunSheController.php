@@ -216,8 +216,11 @@ class KunSheController extends Controller
                 }catch (\Exception $e){
                     SaveToLog::log($e->getMessage(),'we13.log');
                 }finally{
-
-                    $content = "欢迎来到全国最大的情趣社区联盟mo-得意
+                    if($model->scene_id==5){
+                        $content = "51payo.tecclub.cn/weixin/flop/flop-pre";
+                        $this->text($content);
+                    }else{
+                        $content = "欢迎来到全国最大的情趣社区联盟mo-得意
 拥有众多文化社交平台
 在这里你可以尽情展现自己！
 
@@ -232,7 +235,8 @@ class KunSheController extends Controller
 【江浙沪豫高端线下交友】
 <a href=\"http://mp.weixin.qq.com/s/6zyGq4Om2gldkq9Pao97mw\">☞ 华中及长三角最大线下高端交友聚会社群☜ </a>
 区域化交友，交流更方便！";
-                    $this->text($content);
+                        $this->text($content);
+                    }
                 }
             }
             if( strtolower($this->postObj->Event) == 'unsubscribe' ){

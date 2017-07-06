@@ -64,7 +64,7 @@ class UserVipExpireDateSearch extends UserVipExpireDate
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
-            $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '24']);
+            $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '18']);
             $model = $data->offset($pages->offset)->limit($pages->limit)->all();
            return array('model'=>$model,'pages'=>$pages);
         }
@@ -78,7 +78,7 @@ class UserVipExpireDateSearch extends UserVipExpireDate
         $data->andFilterWhere(['like', 'number', $this->number])
             ->andFilterWhere(['like', 'admin', $this->admin])
             ->andFilterWhere(['like', 'extra', $this->extra]);
-        $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '24']);
+        $pages = new Pagination(['totalCount' =>$data->count(), 'pageSize' => '18']);
         $model = $data->offset($pages->offset)->limit($pages->limit)->all();
         return array('model'=>$model,'pages'=>$pages,'sort'=>$sort);
     }

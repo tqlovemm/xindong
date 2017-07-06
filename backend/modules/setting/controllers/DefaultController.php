@@ -181,22 +181,6 @@ class DefaultController extends BaseController
                 return '地区不可为空';
             }
 
-            if($model->vip>2){
-                $vipType = new UserVipExpireDate();
-                $vipType->number = $model->id;
-                $vipType->vip = $model->vip;
-                $vipType->type = $model->vip_type;
-                if($model->vip_type==10){
-                    $yearTime = date('Y-m-d',strtotime('+1 years'));
-                    $vipType->expire = $yearTime;
-                }else{
-                    $halfYearTime = date('Y-m-d',strtotime('+6 month', time()));
-                    $vipType->expire = $halfYearTime;
-                }
-                $vipType->save();
-            }
-
-
             $model->flag = md5(time().md5(rand(10000,99999)));
             $model->flop_id = $model->address;
             $model->address = $area[$model->address];
@@ -205,6 +189,23 @@ class DefaultController extends BaseController
             }
 
             if($model->save()){
+
+                if($model->vip>2){
+                    $vipType = new UserVipExpireDate();
+                    $vipType->number = $model->id;
+                    $vipType->vip = $model->vip;
+                    $vipType->type = $model->vip_type;
+                    if($model->vip_type==10){
+                        $yearTime = date('Y-m-d',strtotime('+1 years'));
+                        $vipType->expire = $yearTime;
+                    }else{
+                        $halfYearTime = date('Y-m-d',strtotime('+6 month', time()));
+                        $vipType->expire = $halfYearTime;
+                    }
+                    $vipType->save();
+                }
+
+
                 $url = "http://13loveme.com/files/";
                 return $this->render('send-collecting-url',['model'=>$model,'url'=>$url]);
             }

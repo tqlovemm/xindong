@@ -39,6 +39,9 @@ return [
             'class' => 'frontend\modules\article\Article',
 
         ],
+        'weiuser' => [
+            'class' => 'frontend\modules\weiuser\weiuser',
+        ],
         'forum' => [
             'class' => 'frontend\modules\forum\Forum',
             'aliases' => [
