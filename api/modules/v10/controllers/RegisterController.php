@@ -104,8 +104,14 @@ class RegisterController extends Controller
             'message'   =>  '注册成功',
             'data'  =>  $data0,
         );
-
-        Yii::$app->db->createCommand()->insert('pre_user_profile',['user_id'=>$user_id,'birthdate'=>$model->birthdate])->execute();
+        //2017.7.6修改
+        $address = Yii::$app->request->getBodyParam('address');
+        if($address){
+            Yii::$app->db->createCommand()->insert('pre_user_profile',['user_id'=>$user_id,'birthdate'=>$model->birthdate,'address'=>$address])->execute();
+        }else{
+            Yii::$app->db->createCommand()->insert('pre_user_profile',['user_id'=>$user_id,'birthdate'=>$model->birthdate])->execute();
+        }
+        //Yii::$app->db->createCommand()->insert('pre_user_profile',['user_id'=>$user_id,'birthdate'=>$model->birthdate])->execute();
         Yii::$app->db->createCommand()->insert('pre_user_data',['user_id'=>$user_id])->execute();
 
         //引导注册用户联系客服
