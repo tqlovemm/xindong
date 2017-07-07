@@ -522,5 +522,11 @@ class KunSheController extends Controller
         return $res;
     }
 
+    public function actionC(){
+
+
+        Yii::$app->cache->delete('access_token_ks');
+    }
+
 
 }
