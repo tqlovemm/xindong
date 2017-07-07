@@ -123,7 +123,7 @@ class GirlFlopController extends ActiveController {
         $model->load(Yii::$app->request->getBodyParams(), '');
         $flop_userid = $model->flop_userid;
         $flop_type = $model->flop_type;
-        $renzheng = GirlAuthentication::find()->where(['user_id'=>$id])->one();
+        $renzheng = GirlAuthentication::find()->where(['user_id'=>$id])->orderBy("created_at desc")->one();
         $time = strtotime('today');
         $recordwhere = "user_id = {$id} AND created_at >= {$time}";
         $recordcount = GirlFlopRecord::find()->where($recordwhere)->count();
