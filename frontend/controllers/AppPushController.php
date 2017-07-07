@@ -21,7 +21,7 @@ class AppPushController extends Controller
         }
 
         self::rechargePush();
-        self::savemeData();
+//        self::savemeData();
 
         PushConfig::config();
         $query = new AppPush();
