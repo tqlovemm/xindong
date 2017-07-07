@@ -1,7 +1,10 @@
 <?php
 $type = $_GET['stype'];
-$msg = "[\"".$_GET['msg']."\"]";
-$new = json_decode($msg,true);
+if($type == 1){
+    $msg = "恭喜您！您的视频认证已通过了！";
+}else{
+    $msg = "您的认证视频因以下原因未通过：没有拍你本人，光线太暗看不清，或裸露身体或各种广告。请重新拍摄。";
+}
 ?>
 <html>
 <head>
@@ -31,7 +34,7 @@ $new = json_decode($msg,true);
         }
     ?>
 </div>
-<p><strong><?php echo $new[0]; ?></strong></p>
+<p><strong><?php echo $msg; ?></strong></p>
 </body>
 </html>
 
