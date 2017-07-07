@@ -100,7 +100,7 @@ class GirlAuthenticationController extends Controller
                 $icon = Yii::$app->request->hostInfo.'/images/app_push/Group.png';
                 $date = time();
                 $weburl = Yii::$app->params['hostname']."/show.php?stype=".$status."&msg=".$content;
-                $extras = json_encode(array('push_title'=>urlencode($title),'push_content'=>urlencode($msg),'push_type'=>'SSCOMM_AD_WEB','push_webTitle'=>urlencode($title),'push_webUrl'=>urlencode($weburl)));
+                $extras = json_encode(array('push_title'=>urlencode($title),'push_content'=>urlencode($msg),'push_type'=>'SSCOMM_AD_WEB','push_webTitle'=>urlencode($title),'push_webUrl'=>$weburl));
                 Yii::$app->db->createCommand("insert into {{%app_push}} (type,status,cid,title,msg,extras,platform,response,icon,created_at,updated_at) values('SSCOMM_AD_WEB',2,'$cid','$title','$msg','$extras','all','NULL','$icon',$date,$date)")->execute();
             }
             return $this->redirect(['index', 'id' => $model->id]);
