@@ -74,12 +74,7 @@ class AppPush extends ActiveRecord
         return [
 
             'push_id'=>'id','title','msg','status',
-            'cid'=>function($model){
-               if(empty($model->cid)){
-                   return $_GET['cid'];
-               }
-               return $model->cid;
-            },
+            'cid',
             'created_at','updated_at','is_read',
             'icon',
             'response',
