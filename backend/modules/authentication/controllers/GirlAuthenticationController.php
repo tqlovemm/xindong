@@ -90,16 +90,14 @@ class GirlAuthenticationController extends Controller
                 if($status == 1){
                     $content = "恭喜您！您的视频认证已通过了！";
                 }elseif($status == 2){
-                    $content = Yii::$app->request->getBodyParam('beizhu');
-                    if(!$content){
-                        $content = "你的形象视频因以下原因被删除：没有拍你本人，光线太暗看不清，或裸露身体或各种广告。请重新拍摄。";
-                    }
+                    //$content = Yii::$app->request->getBodyParam('beizhu');
+                    $content = "你的形象视频因以下原因被删除：没有拍你本人，光线太暗看不清，或裸露身体或各种广告。请重新拍摄。";
                 }
                 $title = "视频验证";
                 $msg = $content;
                 $icon = Yii::$app->request->hostInfo.'/images/app_push/Group.png';
                 $date = time();
-                $weburl = Yii::$app->params['hostname']."/show.php?stype=".$status."&msg=".$content;
+                $weburl = Yii::$app->params['hostname']."/show.php?stype=".$status;
                 $extras = json_encode(array('push_title'=>urlencode($title),'push_content'=>urlencode($msg),'push_type'=>'SSCOMM_AD_WEB','push_webTitle'=>urlencode($title),'push_webUrl'=>$weburl));
                 Yii::$app->db->createCommand("insert into {{%app_push}} (type,status,cid,title,msg,extras,platform,response,icon,created_at,updated_at) values('SSCOMM_AD_WEB',2,'$cid','$title','$msg','$extras','all','NULL','$icon',$date,$date)")->execute();
             }
