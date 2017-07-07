@@ -319,7 +319,7 @@ function pushMessageToApp($badge,  $title, $msg, $payload, $locKey){
     $igt = new IGeTui(HOST,APPKEY,MASTERSECRET);
     $template = IGtTransmissionTemplateDemo($badge, $title, $msg, $payload);
     $template->set_transmissionContent($payload);//透传内容
-    $template->set_pushInfo('十三平台', $badge, $title, '', '', $locKey, '', '');
+    $template->set_pushInfo('十三平台', $badge, $title, $msg, '', $locKey, '', '');
     //$template = IGtLinkTemplateDemo();
     //个推信息体
     //基于应用消息体
