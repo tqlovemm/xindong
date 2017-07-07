@@ -21,7 +21,14 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'updated_at')->textInput() ?>
 
     <?= $form->field($model, 'status')->textInput()->dropDownList([1=>'认证成功',2=>'认证失败',3=>'未认证']) ?>
+    <?php if($update == 1){ ?>
+        <div class="form-group">
+            <label class="control-label">备注</label>
+            <input type="text" class="form-control" name="beizhu">
 
+            <div class="help-block"></div>
+        </div>
+    <?php } ?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
