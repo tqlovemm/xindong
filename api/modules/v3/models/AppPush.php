@@ -73,7 +73,9 @@ class AppPush extends ActiveRecord
     {
         return [
 
-            'push_id'=>'id','title','msg','status','cid','created_at','updated_at','is_read',
+            'push_id'=>'id','title','msg','status',
+            'cid',
+            'created_at','updated_at','is_read',
             'icon',
             'response',
 

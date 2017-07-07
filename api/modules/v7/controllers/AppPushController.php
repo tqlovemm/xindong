@@ -37,10 +37,9 @@ class AppPushController extends ActiveController
 
         $model = $this->modelClass;
         $cid = $_GET['cid'];
-        $query = $model::find()->where(['type'=>'SSCOMM_NOTICE'])->asArray()->all();
-        SaveToLog::log(json_encode($query),'logapp.log');
-            /*->where("cid = '{$cid}' and `type` <> 'SSCOMM_NEWSCOMMENT_DETAIL' and is_read = 1 ")->orWhere(['cid' =>''])
-            ->orderBy('created_at desc');*/
+        $query = $model::find()
+            ->where("cid = '{$cid}' and `type` <> 'SSCOMM_NEWSCOMMENT_DETAIL' and is_read = 1 ")->orWhere(['type'=>'SSCOMM_NOTICE'])
+            ->orderBy('created_at desc');
         return new ActiveDataProvider([
             'query' =>  $query
         ]);

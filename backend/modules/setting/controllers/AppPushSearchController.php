@@ -68,17 +68,17 @@ class AppPushSearchController extends Controller
             if($model->type=='SSCOMM_AD_WEB'){
 
                 $model->extras = array('push_title'=>urlencode($model->title),'push_content'=>$model->msg,'push_webTitle'=>urlencode($model->title),'push_webUrl'=>$model->msg,'push_type'=>$model->type);
-                $model->icon = 'http://13loveme.com:82/images/app_push/u=2084298190,2591444308&fm=21&gp=0.png';
+                $model->icon = 'http://admin.13loveme.com/images/app_push/u=2084298190,2591444308&fm=21&gp=0.png';
 
             }elseif($model->type=='SSCOMM_NOTICE'){
 
                 $model->extras = array('push_title'=>urlencode($model->title),'push_content'=>urlencode($model->msg),'push_type'=>$model->type);
-                $model->icon = 'http://13loveme.com:82/images/app_push/u=2285230243,2436417019&fm=21&gp=0.png';
+                $model->icon = 'http://admin.13loveme.com/images/app_push/u=2285230243,2436417019&fm=21&gp=0.png';
 
             }elseif($model->type=='SSCOMM_LOGINOUT'){
 
                 $model->extras = array('push_title'=>urlencode($model->title),'push_content'=>urlencode($model->msg),'push_type'=>$model->type);
-                $model->icon = 'http://13loveme.com:82/images/app_push/u=1817874554,3561189142&fm=21&gp=0.png';
+                $model->icon = 'http://admin.13loveme.com/images/app_push/u=1817874554,3561189142&fm=21&gp=0.png';
 
             }
 
