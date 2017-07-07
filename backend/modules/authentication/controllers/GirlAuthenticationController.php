@@ -91,7 +91,7 @@ class GirlAuthenticationController extends Controller
                     $content = "恭喜您！您的视频认证已通过了！";
                 }elseif($status == 2){
                     //$content = Yii::$app->request->getBodyParam('beizhu');
-                    $content = "你的形象视频因以下原因被删除：没有拍你本人，光线太暗看不清，或裸露身体或各种广告。请重新拍摄。";
+                    $content = "您的认证视频因以下原因未通过：没有拍你本人，光线太暗看不清，或裸露身体或各种广告。请重新拍摄。";
                 }
                 $title = "视频验证";
                 $msg = $content;
