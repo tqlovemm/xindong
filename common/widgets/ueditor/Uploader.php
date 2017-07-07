@@ -97,13 +97,13 @@ class Uploader
             return;
         }
         //创建目录失败
-        if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {
-            $this->stateInfo = $this->getStateInfo("ERROR_CREATE_DIR");
-            return;
-        } else if (!is_writeable($dirname)) {
-            $this->stateInfo = $this->getStateInfo("ERROR_DIR_NOT_WRITEABLE");
-            return;
-        }
+//        if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {
+//            $this->stateInfo = $this->getStateInfo("ERROR_CREATE_DIR");
+//            return;
+//        } else if (!is_writeable($dirname)) {
+//            $this->stateInfo = $this->getStateInfo("ERROR_DIR_NOT_WRITEABLE");
+//            return;
+//        }
         //七牛
         $qn = new QiniuUploader($this->fileField,Yii::$app->params['qnak1'],Yii::$app->params['qnsk1']);
         $qiniu = $qn->upload_app('appimages',$this->fullName,$file['tmp_name']);
