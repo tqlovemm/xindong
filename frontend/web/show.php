@@ -1,6 +1,7 @@
 <?php
 $type = $_GET['stype'];
-$msg = $_GET['msg'];
+$msg = "[\"".$_GET['msg']."\"]";
+$new = json_decode($msg,true);
 ?>
 <html>
 <head>
@@ -30,7 +31,7 @@ $msg = $_GET['msg'];
         }
     ?>
 </div>
-<p><strong><?php echo $msg; ?></strong></p>
+<p><strong><?php echo $new[0]; ?></strong></p>
 </body>
 </html>
 
