@@ -217,7 +217,10 @@ class KunSheController extends Controller
                     SaveToLog::log($e->getMessage(),'we13.log');
                 }finally{
                     if($model->scene_id==5){
-                        $content = "51payo.tecclub.cn/weixin/flop";
+                        $content = "Mua~
+好开心，又捕获一枚小可爱！
+谢谢你的关注，之后我们将在这里为你直接推送男生二维码喔！
+现在点击<a href='51payo.tecclub.cn/weixin/flop'>【后宫】</a>继续翻牌吧~";
                         $this->text($content);
                     }else{
                         $content = "欢迎来到全国最大的情趣社区联盟mo-得意
