@@ -107,42 +107,17 @@ class KunSheController extends Controller
         $arr = array(
             'button' =>array(
                 array(
-                    'name'=>urlencode("幸福入口"),
-                    'sub_button'=>array(
-                        array(
-                            'type'=>'click',
-                            'name'=>urlencode("男生入口"),
-                            "key"=> "V1001_GOOD",
-                        ),
-                        array(
-                            'type'=>'click',
-                            'name'=>urlencode("女生入口"),
-                            "key"=> "V1002_GOOD",
-                        ),
-                    )
+                    "type"=>"view",
+                    "name"=>urlencode("翻牌子"),
+                    "url"=>"http://51payo.tecclub.cn/weixin/flop/flop-pre",
+                    "sub_button"=>[],
                 ),
                 array(
-                    'name'=>urlencode("撩一撩"),
-                    'sub_button'=>array(
-                        array(
-                            "type"=>"view",
-                            "name"=>urlencode("SM|西檬之家"),
-                            "url"=>"https://mp.weixin.qq.com/s?__biz=MzI2OTQ3OTA1NA==&mid=2247483859&idx=3&sn=4de9b46e0e7e88543d0c00cb0aeb53a0&chksm=eadefc32dda97524d0a7adb860559c937752d3601d49cf71e2cd8fef878dde4d8c8bb9919476&scene=18#rd",
-                            "sub_button"=>[],
-
-                        ), array(
-                            "type"=>"click",
-                            "name"=>urlencode("跑圈 | 十三平台"),
-                            "key"=> "V1003_GOOD",
-
-                        ),
-                        array(
-                            'type'=>'click',
-                            'name'=>urlencode("聊sao | 神秘三角"),
-                            "key"=> "V1004_GOOD",
-                        ),
-                    )
-                )
+                    "type"=>"view",
+                    "name"=>urlencode("快速脱单"),
+                    "url"=>"http://51payo.com/contact",
+                    "sub_button"=>[],
+                ),
             )
         );
 
@@ -221,7 +196,7 @@ class KunSheController extends Controller
 好开心，又捕获一枚小可爱！
 谢谢你的关注，之后我们将在这里为你直接推送男生二维码喔！
 
-现在点击<a href='http://51payo.tecclub.cn/weixin/flop'>【我的后宫】</a>继续翻牌吧~";
+现在点击<a href='http://51payo.tecclub.cn/weixin/flop/flop-pre'>【我的后宫】</a>继续翻牌吧~";
                         $this->text($content);
                     }else{
                         $content = "欢迎来到全国最大的情趣社区联盟mo-得意
