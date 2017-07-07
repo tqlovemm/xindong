@@ -84,28 +84,30 @@ class GirlFlopController extends ActiveController {
         $query = User2::find()
             ->select('username,nickname,identify,pre_user.id,sex,address,birthdate,img_url,groupid')
             ->JoinWith('image')->JoinWith('profile');
-        if($morelike){
-            if($morelike == 1){
-                $query->JoinWith('boylike')->orderBy("is_like desc");
-            }elseif($morelike == 2){
-                $query->JoinWith('boylike')->orderBy("is_like asc");
-            }
-        }
         $where = "sex = {$sex} AND img_url is not null";
         if($address){
             if($address == "海外"){
                 $sxhw = (new Query())->select('shortname')->from('{{%member_address_link}}')->where(['parentid'=>0])->all();
                 for($i=0;$i<count($sxhw);$i++){
-                    $where .= "AND address not like '%".$sxhw[$i]['shortname']."%'";
+                    $where .= " AND address not like '%".$sxhw[$i]['shortname']."%'";
                 }
             }else{
-                $where .= "AND address like '%".$address."%'";
+                $where .= " AND address like '%".$address."%'";
             }
         }
         if($exceptId2){
             $where .= " AND pre_user.id not in({$exceptId2})";
         }
-        $info = $query->where($where)->orderBy("rand()");
+        if($morelike){
+            if($morelike == 1){
+                $query->JoinWith('boylike')->orderBy("is_like desc");
+            }elseif($morelike == 2){
+                $query->JoinWith('boylike')->orderBy("is_like asc")->orderBy("rand()");
+            }
+        }else{
+            $query->orderBy("rand()");
+        }
+        $info = $query->where($where);
         return new ActiveDataProvider([
             'query' =>  $info,
             'pagination' => [
@@ -123,7 +125,7 @@ class GirlFlopController extends ActiveController {
         $model->load(Yii::$app->request->getBodyParams(), '');
         $flop_userid = $model->flop_userid;
         $flop_type = $model->flop_type;
-        $renzheng = GirlAuthentication::find()->where(['user_id'=>$id])->one();
+        $renzheng = GirlAuthentication::find()->where(['user_id'=>$id])->orderBy("created_at desc")->one();
         $time = strtotime('today');
         $recordwhere = "user_id = {$id} AND created_at >= {$time}";
         $recordcount = GirlFlopRecord::find()->where($recordwhere)->count();

@@ -81,25 +81,27 @@ class GirlAuthenticationController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $status = $model->status;
             $userid = $model->user_id;
             $user = (new Query())->where(['id'=>$userid])->select('cid')->from('pre_user')->one();
             $cid = $user['cid'];
-            if($cid){
+            if($cid && $status!=3){
                 if($status == 1){
-                    $content = "恭喜您！您的视频认证已通过了~";
+                    $content = "恭喜您！您的视频认证已通过了！";
                 }elseif($status == 2){
-                    $content = "很抱歉！您的视频认证未通过，请重新认证！";
+                    $content = Yii::$app->request->getBodyParam('beizhu');
+                    if(!$content){
+                        $content = "你的形象视频因以下原因被删除：没有拍你本人，光线太暗看不清，或裸露身体或各种广告。请重新拍摄。";
+                    }
                 }
-                $title = $content;
+                $title = "视频验证";
                 $msg = $content;
+                $icon = Yii::$app->request->hostInfo.'/images/app_push/Group.png';
                 $date = time();
-                //$icon = Yii::$app->params['icon'].'/images/app_push/u=2285230243,2436417019&fm=21&gp=0.png';
-                $icon = "";
-                $extras = json_encode(array('push_title'=>urlencode($title),'push_content'=>urlencode($msg),'push_type'=>'SSCOMM_NOTICE'));
-                Yii::$app->db->createCommand("insert into {{%app_push}} (type,status,cid,title,msg,extras,platform,response,icon,created_at,updated_at) values('SSCOMM_NOTICE',2,'$cid','$title','$msg','$extras','all','NULL','$icon',$date,$date)")->execute();
+                $weburl = Yii::$app->params['hostname']."/show.php?stype=".$status."&msg=".$content;
+                $extras = json_encode(array('push_title'=>urlencode($title),'push_content'=>urlencode($msg),'push_type'=>'SSCOMM_AD_WEB','push_webTitle'=>urlencode($title),'push_webUrl'=>urlencode($weburl)));
+                Yii::$app->db->createCommand("insert into {{%app_push}} (type,status,cid,title,msg,extras,platform,response,icon,created_at,updated_at) values('SSCOMM_AD_WEB',2,'$cid','$title','$msg','$extras','all','NULL','$icon',$date,$date)")->execute();
             }
             return $this->redirect(['index', 'id' => $model->id]);
         } else {
