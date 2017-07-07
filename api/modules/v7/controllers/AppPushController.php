@@ -6,6 +6,7 @@ use api\modules\v11\models\FormThreadPushMsg;
 use api\modules\v11\models\User;
 use api\modules\v3\models\AppPush;
 use api\modules\v7\models\Message;
+use common\components\SaveToLog;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
@@ -36,7 +37,8 @@ class AppPushController extends ActiveController
 
         $model = $this->modelClass;
         $cid = $_GET['cid'];
-        $query = $model::find()->where(['type'=>'SSCOMM_NOTICE']);
+        $query = $model::find()->where(['type'=>'SSCOMM_NOTICE'])->asArray()->all();
+        SaveToLog::log(json_encode($query),'logapp.log');
             /*->where("cid = '{$cid}' and `type` <> 'SSCOMM_NEWSCOMMENT_DETAIL' and is_read = 1 ")->orWhere(['cid' =>''])
             ->orderBy('created_at desc');*/
         return new ActiveDataProvider([
