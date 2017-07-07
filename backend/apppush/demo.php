@@ -315,11 +315,11 @@ function pushMessageToList($badge, $title, $msg, $payload, $cids)
 }
 
 //群推接口案例
-function pushMessageToApp($badge, $message, $payload, $locKey){
+function pushMessageToApp($badge,  $title, $msg, $payload, $locKey){
     $igt = new IGeTui(HOST,APPKEY,MASTERSECRET);
-    $template = IGtTransmissionTemplateDemo();
+    $template = IGtTransmissionTemplateDemo($badge, $title, $msg, $payload);
     $template->set_transmissionContent($payload);//透传内容
-    $template->set_pushInfo('十三平台', $badge, $message, '', '', $locKey, '', '');
+    $template->set_pushInfo('十三平台', $badge, $title, $msg, '', $locKey, '', '');
     //$template = IGtLinkTemplateDemo();
     //个推信息体
     //基于应用消息体
