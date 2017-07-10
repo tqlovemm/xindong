@@ -217,7 +217,7 @@ class KunSheController extends Controller
                     SaveToLog::log($e->getMessage(),'we13.log');
                 }finally{
                     if($model->scene_id==5){
-                        $content = "51payo.tecclub.cn/weixin/flop/flop-pre";
+                        $content = "51payo.tecclub.cn/weixin/flop";
                         $this->text($content);
                     }else{
                         $content = "欢迎来到全国最大的情趣社区联盟mo-得意
