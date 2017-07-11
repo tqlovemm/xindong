@@ -7,15 +7,8 @@ class ArticleController extends Controller
 {
 
     public $layout = false;
-    public function actionIndex(){
-
-
-
-
-    }
 
     public function actionBoy(){
-
         return $this->render('boy');
     }
    public function actionGirl(){
