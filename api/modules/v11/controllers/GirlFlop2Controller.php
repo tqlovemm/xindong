@@ -16,7 +16,7 @@ use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\db\Query;
 
-class GirlFlopController extends ActiveController {
+class GirlFlop2Controller extends ActiveController {
 
     public $modelClass = 'api\modules\v11\models\GirlFlop';
     public $serializer = [
@@ -43,10 +43,10 @@ class GirlFlopController extends ActiveController {
         $id = isset($_GET['id'])?$_GET['id']:'';
         $address = isset($_GET['address'])?$_GET['address']:'';
         $morelike = isset($_GET['morelike'])?$_GET['morelike']:'';
-        $decode = new Decode();
-        if(!$decode->decodeDigit($id)){
-            Response::show(210,'参数不正确');
-        }
+//        $decode = new Decode();
+//        if(!$decode->decodeDigit($id)){
+//            Response::show(210,'参数不正确');
+//        }
         $userInfo = User2::findOne($id);
         if(!$userInfo){
             Response::show('201','用户不存在');
@@ -55,6 +55,19 @@ class GirlFlopController extends ActiveController {
             $sex = 0;
         }else{
             Response::show('201','该用户是男生');
+        }
+        //翻牌限制
+        $renzheng = GirlAuthentication::find()->where(['user_id'=>$id])->orderBy("created_at desc")->one();
+        $time = strtotime('today');
+        $recordwhere = "user_id = {$id} AND created_at >= {$time}";
+        $recordcount = GirlFlopRecord::find()->where($recordwhere)->count();
+        if($renzheng['status'] == 1){
+            $maxflop = 50;
+        }else{
+            $maxflop = 20;
+        }
+        if($recordcount >= $maxflop){
+            Response::show('202','超过每日翻牌限制！',"翻牌错误");
         }
         //环信好友
         $friends = $this->Easemob()->findFriend($userInfo['username']);

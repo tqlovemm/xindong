@@ -5,12 +5,12 @@ namespace backend\modules\authentication\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\modules\authentication\models\GirlAuthentication;
+use backend\modules\authentication\models\AdminPush;
 
 /**
- * GirlAuthenticationSearch represents the model behind the search form about `backend\modules\authentication\models\GirlAuthentication`.
+ * AdminPushSearch represents the model behind the search form about `backend\modules\authentication\models\AdminPush`.
  */
-class GirlAuthenticationSearch extends GirlAuthentication
+class AdminPushSearch extends AdminPush
 {
     /**
      * @inheritdoc
@@ -18,8 +18,7 @@ class GirlAuthenticationSearch extends GirlAuthentication
     public function rules()
     {
         return [
-            [['id', 'user_id',  'updated_at', 'status','level'], 'integer'],
-            [['video_url'], 'safe'],
+            [['id', 'user_id', 'status'], 'integer'],
         ];
     }
 
@@ -41,7 +40,7 @@ class GirlAuthenticationSearch extends GirlAuthentication
      */
     public function search($params)
     {
-        $query = GirlAuthentication::find()->orderBy("created_at desc");
+        $query = AdminPush::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -58,13 +57,8 @@ class GirlAuthenticationSearch extends GirlAuthentication
         $query->andFilterWhere([
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
             'status' => $this->status,
-            'level' => $this->level,
         ]);
-
-        $query->andFilterWhere(['like', 'video_url', $this->video_url]);
 
         return $dataProvider;
     }

@@ -30,8 +30,8 @@ class GirlAuthentication extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'video_url', 'created_at', 'updated_at', 'status'], 'required'],
-            [['user_id', 'created_at', 'updated_at', 'status'], 'integer'],
+            [['user_id', 'video_url', 'created_at', 'updated_at', 'status','level'], 'required'],
+            [['user_id', 'created_at', 'updated_at', 'status','level'], 'integer'],
             [['video_url'], 'string', 'max' => 255]
         ];
     }
@@ -47,6 +47,7 @@ class GirlAuthentication extends \yii\db\ActiveRecord
             'video_url' => '认证视频',
             'created_at' => '上传时间',
             'updated_at' => '修改时间',
+            'level' => '认证等级',
             'status' => 'Status',
         ];
     }

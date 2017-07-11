@@ -19,6 +19,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'created_at')->textInput() ?>
 
     <?= $form->field($model, 'updated_at')->textInput() ?>
+    <?= $form->field($model, 'level')->textInput()->dropDownList([1=>1,2=>2,3=>3,4=>4]) ?>
 
     <?= $form->field($model, 'status')->textInput()->dropDownList([1=>'认证成功',2=>'认证失败',3=>'未认证']) ?>
 

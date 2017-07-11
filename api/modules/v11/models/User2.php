@@ -20,9 +20,6 @@ use api\modules\v11\models\GirlFlopBoy;
  */
 class User2 extends ActiveRecord  implements IdentityInterface
 {
-    public $address;
-    public $birthdate;
-    public $img_url;
     /**
      * @inheritdoc
      */
@@ -70,8 +67,8 @@ class User2 extends ActiveRecord  implements IdentityInterface
     public function fields()
     {
         return [
-            'user_id'=>'id','username','avatar','nickname','sex','groupid',
-            'address','birthdate','avatar'=>'img_url',
+            'user_id'=>'id','username','nickname','sex','groupid','cid',
+            'address','birthdate','avatar'=>'image',
         ];
     }
 
@@ -93,6 +90,12 @@ class User2 extends ActiveRecord  implements IdentityInterface
      */
     public function getImage()
     {
+        $res = UserImage::find()->where(['user_id'=>$this->id])->one();
+        return $res['img_url'];
+    }
+
+    public function getUimage()
+    {
         return $this->hasOne(UserImage::className(), ['user_id' => 'id']);
     }
 
@@ -100,9 +103,15 @@ class User2 extends ActiveRecord  implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProfile()
+    public function getAddress()
     {
-        return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
+        $res = UserProfile::find()->where(['user_id'=>$this->id])->one();
+        return $res['address'];
+    }
+    public function getBirthdate()
+    {
+        $res = UserProfile::find()->where(['user_id'=>$this->id])->one();
+        return $res['birthdate'];
     }
 
     /**

@@ -55,6 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                 'format' => 'raw',
             ],
+            'level',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
