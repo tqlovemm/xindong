@@ -194,10 +194,10 @@ class GirlFlopController extends ActiveController {
         }
     }
     public function actionView($id){
-      /*  $decode = new Decode();
+        $decode = new Decode();
         if(!$decode->decodeDigit($id)){
             Response::show(210,'参数不正确');
-        }*/
+        }
         $model = new $this->modelClass();
         $res = $model::find()->where(['user_id'=>$id,'flop_type'=>1])->orderBy("created_at desc")->all();
         $ids = array();
