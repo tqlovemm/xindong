@@ -225,8 +225,8 @@ class GirlFlopController extends ActiveController {
             $maxpage = ceil($pagination->totalCount/$pagination->defaultPageSize);
             $boysres = User2::find()->where("pre_user.id in({$ids2}) ORDER BY field(pre_user.id,{$ids2})")->select('username,nickname,pre_user.id,sex,address,avatar,groupid,birthdate,img_url')
                 ->offset($pagination->offset)->limit($pagination->limit)
-                ->JoinWith('image')->JoinWith('profile')->all();
-            return $boysres;
+                ->with('image')->with('profile')->all();
+
             $newarr = array();
             for($i=0;$i<count($boysres);$i++){
                 if(in_array($boysres[$i]['id'],$exceptId)){
@@ -238,10 +238,10 @@ class GirlFlopController extends ActiveController {
                 $newarr[$i]['info']['username'] = $boysres[$i]['username'];
                 $newarr[$i]['info']['nickname'] = $boysres[$i]['nickname'];
                 $newarr[$i]['info']['sex'] = $boysres[$i]['sex'];
-                $newarr[$i]['info']['address'] = $boysres[$i]['address'];
+                $newarr[$i]['info']['address'] = $boysres[$i]['profile']['address'];
                 $newarr[$i]['info']['groupid'] = $boysres[$i]['groupid'];
-                $newarr[$i]['info']['birthdate'] = $boysres[$i]['birthdate'];
-                $newarr[$i]['info']['avatar'] = $boysres[$i]['img_url'];
+                $newarr[$i]['info']['birthdate'] = $boysres[$i]['profile']['birthdate'];
+                $newarr[$i]['info']['avatar'] = $boysres[$i]['image']['img_url'];
             }
             return $this->datares(200,$maxpage,$newarr);
         }else{
