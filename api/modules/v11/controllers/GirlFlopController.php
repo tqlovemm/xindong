@@ -43,10 +43,10 @@ class GirlFlopController extends ActiveController {
         $id = isset($_GET['id'])?$_GET['id']:'';
         $address = isset($_GET['address'])?$_GET['address']:'';
         $morelike = isset($_GET['morelike'])?$_GET['morelike']:'';
-        $decode = new Decode();
-        if(!$decode->decodeDigit($id)){
-            Response::show(210,'参数不正确');
-        }
+//        $decode = new Decode();
+//        if(!$decode->decodeDigit($id)){
+//            Response::show(210,'参数不正确');
+//        }
         $userInfo = User2::findOne($id);
         if(!$userInfo){
             Response::show('201','用户不存在');
@@ -194,7 +194,7 @@ class GirlFlopController extends ActiveController {
         }
     }
     public function actionView($id){
-    /*    $decode = new Decode();
+      /*  $decode = new Decode();
         if(!$decode->decodeDigit($id)){
             Response::show(210,'参数不正确');
         }*/
@@ -223,43 +223,16 @@ class GirlFlopController extends ActiveController {
             ]);
             $pagination->validatePage = false;
             $maxpage = ceil($pagination->totalCount/$pagination->defaultPageSize);
-            $boysres = User2::find()->where("pre_user.id in({$ids2}) ORDER BY field(pre_user.id,{$ids2})")
+            $boysres = User2::find()->where("pre_user.id in({$ids2}) ORDER BY field(pre_user.id,{$ids2})")->select('username,nickname,pre_user.id,sex,address,avatar,groupid,birthdate,img_url')
                 ->offset($pagination->offset)->limit($pagination->limit)
-                ->all();
-
+                ->JoinWith('image')->JoinWith('profile')->all();
             $newarr = array();
-            foreach ($boysres as $key=>$boysr){
-                var_dump($boysr);
-
-                return;
-                if(in_array($boysr['id'],$exceptId)){
-                    $newarr[$key]['is_friend'] = 1;
-                }else{
-                    $newarr[$key]['is_friend'] = 2;
-                }
-
-                $newarr[$key]['info']['user_id'] = $boysr->id;
-                $newarr[$key]['info']['username'] = $boysr->username;
-                $newarr[$key]['info']['nickname'] = $boysr->nickname;
-                $newarr[$key]['info']['sex'] = $boysr->sex;
-                $newarr[$key]['info']['address'] = $boysr->address;
-                $newarr[$key]['info']['groupid'] = $boysr->groupid;
-                $newarr[$key]['info']['birthdate'] = $boysr->birthdate;
-                $newarr[$key]['info']['avatar'] = $boysr->avatar;
-
-            }
-
-
-
-        /*    for($i=0;$i<count($boysres);$i++){
+            for($i=0;$i<count($boysres);$i++){
                 if(in_array($boysres[$i]['id'],$exceptId)){
                     $newarr[$i]['is_friend'] = 1;
                 }else{
                     $newarr[$i]['is_friend'] = 2;
                 }
-
-                $newarr[$i] = $boysres[$i];
-
                 $newarr[$i]['info']['user_id'] = $boysres[$i]['id'];
                 $newarr[$i]['info']['username'] = $boysres[$i]['username'];
                 $newarr[$i]['info']['nickname'] = $boysres[$i]['nickname'];
@@ -267,8 +240,8 @@ class GirlFlopController extends ActiveController {
                 $newarr[$i]['info']['address'] = $boysres[$i]['address'];
                 $newarr[$i]['info']['groupid'] = $boysres[$i]['groupid'];
                 $newarr[$i]['info']['birthdate'] = $boysres[$i]['birthdate'];
-                $newarr[$i]['info']['avatar'] = $boysres[$i]['avatar'];
-            }*/
+                $newarr[$i]['info']['avatar'] = $boysres[$i]['img_url'];
+            }
             return $this->datares(200,$maxpage,$newarr);
         }else{
             Response::show('200','',[]);
