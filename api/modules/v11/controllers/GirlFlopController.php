@@ -230,6 +230,7 @@ class GirlFlopController extends ActiveController {
             $newarr = array();
             foreach ($boysres as $key=>$boysr){
 
+                return $boysr;
                 if(in_array($boysr->id,$exceptId)){
                     $newarr[$key]['is_friend'] = 1;
                 }else{
