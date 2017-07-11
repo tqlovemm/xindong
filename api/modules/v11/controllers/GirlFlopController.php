@@ -82,8 +82,7 @@ class GirlFlopController extends ActiveController {
             $exceptId2 .= $flopid2;
         }
         $query = User2::find()
-            ->select('username,nickname,identify,pre_user.id,sex,address,birthdate,img_url,groupid')
-            ->JoinWith('image')->JoinWith('profile');
+            ->JoinWith('uimage');
         $where = "sex = {$sex} AND img_url is not null";
         if($address){
             if($address == "海外"){
@@ -194,10 +193,10 @@ class GirlFlopController extends ActiveController {
         }
     }
     public function actionView($id){
-        $decode = new Decode();
-        if(!$decode->decodeDigit($id)){
-            Response::show(210,'参数不正确');
-        }
+//        $decode = new Decode();
+//        if(!$decode->decodeDigit($id)){
+//            Response::show(210,'参数不正确');
+//        }
         $model = new $this->modelClass();
         $res = $model::find()->where(['user_id'=>$id,'flop_type'=>1])->orderBy("created_at desc")->all();
         $ids = array();
@@ -219,13 +218,13 @@ class GirlFlopController extends ActiveController {
             $ids2 = implode(',',$ids);
             $pagination = new Pagination([
                 'defaultPageSize' => 10,
-                'totalCount' => User2::find()->where("pre_user.id in({$ids2}) ORDER BY field(pre_user.id,{$ids2})")->count(),
+                'totalCount' => User2::find()->where("pre_user.id in({$ids2})")->count(),
             ]);
             $pagination->validatePage = false;
             $maxpage = ceil($pagination->totalCount/$pagination->defaultPageSize);
-            $boysres = User2::find()->where("pre_user.id in({$ids2}) ORDER BY field(pre_user.id,{$ids2})")->select('username,nickname,pre_user.id,sex,address,avatar,groupid,birthdate,img_url')
+            $boysres = User2::find()->where("pre_user.id in({$ids2}) ORDER BY field(pre_user.id,{$ids2})")
                 ->offset($pagination->offset)->limit($pagination->limit)
-                ->JoinWith('image')->JoinWith('profile')->all();
+                ->all();
             $newarr = array();
             for($i=0;$i<count($boysres);$i++){
                 if(in_array($boysres[$i]['id'],$exceptId)){
@@ -240,11 +239,11 @@ class GirlFlopController extends ActiveController {
                 $newarr[$i]['info']['address'] = $boysres[$i]['address'];
                 $newarr[$i]['info']['groupid'] = $boysres[$i]['groupid'];
                 $newarr[$i]['info']['birthdate'] = $boysres[$i]['birthdate'];
-                $newarr[$i]['info']['avatar'] = $boysres[$i]['img_url'];
+                $newarr[$i]['info']['avatar'] = $boysres[$i]['image'];
             }
             return $this->datares(200,$maxpage,$newarr);
         }else{
-            Response::show('200','',[]);
+            return $this->datares(200,1,'');
         }
     }
     protected function datares($code,$maxpage,$data,$message='ok'){
