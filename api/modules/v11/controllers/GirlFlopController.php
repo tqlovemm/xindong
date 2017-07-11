@@ -243,7 +243,8 @@ class GirlFlopController extends ActiveController {
             }
             return $this->datares(200,$maxpage,$newarr);
         }else{
-            return $this->datares(200,1,'');
+            $data = array();
+            return $this->datares(200,1,$data);
         }
     }
     protected function datares($code,$maxpage,$data,$message='ok'){
