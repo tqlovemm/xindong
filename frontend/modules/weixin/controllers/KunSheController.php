@@ -107,42 +107,17 @@ class KunSheController extends Controller
         $arr = array(
             'button' =>array(
                 array(
-                    'name'=>urlencode("幸福入口"),
-                    'sub_button'=>array(
-                        array(
-                            'type'=>'click',
-                            'name'=>urlencode("男生入口"),
-                            "key"=> "V1001_GOOD",
-                        ),
-                        array(
-                            'type'=>'click',
-                            'name'=>urlencode("女生入口"),
-                            "key"=> "V1002_GOOD",
-                        ),
-                    )
+                    "type"=>"view",
+                    "name"=>urlencode("翻牌子"),
+                    "url"=>"http://51payo.tecclub.cn/weixin/flop/flop-pre",
+                    "sub_button"=>[],
                 ),
                 array(
-                    'name'=>urlencode("撩一撩"),
-                    'sub_button'=>array(
-                        array(
-                            "type"=>"view",
-                            "name"=>urlencode("SM|西檬之家"),
-                            "url"=>"https://mp.weixin.qq.com/s?__biz=MzI2OTQ3OTA1NA==&mid=2247483859&idx=3&sn=4de9b46e0e7e88543d0c00cb0aeb53a0&chksm=eadefc32dda97524d0a7adb860559c937752d3601d49cf71e2cd8fef878dde4d8c8bb9919476&scene=18#rd",
-                            "sub_button"=>[],
-
-                        ), array(
-                            "type"=>"click",
-                            "name"=>urlencode("跑圈 | 十三平台"),
-                            "key"=> "V1003_GOOD",
-
-                        ),
-                        array(
-                            'type'=>'click',
-                            'name'=>urlencode("聊sao | 神秘三角"),
-                            "key"=> "V1004_GOOD",
-                        ),
-                    )
-                )
+                    "type"=>"view",
+                    "name"=>urlencode("快速脱单"),
+                    "url"=>"http://51payo.com/contact",
+                    "sub_button"=>[],
+                ),
             )
         );
 
@@ -217,24 +192,11 @@ class KunSheController extends Controller
                     SaveToLog::log($e->getMessage(),'we13.log');
                 }finally{
                     if($model->scene_id==5){
-                        $content = "51payo.tecclub.cn/weixin/flop";
-                        $this->text($content);
-                    }else{
-                        $content = "欢迎来到全国最大的情趣社区联盟mo-得意
-拥有众多文化社交平台
-在这里你可以尽情展现自己！
+                        $content = "Mua~
+好开心，又捕获一枚小可爱！
+谢谢你的关注，之后我们将在这里为你直接推送男生二维码喔！
 
-【十三交友平台】
-<a href=\"https://mp.weixin.qq.com/s?__biz=MzI1MTEyMDI0Mw==&mid=2667464720&idx=3&sn=017159a5989c3d238a254cf959b225a8&chksm=f2fd370cc58abe1aacb776cb925c64ba02658e217640d8d627875695af251c2ba3b692364f6f#rd\">☞ 全球最大华人高端交友社区☜ </a> 
-只有来了才知道其中的乐趣！
-
-【西檬之家】
-<a href=\"http://mp.weixin.qq.com/s/0Q_DAaB6Qg8q0pzN7nG1JA\">☞ SM亚文化圈层社区☜ </a>
-你懂得，老司机聚集地！
-
-【江浙沪豫高端线下交友】
-<a href=\"http://mp.weixin.qq.com/s/6zyGq4Om2gldkq9Pao97mw\">☞ 华中及长三角最大线下高端交友聚会社群☜ </a>
-区域化交友，交流更方便！";
+现在点击<a href='http://51payo.tecclub.cn/weixin/flop/flop-pre'>【我的后宫】</a>继续翻牌吧~";
                         $this->text($content);
                     }
                 }
@@ -558,6 +520,12 @@ class KunSheController extends Controller
         $url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=".$this->getAccessTokens()."&next_openid=$next_openid";
         $res = json_decode($this->getData($url),true);
         return $res;
+    }
+
+    public function actionC(){
+
+
+        Yii::$app->cache->delete('access_token_ks');
     }
 
 
