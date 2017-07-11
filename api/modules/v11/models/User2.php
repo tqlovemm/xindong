@@ -20,9 +20,8 @@ use api\modules\v11\models\GirlFlopBoy;
  */
 class User2 extends ActiveRecord  implements IdentityInterface
 {
-    public $address;
-    public $birthdate;
-    public $img_url;
+    public $_profile;
+
     /**
      * @inheritdoc
      */
@@ -69,9 +68,19 @@ class User2 extends ActiveRecord  implements IdentityInterface
     // 返回的数据格式化
     public function fields()
     {
+        $this->_profile = UserProfile::findOne($this->id);
         return [
-            'user_id'=>'id','username','avatar','nickname','sex','groupid',
-            'address','birthdate','avatar'=>'img_url','cid'
+            'user_id'=>'id','username','avatar','nickname','sex','groupid','cid',
+            'address'=>function(){
+                return $this->_profile->address;
+            },
+            'birthdate'=>function(){
+                return $this->_profile->birthdate;
+            },
+            'flop_avatar'=>function(){
+                $imageModel = UserImage::findOne(['user_id'=>$this->id]);
+                return $imageModel->img_url;
+            }
         ];
     }
 

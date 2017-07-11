@@ -223,7 +223,7 @@ class GirlFlopController extends ActiveController {
             ]);
             $pagination->validatePage = false;
             $maxpage = ceil($pagination->totalCount/$pagination->defaultPageSize);
-            $boysres = User2::find()->with('image')->with('profile')->where("pre_user.id in({$ids2}) ORDER BY field(pre_user.id,{$ids2})")
+            $boysres = User2::find()->where("pre_user.id in({$ids2}) ORDER BY field(pre_user.id,{$ids2})")
                 ->offset($pagination->offset)->limit($pagination->limit)
                 ->all();
             $newarr = array();
