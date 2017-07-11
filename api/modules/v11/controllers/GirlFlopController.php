@@ -228,14 +228,35 @@ class GirlFlopController extends ActiveController {
                 ->all();
 
             $newarr = array();
-            for($i=0;$i<count($boysres);$i++){
+            foreach ($boysres as $key=>$boysr){
+
+                if(in_array($boysr->user_id,$exceptId)){
+                    $newarr[$key]['is_friend'] = 1;
+                }else{
+                    $newarr[$key]['is_friend'] = 2;
+                }
+
+                $newarr[$key]['info']['user_id'] = $boysr->user_id;
+                $newarr[$key]['info']['username'] = $boysr->username;
+                $newarr[$key]['info']['nickname'] = $boysr->nickname;
+                $newarr[$key]['info']['sex'] = $boysr->sex;
+                $newarr[$key]['info']['address'] = $boysr->address;
+                $newarr[$key]['info']['groupid'] = $boysr->groupid;
+                $newarr[$key]['info']['birthdate'] = $boysr->birthdate;
+                $newarr[$key]['info']['avatar'] = $boysr->avatar;
+
+            }
+
+
+
+        /*    for($i=0;$i<count($boysres);$i++){
                 if(in_array($boysres[$i]['id'],$exceptId)){
                     $newarr[$i]['is_friend'] = 1;
                 }else{
                     $newarr[$i]['is_friend'] = 2;
                 }
 
-              //  $newarr[$i] = $boysres[$i];
+                $newarr[$i] = $boysres[$i];
 
                 $newarr[$i]['info']['user_id'] = $boysres[$i]['id'];
                 $newarr[$i]['info']['username'] = $boysres[$i]['username'];
@@ -245,7 +266,7 @@ class GirlFlopController extends ActiveController {
                 $newarr[$i]['info']['groupid'] = $boysres[$i]['groupid'];
                 $newarr[$i]['info']['birthdate'] = $boysres[$i]['birthdate'];
                 $newarr[$i]['info']['avatar'] = $boysres[$i]['avatar'];
-            }
+            }*/
             return $this->datares(200,$maxpage,$newarr);
         }else{
             Response::show('200','',[]);
