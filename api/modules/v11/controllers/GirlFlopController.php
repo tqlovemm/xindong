@@ -237,7 +237,7 @@ class GirlFlopController extends ActiveController {
 
               //  $newarr[$i] = $boysres[$i];
 
-                $newarr[$i]['info']['user_id'] = $boysres[$i]['user_id'];
+                $newarr[$i]['info']['user_id'] = $boysres[$i]['id'];
                 $newarr[$i]['info']['username'] = $boysres[$i]['username'];
                 $newarr[$i]['info']['nickname'] = $boysres[$i]['nickname'];
                 $newarr[$i]['info']['sex'] = $boysres[$i]['sex'];
