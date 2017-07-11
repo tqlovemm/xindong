@@ -229,7 +229,7 @@ class GirlFlopController extends ActiveController {
 
             $newarr = array();
             for($i=0;$i<count($boysres);$i++){
-                if(in_array($boysres[$i]['user_id'],$exceptId)){
+                if(in_array($boysres[$i]['id'],$exceptId)){
                     $newarr[$i]['is_friend'] = 1;
                 }else{
                     $newarr[$i]['is_friend'] = 2;
