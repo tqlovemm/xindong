@@ -43,10 +43,10 @@ class GirlFlopController extends ActiveController {
         $id = isset($_GET['id'])?$_GET['id']:'';
         $address = isset($_GET['address'])?$_GET['address']:'';
         $morelike = isset($_GET['morelike'])?$_GET['morelike']:'';
-        $decode = new Decode();
-        if(!$decode->decodeDigit($id)){
-            Response::show(210,'参数不正确');
-        }
+//        $decode = new Decode();
+//        if(!$decode->decodeDigit($id)){
+//            Response::show(210,'参数不正确');
+//        }
         $userInfo = User2::findOne($id);
         if(!$userInfo){
             Response::show('201','用户不存在');
@@ -175,7 +175,7 @@ class GirlFlopController extends ActiveController {
         }
         //推送
         $user = User2::find()->where(['id'=>$flop_userid])->one();
-        if($user['groupid'] == 1 && $user['cid'] && $flop_type == 1){
+        if($user['groupid'] == 1 && $flop_type == 1){
             $girluser = User::find()->where(['id'=>$id])->one();
             $cid = $user['cid'];
             $title = "有女生喜欢你，成为会员可以收到好友通知哦。";
