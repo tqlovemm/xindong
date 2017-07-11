@@ -226,6 +226,8 @@ class GirlFlopController extends ActiveController {
             $boysres = User2::find()->where("pre_user.id in({$ids2}) ORDER BY field(pre_user.id,{$ids2})")
                 ->offset($pagination->offset)->limit($pagination->limit)
                 ->all();
+
+            return $boysres;
             $newarr = array();
             for($i=0;$i<count($boysres);$i++){
                 if(in_array($boysres[$i]['id'],$exceptId)){
