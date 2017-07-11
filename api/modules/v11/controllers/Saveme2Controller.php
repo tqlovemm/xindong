@@ -11,6 +11,8 @@ use yii\myhelper\Decode;
 use api\modules\v11\models\SavemeInfo;
 use yii\filters\RateLimiter;
 use yii\myhelper\Easemob;
+use common\components\PushConfig;
+use api\modules\v11\models\User;
 
 class Saveme2Controller extends ActiveController {
 
@@ -92,6 +94,7 @@ class Saveme2Controller extends ActiveController {
         return $this->datares(200,$maxpage,$savemeres);
     }
     public function actionCreate() {
+
     	$model = new $this->modelClass();
     	$cid = Yii::$app->request->getBodyParam('created_id');
         $img = Yii::$app->request->getBodyParam('img');
@@ -125,6 +128,24 @@ class Saveme2Controller extends ActiveController {
             $sql = "INSERT INTO `pre_saveme_img` (`saveme_id`,`path`,`status`)  VALUES ".implode(",", $photoname);
 	    	Yii::$app->db->createCommand($sql)->execute();
     	}
+        //管理员提醒
+        $adminres = (new Query())->select('user_id')->from('{{%admin_push}}')->all();
+        if(!empty($adminres)){
+            $userids = array();
+            foreach($adminres as $v){
+                $userids[] = $v['user_id'];
+            }
+            $title = "系统提醒";
+            $msg = "有新的救我需要审核！";
+            $data = array('push_title'=>$title,'push_content'=>$msg,'push_type'=>'SSCOMM_NOTICE');
+            $extras = json_encode($data);
+            PushConfig::config();
+            $puser = User::find()->where(['id'=>$userids])->all();
+            foreach($puser as $var){
+                $cids[] = $var['cid'];
+            }
+            pushMessageToList(1, $title, $msg, $extras , $cids);
+        }
         Response::show('200','操作成功','发布成功,等待审核');
     }
     //女生通知列表

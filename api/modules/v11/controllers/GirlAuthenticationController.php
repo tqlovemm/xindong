@@ -7,6 +7,8 @@ use yii\myhelper\Decode;
 use yii\filters\RateLimiter;
 use common\Qiniu\QiniuUploader;
 use yii\myhelper\Response;
+use common\components\PushConfig;
+use api\modules\v11\models\User;
 
 class GirlAuthenticationController extends ActiveController {
 
@@ -55,6 +57,24 @@ class GirlAuthenticationController extends ActiveController {
         if(!$model->save()){
             // return $model->getFirstErrors();
             Response::show('201','上传失败',"上传失败");
+        }
+        //管理员提醒
+        $adminres = (new Query())->select('user_id')->from('{{%admin_push}}')->all();
+        if(!empty($adminres)){
+            $userids = array();
+            foreach($adminres as $v){
+                $userids[] = $v['user_id'];
+            }
+            $title = "系统提醒";
+            $msg = "有新的救我需要审核！";
+            $data = array('push_title'=>$title,'push_content'=>$msg,'push_type'=>'SSCOMM_NOTICE');
+            $extras = json_encode($data);
+            PushConfig::config();
+            $puser = User::find()->where(['id'=>$userids])->all();
+            foreach($puser as $var){
+                $cids[] = $var['cid'];
+            }
+            pushMessageToList(1, $title, $msg, $extras , $cids);
         }
         Response::show('200','上传成功',"上传成功");
     }
