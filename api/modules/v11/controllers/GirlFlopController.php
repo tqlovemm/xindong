@@ -227,22 +227,24 @@ class GirlFlopController extends ActiveController {
                 ->offset($pagination->offset)->limit($pagination->limit)
                 ->all();
 
-            return $boysres;
             $newarr = array();
             for($i=0;$i<count($boysres);$i++){
-                if(in_array($boysres[$i]['id'],$exceptId)){
+                if(in_array($boysres[$i]['user_id'],$exceptId)){
                     $newarr[$i]['is_friend'] = 1;
                 }else{
                     $newarr[$i]['is_friend'] = 2;
                 }
-                $newarr[$i]['info']['user_id'] = $boysres[$i]['id'];
+
+                $newarr[$i] = $boysres[$i];
+
+      /*          $newarr[$i]['info']['user_id'] = $boysres[$i]['user_id'];
                 $newarr[$i]['info']['username'] = $boysres[$i]['username'];
                 $newarr[$i]['info']['nickname'] = $boysres[$i]['nickname'];
                 $newarr[$i]['info']['sex'] = $boysres[$i]['sex'];
                 $newarr[$i]['info']['address'] = $boysres[$i]['address'];
                 $newarr[$i]['info']['groupid'] = $boysres[$i]['groupid'];
                 $newarr[$i]['info']['birthdate'] = $boysres[$i]['birthdate'];
-                $newarr[$i]['info']['avatar'] = $boysres[$i]['img_url'];
+                $newarr[$i]['info']['avatar'] = $boysres[$i]['flop_avatar'];*/
             }
             return $this->datares(200,$maxpage,$newarr);
         }else{
