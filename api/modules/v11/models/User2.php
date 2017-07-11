@@ -77,7 +77,7 @@ class User2 extends ActiveRecord  implements IdentityInterface
             'birthdate'=>function(){
                 return $this->_profile->birthdate;
             },
-            'flop_avatar'=>function(){
+            'avatar'=>function(){
                 $imageModel = UserImage::findOne(['user_id'=>$this->id]);
                 return $imageModel->img_url;
             }
