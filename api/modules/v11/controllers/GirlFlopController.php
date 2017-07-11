@@ -229,7 +229,7 @@ class GirlFlopController extends ActiveController {
 
             $newarr = array();
             foreach ($boysres as $key=>$boysr){
-                var_dump($boysr['address']);
+                var_dump($boysr->address);
                 var_dump($boysr);
 
                 return;
