@@ -70,7 +70,10 @@ class User2 extends ActiveRecord  implements IdentityInterface
     {
         $this->_profile = UserProfile::findOne($this->id);
         return [
-            'user_id'=>'id','username','avatar','nickname','sex','groupid','cid',
+            'user_id'=>function(){
+
+            return $this->id;
+            },'username','avatar','nickname','sex','groupid','cid',
             'address'=>function(){
                 return $this->_profile->address;
             },
