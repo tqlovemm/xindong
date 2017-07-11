@@ -236,7 +236,7 @@ class GirlFlopController extends ActiveController {
                     $newarr[$key]['is_friend'] = 2;
                 }
 
-                $newarr[$key]['info']['user_id'] = $boysr->user_id;
+                $newarr[$key]['info']['user_id'] = $boysr->id;
                 $newarr[$key]['info']['username'] = $boysr->username;
                 $newarr[$key]['info']['nickname'] = $boysr->nickname;
                 $newarr[$key]['info']['sex'] = $boysr->sex;
