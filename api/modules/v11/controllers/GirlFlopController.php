@@ -235,16 +235,16 @@ class GirlFlopController extends ActiveController {
                     $newarr[$i]['is_friend'] = 2;
                 }
 
-                $newarr[$i] = $boysres[$i];
+              //  $newarr[$i] = $boysres[$i];
 
-      /*          $newarr[$i]['info']['user_id'] = $boysres[$i]['user_id'];
+                $newarr[$i]['info']['user_id'] = $boysres[$i]['user_id'];
                 $newarr[$i]['info']['username'] = $boysres[$i]['username'];
                 $newarr[$i]['info']['nickname'] = $boysres[$i]['nickname'];
                 $newarr[$i]['info']['sex'] = $boysres[$i]['sex'];
                 $newarr[$i]['info']['address'] = $boysres[$i]['address'];
                 $newarr[$i]['info']['groupid'] = $boysres[$i]['groupid'];
                 $newarr[$i]['info']['birthdate'] = $boysres[$i]['birthdate'];
-                $newarr[$i]['info']['avatar'] = $boysres[$i]['flop_avatar'];*/
+                $newarr[$i]['info']['avatar'] = $boysres[$i]['avatar'];
             }
             return $this->datares(200,$maxpage,$newarr);
         }else{
