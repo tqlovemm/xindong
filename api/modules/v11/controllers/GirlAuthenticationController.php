@@ -9,6 +9,7 @@ use common\Qiniu\QiniuUploader;
 use yii\myhelper\Response;
 use common\components\PushConfig;
 use api\modules\v11\models\User;
+use yii\db\Query;
 
 class GirlAuthenticationController extends ActiveController {
 
