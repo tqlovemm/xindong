@@ -50,7 +50,7 @@ class GetInfoFromUsernameController extends Controller
     $uid = Yii::$app->request->get('uid');
     $model = $this->findModel($username);
     $decode = new Decode();
-    if(!$decode->decodeDigit($uid)){
+    if(!$decode->decodeDigit($username)){
         Response::show(210,'参数不正确');
     }
     $follow = Yii::$app->db->createCommand("select * from pre_user_follow where user_id = {$uid} and people_id={$model['id']}")->queryOne();
