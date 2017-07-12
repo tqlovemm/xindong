@@ -100,9 +100,6 @@ class User2 extends ActiveRecord  implements IdentityInterface
     }
 
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getAddress()
     {
         $res = UserProfile::find()->where(['user_id'=>$this->id])->one();
