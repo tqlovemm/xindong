@@ -4871,7 +4871,7 @@
                     <p>男女生加入平台后，拍摄一些带有平台LOGO/名称的照片来回馈平台，做宣传，突出真实性，欢迎更多的朋友们加入！！</p>
                     <p>（多图，但绝对值得你看）</p>
                     <p><br></p>
-                    <p><img src="http://oqfwt261i.bkt.clouddn.com/weixin/sucaitu/idphoto2.jpg"></p>
+                    <p><img src="http://oqfwt261i.bkt.clouddn.com/weixin/sucaitu/id_20170712162402.jpg"></p>
                     <p><span style="line-height: 1.6;">&nbsp; &nbsp;&nbsp;</span><br></p>
                   <!--  <table>
                         <tbody>
