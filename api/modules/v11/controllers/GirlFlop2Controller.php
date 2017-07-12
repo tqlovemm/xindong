@@ -95,7 +95,7 @@ class GirlFlop2Controller extends ActiveController {
             $exceptId2 .= $flopid2;
         }
         $query = User2::find()
-            ->JoinWith('uimage');
+            ->JoinWith('uimage')->JoinWith('uaddress');
         $where = "sex = {$sex} AND img_url is not null AND pre_user.id in(20888,21010,22061,24574,24582)";
         if($address){
             if($address == "海外"){
