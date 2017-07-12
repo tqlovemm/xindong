@@ -43,10 +43,10 @@ class GirlFlopController extends ActiveController {
         $id = isset($_GET['id'])?$_GET['id']:'';
         $address = isset($_GET['address'])?$_GET['address']:'';
         $morelike = isset($_GET['morelike'])?$_GET['morelike']:'';
-//        $decode = new Decode();
-//        if(!$decode->decodeDigit($id)){
-//            Response::show(210,'参数不正确');
-//        }
+        $decode = new Decode();
+        if(!$decode->decodeDigit($id)){
+            Response::show(210,'参数不正确');
+        }
         $userInfo = User2::findOne($id);
         if(!$userInfo){
             Response::show('201','用户不存在');

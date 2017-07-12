@@ -98,6 +98,7 @@ class User2 extends ActiveRecord  implements IdentityInterface
     {
         return $this->hasOne(UserImage::className(), ['user_id' => 'id']);
     }
+
     public function getUaddress()
     {
         return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
