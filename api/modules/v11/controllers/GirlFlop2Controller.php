@@ -96,7 +96,7 @@ class GirlFlop2Controller extends ActiveController {
         }
         $query = User2::find()
             ->JoinWith('uimage')->JoinWith('uaddress');
-        $where = "sex = {$sex} AND img_url is not null AND pre_user.id in(20888,21010,22061,24574,24582)";
+        $where = "sex = {$sex} AND img_url is not null";
         if($address){
             if($address == "海外"){
                 $sxhw = (new Query())->select('shortname')->from('{{%member_address_link}}')->where(['parentid'=>0])->all();
@@ -230,7 +230,7 @@ class GirlFlop2Controller extends ActiveController {
             }
             $ids2 = implode(',',$ids);
             $pagination = new Pagination([
-                'defaultPageSize' => 1,
+                'defaultPageSize' => 10,
                 'totalCount' => User2::find()->where("pre_user.id in({$ids2})")->count(),
             ]);
             $pagination->validatePage = false;
