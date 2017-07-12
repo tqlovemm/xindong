@@ -43,10 +43,10 @@ class GirlFlop2Controller extends ActiveController {
         $id = isset($_GET['id'])?$_GET['id']:'';
         $address = isset($_GET['address'])?$_GET['address']:'';
         $morelike = isset($_GET['morelike'])?$_GET['morelike']:'';
-//        $decode = new Decode();
-//        if(!$decode->decodeDigit($id)){
-//            Response::show(210,'参数不正确');
-//        }
+        $decode = new Decode();
+        if(!$decode->decodeDigit($id)){
+            Response::show(210,'参数不正确');
+        }
         $userInfo = User2::findOne($id);
         if(!$userInfo){
             Response::show('201','用户不存在');
@@ -96,7 +96,7 @@ class GirlFlop2Controller extends ActiveController {
         }
         $query = User2::find()
             ->JoinWith('uimage');
-        $where = "sex = {$sex} AND img_url is not null";
+        $where = "sex = {$sex} AND img_url is not null AND pre_user.id in(20888,21010,22061,24574,24582)";
         if($address){
             if($address == "海外"){
                 $sxhw = (new Query())->select('shortname')->from('{{%member_address_link}}')->where(['parentid'=>0])->all();
