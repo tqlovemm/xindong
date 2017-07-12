@@ -44,6 +44,61 @@ class GetInfoFromUsernameController extends Controller
         unset($actions['index'], $actions['update'], $actions['create'], $actions['delete'], $actions['view']);
         return $actions;
     }
+    public function actionIndex(){
+
+    $username = Yii::$app->request->get('username');
+    $uid = Yii::$app->request->get('uid');
+    $model = $this->findModel($username);
+    $decode = new Decode();
+    if(!$decode->decodeDigit($uid)){
+        Response::show(210,'参数不正确');
+    }
+    $follow = Yii::$app->db->createCommand("select * from pre_user_follow where user_id = {$uid} and people_id={$model['id']}")->queryOne();
+    if(!$follow){
+        $follow['follow'] = 0;
+    }else{
+        $follow['follow'] = 1;
+        unset($follow['id'],$follow['people_id']);
+    }
+
+    $userData = new UserData();
+    if(($data = $userData::findOne($model['id']))==null){
+        $userData->user_id = $model['id'];
+        $userData->save();
+        $data = $userData;
+    }
+    $data = $data->getAttributes();//节操币，粉丝，关注数
+
+    $data['thread_count'] = FormThread::find()->where(['user_id'=>$model['id']])->count();//发帖数
+
+    $userProfile = new UserProfile();
+    if(($profile = $userProfile::findOne($model['id']))==null){
+        $userProfile->user_id = $model['id'];
+        $userProfile->created_at = time();
+        $userProfile->updated_at = time();
+        $userProfile->save();
+        $profile = $userProfile;
+    }
+    $profile = $profile->getAttributes();
+    $profile['is_marry'] = (string)$profile['is_marry'];
+    unset($model['password_hash'],$model['cellphone'],$model['invitation'],$model['openId'],$model['weibo_num'],$model['none'],$profile['description'],$model['auth_key'],$model['password_reset_token'],$model['role'],$model['identity']);
+    $profile['mark']=json_decode($profile['mark']);
+    $profile['make_friend']=json_decode($profile['make_friend']);
+    $profile['hobby']=json_decode($profile['hobby']);
+    $profile['glamorous'] = 600;
+
+    $ims['photos'] = array_values(UserImage::find()->select('img_url')->where(['user_id'=>$model['id']])->asArray()->column());
+
+    $gres = (new Query())->select('status')->from('pre_girl_authentication')->orderBy("created_at desc")->where(['user_id'=>$model['id']])->one();
+    $grz = array();
+    if($gres){
+        $grz['is_renzheng'] = intval($gres['status']);
+    }else{
+        $grz['is_renzheng'] = 0;
+    }
+
+    return $model+$data+$profile+$follow+$ims+$grz;
+}
 
     public function actionView($id)
     {

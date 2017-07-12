@@ -4867,7 +4867,7 @@
 
                     <p>男生入会有自我介绍、资料审核、选择会员、付费入会、完成入会这几个步骤，具体如下图（从添加入会客服到完成入会到添加会员客服到获取会员权限都有哦）<br></p>
                     <p><br></p>
-                    <p><img src="http://oqfwt261i.bkt.clouddn.com/weixin/sucaitu/123456.jpg"></p>
+                    <p><img src="http://oqfwt261i.bkt.clouddn.com/weixin/sucaitu/640.jpg"></p>
                     <p><br></p>
                 </div>
 
