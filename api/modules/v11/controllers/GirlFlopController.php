@@ -151,7 +151,7 @@ class GirlFlopController extends ActiveController {
         $record = new GirlFlopRecord();
         $record->user_id=$id;
         $record->save();
-        //男生热度记录
+        //男热度记录
         $boylike = new GirlFlopBoy();
         $boyres = $boylike->find()->where(['user_id'=>$flop_userid])->one();
         if($boyres){
