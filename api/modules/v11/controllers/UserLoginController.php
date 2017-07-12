@@ -138,7 +138,7 @@ class UserLoginController extends Controller
         if($gres){
             $grz['is_renzheng'] = strval($gres['status']);
         }else{
-            $grz['is_renzheng'] = 0;
+            $grz['is_renzheng'] = "0";
         }
 
         return $model+$data+$profile+$follow+$ims+$grz;
