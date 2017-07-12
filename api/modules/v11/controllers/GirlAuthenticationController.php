@@ -67,7 +67,7 @@ class GirlAuthenticationController extends ActiveController {
                 $userids[] = $v['user_id'];
             }
             $title = "系统提醒";
-            $msg = "有新的救我需要审核！";
+            $msg = "有新的女生认证需要审核！";
             $data = array('push_title'=>$title,'push_content'=>$msg,'push_type'=>'SSCOMM_NOTICE');
             $extras = json_encode($data);
             PushConfig::config();
