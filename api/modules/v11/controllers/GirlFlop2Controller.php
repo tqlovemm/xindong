@@ -230,7 +230,7 @@ class GirlFlop2Controller extends ActiveController {
             }
             $ids2 = implode(',',$ids);
             $pagination = new Pagination([
-                'defaultPageSize' => 10,
+                'defaultPageSize' => 1,
                 'totalCount' => User2::find()->where("pre_user.id in({$ids2})")->count(),
             ]);
             $pagination->validatePage = false;
