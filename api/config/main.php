@@ -212,10 +212,10 @@ return [
         ],
     ],
     'params' => $params,
-    'as access' => [
+/*    'as access' => [
         'class' => 'app\components\AccessControl',
         'user_id_tag'=>'member_user_id',
-    ]
+    ]*/
 ];
 
 
