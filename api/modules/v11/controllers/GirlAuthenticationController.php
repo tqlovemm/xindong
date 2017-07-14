@@ -98,7 +98,7 @@ class GirlAuthenticationController extends ActiveController {
         }elseif($authentication['status'] == 2){
             return array('code'=>201,'message'=>"认证失败！",'data'=>$data);
         }elseif($authentication['status'] == 3){
-            return array('code'=>200,'message'=>"正在审核中!",'data'=>$data);
+            return array('code'=>203,'message'=>"正在审核中!",'data'=>$data);
         }
 
     }
