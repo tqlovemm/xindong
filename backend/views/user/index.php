@@ -46,21 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'groupid',
                 'label' => '会员等级',
                 'value' => function ($data) {
-                    if($data->groupid==1){
-                        $vip = "1-网站会员";
-                    }elseif($data->groupid==2){
-                        $vip = "2-普通会员";
-                    }elseif($data->groupid==3){
-                        $vip = "3-高端会员";
-                    }elseif($data->groupid==4){
-                        $vip = "4-至尊会员";
-                    }elseif($data->groupid==5){
-                        $vip = "5-私人定制";
-                    }else{
-                        $vip = "未知错误";
-                    }
-
-                    return $vip;
+                    return \common\components\Vip::vip($data->groupid);
                 }
 
             ],
