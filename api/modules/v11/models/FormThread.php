@@ -87,7 +87,11 @@ class FormThread extends ActiveRecord
             $this->is_renzheng = 0;
         }
         return [
-            "wid",'user_id', 'content','sex','tag','is_top','type','created_at','groupid'=>function(){
+            "wid",'user_id', 'content','tag','is_top','type','created_at',
+            'sex'=>function(){
+                return $this->_user->sex;
+            },
+            'groupid'=>function(){
                 return $this->_user->groupid;
             },
 
