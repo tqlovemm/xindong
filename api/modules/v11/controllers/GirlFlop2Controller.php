@@ -96,7 +96,7 @@ class GirlFlop2Controller extends ActiveController {
         }
         $query = User2::find()
             ->JoinWith('uimage')->JoinWith('uaddress');
-        $where = "sex = {$sex} AND img_url is not null";
+        $where = "sex = {$sex} AND img_url is not null AND pre_user.id in(20888,21010,22061,24574,24582)";
         if($address){
             if($address == "海外"){
                 $sxhw = (new Query())->select('shortname')->from('{{%member_address_link}}')->where(['parentid'=>0])->all();
