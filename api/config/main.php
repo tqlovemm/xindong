@@ -198,7 +198,7 @@ return [
                         'v11/form-thread-report-choice', 'v11/form-thread-report','v11/form-thread-push-msg','v11/we-chat-customer-service','v11/open-before-adv','v11/wechat-push','v11/article','v11/article-type','v11/article-collection','v11/article-like','v11/article-adver','v11/article-pl','v11/saveme-record',
                         'v11/form-thread-report-choice', 'v11/form-thread-report','v11/form-thread-push-msg','v11/we-chat-customer-service','v11/open-before-adv',
                         'v11/wechat-push','v11/article','v11/article-type','v11/article-collection','v11/article-like','v11/article-adver','v11/article-pl',
-                        'v11/user-login','v11/saveme2','v11/saveme-info2','v11/girl-flop','v11/girl-flop2','v11/girl-authentication','v11/make-friend','v11/girl-flop-choice','v11/member-sort-third'
+                        'v11/user-login','v11/saveme2','v11/saveme-info2','v11/girl-flop','v11/girl-flop2','v11/girl-authentication','v11/make-friend','v11/girl-flop-choice','v11/member-sort-third','v11/member-sort-four'
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\w+>',
@@ -210,8 +210,21 @@ return [
     ],
     'params' => $params,
 /*    'on beforeAction' => function() {
-        if(empty(Yii::$app->request->headers->get('member_user_id'))){
+        $user_id = Yii::$app->request->headers->get('member_user_id');
+        if(empty($user_id)){
             \yii\myhelper\Response::show(403,'NoAccess',Yii::$app->controller->getRoute());
+        }else{
+            $route = \backend\modules\card\models\AllJurisdictionRoute::find()->select('route')->where(['type'=>1])->asArray()->column();
+            $assignment = \backend\modules\card\models\JurisdictionAssignment::find()->select('item_name')->where(['user_id'=>$user_id])->asArray()->column();
+            $routeChild = \backend\modules\card\models\AllJurisdictionRouteChild::find()->select('child')->where(['parent'=>$assignment])->asArray()->column();
+            $action = Yii::$app->controller->getRoute();
+            if(in_array($action,$route)){
+                if(in_array($action,$routeChild)){
+                    \yii\myhelper\Response::show(200,'OK',$action);
+                }else{
+                    \yii\myhelper\Response::show(403,'NoAccess',$action);
+                }
+            }
         }
     },*/
 
