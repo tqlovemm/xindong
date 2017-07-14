@@ -206,28 +206,16 @@ return [
                     ]
                 ],
             ],
-        ]
+        ],
+        'authManager' => [
+            'class' => 'app\components\AccessControl',
+        ],
     ],
     'params' => $params,
-/*    'on beforeAction' => function() {
-        $user_id = Yii::$app->request->headers->get('member_user_id');
-        if(empty($user_id)){
-            \yii\myhelper\Response::show(403,'NoAccess',Yii::$app->controller->getRoute());
-        }else{
-            $route = \backend\modules\card\models\AllJurisdictionRoute::find()->select('route')->where(['type'=>1])->asArray()->column();
-            $assignment = \backend\modules\card\models\JurisdictionAssignment::find()->select('item_name')->where(['user_id'=>$user_id])->asArray()->column();
-            $routeChild = \backend\modules\card\models\AllJurisdictionRouteChild::find()->select('child')->where(['parent'=>$assignment])->asArray()->column();
-            $action = Yii::$app->controller->getRoute();
-            if(in_array($action,$route)){
-                if(in_array($action,$routeChild)){
-                    \yii\myhelper\Response::show(200,'OK',$action);
-                }else{
-                    \yii\myhelper\Response::show(403,'NoAccess',$action);
-                }
-            }
-        }
-    },*/
-
+    'as access' => [
+        'class' => 'app\components\AccessControl',
+        'user_id_tag'=>'member_user_id',
+    ]
 ];
 
 

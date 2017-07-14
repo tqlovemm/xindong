@@ -4,11 +4,6 @@ namespace api\modules\v1\controllers;
 
 use yii\rest\ActiveController;
 
-/**
- * Country Controller API
- *
- * @author Budi Irawan <deerawan@gmail.com>
- */
 class TestController extends ActiveController
 {
     public $modelClass = 'api\modules\v1\models\User';
@@ -39,7 +34,7 @@ class TestController extends ActiveController
     }
 
     public function actionIndex(){
-        return \Yii::$app->controller->getRoute();
+        return $dependency;
     }
     public function actionView($id){
 
