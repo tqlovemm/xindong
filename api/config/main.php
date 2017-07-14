@@ -11,6 +11,10 @@ return [
     'basePath' => dirname(__DIR__),    
     'bootstrap' => ['log'],
     'modules' => [
+        'v1' => [
+            'basePath' => '@app/modules/v1',
+            'class' => 'api\modules\v1\Module'
+        ],
         'v2' => [
             'basePath' => '@app/modules/v2',
             'class' => 'api\modules\v2\Module'
@@ -77,6 +81,16 @@ return [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule', 
+                    'controller' => [
+                      'v1/test',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\w+>',
+
+                    ]
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
                     'controller' => [
                       'v2/thread','v2/user','v2/user1','v2/post','v2/profile','v2/data','v2/mark','v2/ufollow','v2/note','v2/follow','v2/claims-thread',
                         'v2/flop','v2/flop-content','v2/flop-content-data',
@@ -195,6 +209,12 @@ return [
         ]
     ],
     'params' => $params,
+/*    'on beforeAction' => function() {
+        if(empty(Yii::$app->request->headers->get('member_user_id'))){
+            \yii\myhelper\Response::show(403,'NoAccess',Yii::$app->controller->getRoute());
+        }
+    },*/
+
 ];
 
 
