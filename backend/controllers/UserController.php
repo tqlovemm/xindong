@@ -107,12 +107,6 @@ class UserController extends BaseController
         }
     }
 
-    public function actionDisconnect($username){
-
-        $data = $this->setMes()->disconnect($username);
-        return var_dump($data);
-
-    }
     protected function setMes(){
 
         $options = array(
@@ -183,6 +177,7 @@ class UserController extends BaseController
 
         return $this->render('address-info',['model'=>$model]);
     }
+
     public function actionUpdateAddress($id)
     {
         $model = UserProfile::findOne(['user_id'=>$id]);
@@ -382,9 +377,6 @@ class UserController extends BaseController
         $modelClass = new ThirthFiles();
         $model = $modelClass::find()->where(['pre_collecting_files_text.id'=>$number])->joinWith('img')->asArray()->one();
         return $this->render('user-file-total',['model'=>$model]);
-
-
-
     }
 
     public function actionDatingSuccessDropped($id){
