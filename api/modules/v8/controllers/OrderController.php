@@ -215,7 +215,7 @@ class OrderController extends ActiveController
                 $sorts_id = $charge['metadata']['sort_id'];
                 $price2 = MemberSort::find()->where(['id'=>$sorts_id])->asArray()->one();
                 $userInfo = User::find()->where(['id'=>$model->user_id])->asArray()->one();
-                if((int)$userInfo['groupid'] == 1){
+                if((int)$userInfo['groupid'] == 0){
                     $self_data['realPrice'] = $price2['price_1'];
                     $self_data['realGiveaway'] = $price2['giveaway'];
                     $self_data['groupid'] = $price2['groupid'];
