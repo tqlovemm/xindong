@@ -31,7 +31,9 @@ class Vip
 
     public static function vip($vipNumber){
 
-        if($vipNumber==2){
+        if($vipNumber==1){
+            $vip = "包月会员";
+        } elseif($vipNumber==2){
             $vip = "普通会员";
         }elseif($vipNumber==3){
             $vip = "高端会员";

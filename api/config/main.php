@@ -11,6 +11,10 @@ return [
     'basePath' => dirname(__DIR__),    
     'bootstrap' => ['log'],
     'modules' => [
+        'v1' => [
+            'basePath' => '@app/modules/v1',
+            'class' => 'api\modules\v1\Module'
+        ],
         'v2' => [
             'basePath' => '@app/modules/v2',
             'class' => 'api\modules\v2\Module'
@@ -77,6 +81,16 @@ return [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule', 
+                    'controller' => [
+                      'v1/test',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\w+>',
+
+                    ]
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
                     'controller' => [
                       'v2/thread','v2/user','v2/user1','v2/post','v2/profile','v2/data','v2/mark','v2/ufollow','v2/note','v2/follow','v2/claims-thread',
                         'v2/flop','v2/flop-content','v2/flop-content-data',
@@ -184,7 +198,7 @@ return [
                         'v11/form-thread-report-choice', 'v11/form-thread-report','v11/form-thread-push-msg','v11/we-chat-customer-service','v11/open-before-adv','v11/wechat-push','v11/article','v11/article-type','v11/article-collection','v11/article-like','v11/article-adver','v11/article-pl','v11/saveme-record',
                         'v11/form-thread-report-choice', 'v11/form-thread-report','v11/form-thread-push-msg','v11/we-chat-customer-service','v11/open-before-adv',
                         'v11/wechat-push','v11/article','v11/article-type','v11/article-collection','v11/article-like','v11/article-adver','v11/article-pl',
-                        'v11/user-login','v11/saveme2','v11/saveme-info2','v11/girl-flop','v11/girl-flop2','v11/girl-authentication','v11/make-friend','v11/girl-flop-choice','v11/member-sort-third'
+                        'v11/user-login','v11/saveme2','v11/saveme-info2','v11/girl-flop','v11/girl-flop2','v11/girl-authentication','v11/make-friend','v11/girl-flop-choice','v11/member-sort-third','v11/member-sort-four'
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\w+>',
@@ -192,9 +206,16 @@ return [
                     ]
                 ],
             ],
-        ]
+        ],
+        'authManager' => [
+            'class' => 'app\components\AccessControl',
+        ],
     ],
     'params' => $params,
+/*    'as access' => [
+        'class' => 'app\components\AccessControl',
+        'user_id_tag'=>'member_user_id',
+    ]*/
 ];
 
 

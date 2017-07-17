@@ -177,6 +177,13 @@ class WeiXinController extends Controller
                     'name'=>urlencode("新人必看"),
                     'sub_button'=>array(
                         array(
+                            "type"=>"view",
+                            "name"=>urlencode("平台解密"),
+                            "url"=>"https://mp.weixin.qq.com/s/f4Ois6eEqYsZkLSpUcUFDg",
+                            "sub_button"=>[],
+
+                        ),
+                        array(
                             'type'=>'view',
                             'name'=>urlencode("平台简介"),
                             'url'=>'http://mp.weixin.qq.com/s/IhEg7rG-ls01lFpBAGri6w',
@@ -188,13 +195,6 @@ class WeiXinController extends Controller
                             'url'=>'http://13loveme.com/',
                             "sub_button"=>[],
                         ),
-                        array(
-                            "type"=>"view",
-                            "name"=>urlencode("往日觅约"),
-                            "url"=>"http://13loveme.com/red",
-                            "sub_button"=>[],
-
-                        )
                     )
                 ),
                 array(
@@ -218,12 +218,6 @@ class WeiXinController extends Controller
                             "url"=>"http://weibo.com/13jiaoyoupt",
                             "sub_button"=>[],
 
-                        ),
-                        array(
-                            'type'=>'view',
-                            'name'=>urlencode("会员分布"),
-                            "url"=>"http://13loveme.com/heart/34?top=bottom",
-                            "sub_button"=>[],
                         ),
                         array(
                             'type'=>'view',
