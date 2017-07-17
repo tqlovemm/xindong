@@ -28,6 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'user_id',
+            [
+                'attribute'=>'用户名',
+                'label' => '用户名',
+                'value' =>  function($data){
+                    return \backend\models\User::findOne($data->user_id)->username;
+                }
+            ],
             'order_number',
             'alipay_order',
             'total_fee',
@@ -45,6 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return date('Y-m-d H:i:s',$data->updated_at);
                 }
             ],
+
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
