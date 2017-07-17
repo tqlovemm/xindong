@@ -2,6 +2,7 @@
 
 namespace backend\modules\app\models;
 
+use backend\models\User;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -19,7 +20,7 @@ class AppOrderListSearch extends AppOrderList
     {
         return [
             [['id', 'user_id', 'giveaway', 'type', 'status', 'updated_at',], 'integer'],
-            [['order_number', 'alipay_order', 'extra', 'channel', 'description'], 'safe'],
+            [['order_number', 'alipay_order', 'extra', 'channel', 'description', 'username'], 'safe'],
             [['total_fee'], 'number'],
         ];
     }
@@ -62,9 +63,13 @@ class AppOrderListSearch extends AppOrderList
             return $dataProvider;
         }
 
+
+        $username = User::find()->where(['username'=>$this->username])->asArray()->one();
+
         $query->andFilterWhere([
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'pre_app_order_list.user_id' => $username['id'],
             'total_fee' => $this->total_fee,
             'giveaway' => $this->giveaway,
             'type' => $this->type,
@@ -74,7 +79,7 @@ class AppOrderListSearch extends AppOrderList
 
         $query->andFilterWhere(['like', 'order_number', $this->order_number])
             ->andFilterWhere(['like', 'alipay_order', $this->alipay_order])
-            //->andFilterWhere(['like', 'subject', $this->subject])
+            ->andFilterWhere(['like', 'subject', $this->subject])
             ->andFilterWhere(['like', 'extra', $this->extra])
             ->andFilterWhere(['like', 'channel', $this->channel])
             ->andFilterWhere(['like', 'description', $this->description]);

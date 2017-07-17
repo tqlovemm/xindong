@@ -28,6 +28,7 @@ use Yii;
  */
 class AppOrderList extends \yii\db\ActiveRecord
 {
+    public $username;
     /**
      * @inheritdoc
      */

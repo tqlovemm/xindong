@@ -29,16 +29,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'user_id',
             [
-                'attribute'=>'用户名',
-                'label' => '用户名',
-                'value' =>  function($data){
-                    return \backend\models\User::findOne($data->user_id)->username;
+                'attribute' => 'username',
+                'label' => '会员名',
+                'value' => function ($data) {
+                    $user = \backend\models\User::getUsername($data->user_id);
+                    return $user;
                 }
             ],
             'order_number',
             'alipay_order',
             'total_fee',
-             'giveaway',
+            'giveaway',
              //'subject',
             // 'extra:ntext',
              'channel',

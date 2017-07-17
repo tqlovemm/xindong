@@ -34,8 +34,8 @@ class AppOrderController extends Controller
     public function actionIndex()
     {
         $searchModel = new AppOrderListSearch();
-        $data['sort'] = '-updated_at';
-        $dataProvider = $searchModel->search($data);
+        //$data['sort'] = '-updated_at';
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
