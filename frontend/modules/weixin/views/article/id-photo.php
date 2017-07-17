@@ -5247,7 +5247,6 @@
                     <img style="max-width: 107% !important;margin-left: -10px;" src="http://oqfwt261i.bkt.clouddn.com/weixin/sucaitu/id2.jpg"></p><p>
                     <img style="max-width: 107% !important;margin-left: -10px;" src="http://oqfwt261i.bkt.clouddn.com/weixin/sucaitu/id3.jpg"></p>
                     <p>End</p>
-                    <p><img src="http://oqfwt261i.bkt.clouddn.com/weixin/sucaitu/idphotoend.gif"></p>
                     <p><br></p>
                 </div>
 
