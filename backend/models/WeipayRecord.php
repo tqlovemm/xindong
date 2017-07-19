@@ -79,4 +79,11 @@ class WeipayRecord extends \yii\db\ActiveRecord
         }
         return false;
     }
+
+    public function getUsername(){
+        $arr = Yii::$app->db
+            ->createCommand("SELECT username FROM {{%user}}  WHERE id={$this->user_id}")
+            ->queryOne();
+        return $arr['username'];
+    }
 }
