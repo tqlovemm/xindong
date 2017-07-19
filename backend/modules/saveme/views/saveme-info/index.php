@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'saveme_id',
             'apply_uid',
+            ['label'=>'用户名','attribute' => 'username','value' => 'user.username' ],
             [
                 'attribute' => 'created_at',
                 'value'=>

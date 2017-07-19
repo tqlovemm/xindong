@@ -12,6 +12,7 @@ use backend\modules\article\models\Article;
  */
 class ArticleSearch extends Article
 {
+    public $username;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,7 @@ class ArticleSearch extends Article
     {
         return [
             [['id', 'created_id', 'wtype', 'wclick', 'wdianzan', 'hot', 'created_at', 'updated_at', 'status'], 'integer'],
-            [['title', 'wimg', 'content','miaoshu'], 'safe'],
+            [['title', 'wimg', 'content','miaoshu','username'], 'safe'],
         ];
     }
 
@@ -41,7 +42,7 @@ class ArticleSearch extends Article
      */
     public function search($params)
     {
-        $query = article::find();
+        $query = article::find()->joinWith(['user']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -71,6 +72,7 @@ class ArticleSearch extends Article
             ->andFilterWhere(['like', 'wimg', $this->wimg])
             ->andFilterWhere(['like', 'miaoshu', $this->miaoshu])
             ->andFilterWhere(['like', 'content', $this->content])
+            ->andFilterWhere(['like', 'pre_user.username', $this->username])
             ->orderBy('created_at desc');
 
         return $dataProvider;

@@ -3,7 +3,7 @@
 namespace backend\modules\article\models;
 
 use Yii;
-use backend\modules\article\models\ArticleType;
+use frontend\modules\member\models\User;
 
 class Article extends \yii\db\ActiveRecord
 {
@@ -63,5 +63,9 @@ class Article extends \yii\db\ActiveRecord
         } else {
             return false;
         }
+    }
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'created_id']);
     }
 }

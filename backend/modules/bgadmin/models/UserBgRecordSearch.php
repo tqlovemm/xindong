@@ -12,6 +12,7 @@ use frontend\modules\member\models\UserBgRecord;
  */
 class UserBgRecordSearch extends UserBgRecord
 {
+    public $username;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,7 @@ class UserBgRecordSearch extends UserBgRecord
     {
         return [
             [['id', 'user_id', 'created_at'], 'integer'],
-            [['description'], 'safe'],
+            [['description','username'], 'safe'],
         ];
     }
 
@@ -41,7 +42,7 @@ class UserBgRecordSearch extends UserBgRecord
      */
     public function search($params)
     {
-        $query = UserBgRecord::find();
+        $query = UserBgRecord::find()->joinWith(['user']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -61,7 +62,8 @@ class UserBgRecordSearch extends UserBgRecord
             'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'description', $this->description])
+              ->andFilterWhere(['like', 'pre_user.username', $this->username]);
 
         return $dataProvider;
     }

@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
             'user_id',
+            ['label'=>'用户名','attribute' => 'username','value' => 'user.username' ],
             'description',
             [
                 'attribute' => '时间',

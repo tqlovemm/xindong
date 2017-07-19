@@ -3,6 +3,7 @@
 namespace backend\modules\saveme\models;
 
 use Yii;
+use frontend\modules\member\models\User;
 
 /**
  * This is the model class for table "pre_saveme_apply".
@@ -50,5 +51,9 @@ class SavemeInfo extends \yii\db\ActiveRecord
             'type' => 'Type',
             'status' => 'Status',
         ];
+    }
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'apply_uid']);
     }
 }

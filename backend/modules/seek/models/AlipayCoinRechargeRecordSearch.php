@@ -12,6 +12,7 @@ use frontend\modules\member\models\AlipayCoinRechargeRecord;
  */
 class AlipayCoinRechargeRecordSearch extends AlipayCoinRechargeRecord
 {
+    public $username;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,7 @@ class AlipayCoinRechargeRecordSearch extends AlipayCoinRechargeRecord
     {
         return [
             [['id', 'user_id', 'giveaway', 'day_time', 'week_time', 'mouth_time', 'type', 'status', 'platform'], 'integer'],
-            [['user_number', 'out_trade_no', 'subject', 'notify_time', 'extra', 'description'], 'safe'],
+            [['user_number', 'out_trade_no', 'subject', 'notify_time', 'extra', 'description', 'username'], 'safe'],
             [['total_fee'], 'number'],
         ];
     }
@@ -42,7 +43,7 @@ class AlipayCoinRechargeRecordSearch extends AlipayCoinRechargeRecord
      */
     public function search($params)
     {
-        $query = AlipayCoinRechargeRecord::find()->orderBy('notify_time desc');
+        $query = AlipayCoinRechargeRecord::find()->orderBy('notify_time desc')->joinWith(['user']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -74,7 +75,8 @@ class AlipayCoinRechargeRecordSearch extends AlipayCoinRechargeRecord
             ->andFilterWhere(['like', 'subject', $this->subject])
             ->andFilterWhere(['like', 'notify_time', $this->notify_time])
             ->andFilterWhere(['like', 'extra', $this->extra])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'pre_user.username', $this->username]);
 
         return $dataProvider;
     }

@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 //            'id',
             'created_id',
+            ['label'=>'用户名','attribute' => 'username','value' => 'user.username' ],
             'title',
             'miaoshu',
             'wtype',

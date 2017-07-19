@@ -12,6 +12,7 @@ use backend\modules\saveme\models\SavemeInfo;
  */
 class SavemeInfoSearch extends SavemeInfo
 {
+    public $username;
     /**
      * @inheritdoc
      */
@@ -19,6 +20,7 @@ class SavemeInfoSearch extends SavemeInfo
     {
         return [
             [['id', 'saveme_id', 'apply_uid', 'created_at', 'updated_at', 'type', 'status'], 'integer'],
+            [['username'], 'safe'],
         ];
     }
 
@@ -40,7 +42,7 @@ class SavemeInfoSearch extends SavemeInfo
      */
     public function search($params)
     {
-        $query = SavemeInfo::find();
+        $query = SavemeInfo::find()->joinWith(['user']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -63,6 +65,7 @@ class SavemeInfoSearch extends SavemeInfo
             'type' => $this->type,
             'status' => $this->status,
         ]);
+        $query->andFilterWhere(['like', 'pre_user.username', $this->username]);
 
         return $dataProvider;
     }
