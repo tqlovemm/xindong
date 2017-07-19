@@ -148,13 +148,7 @@ $rand_url = AccessToken::antiBlocking();
                     <li><a href="<?=Url::toRoute(['/about','url_about'=>$rand_url])?>" <?php if(Yii::$app->request->getPathInfo()=='about'){echo 'class="bar-active"';}?>>关于我们<h5>About us</h5></a></li>
                     <li><a href="<?=Url::toRoute(['/contact','url_contact'=>$rand_url])?>" <?php if(Yii::$app->request->getPathInfo()=='contact'){echo 'class="bar-active"';}?>>联系我们<h5>Contact us</h5></a></li>
 
-                        <?php if(Yii::$app->user->isGuest){?>
-                            <li style="<?php if(strpos((string)Yii::$app->request->getPathInfo(),'forum/default') === 0){ echo 'display:none';}?>"><a href="/login">登录<h5>Login</h5></a></li>
-                        <?php }else{?>
-                            <li class="loginover"  style="<?php if(strpos((string)Yii::$app->request->getPathInfo(),'forum/default') === 0){ echo 'display:none';}?>">
-                                <a href="/member/user"><?=Helper::truncate_utf8_string(Yii::$app->user->identity->username,4)?><h5>Yours</h5></a>
-                            </li>
-                        <?php }?>
+
                 </ul>
             </div>
         </div>
