@@ -5,6 +5,7 @@ use yii\widgets\LinkPager;
 <table class="table table-bordered table-striped">
     <tr>
         <td>会员ID</td>
+        <td>用户名</td>
         <td>会员编号</td>
         <td>充值总金额</td>
         <td>充值次数</td>
@@ -12,9 +13,11 @@ use yii\widgets\LinkPager;
     </tr>
     <?php foreach($model as $key=>$val):
         $number = \backend\models\User::getNumber($val['user_id']);
+        $username = \backend\models\User::getUsername($val['user_id']);
         ?>
         <tr>
             <td><?=$val['user_id']?></td>
+            <td><?=$username?></td>
             <td><?=$number?></td>
             <td><?=$val['fee']?></td>
             <td><?=$val['count']?></td>

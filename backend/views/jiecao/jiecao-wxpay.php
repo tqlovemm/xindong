@@ -16,6 +16,7 @@ $this->registerCss("
 ?>
     <div class="row" style="border-bottom:2px solid #ff8c08;margin-bottom: 10px;">
         <div class="col-md-1" >用户ID</div>
+        <div class="col-md-1" >用户名</div>
         <div class="col-md-1" >用户编号</div>
         <div class="col-md-1" >充值金额</div>
         <div class="col-md-1" >得到节操币</div>
@@ -23,7 +24,7 @@ $this->registerCss("
         <div class="col-md-2" >充值时间</div>
         <div class="col-md-1" >类型</div>
         <div class="col-md-1" >是否关注公众</div>
-        <div class="col-md-3" >描述</div>
+        <div class="col-md-2" >描述</div>
     </div>
 <?php foreach($model as $key=>$val):
 
@@ -80,6 +81,7 @@ $this->registerCss("
 
     <div class="row" style="border-bottom:2px solid #ff8c08;margin-bottom: 10px;">
         <div class="col-md-1" ><?=$val['user_id']?></div>
+        <div class="col-md-1" ><?=$val['username']?></div>
         <div class="col-md-1" ><?=$number['number']?></div>
         <div class="col-md-1" ><?=$val['total_fee']?>元</div>
         <div class="col-md-1" ><?=$jiecao?></div>
@@ -87,7 +89,7 @@ $this->registerCss("
         <div class="col-md-2" ><?=date('Y-m-d H:i:s',$val['updated_at'])?></div>
         <div class="col-md-1" ><?=$type?></div>
         <div class="col-md-1" ><?=$pay_info['is_subscribe']?></div>
-        <div class="col-md-3" ><?=$introduce?></div>
+        <div class="col-md-2" ><?=$introduce?></div>
     </div>
 <?php endforeach;?>
 <h3 class="text-right">本页总计：<?=$sum1?>元</h3>
