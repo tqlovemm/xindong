@@ -139,7 +139,7 @@ $rand_url = AccessToken::antiBlocking();
                     <img class="login13" src="<?= Yii::getAlias('@web')?>/images/logo1.png" alt="十三平台-中国领先的全球华人寻约交友平台" title="十三平台-中国领先的全球华人寻约交友平台">
                 </a>
             </div>
-            <div class="collapse navbar-collapse navbar-right navbar-main-collapse dd">
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse dd" style="margin-right: -150px;">
                 <ul class="nav navbar-nav cc">
                     <li><a href="<?=Url::toRoute(['/','url'=>$rand_url])?>">主页<h5>Home</h5></a></li>
                     <li><a href="<?=Url::toRoute(['/date-today','url_services'=>$rand_url])?>" <?php if(in_array(Yii::$app->request->getPathInfo(),['dating','datingt','date-today','date-past','hear-view','support-team','beautiful-people','firefighters'])||Yii::$app->request->getPathInfo()=='date-quality'||strpos(Yii::$app->request->getPathInfo(),'hear-view')!==false||strpos(Yii::$app->request->getPathInfo(),'date-view')!==false){echo 'class="bar-active"';}?>>最新觅约<h5>Dating</h5></a></li>
